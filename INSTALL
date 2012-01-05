@@ -1,0 +1,9 @@
+Mini guide d'installation:
+
+1 - Copier un des fichiers samples présents dans grails-app/conf/samples/
+2 - Créer une variable d'environnement nommé "EPSILON_CONF" ayant pour valeur le path vers le fichier "properties" copié en "1"
+3 - Editer ce fichier selon votre conf (datasource, nom du serveur, et conf mail)
+4 - Télécharger / installer un tomcat (un 6.x, c'est pas mal)
+5 - Si vous compilez Epsilon, il faut également installer grails : grails.org
+6 - Pour compiler : grails prod war
+7 - Placer le war epsilon-VERSION.war dans Tomcat
