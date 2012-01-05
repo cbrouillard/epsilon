@@ -1,0 +1,6 @@
+Epsilon est un mini logiciel de "comptabilité".
+J'insiste bien sur "mini" puisqu'il s'agit surtout d'un outil permettant de suivre ses dépenses de façon beaucoup plus fine que le logiciel en ligne fourni par votre banque.
+
+Epsilon est fourni sous la forme d'un war, déployable sur un tomcat par exemple. Il requiert l'utilisation d'une base de données (Postgresql, MySql, HSQLDB, autres ...)
+
+Epsilon est basé sur Grails.
