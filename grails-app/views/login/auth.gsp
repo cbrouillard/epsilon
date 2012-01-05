@@ -14,8 +14,8 @@
 		padding-bottom: 6px;
 		margin: 60px auto;
 		text-align: left;
-		border: 1px solid #aab;
-		background-color: #f0f0fa;
+		border: 1px solid #92E07F;
+		background-color: #92E07F;
 		-moz-box-shadow: 2px 2px 2px #eee;
 		-webkit-box-shadow: 2px 2px 2px #eee;
 		-khtml-box-shadow: 2px 2px 2px #eee;

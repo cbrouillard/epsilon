@@ -4,7 +4,7 @@
   </g:remoteLink>
 </g:if>
 <g:else>
-  <g:remoteLink title=Activer" controller="admin" action="enableuser" update="person${person?.id}-enable" id="${person?.id}">
+  <g:remoteLink title="Activer" controller="admin" action="enableuser" update="person${person?.id}-enable" id="${person?.id}">
     <img src="${resource(dir:'img', file:'offline.png')}" alt="E"/>
   </g:remoteLink>
 </g:else>
