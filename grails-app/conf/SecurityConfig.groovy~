@@ -1,0 +1,11 @@
+security {
+	// see DefaultSecurityConfig.groovy for all settable/overridable properties
+	active = true
+        useRequestMapDomainClass = false
+
+	loginUserDomainClass = "com.headbangers.epsilon.Person"
+	authorityDomainClass = "com.headbangers.epsilon.Role"
+
+        useControllerAnnotations = true
+        useAcl = true
+}

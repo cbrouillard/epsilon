@@ -1,0 +1,274 @@
+a.yellow{
+    color:yellow;
+}
+.centered{
+    text-align: center;
+}
+.admin-menus{
+    float:right;
+}
+img{border:none;}
+.tdcenter{
+    text-align: center;
+}
+.tdright{
+    text-align:right;
+}
+.fixedsize{
+    width: 100px;
+}
+.limitedSize{
+    width:200px;
+    text-align: justify;
+}
+#deco-border-left{
+    position: fixed;
+    top:0px;
+    left:0px;
+    width:170px;
+    height:100%;
+    border-right:5px solid #92e07f;
+    z-index:-1;
+}
+#menu-principal{
+    float:left;
+    /*border-right:1px solid #92e07f;*/
+    width:170px;
+}
+#menu-principal div.menuButton{
+    background-color: white;
+}
+#menu-principal div.selected{
+    background-color: #edd23b;
+    border-right:5px solid #92e07f;
+}
+#menu-principal div:hover{
+    background-color: #92e07f;
+}
+
+#operations-creator{
+    margin-top:5px;
+    /*float:left;
+    margin-left: 5px;*/
+}
+td.principal{
+    font-weight: bold;
+}
+h1.red{
+    color: red;
+}
+table.red{
+    border-color: red;
+}
+table.red td{
+    border: 0px solid red;
+}
+table.green{
+    border-color: #92e07f;
+}
+table.green td{
+    border: 0px solid #92e07f;
+}
+table.blue{
+    border-color: #b2d1ff;
+}
+table.blue td{
+    border: 0px solid #b2d1ff;
+}
+table.simple{
+}
+table.simple td{
+    border: 0px solid #ccc;
+}
+#account-selector, .undernav, .important{
+    padding: 7px 12px;
+    background-color: #92e07f;
+    font-weight: bold;
+    color: #222;
+    /*margin-left:170px;*/
+    min-height: 15px
+}
+.undernav form{
+    /*    margin-left:170px;*/
+}
+.important{
+    text-align: right;
+}
+.list{
+    margin-top:5px;
+}
+.menuButton a.bank {
+    background: url(../img/bank.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.account {
+    background: url(../img/account.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.logout {
+    background: url(../img/logout.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.stats {
+    background: url(../img/stats.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.echeancy {
+    background: url(../img/echeancy.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.budget {
+    background: url(../img/coins.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.loan {
+    background: url(../img/loan.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.category {
+    background: url(../img/category.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.tiers {
+    background: url(../img/tiers.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.menuButton a.operation {
+    background: url(../img/operation.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+.special{
+    background-color: #48802C;
+    margin-left:5px;
+}
+.special a.operation{
+    color: white;
+}
+
+.menuButton a.personal {
+    background: url(../img/personal-information.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+#epsilon-footer{
+    bottom:0;
+    left:0;
+    position:fixed;
+    width:100%;
+    text-align: center;
+    background: #92e07f url(../img/tooltip.png) repeat top left;
+    height:21px;
+    padding-top: 3px;
+    font-style: italic;
+    font-weight: bold;
+    color: #eee;
+}
+
+.help{
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px solid #6f5522;
+    background-color: #f1d77f;
+    color: #6f5522;
+    font-weight: bold;
+    text-align: justify;
+}
+
+.register{
+    /*    max-height: 450px;
+        overflow: auto;*/
+    /*    padding-right: 5px;*/
+    /*float:left;*/
+}
+
+#month-bar {
+    text-align:center;
+    margin-top:5px;
+    /*    margin-right: 5px;*/
+}
+
+#category-selector div.yui-ac{
+    float:left;
+}
+#category-selector button{
+    margin-top:1px;
+}
+
+td.budget-OK {
+    font-weight: bold;
+    color:green;
+}
+
+td.budget-REACHED{
+    font-weight: bold;
+    color:orange;
+}
+
+td.budget-KO{
+    font-weight: bold;
+    color:red;
+    background-color:#000;
+}
+
+.account-informations{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+
+#search input{
+    background: transparent url(../img/details.png) no-repeat center right;
+}
+
+#search div.yui-ac{
+    float:left;
+}
+
+#search button{
+    background-color: #fcfcfc;
+    border: 1px solid #ccc;
+    font: 11px verdana, arial, helvetica, sans-serif;
+    margin-top: 2px;
+    margin-left: 2px;
+    padding-top:1px;
+    padding-bottom:1px;
+    /*    padding: 2px 4px;*/
+}
+
+div.setup {
+    margin: auto;
+    width: 600px;
+}
+
+#welcome{
+    background-color: #48802C;
+    border: 1px solid white;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+div.export{
+    width:auto;
+}
+
+#calcul{
+    position: fixed;
+/*    background:red;*/
+    bottom: 25px;
+    right: 2px;
+}
