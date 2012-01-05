@@ -52,11 +52,18 @@ class PersonController {
             
             def oldPass = person.password
             person.properties = params
+
+            // Set password if needed
+            person.password = params.pass ? params.pass : oldPass
+
+            /*
             if (params.pass){
-                person.password = springSecurityService.passwordEncoder(person.pass)
+                //person.password = springSecurityService.encodePassword(params.pass)
+                person.password = params.pass
             } else {
                 person.password = oldPass
-            }
+            }*/
+            
             person.merge()
             if (!person.hasErrors() && person.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Bank'), person.username])}"
