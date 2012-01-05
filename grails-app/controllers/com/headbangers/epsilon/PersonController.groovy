@@ -50,12 +50,12 @@ class PersonController {
         def person = Person.get(personId)
         if (person) {
             
-            def oldPass = person.passwd
+            def oldPass = person.password
             person.properties = params
             if (params.pass){
-                person.passwd = springSecurityService.passwordEncoder(person.pass)
+                person.password = springSecurityService.passwordEncoder(person.pass)
             } else {
-                person.passwd = oldPass
+                person.password = oldPass
             }
             person.merge()
             if (!person.hasErrors() && person.save(flush: true)) {
