@@ -110,8 +110,9 @@ class OperationController {
 
     private def reloadlist (type, params, operationInstance) {
         def accounts = genericService.loadUserObjects (springSecurityService.getCurrentUser(), Account.class)
-        def selectedAccount = accountService.selectAccount (springSecurityService.getCurrentUser(), params["account.id"])
-        render(view: "list", model: [tabToDisplay:type, operationInstance: operationInstance, accounts:accounts, selected:selectedAccount])
+        def selectedAccount = accountService.selectAccount (springSecurityService.getCurrentUser(), operationInstance.account.id)
+        def currentMonth = dateUtil.getMonth (null)
+        render(view: "list", model: [tabToDisplay:type, operationInstance: operationInstance, accounts:accounts, selected:selectedAccount, currentMonth:currentMonth])
     }
 
     def saveretrait = {

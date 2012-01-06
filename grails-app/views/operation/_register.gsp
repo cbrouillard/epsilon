@@ -2,10 +2,10 @@
 
 <div>
   <div id="month-bar" class="help">
-    <g:link controller="operation" action="list" params="[account:selected.id, byMonth:byMonth?byMonth-1:currentMonth-1]" title="Mois précédent">
+    <g:link controller="operation" action="list" params="[account:selected?.id, byMonth:byMonth?byMonth-1:currentMonth?-1:0]" title="Mois précédent">
       << Mois précédent ||
     </g:link><b>
-      <g:message code="month.${byMonth?byMonth:currentMonth}"/></b> || <g:link controller="operation" action="list" params="[account:selected.id, byMonth:byMonth?byMonth+1:currentMonth+1]" title="Mois suivant">
+      <g:message code="month.${byMonth?byMonth:currentMonth}"/></b> || <g:link controller="operation" action="list" params="[account:selected.id, byMonth:byMonth?byMonth+1:currentMonth?+1:0]" title="Mois suivant">
       Mois suivant >>
     </g:link>
   </div>
@@ -27,13 +27,13 @@
       <tbody>
 
       <g:if test="${byMonth}">
-        <g:set var="operations" value="${selected.lastOperationsByMonth(byMonth)}"/>
+        <g:set var="operations" value="${selected?.lastOperationsByMonth(byMonth?byMonth:0)}"/>
       </g:if>
       <g:else>
-        <g:set var="operations" value="${selected.lastOperationsByMonth(currentMonth)}"/>
+        <g:set var="operations" value="${selected?.lastOperationsByMonth(currentMonth?currentMonth:0)}"/>
       </g:else>
 
-      <g:set var="accountAmount" value="${selected.lastSnapshot.amount}" />
+      <g:set var="accountAmount" value="${selected?.lastSnapshot.amount}" />
       <g:each in="${operations}" status="i" var="operationInstance">
         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
           <td>${i+1}</td>
