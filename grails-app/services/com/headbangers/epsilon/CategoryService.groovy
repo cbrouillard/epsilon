@@ -44,8 +44,8 @@ class CategoryService {
         log.info "Category : ${forCategory.name}"
         while (monthStart <= monthEnd){
 
-            def firstDate = dateUtil.getFirstDayOfTheMonth (monthStart)
-            def lastDate = dateUtil.getLastDayOfTheMonth(monthStart)
+            def firstDate = dateUtil.formatDateForSQL(dateUtil.getFirstDayOfTheMonth (monthStart))
+            def lastDate = dateUtil.formatDateForSQL(dateUtil.getLastDayOfTheMonth(monthStart))
             log.info "Intervalle de dates : du ${firstDate} au ${lastDate}"
 
             def session = sessionFactory.getCurrentSession()
@@ -74,8 +74,8 @@ class CategoryService {
         log.info "Category : ${forCategory.name}"
         while (monthStart <= monthEnd){
 
-            def firstDate = dateUtil.getFirstDayOfTheMonth (monthStart)
-            def lastDate = dateUtil.getLastDayOfTheMonth(monthStart)
+            def firstDate = dateUtil.formatDateForSQL(dateUtil.getFirstDayOfTheMonth (monthStart))
+            def lastDate = dateUtil.formatDateForSQL(dateUtil.getLastDayOfTheMonth(monthStart))
             log.info "Intervalle de dates : du ${firstDate} au ${lastDate}"
 
             def session = sessionFactory.getCurrentSession()
