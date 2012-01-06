@@ -1,16 +1,37 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
 package com.headbangers.epsilon
 
+import grails.plugins.springsecurity.Secured
+
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class LoanController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def springSecurityService
+    def genericService
+    
     def index = {
         redirect(action: "list", params: params)
     }
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [loanInstanceList: Loan.list(params), loanInstanceTotal: Loan.count()]
+        
+        def person = springSecurityService.getCurrentUser()
+        def loans = genericService.loadUserObjects (person, Loan.class, params)
+        
+        [loanInstanceList: loans, loanInstanceTotal: loans.totalCount]
     }
 
     def create = {

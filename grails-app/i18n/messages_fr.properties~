@@ -138,6 +138,9 @@ budget.dateCreated.label = Créé le
 
 # LOAN
 loan.label = Prêt
+loan.name.label = Nom
+loan.type.label = Type
+loan.amount.label = Montant de départ
 
 ## PERSON
 person.label = Utilisateur

@@ -1,4 +1,15 @@
-
+<!-- 
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+-->
 <%@ page import="com.headbangers.epsilon.Loan" %>
 <html>
   <head>
@@ -22,15 +33,19 @@
         <thead>
           <tr>
 
+        <g:sortableColumn property="name" title="${message(code: 'loan.name.label', default: 'Name')}" />
+
         <g:sortableColumn property="type" title="${message(code: 'loan.type.label', default: 'Type')}" />
 
         <th><g:message code="loan.tiers.label" default="Tiers" /></th>
 
-        <th><g:message code="loan.owner.label" default="Owner" /></th>
-
         <g:sortableColumn property="amount" title="${message(code: 'loan.amount.label', default: 'Amount')}" />
+        <g:sortableColumn property="refundValue" title="${message(code: 'loan.refundValue.label', default: 'Refund')}" />
+        <g:sortableColumn property="refundValue" title="${message(code: 'loan.currentCalculatedAmountValue.label', default: 'Current')}" />
 
         <th><g:message code="loan.scheduled.label" default="Scheduled" /></th>
+
+        <th>Actions</th>
 
         </tr>
         </thead>
@@ -38,15 +53,15 @@
         <g:each in="${loanInstanceList}" status="i" var="loanInstance">
           <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-          <td>${fieldValue(bean: loanInstance, field: "type")}</td>
+            <td>${fieldValue(bean: loanInstance, field: "type")}</td>
 
-          <td>${fieldValue(bean: loanInstance, field: "tiers")}</td>
+            <td>${fieldValue(bean: loanInstance, field: "tiers")}</td>
 
-          <td>${fieldValue(bean: loanInstance, field: "owner")}</td>
+            <td>${fieldValue(bean: loanInstance, field: "amount")}</td>
 
-          <td>${fieldValue(bean: loanInstance, field: "amount")}</td>
+            <td>${fieldValue(bean: loanInstance, field: "scheduled")}</td>
 
-          <td>${fieldValue(bean: loanInstance, field: "scheduled")}</td>
+            <td></td>
 
           </tr>
         </g:each>
