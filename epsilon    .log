@@ -1,0 +1,48 @@
+CREATE USER SA PASSWORD "" ADMIN
+/*C1*/SET SCHEMA PUBLIC
+CONNECT USER SA
+DISCONNECT
+/*C2*/SET SCHEMA PUBLIC
+CONNECT USER SA
+create table account (id varchar(255) not null, version bigint not null, amount double not null, bank_id varchar(255) not null, date_created timestamp not null, date_opened timestamp not null, description longvarchar, last_updated timestamp, mobile_default bit not null, name varchar(255) not null, owner_id varchar(255) not null, type varchar(255) not null, primary key (id))
+create table bank (id varchar(255) not null, version bigint not null, date_created timestamp not null, description longvarchar, last_updated timestamp, name varchar(255) not null, owner_id varchar(255) not null, url varchar(255), primary key (id))
+create table budget (id varchar(255) not null, version bigint not null, active bit not null, amount double not null, date_created timestamp not null, last_updated timestamp, name varchar(255) not null, note longvarchar, owner_id varchar(255) not null, primary key (id))
+create table budget_category (budget_attached_categories_id varchar(255), category_id varchar(255))
+create table category (id varchar(255) not null, version bigint not null, color varchar(255) not null, date_created timestamp not null, description longvarchar, last_updated timestamp, name varchar(255) not null, owner_id varchar(255) not null, type varchar(255) not null, primary key (id))
+create table loan (id varchar(255) not null, version bigint not null, amount double not null, current_calculated_amount_value double, date_created timestamp not null, description longvarchar, last_updated timestamp not null, name varchar(255) not null, owner_id varchar(255) not null, refund_value double not null, scheduled_id varchar(255), tiers_id varchar(255) not null, type varchar(255) not null, primary key (id))
+create table operation (id varchar(255) not null, version bigint not null, account_id varchar(255) not null, amount double not null, category_id varchar(255) not null, date_application timestamp not null, date_created timestamp not null, last_updated timestamp, note longvarchar, owner_id varchar(255) not null, pointed bit not null, tiers_id varchar(255) not null, type varchar(255) not null, primary key (id))
+create table parameter (id varchar(255) not null, version bigint not null, date_created timestamp not null, last_updated timestamp, name varchar(255) not null, owner_id varchar(255) not null, value varchar(255), primary key (id))
+create table person (id varchar(255) not null, version bigint not null, account_expired bit not null, account_locked bit not null, email varchar(255) not null, email_show bit not null, enabled bit not null, mobile_token varchar(255), passwd varchar(255) not null, password_expired bit not null, user_real_name varchar(255) not null, username varchar(255) not null, primary key (id), unique (username), unique (mobile_token))
+create table role (id varchar(255) not null, version bigint not null, authority varchar(255) not null, description varchar(255) not null, primary key (id), unique (authority))
+create table role_people (role_id varchar(255) not null, person_id varchar(255) not null, primary key (role_id, person_id))
+create table scheduled (id varchar(255) not null, version bigint not null, account_from_id varchar(255) not null, account_to_id varchar(255), active bit not null, amount double not null, automatic bit not null, category_id varchar(255) not null, date_application timestamp not null, date_created timestamp not null, date_last_application timestamp, last_updated timestamp, name varchar(255) not null, note longvarchar, owner_id varchar(255) not null, tiers_id varchar(255) not null, type varchar(255) not null, primary key (id))
+create table scheduled_operation (scheduled_past_operations_id varchar(255), operation_id varchar(255))
+create table snapshot (id varchar(255) not null, version bigint not null, account_id varchar(255) not null, amount double not null, date_created timestamp not null, previous_id varchar(255), primary key (id))
+create table tiers (id varchar(255) not null, version bigint not null, date_created timestamp not null, description longvarchar, last_updated timestamp, name varchar(255) not null, owner_id varchar(255) not null, primary key (id))
+alter table account add constraint FKB9D38A2D1016C7CB foreign key (bank_id) references bank
+alter table account add constraint FKB9D38A2D4B4F68CD foreign key (owner_id) references person
+alter table bank add constraint FK2E063C4B4F68CD foreign key (owner_id) references person
+alter table budget add constraint FKADDAAF454B4F68CD foreign key (owner_id) references person
+alter table budget_category add constraint FK5BED9CB8D827080B foreign key (category_id) references category
+alter table budget_category add constraint FK5BED9CB8F09D7793 foreign key (budget_attached_categories_id) references budget
+alter table category add constraint FK302BCFE4B4F68CD foreign key (owner_id) references person
+alter table loan add constraint FK32C4F0D9DA56A9 foreign key (tiers_id) references tiers
+alter table loan add constraint FK32C4F0F1B059A9 foreign key (scheduled_id) references scheduled
+alter table loan add constraint FK32C4F04B4F68CD foreign key (owner_id) references person
+alter table operation add constraint FK631AD567D9DA56A9 foreign key (tiers_id) references tiers
+alter table operation add constraint FK631AD567D827080B foreign key (category_id) references category
+alter table operation add constraint FK631AD567CFED6169 foreign key (account_id) references account
+alter table operation add constraint FK631AD5674B4F68CD foreign key (owner_id) references person
+alter table parameter add constraint FK747EB3A94B4F68CD foreign key (owner_id) references person
+alter table role_people add constraint FK28B75E781B0864EB foreign key (person_id) references person
+alter table role_people add constraint FK28B75E787646E58B foreign key (role_id) references role
+alter table scheduled add constraint FKF66BC0ADE07EA9C9 foreign key (account_to_id) references account
+alter table scheduled add constraint FKF66BC0ADD9DA56A9 foreign key (tiers_id) references tiers
+alter table scheduled add constraint FKF66BC0AD93A33ABA foreign key (account_from_id) references account
+alter table scheduled add constraint FKF66BC0ADD827080B foreign key (category_id) references category
+alter table scheduled add constraint FKF66BC0AD4B4F68CD foreign key (owner_id) references person
+alter table scheduled_operation add constraint FK5BA45C553E72996F foreign key (scheduled_past_operations_id) references scheduled
+alter table scheduled_operation add constraint FK5BA45C558BC6769 foreign key (operation_id) references operation
+alter table snapshot add constraint FK10FAD5C44E823438 foreign key (previous_id) references snapshot
+alter table snapshot add constraint FK10FAD5C4CFED6169 foreign key (account_id) references account
+alter table tiers add constraint FK693EAD14B4F68CD foreign key (owner_id) references person

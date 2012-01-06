@@ -17,8 +17,8 @@ package com.headbangers.epsilon;
  */
 public enum LoanType {
 
-    ME_TO_US("+"),
-    US_TO_ME("-");
+    ME_TO_US("-"),
+    US_TO_ME("+");
 
     private LoanType(String sign) {
         this.sign = sign;

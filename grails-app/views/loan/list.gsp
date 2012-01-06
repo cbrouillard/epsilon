@@ -32,18 +32,15 @@
       <table>
         <thead>
           <tr>
-
         <g:sortableColumn property="name" title="${message(code: 'loan.name.label', default: 'Name')}" />
-
         <g:sortableColumn property="type" title="${message(code: 'loan.type.label', default: 'Type')}" />
 
         <th><g:message code="loan.tiers.label" default="Tiers" /></th>
 
         <g:sortableColumn property="amount" title="${message(code: 'loan.amount.label', default: 'Amount')}" />
+        <g:sortableColumn property="interest" title="${message(code: 'loan.interest.label', default: 'Interest')}" />
         <g:sortableColumn property="refundValue" title="${message(code: 'loan.refundValue.label', default: 'Refund')}" />
-        <g:sortableColumn property="refundValue" title="${message(code: 'loan.currentCalculatedAmountValue.label', default: 'Current')}" />
-
-        <th><g:message code="loan.scheduled.label" default="Scheduled" /></th>
+        <g:sortableColumn property="currentCalculatedAmountValue" title="${message(code: 'loan.currentCalculatedAmountValue.label', default: 'Current')}" />
 
         <th>Actions</th>
 
@@ -53,15 +50,22 @@
         <g:each in="${loanInstanceList}" status="i" var="loanInstance">
           <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-            <td>${fieldValue(bean: loanInstance, field: "type")}</td>
+            <td>${fieldValue(bean: loanInstance, field: "name")}</td>
 
-            <td>${fieldValue(bean: loanInstance, field: "tiers")}</td>
+            <td><g:message code="loan.type.value.${fieldValue(bean: loanInstance, field: "type")}" /></td>
 
-            <td>${fieldValue(bean: loanInstance, field: "amount")}</td>
+            <td>${fieldValue(bean: loanInstance, field: "tiers.name")}</td>
 
-            <td>${fieldValue(bean: loanInstance, field: "scheduled")}</td>
+            <td>${fieldValue(bean: loanInstance, field: "amount")} €</td>
+            <td>${loanInstance.interest?formatNumber(number:loanInstance.interest,format:"0.##") + " €":"Aucun/inconnu"}</td>
+            <td>${fieldValue(bean: loanInstance, field: "refundValue")} € / mois</td>
+            <td>${fieldValue(bean: loanInstance, field: "currentCalculatedAmountValue")} €</td>
 
-            <td></td>
+            <td class="center">
+          <g:link title="Afficher les détails" class="popup" action="show" id="${loanInstance.id}"><img src="${resource(dir:'img', file:'details.png')}"/></g:link>
+          <g:link title="Editer" action="edit" id="${loanInstance.id}"><img src="${resource(dir:'img', file:'edit.png')}"/></g:link>
+          <g:link title="Afficher l'échéance associée" class="popup" controller="scheduled" action="show" params="[id:loanInstance.scheduled.id]"><img src="${resource(dir:'img', file:'echeancy.png')}"/></g:link>
+          </td>
 
           </tr>
         </g:each>

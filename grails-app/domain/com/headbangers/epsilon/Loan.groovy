@@ -19,12 +19,10 @@ class Loan {
     Double amount
     Double refundValue
     Double currentCalculatedAmountValue
+    Double interest
     
     String name
     String description
-    
-    Date startDate
-    Date endDate
     
     Scheduled scheduled
     Person owner
@@ -36,11 +34,11 @@ class Loan {
         tiers nullable:false
         owner nullable:false
         amount nullable:false, blank:false
-        
+        name nullable:false, blank:false
+        currentCalculatedAmountValue nullable:true        
         scheduled nullable:true
-        startDate nullable:true, blank:false
-        endDate nullable:true, blank:false
         description nullable:true, blank:false, widget:'textarea'
+        interest nullable:true
     }
     
     static mapping = {

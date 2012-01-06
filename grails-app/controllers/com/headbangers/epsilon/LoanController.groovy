@@ -20,6 +20,9 @@ class LoanController {
 
     def springSecurityService
     def genericService
+    def categoryService
+    def tiersService
+    def dateUtil
     
     def index = {
         redirect(action: "list", params: params)
@@ -35,25 +38,51 @@ class LoanController {
     }
 
     def create = {
+        def person = springSecurityService.getCurrentUser()
         def loanInstance = new Loan()
         loanInstance.properties = params
-        return [loanInstance: loanInstance]
+        def scheduled = new Scheduled()
+        def accounts = genericService.loadUserObjects (person, Account.class)
+        return [loanInstance: loanInstance, scheduled:scheduled, accounts:accounts]
     }
 
     def save = {
+        def person = springSecurityService.getCurrentUser()
         def loanInstance = new Loan(params)
-        if (loanInstance.save(flush: true)) {
+        
+        params.remove ("type")
+        loanInstance.currentCalculatedAmountValue = loanInstance.amount + (loanInstance.interest ? loanInstance.interest : 0)
+        
+        loanInstance.tiers = tiersService.findOrCreateTiers (person, params["tiers.name"])
+        
+        def scheduled = new Scheduled(params)
+        scheduled.automatic = true
+        scheduled.amount = loanInstance.refundValue
+        scheduled.type = loanInstance.type.equals (LoanType.ME_TO_US) ? OperationType.RETRAIT : OperationType.DEPOT
+        scheduled.name = "Prêt - ${loanInstance.name}"
+        scheduled.tiers = loanInstance.tiers
+        scheduled.category = categoryService.findOrCreateCategory (person, message (code:"loan.label"), scheduled.type.equals(OperationType.RETRAIT)?CategoryType.DEPENSE:CategoryType.REVENU)
+        scheduled.owner = person
+        scheduled.accountFrom = Account.get(params["accountFrom.id"])
+        
+        loanInstance.owner = person
+        loanInstance.scheduled = scheduled
+        
+        scheduled.save(flush:true)
+        if (loanInstance.save(flush:true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'loan.label', default: 'Loan'), loanInstance.id])}"
-            redirect(action: "show", id: loanInstance.id)
+            redirect(action: "list")
         }
         else {
-            render(view: "create", model: [loanInstance: loanInstance])
+            def accounts = genericService.loadUserObjects (person, Account.class)
+            render(view: "create", model: [loanInstance: loanInstance, scheduled:scheduled, accounts:accounts])
         }
     }
 
     def show = {
+        def person = springSecurityService.getCurrentUser()
         def loanInstance = Loan.get(params.id)
-        if (!loanInstance) {
+        if (!loanInstance && loanInstance.owner.equals(person)) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'loan.label', default: 'Loan'), params.id])}"
             redirect(action: "list")
         }
@@ -63,19 +92,22 @@ class LoanController {
     }
 
     def edit = {
+        def person = springSecurityService.getCurrentUser()
         def loanInstance = Loan.get(params.id)
-        if (!loanInstance) {
+        if (!loanInstance && loanInstance.owner.equals(person)) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'loan.label', default: 'Loan'), params.id])}"
             redirect(action: "list")
         }
         else {
-            return [loanInstance: loanInstance]
+            def accounts = genericService.loadUserObjects (person, Account.class)
+            return [loanInstance: loanInstance, accounts:accounts]
         }
     }
 
     def update = {
+        def person = springSecurityService.getCurrentUser()
         def loanInstance = Loan.get(params.id)
-        if (loanInstance) {
+        if (loanInstance && loanInstance.owner.equals(person)) {
             if (params.version) {
                 def version = params.version.toLong()
                 if (loanInstance.version > version) {
@@ -86,6 +118,7 @@ class LoanController {
                 }
             }
             loanInstance.properties = params
+            loanInstance.scheduled.dateApplication = dateUtil.parseFromView (params.dateApplication)
             if (!loanInstance.hasErrors() && loanInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loan.label', default: 'Loan'), loanInstance.id])}"
                 redirect(action: "show", id: loanInstance.id)
@@ -101,9 +134,11 @@ class LoanController {
     }
 
     def delete = {
+        def person = springSecurityService.getCurrentUser()
         def loanInstance = Loan.get(params.id)
-        if (loanInstance) {
+        if (loanInstance && loanInstance.owner.equals(person)) {
             try {
+                loanInstance.scheduled.delete()
                 loanInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'loan.label', default: 'Loan'), params.id])}"
                 redirect(action: "list")

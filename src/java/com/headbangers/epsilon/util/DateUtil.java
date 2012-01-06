@@ -11,6 +11,7 @@
 
 package com.headbangers.epsilon.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +27,14 @@ public class DateUtil {
 
     public String formatDateForSQL(Date date) {
         return sdfSQL.format(date);
+    }
+    
+    public Date parseFromView (String string){
+        try {
+            return sdf.parse(string);
+        } catch (ParseException ex) {
+            return getTodayMorning();
+        }
     }
     
     public Date getTodayMorning() {
