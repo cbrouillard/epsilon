@@ -11,9 +11,14 @@ import java.util.Date;
 public class DateUtil {
 
     static SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+    static SimpleDateFormat sdfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     public static String format (Date date){
         return sdf.format(date);
+    }
+
+    public String formatDateForSQL(Date date) {
+        return sdfSQL.format(date);
     }
     
     public Date getTodayMorning() {

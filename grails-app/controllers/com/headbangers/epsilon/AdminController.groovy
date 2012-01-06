@@ -34,7 +34,8 @@ class AdminController {
 
         // encode passwd
         if (params.pass){
-            person.passwd = springSecurityService.passwordEncoder(person.pass)
+            //person.passwd = springSecurityService.passwordEncoder(person.pass)
+            person.password = params.pass
         }
         
         if (person.save(flush: true)) {
@@ -77,7 +78,8 @@ class AdminController {
             }
             person.properties = params
             if (params.pass){
-                person.passwd = springSecurityService.passwordEncoder(person.pass)
+                //person.password = springSecurityService.passwordEncoder(person.pass)
+                person.password = params.pass
             }
             if (!person.hasErrors() && person.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Bank'), person.username])}"
