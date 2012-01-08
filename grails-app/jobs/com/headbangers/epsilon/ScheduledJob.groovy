@@ -40,19 +40,31 @@ class ScheduledJob {
                 between("dateApplication", dateUtil.getTodayMorning(), dateUtil.getTodayEvening())                
             }
 
-            scheduleds.each { scheduled->
-                log.debug ("Treating this scheduled : ${scheduled.name}")
-                scheduledService.buildOperationFromScheduled(scheduled)
+            scheduleds.each { zeScheduled->
+                log.debug ("Treating this scheduled : ${zeScheduled.name}")
+                scheduledService.buildOperationFromScheduled(zeScheduled)
 
                 // let's go for the next month
-                scheduled.dateApplication = dateUtil.getTodayPlusOneMonth()
+                zeScheduled.dateApplication = dateUtil.getTodayPlusOneMonth()
                     
-                if (scheduled.dateLastApplication && scheduled.dateApplication >= scheduled.dateLastApplication){
-                    log.debug ("This scheduled is no more active : ${scheduled.name}")
-                    scheduled.active = false
+                if (zeScheduled.dateLastApplication && zeScheduled.dateApplication >= zeScheduled.dateLastApplication){
+                    log.debug ("This scheduled is no more active : ${zeScheduled.name}")
+                    zeScheduled.active = false
                 }
                     
-                scheduled.save(flush:true)
+                zeScheduled.save(flush:true)
+                
+                // if scheduled is part of loan, then update the loan
+                def loan = Loan.createCriteria().get {
+                    scheduled{eq ("id", zeScheduled.id)}
+                }
+                
+                if (loan){
+                    log.debug ("This scheduled is part of a loan. We have to update it too.")
+                    loan.currentCalculatedAmountValue -= loan.refundValue
+                    loan.nbPayedMonth += 1
+                    loan.save(flush:true)
+                }
             }
 
             if (scheduleds){

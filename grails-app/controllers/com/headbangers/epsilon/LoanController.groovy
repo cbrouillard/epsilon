@@ -68,6 +68,10 @@ class LoanController {
         loanInstance.owner = person
         loanInstance.scheduled = scheduled
         
+        if (scheduled.dateApplication && loanInstance.amount && loanInstance.refundValue){
+            loanInstance.calculatedEndDate = caculateLoanEndDate (loanInstance.currentCalculatedAmountValue, scheduled.dateApplication, loanInstance.refundValue)
+        }
+        
         scheduled.save(flush:true)
         if (loanInstance.save(flush:true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'loan.label', default: 'Loan'), loanInstance.id])}"
@@ -118,10 +122,20 @@ class LoanController {
                 }
             }
             loanInstance.properties = params
+            loanInstance.tiers = tiersService.findOrCreateTiers (person, params["tiers.name"])
+            
             loanInstance.scheduled.dateApplication = dateUtil.parseFromView (params.dateApplication)
+            loanInstance.scheduled.tiers = loanInstance.tiers
+            loanInstance.scheduled.accountFrom = Account.get(params["accountFrom.id"])
+            loanInstance.scheduled.amount = loanInstance.refundValue
+            
+            if (loanInstance.scheduled.dateApplication && loanInstance.amount && loanInstance.refundValue){
+                loanInstance.calculatedEndDate = caculateLoanEndDate (loanInstance.currentCalculatedAmountValue, loanInstance.scheduled.dateApplication, loanInstance.refundValue)
+            }
+            
             if (!loanInstance.hasErrors() && loanInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loan.label', default: 'Loan'), loanInstance.id])}"
-                redirect(action: "show", id: loanInstance.id)
+                redirect(action: "list")
             }
             else {
                 render(view: "edit", model: [loanInstance: loanInstance])
@@ -152,5 +166,12 @@ class LoanController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'loan.label', default: 'Loan'), params.id])}"
             redirect(action: "list")
         }
+    }
+    
+    private Date caculateLoanEndDate (totalAmount, firstApplicationDate, refundByMonth){
+        double nbMonth = totalAmount / refundByMonth
+        int realNbMonth = java.lang.Math.round (nbMonth)
+        
+        return dateUtil.addMonthToDate (firstApplicationDate, realNbMonth)
     }
 }

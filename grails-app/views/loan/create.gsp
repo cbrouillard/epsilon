@@ -30,6 +30,16 @@
   </div>
   <div class="body">
     <h1>Créer un nouveau prêt</h1>
+    
+    <div class="help">
+      Saisissez les détails de votre prêt.<br/>
+      Epsilon sait gérer deux sens:
+      <ul>
+        <li>vous êtes l'emprunteur : sélectionnez l'onglet "Je doit de l'argent"</li>
+        <li>vous êtes le prêteur : sélectionnez l'onglet "On me doit de l'argent"</li>
+      </ul>
+    </div>
+    
     <g:if test="${flash.message}">
       <div class="message">${flash.message}</div>
     </g:if>

@@ -37,6 +37,13 @@ public class DateUtil {
         }
     }
     
+    public Date addMonthToDate (Date date, int nb){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, nb);
+        return calendar.getTime();
+    }
+    
     public Date getTodayMorning() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);

@@ -29,6 +29,9 @@ class Loan {
     Tiers tiers
     LoanType type
     
+    Date calculatedEndDate
+    int nbPayedMonth = 0
+    
     static constraints = {
         type nullable:false, blank:false
         tiers nullable:false
@@ -39,6 +42,7 @@ class Loan {
         scheduled nullable:true
         description nullable:true, blank:false, widget:'textarea'
         interest nullable:true
+        calculatedEndDate nullable:false
     }
     
     static mapping = {

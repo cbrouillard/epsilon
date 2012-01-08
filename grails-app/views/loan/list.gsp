@@ -25,6 +25,12 @@
   </div>
   <div class="body">
     <h1>Liste des prêts</h1>
+    
+    <div class="help">
+      Voici la liste des prêts que vous avez contracté.<br/><br/>
+      Chaque prêt est automatiquement associé à une échéance qui est traitée mensuellement et de façon automatique.<br/>
+    </div>
+    
     <g:if test="${flash.message}">
       <div class="message">${flash.message}</div>
     </g:if>
@@ -42,6 +48,8 @@
         <g:sortableColumn property="refundValue" title="${message(code: 'loan.refundValue.label', default: 'Refund')}" />
         <g:sortableColumn property="currentCalculatedAmountValue" title="${message(code: 'loan.currentCalculatedAmountValue.label', default: 'Current')}" />
 
+        <g:sortableColumn property="calculatedEndDate" title="${message(code: 'loan.calculatedEndDate.label', default: 'End date')}"/>
+        
         <th>Actions</th>
 
         </tr>
@@ -60,6 +68,8 @@
             <td>${loanInstance.interest?formatNumber(number:loanInstance.interest,format:"0.##") + " €":"Aucun/inconnu"}</td>
             <td>${fieldValue(bean: loanInstance, field: "refundValue")} € / mois</td>
             <td>${fieldValue(bean: loanInstance, field: "currentCalculatedAmountValue")} €</td>
+            
+            <td><g:formatDate date="${loanInstance.calculatedEndDate}" /></td>
 
             <td class="center">
           <g:link title="Afficher les détails" class="popup" action="show" id="${loanInstance.id}"><img src="${resource(dir:'img', file:'details.png')}"/></g:link>
