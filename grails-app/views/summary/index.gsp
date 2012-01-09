@@ -27,6 +27,9 @@
       <div class="accounts list">
         <g:if test="${accounts}">
           <h1>Vos comptes</h1>
+          
+          <div class="help">Bienvenue sur Epsilon !</div>
+          
           <table class="simple">
             <tbody>
             <g:set var="accountAmount" value="${0D}" />
@@ -114,7 +117,7 @@
       <g:if test="${lates}">
         <div class="scheduled list">
           <h1 class="red">Paiements en retard</h1>
-          <g:render template="scheduledtable" model="[cssClass:'red', scheduleds:lates]"/>
+          <g:render template="scheduledtable" model="[cssClass:'red', scheduleds:lates, forceActionDisplay:true]"/>
         </div>
       </g:if>
 

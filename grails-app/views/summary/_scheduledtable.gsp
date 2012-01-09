@@ -22,7 +22,7 @@
           <img src="${resource(dir:'img', file:'time.png')}" alt="Automatique"/>
         </g:if>
 
-    <g:if test="${!filterAutomatic && !scheduled.automatic}">
+    <g:if test="${(!filterAutomatic && !scheduled.automatic) || (forceActionDisplay)}">
     <g:link controller="scheduled" action="apply" id="${scheduled.id}" title="Appliquer l'échéance">
       <img src="${resource(dir:'img', file:'enter.png')}"/>
     </g:link>
