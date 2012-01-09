@@ -28,7 +28,7 @@
         </td>
         <td valign="top" class="value mandatory ">
 
-        <g:select optionValue="name" name="account.to" from="${accounts}" optionKey="id"/>
+        <g:select optionValue="${{it.name+' = '+formatNumber('number':it.getSold(), 'format':'0.##')+'€'}}" name="account.to" from="${accounts}" optionKey="id"/>
 
       </td>
 

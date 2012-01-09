@@ -25,6 +25,7 @@ class OperationController {
     def snapshotService
     def dateUtil
     def exportService
+    def bayesClassifierService
 
     def index = {
         redirect(action: "list", params: params)
@@ -112,6 +113,8 @@ class OperationController {
                 log.error ("We have to sync the snapshot")
                 snapshotService.sync (operationInstance.account, operationInstance.dateApplication)
             }
+            
+            bayesClassifierService.train (params["tiers.name"], params["category.name"]);
 
             return true
         }
@@ -280,5 +283,18 @@ class OperationController {
 
         render (template:'pointactions', model:[operation:operation])
     }
+      
+    def guessCategory = {
+        def tiers = Tiers.get(params.id)
+        if (tiers){
+            log.debug "Tiers = ${tiers.name}"
+            def bayes = bayesClassifierService.classifyText(tiers.name)
             
+            log.debug "Guessed = '${bayes}'"
+            render bayes as String
+        }
+        
+        render "" as String
+    }
+    
 }

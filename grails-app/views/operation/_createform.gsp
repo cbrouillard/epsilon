@@ -28,8 +28,8 @@
         </td>
         <td valign="top" class="mandatory value ${hasErrors(bean: operationInstance, field: 'tiers', 'errors')}">
 
-        <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}" value="${operationInstance?.tiers?.name}"/>
-
+      <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}" value="${operationInstance?.tiers?.name}" 
+                           onItemSelect="tryToGuessCategoryWithTiersId(id, 'category${type}');" />
       </td>
 
       <td valign="top" class="name">
@@ -41,7 +41,7 @@
 
       <jq:jquery>
         jQuery("#dateApplication${type}").datePicker({clickInput:true, startDate:'01/01/1996'})
-          .val(new Date().asString()).trigger('change');
+        .val(new Date().asString()).trigger('change');
       </jq:jquery>
 
       </tr>
@@ -68,7 +68,7 @@
           <label for="note"><g:message code="operation.note.label" default="Note" /></label>
         </td>
         <td valign="top" class="value ${hasErrors(bean: operationInstance, field: 'note', 'errors')}">
-          <g:textArea name="note" cols="40" rows="50" value="${operationInstance?.note}"/>
+      <g:textArea name="note" cols="40" rows="50" value="${operationInstance?.note}"/>
       </td>
 
       <td valign="top" class="name">
