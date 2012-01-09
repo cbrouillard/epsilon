@@ -114,8 +114,11 @@ class OperationController {
                 snapshotService.sync (operationInstance.account, operationInstance.dateApplication)
             }
             
-            bayesClassifierService.train (params["tiers.name"], params["category.name"]);
-
+            def bayes = bayesClassifierService.classifyText(params["tiers.name"])
+            if (!bayes.equals("") && !bayes.equals(params["category.name"])) {
+                bayesClassifierService.train (params["tiers.name"], params["category.name"]);
+            }
+            
             return true
         }
 
