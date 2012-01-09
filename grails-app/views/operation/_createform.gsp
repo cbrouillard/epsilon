@@ -29,7 +29,13 @@
         <td valign="top" class="mandatory value ${hasErrors(bean: operationInstance, field: 'tiers', 'errors')}">
 
       <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}" value="${operationInstance?.tiers?.name}" 
-                           onItemSelect="tryToGuessCategoryWithTiersId(id, 'category${type}');" />
+                           />
+
+      <jq:jquery>
+        jQuery('#tiers${type}').focusout (function(){
+        tryToGuessCategoryWithTiersId(jQuery('#tiers${type}').val(), 'category${type}');        
+        });
+      </jq:jquery>
       </td>
 
       <td valign="top" class="name">

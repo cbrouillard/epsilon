@@ -285,16 +285,10 @@ class OperationController {
     }
       
     def guessCategory = {
-        def tiers = Tiers.get(params.id)
-        if (tiers){
-            log.debug "Tiers = ${tiers.name}"
-            def bayes = bayesClassifierService.classifyText(tiers.name)
+        def bayes = bayesClassifierService.classifyText(params.id)
             
-            log.debug "Guessed = '${bayes}'"
-            render bayes as String
-        }
-        
-        render "" as String
+        log.debug "Guessed = '${bayes}'"
+        render bayes as String
     }
     
 }
