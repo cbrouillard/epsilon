@@ -19,6 +19,7 @@ class Parameter {
 
     String name
     String value
+    String type
 
     Person owner
 

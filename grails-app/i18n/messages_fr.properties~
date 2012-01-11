@@ -41,7 +41,7 @@ default.button.create.label=Créer
 default.button.edit.label=Editer
 default.button.update.label=Mis à jour
 default.button.delete.label=Effacer
-default.button.delete.confirm.message =  Attention ! La suppression d\'un objet est définitive et irréversible
+default.button.delete.confirm.message =  Avant de continuer, merci de vérifier votre action. Cliquez sur "Oui" afin de confirmer cette suppression.
 # Attention ! La suppression d\'un objet est définitive et irréversible. Avant de continuer, merci de vérifier votre action. Cliquez sur "Oui" afin de confirmer cette suppression.
 
 # Data binding errors. Use "typeMismatch.$className.$propertyName to customize (eg typeMismatch.Book.author)
@@ -153,6 +153,7 @@ loan.scheduled.label = Echéance associée
 loan.description.label = Description
 loan.dateCreated.label = Créé le
 loan.lastUpdated.label = Dernière mise à jour le
+loan.calculatedEndDate.label = Date de fin calculée
 
 ## PERSON
 person.label = Utilisateur

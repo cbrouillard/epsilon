@@ -14,6 +14,8 @@ package com.headbangers.epsilon
 class Person {
     String id
     transient springSecurityService
+    
+    static hasMany = [parameters:Parameter]
 
     String username
     String password
@@ -54,7 +56,7 @@ class Person {
             encodePassword()
         }
     }
-
+    
     protected void encodePassword() {
         password = springSecurityService.encodePassword(password)
     }

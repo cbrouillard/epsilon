@@ -15,10 +15,24 @@ import grails.plugins.springsecurity.Secured
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonController {
 
-    static allowedMethods = [edit: "POST", update: "POST"]
+    static allowedMethods = [edit: "POST", update: "POST", parameterize:"POST"]
     
     def springSecurityService
+    def parameterService
 
+    def infos = {
+        
+        def person = springSecurityService.getCurrentUser()
+        
+        def parameters = new HashMap<String, String>()
+        person.parameters.each{parameter -> 
+            parameters.put (parameter.name, parameter.value)
+        }
+        
+        [person : person, parameters:parameters]
+        
+    }
+    
     def activateMobile = {
 
         def person = springSecurityService.getCurrentUser()
@@ -43,13 +57,6 @@ class PersonController {
         render (template:'/summary/mobile', model:[person:dbPerson])
     }
     
-    def infos = {
-        
-        def person = springSecurityService.getCurrentUser()
-        [person : person]
-        
-    }
-    
     def edit = {
         def person = springSecurityService.getCurrentUser()
         [person : person]
@@ -66,14 +73,6 @@ class PersonController {
 
             // Set password if needed
             person.password = params.pass ? params.pass : oldPass
-
-            /*
-            if (params.pass){
-                //person.password = springSecurityService.encodePassword(params.pass)
-                person.password = params.pass
-            } else {
-                person.password = oldPass
-            }*/
             
             person.merge()
             if (!person.hasErrors() && person.save(flush: true)) {
@@ -88,6 +87,16 @@ class PersonController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Bank'), params.id])}"
             redirect(controller:'summary')
         }
+        
+    }
+    
+    def parameterize = {
+        log.error "test"
+        def person = springSecurityService.getCurrentUser()
+        
+        parameterService.setBayesianFilterParameter (person, params.bayesian_filter?true:false)
+        
+        redirect (action:'infos')
         
     }
 }

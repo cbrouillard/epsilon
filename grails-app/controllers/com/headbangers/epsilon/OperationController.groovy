@@ -26,6 +26,8 @@ class OperationController {
     def dateUtil
     def exportService
     def bayesClassifierService
+    
+    def parameterService
 
     def index = {
         redirect(action: "list", params: params)
@@ -90,7 +92,7 @@ class OperationController {
         def month = params["byMonth"]?params.int('byMonth'):0 // TODO 0 pas correct car 0 = Janvier
         def currentMonth = dateUtil.getMonth (null)
 
-        [accounts:accounts, selected:selectedAccount, byMonth:month, currentMonth:currentMonth]
+        [accounts:accounts, selected:selectedAccount, byMonth:month, currentMonth:currentMonth, parameterBayesianFilter:parameterService.getBayesianFilterParameter (person)]
     }
 
     private def save (Operation operationInstance, CategoryType type, params) {
