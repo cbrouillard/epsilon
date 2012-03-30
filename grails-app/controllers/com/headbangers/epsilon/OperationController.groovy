@@ -116,10 +116,16 @@ class OperationController {
                 snapshotService.sync (operationInstance.account, operationInstance.dateApplication)
             }
             
-            def bayes = bayesClassifierService.classifyText(params["tiers.name"])
-            if (!bayes.equals("") && !bayes.equals(params["category.name"])) {
-                bayesClassifierService.train (params["tiers.name"], params["category.name"]);
-            }
+            //            def bayes = ""
+            //            try{
+            //                bayes = bayesClassifierService.classifyText(params["tiers.name"])
+            //            } catch (Throwable all){
+            //                log.error "Impossible de classifier ..."
+            //            }
+            //            
+            //            if (!bayes.equals(params["category.name"])) {
+            //                bayesClassifierService.train (params["tiers.name"], params["category.name"]);
+            //            }
             
             return true
         }
