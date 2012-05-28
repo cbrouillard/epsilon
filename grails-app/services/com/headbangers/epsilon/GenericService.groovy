@@ -13,8 +13,6 @@ package com.headbangers.epsilon
 
 class GenericService {
 
-    boolean transactional = true
-
     def loadUserObjects(person, object) {
         return object.createCriteria().list(sort:'dateCreated', order:'desc'){
             owner {eq ("id", person.id)}

@@ -2,8 +2,6 @@ package com.headbangers.epsilon
 
 class ParameterService {
 
-    boolean transactional = true
-    
     private Parameter findParameter (Person person, String name) {
         def parameterToReturn = null
         person.parameters.each{ zeParameter ->

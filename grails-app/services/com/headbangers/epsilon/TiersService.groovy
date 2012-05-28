@@ -13,8 +13,6 @@ package com.headbangers.epsilon
 
 class TiersService {
 
-    boolean transactional = true
-
     def findAllTiers (person){
         return Tiers.findAllByOwner (person)
     }

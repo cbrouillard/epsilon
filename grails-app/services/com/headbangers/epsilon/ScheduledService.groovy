@@ -13,8 +13,6 @@ package com.headbangers.epsilon
 
 class ScheduledService {
 
-    boolean transactional = true
-
     def dateUtil
 
     def findLates (person){

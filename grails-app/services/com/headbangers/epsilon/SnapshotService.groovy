@@ -13,8 +13,6 @@ package com.headbangers.epsilon
 
 class SnapshotService {
 
-    boolean transactional = true
-
     def dateUtil
 
     def sync(accountToSync, date) {

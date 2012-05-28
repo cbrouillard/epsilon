@@ -13,8 +13,6 @@ package com.headbangers.epsilon
 
 class OperationService {
 
-    boolean transactional = true
-
     def dateUtil
 
     def findAllDepenseForThisMonth(person) {

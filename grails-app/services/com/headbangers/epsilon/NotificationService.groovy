@@ -14,8 +14,6 @@ import org.springframework.mail.MailSendException
 
 class NotificationService {
 
-    boolean transactional = true
-
     def mailService
 
     def sendScheduledDoneMail(person, scheduledList) {

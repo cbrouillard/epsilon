@@ -13,7 +13,6 @@ package com.headbangers.epsilon
 
 class CategoryService {
 
-    boolean transactional = true
     def sessionFactory
     def dateUtil
 

@@ -13,8 +13,6 @@ package com.headbangers.epsilon
 
 class PersonService {
 
-    static transactional = true
-
     def springSecurityService
 
     def findUserByToken(String tokenId) {

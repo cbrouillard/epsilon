@@ -146,20 +146,20 @@ class BootStrap {
         
         //        accountService.rebuildAllSnapshots()
         
-        def persons = Person.list()
-        persons.each { person -> 
-        
-            def parameters = new HashMap<String, String>()
-            person.parameters.each{parameter -> 
-                parameters.put (parameter.name, parameter.value)
-            }
-            
-            if (!parameters.bayesian_filter){
-                Parameter bayesianFilter = new Parameter (name:"bayesian_filter", value:"true", owner:person, type:"boolean")
-                bayesianFilter.save(flush:true)
-            }
-            
-        }
+//        def persons = Person.list()
+//        persons.each { person -> 
+//        
+//            def parameters = new HashMap<String, String>()
+//            person.parameters.each{parameter -> 
+//                parameters.put (parameter.name, parameter.value)
+//            }
+//            
+//            if (!parameters.bayesian_filter){
+//                Parameter bayesianFilter = new Parameter (name:"bayesian_filter", value:"true", owner:person, type:"boolean")
+//                bayesianFilter.save(flush:true)
+//            }
+//            
+//        }
         
         
     }

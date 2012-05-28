@@ -23,8 +23,6 @@ import org.springframework.context.MessageSource;
 
 class ChartService {
 
-    static transactional = true
-
     def dateUtil
     MessageSource messageSource
 

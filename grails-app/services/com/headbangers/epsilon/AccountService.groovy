@@ -13,8 +13,6 @@ package com.headbangers.epsilon
 
 class AccountService {
 
-    boolean transactional = true
-
     def dateUtil
     def operationService
 

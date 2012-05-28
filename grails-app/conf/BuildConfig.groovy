@@ -36,9 +36,25 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
-        runtime 'mysql:mysql-connector-java:5.1.5'
+        //runtime 'mysql:mysql-connector-java:5.1.5'
         runtime 'hsqldb:hsqldb:1.8.0.10'
         runtime 'postgresql:postgresql:9.1-901.jdbc4'
     }
 
+    plugins {
+        runtime ":hibernate:$grailsVersion"
+        runtime ":jquery:1.7.1"
+        runtime ":resources:1.1.5"
+
+        build ":tomcat:$grailsVersion"
+        
+        compile ":richui:0.8"
+        compile ":ofchart:0.6.3"
+        compile ":export:1.3"
+        compile ":quartz:1.0-RC2"
+        compile ":bayes:0.4"
+        compile ":multi-select:0.2"
+        compile ":mail:1.0"
+    }
+    
 }
