@@ -8,4 +8,3 @@ Mini guide d'installation:
 6 - Pour compiler : grails prod war
 7 - Placer le war epsilon-VERSION.war dans Tomcat
 
-TEST
