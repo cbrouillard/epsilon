@@ -18,27 +18,31 @@
     <link rel="stylesheet" href="${resource(dir:'css',file:'datePicker.css')}" />
     <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
 
-  <g:javascript library="jquery" />
-  <g:javascript library="date"/>
-  <g:javascript library="jquery.datePicker"/>
-  <g:javascript library="calculator/jquery.calculator"/>
-  <!--<g:javascript library="qtip/jquery.qtip-1.0.0-rc3.min"/>-->
+  <script src="${resource(dir:'/js/jquery',file:'jquery-1.4.2-min.js')}" type="text/javascript" library="jquery"></script>
+  
+  <script src="${resource(dir:'/js',file:'date.js')}" ></script>
+  <script src="${resource(dir:'/js',file:'jquery.datePicker.js')}" ></script>
+  <script src="${resource(dir:'/js/calculator',file:'jquery.calculator.js')}" ></script>
 
-  <g:javascript library="fancybox/jquery.fancybox-1.3.1"/>
+  <script src="${resource(dir:'/js/fancybox',file:'jquery.fancybox-1.3.1.js')}" ></script>
   <link rel="stylesheet" href="${resource(dir:'/js/fancybox',file:'jquery.fancybox-1.3.1.css')}" />
 
   <export:resource />
-
+  
   <script>
     jQuery.noConflict();
   </script>
-  <g:javascript library="password"/>
+  <script src="${resource(dir:'/js',file:'password.js')}" ></script>
 
-  <g:javascript library="prototype" />
-  <g:javascript library="application" />
+  <script src="${resource(dir:'/js/prototype',file:'prototype.js')}" ></script>
+  <script src="${resource(dir:'/js',file:'application.js')}" ></script>
 
-  <g:layoutHead />
   <ofchart:resources/>
+  <g:layoutHead />
+
+  <r:layoutResources />
+
+  
 </head>
 <body class="pig">
 

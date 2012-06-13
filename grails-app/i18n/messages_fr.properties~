@@ -174,6 +174,10 @@ tiers.lastUpdated.label = Mis à jour le
 setup.button.install.label = Terminer l'installation
 setup.adminpass.label= Mot de passe administrateur
 
+## PARAMETER
+parameter.bayesian.label = Activation du filtre Bayesian
+parameter.bayesian.description = Le filtre Bayesian permet de deviner automatiquement certaines données lors de la saisie d'une opération.<br/>Activez le si vous souhaitez qu'Epsilon tente de deviner ces données.
+
 
 ## SECURITY
 springSecurity.errors.login.expired = Désolé, votre compte a été désactivé
@@ -189,3 +193,12 @@ springSecurity.login.password.label = Mot de passe
 springSecurity.login.remember.me.label = Automatique
 springSecurity.denied.title = Epsilon - Accès refusé
 springSecurity.denied.message = Désolé, vous n'êtes pas autorisé à afficher cette page.
+
+## WISH
+wish.name.label = Nom
+wish.description.label = Description
+wish.webShopUrl.label = Lien boutique
+wish.price.label = Prix
+wish.previsionBuy.label = Date prévisionnelle d'achat
+wish.boughtDate.label = Date d'achat
+wish.bought.label = Acheté

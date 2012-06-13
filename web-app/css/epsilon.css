@@ -158,6 +158,11 @@ table.simple td{
     color: #333;
     padding-left: 25px;
 }
+.menuButton a.wish {
+    background: url(../img/gift.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
 .special{
     background-color: #48802C;
     margin-left:5px;

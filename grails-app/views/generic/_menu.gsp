@@ -34,6 +34,7 @@
 <g:if test="${controllerName == 'category'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="category" controller="category">Catégories</g:link></div>
 <g:if test="${controllerName == 'tiers'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="tiers" controller="tiers">Tiers</g:link></div>
 <g:if test="${controllerName == 'operation'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="operation" controller="operation">Registres</g:link></div>
+<g:if test="${controllerName == 'wish'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="wish" controller="wish">Futurs achats</g:link></div>
 <g:if test="${controllerName == 'stats'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="stats" controller="stats">Statistiques</g:link></div>
 
 <g:if test="${controllerName == 'person'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="personal" controller="person" action="infos">Vos informations</g:link></div>
