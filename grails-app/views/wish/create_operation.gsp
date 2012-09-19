@@ -72,7 +72,7 @@
         <label for="amount"><g:message code="operation.amount.label" default="Amount" /></label>
       </td>
       <td valign="top" class="mandatory  value ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
-      <g:textField name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" />
+      <g:textField name="amount" value="${fieldValue(bean: wishInstance, field: 'amount')}" />
       </td>
       </tr>
 
