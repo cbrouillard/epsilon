@@ -20,7 +20,11 @@ class WishController {
     }
 
     def create() {
-        [wishInstance: new Wish(params)]
+        
+        def person = springSecurityService.getCurrentUser()
+        def accounts = Account.findAllByOwner (person)
+        
+        [wishInstance: new Wish(params), accounts:accounts]
     }
 
     def save() {
@@ -31,7 +35,8 @@ class WishController {
         wishInstance.owner = person
         
         if (!wishInstance.save(flush: true)) {
-            render(view: "create", model: [wishInstance: wishInstance])
+            def accounts = Account.findAllByOwner (person)
+            render(view: "create", model: [wishInstance: wishInstance, accounts:accounts])
             return
         }
 
@@ -39,9 +44,24 @@ class WishController {
         redirect(action: "list")
     }
 
+    def create_operation(){
+        def person = springSecurityService.getCurrentUser()  
+        def wishInstance = Wish.findByIdAndOwner(params.id, person)
+        
+        if (!wishInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            redirect(action: "list")
+            return
+        }
+        
+        [wishInstance:wishInstance]
+    }
+    
     def show() {
         def wishInstance = Wish.get(params.id)
-        if (!wishInstance) {
+        def person = springSecurityService.getCurrentUser()
+        
+        if (!wishInstance || !wishInstance.owner.equals(person)) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
             redirect(action: "list")
             return
@@ -51,18 +71,24 @@ class WishController {
     }
 
     def edit() {
-        def wishInstance = Wish.get(params.id)
+        
+        def person = springSecurityService.getCurrentUser()        
+        def wishInstance = Wish.findByIdAndOwner(params.id, person)
+        
         if (!wishInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
             redirect(action: "list")
             return
         }
-
-        [wishInstance: wishInstance]
+        
+        def accounts = Account.findAllByOwner (person)
+        [wishInstance: wishInstance, accounts:accounts]
     }
 
     def update() {
-        def wishInstance = Wish.get(params.id)
+        def person = springSecurityService.getCurrentUser()  
+        def wishInstance = Wish.findByIdAndOwner(params.id, person)
+        
         if (!wishInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
             redirect(action: "list")
@@ -88,11 +114,13 @@ class WishController {
         }
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'wish.label', default: 'Wish'), wishInstance.id])
-        redirect(action: "show", id: wishInstance.id)
+        redirect(action: "list")
     }
 
     def delete() {
-        def wishInstance = Wish.get(params.id)
+        def person = springSecurityService.getCurrentUser()  
+        def wishInstance = Wish.findByIdAndOwner(params.id, person)
+        
         if (!wishInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
             redirect(action: "list")

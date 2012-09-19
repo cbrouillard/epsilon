@@ -10,7 +10,7 @@
         </label>
       </td>
       <td valign="top" class="mandatory value ${hasErrors(bean: wishInstance, field: 'account', 'errors')}">
-  <g:select id="account" name="account.id" from="${com.headbangers.epsilon.Account.list()}" optionKey="id" value="${wishInstance?.account?.id}" class="many-to-one"/>
+  <g:select id="account" name="account.id" from="${accounts}" optionKey="id" value="${wishInstance?.account?.id}" class="many-to-one"/>
 </td>
 </tr>
 

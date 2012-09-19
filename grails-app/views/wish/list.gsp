@@ -64,7 +64,7 @@
             <td>${fieldValue(bean: wishInstance, field: "description")}</td>
             <td>${fieldValue(bean: wishInstance, field: "webShopUrl")}</td>
 
-            <td>${fieldValue(bean: wishInstance, field: "price")}</td>
+            <td>${fieldValue(bean: wishInstance, field: "price")} €</td>
 
             <td><g:formatDate date="${wishInstance.previsionBuy}" /></td>
 
@@ -72,6 +72,7 @@
           <td class="center">
           <g:link title="Afficher les détails" action="show" id="${wishInstance.id}" class="popup" rel="popup"><img src="${resource(dir:'img', file:'details.png')}" alt="Détails"/></g:link>
           <g:link title="Editer" action="edit" id="${wishInstance.id}"><img src="${resource(dir:'img', file:'edit.png')}" alt="Editer"/></g:link>
+          <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"><img src="${resource(dir:'img', file:'buy.png')}" alt="Acheter!" /></g:link>
           </td>
 
           </tr>
