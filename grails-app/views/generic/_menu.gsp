@@ -1,4 +1,5 @@
-<!-- 
+<%@ page import="com.headbangers.epsilon.Account" %>
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -10,42 +11,160 @@
  * GNU General Public License for more details.
  */
 -->
-<div id="deco-border-left">&nbsp;</div>
-<div id="menu-principal">
+<ul class="nav">
+    <li class="${controllerName == 'bank' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'bank.png')}"/> Etablissements <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link controller="bank" class="list" action="list"><img src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des
+                 établissements</g:link>
+            </li>
+            <li>
+                <g:link controller="bank" class="create" action="create"><img
+                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouvel établissement</g:link>
+            </li>
+        </ul>
+    </li>
 
-  <div id="grailsLogo" >
-    <a href="${createLink(uri: '/')}">
-    <img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Epsilon" border="0" />
-    </a>
-    <sec:ifLoggedIn>
-      <div id="welcome">
-        Bienvenue <sec:username/> !
-      </div>
+    <li class="${controllerName == 'account' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'account.png')}"/> Comptes <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link controller="account" class="list" action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des comptes</g:link>
+            </li>
+            <li>
+                <g:link controller="account" class="create" action="create"><img
+                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau compte</g:link>
+            </li>
+        </ul>
+    </li>
 
-    </sec:ifLoggedIn>
-  </div>
+    <li class="${controllerName == 'scheduled' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'echeancy.png')}"/> Echéances <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link controller="scheduled" class="list" action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des échéances</g:link>
+            </li>
+            <li>
+                <g:link controller="scheduled" class="create" action="create"><img
+                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouvelle échéance</g:link>
+            </li>
+        </ul>
+    </li>
 
-  <g:if test="${controllerName == 'summary'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><a class="home" href="${createLink(uri: '/')}">Accueil</a></div>
-<g:if test="${controllerName == 'bank'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="bank" controller="bank">Etablissements</g:link></div>
-<g:if test="${controllerName == 'account'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="account" controller="account">Comptes</g:link></div>
-<g:if test="${controllerName == 'scheduled'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="echeancy" controller="scheduled">Echéances</g:link></div>
-<g:if test="${controllerName == 'budget'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="budget" controller="budget">Budgets</g:link></div>
-<g:if test="${controllerName == 'loan'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="loan" controller="loan">Prêts</g:link></div>
-<g:if test="${controllerName == 'category'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="category" controller="category">Catégories</g:link></div>
-<g:if test="${controllerName == 'tiers'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="tiers" controller="tiers">Tiers</g:link></div>
-<g:if test="${controllerName == 'operation'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="operation" controller="operation">Registres</g:link></div>
-<g:if test="${controllerName == 'wish'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="wish" controller="wish">Futurs achats</g:link></div>
-<g:if test="${controllerName == 'stats'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="stats" controller="stats">Statistiques</g:link></div>
+    <li class="${controllerName == 'budget' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'coins.png')}"/> Budgets <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link controller="budget" class="list" action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des budgets</g:link>
+            </li>
+            <li>
+                <g:link controller="budget" class="create" action="create"><img
+                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau budget</g:link>
+            </li>
+        </ul>
+    </li>
 
-<g:if test="${controllerName == 'person'}"><div class="menuButton selected"></g:if><g:else><div class="menuButton"></g:else><g:link class="personal" controller="person" action="infos">Vos informations</g:link></div>
+    <li class="${controllerName == 'wish' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'gift.png')}"/> Futurs achats <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link controller="wish" class="list" action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des futurs achats</g:link>
+            </li>
+            <li>
+                <g:link controller="wish" class="create" action="create"><img
+                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau souhait d'achat</g:link>
+            </li>
+        </ul>
+    </li>
 
-<div class="menuButton" id="logout-button">
-  <sec:ifLoggedIn>
-    <g:link controller="logout" class="logout">
-      Se déconnecter
-    </g:link>
-  </sec:ifLoggedIn>
-</div>
-</div>
+    <li class="${controllerName == 'loan' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'loan.png')}"/> Prêts <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link controller="loan" class="list" action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des prêts</g:link>
+            </li>
+            <li>
+                <g:link controller="loan" class="create" action="create"><img
+                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau prêt</g:link>
+            </li>
+        </ul>
+    </li>
 
+    <li class="${controllerName == 'category' || controllerName == 'tiers' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Données <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link controller="category" class="list" action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des catégories</g:link>
+            </li>
+            <li>
+                <g:link controller="tiers" class="create" action="create"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des tiers</g:link>
+            </li>
+        </ul>
+    </li>
 
+    <li class="${controllerName == 'operation' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'operation.png')}"/> Registres <b class="caret"></b>
+        </g:link>
+        <g:set var="accounts" value="${Account.findAll{ owner.id == sec.loggedInUserInfo([field: 'id']) }}"/>
+
+        <ul class="dropdown-menu">
+            <g:each in="${accounts}" var="account">
+                <li>
+                    <g:link controller="operation" params="[account: account.id]" action="list">${account.nameAndSold}</g:link>
+                </li>
+            </g:each>
+        </ul>
+    </li>
+
+</ul>
+
+<ul class="nav pull-right">
+    <li class="${controllerName == 'person' ? "active" : ""} dropdown">
+        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="${resource(dir: 'img', file: 'personal-information.png')}"/> Profil [<b><sec:username/></b>] <b class="caret"></b>
+        </g:link>
+        <ul class="dropdown-menu">
+            <li>
+                <g:link class="personal"
+                        controller="person"
+                        action="infos"><img src="${resource(dir: 'img', file: 'details.png')}"/> Vos informations</g:link>
+            </li>
+            <sec:ifAllGranted roles="ROLE_ADMIN">
+                <li>
+
+                    <g:link controller="admin"><img src="${resource(dir: 'images/skin', file: 'exclamation.png')}"/> Administration</g:link>
+                </li>
+            </sec:ifAllGranted>
+            <li class="divider"></li>
+            <li>
+                <g:link controller="logout" class="logout">
+                    <img src="${resource(dir: 'img', file: 'logout.png')}"/>
+                    Se déconnecter
+                </g:link>
+            </li>
+        </ul>
+    </li>
+</ul>

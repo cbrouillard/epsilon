@@ -5,6 +5,8 @@ if(System.getenv(ENV_NAME)) {
     InputStream is = new BufferedInputStream(new FileInputStream(System.getenv(ENV_NAME)))
     props.load(is)
     is.close()    
+}else {
+  println "### !!! Impossible d'ouvrir le fichier de conf !!! ###"
 }
 
 dataSource {
