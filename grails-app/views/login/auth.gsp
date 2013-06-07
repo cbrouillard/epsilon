@@ -55,9 +55,10 @@
                    name='j_password' required="true">
 
             <div class="pull-right">
-                <label class="checkbox">
+                <label>
+                    <g:message code="springSecurity.login.remember.me.label"/>
                     <input type="checkbox" name='${rememberMeParameter}'
-                           <g:if test='${hasCookie}'>checked='checked'</g:if>><g:message code="springSecurity.login.remember.me.label"/>
+                           <g:if test='${hasCookie}'>checked='checked'</g:if>>
                 </label>
                 <button class="btn btn-large btn-primary" type="submit"><g:message code="springSecurity.login.button"/></button>
             </div>

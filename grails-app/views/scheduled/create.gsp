@@ -13,64 +13,77 @@
 
 <%@ page import="com.headbangers.epsilon.Scheduled" %>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="layout" content="main" />
-  <g:set var="entityName" value="${message(code: 'scheduled.label', default: 'Scheduled')}" />
-  <title><g:message code="default.create.label" args="[entityName]" /></title>
-
-  <resource:tabView skin="custom_tab"/>
-  <resource:autoComplete skin="default" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="main"/>
+    <g:set var="entityName" value="${message(code: 'scheduled.label', default: 'Scheduled')}"/>
+    <title><g:message code="default.create.label" args="[entityName]"/></title>
 
 </head>
+
 <body>
-  <div class="undernav">
-    <span class="menuButton"><g:link class="list" action="list">Liste des échéances</g:link></span>
-    <span class="menuButton"><g:link class="create" action="create">Nouvelle échéance</g:link></span>
-  </div>
-  <div class="body">
-    <h1>Créer une échéance</h1>
-    <g:if test="${flash.message}">
-      <div class="message">${flash.message}</div>
-    </g:if>
-    <g:hasErrors bean="${scheduledInstance}">
-      <div class="errors">
-        <g:renderErrors bean="${scheduledInstance}" as="list" />
-      </div>
-    </g:hasErrors>
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div>
+                <h1>Créer une nouvelle échéance</h1>
+                <hr/>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="span12">
+            <div class="around-border">
 
-        <richui:tabView id="tabView">
-          <richui:tabLabels>
-            <g:if test="${tabToDisplay=='depot'}">
-            <richui:tabLabel selected="true" title="Dépôt" />
-            </g:if><g:else><richui:tabLabel  title="Dépôt" /></g:else>
-            <g:if test="${tabToDisplay=='virement'}">
-            <richui:tabLabel selected="true" title="Virement" />
-            </g:if><g:else><richui:tabLabel  title="Virement" /></g:else>
-            <g:if test="${!tabToDisplay || tabToDisplay=='facture'}">
-            <richui:tabLabel selected="true" title="Facture" />
-            </g:if><g:else><richui:tabLabel  title="Facture" /></g:else>
+                <g:if test="${flash.message}">
+                    <div class="alert alert-info">${flash.message}</div>
+                </g:if>
 
-          </richui:tabLabels>
-          <richui:tabContents>
+                <g:hasErrors bean="${scheduledInstance}">
+                    <div class="alert alert-error">
+                        <g:renderErrors bean="${scheduledInstance}" as="list"/>
+                    </div>
+                </g:hasErrors>
 
-            <richui:tabContent>
-              <g:render template="createform" model="[type:'depot', selected:selected]" />
-            </richui:tabContent>
+                <div class="tabbable"><!-- Only required for left/right tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="${tabToDisplay == 'depot' ? 'active' : ''}">
+                            <a href="#depot" data-toggle="tab">Dépôt</a>
+                        </li>
+                        <li class="${tabToDisplay == 'virement' ? 'active' : ''}">
+                            <a href="#virement" data-toggle="tab">Virement</a>
+                        </li>
+                        <li class="${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}">
+                            <a href="#facture" data-toggle="tab">Facture</a>
+                        </li>
+                    </ul>
 
-            <richui:tabContent>
-              <g:render template="createvirement" model="[selected:selected]" />
-            </richui:tabContent>
+                    <div class="tab-content">
+                        <div class="tab-pane ${tabToDisplay == 'depot' ? 'active' : ''}" id="depot">
 
-            <richui:tabContent>
-              <g:render template="createform" model="[type:'facture', selected:selected]" />
-            </richui:tabContent>
+                            <g:render template="createform" model="[type: 'depot', selected: selected]"/>
 
-          </richui:tabContents>
-        </richui:tabView>
+                        </div>
 
-      
-  </div>
+                        <div class="tab-pane ${tabToDisplay == 'virement' ? 'active' : ''}" id="virement">
+
+                            <g:render template="createvirement" model="[selected: selected]"/>
+
+                        </div>
+
+                        <div class="tab-pane ${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}" id="facture">
+
+                            <g:render template="createform" model="[type: 'facture', selected: selected]"/>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>
