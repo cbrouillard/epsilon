@@ -12,91 +12,55 @@
 -->
 <%@ page import="com.headbangers.epsilon.Budget" %>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="layout" content="popup" />
-  <g:set var="entityName" value="${message(code: 'budget.label', default: 'Budget')}" />
-  <title><g:message code="default.show.label" args="[entityName]" /></title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="popup"/>
 </head>
+
 <body>
-  <div class="undernav">
-    <span class="menuButton"><g:link class="list" action="list">Liste des budgets</g:link></span>
-    <span class="menuButton"><g:link class="create" action="create">Nouveau budget</g:link></span>
-  </div>
-  <div class="body">
-    <h1>Détails d'un budget</h1>
-    <g:if test="${flash.message}">
-      <div class="message">${flash.message}</div>
-    </g:if>
-    <div class="dialog">
-      <table>
-        <tbody>
+<g:if test="${flash.message}">
+    <div class="alert alert-info">${flash.message}</div>
+</g:if>
 
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="budget.name.label" default="Name" /></td>
+<dl class="dl-horizontal">
+    <dt><g:message code="budget.name.label" default="Name"/></dt>
+    <dd>${fieldValue(bean: budgetInstance, field: "name")}</dd>
 
-        <td valign="top" class="value">${fieldValue(bean: budgetInstance, field: "name")}</td>
+    <dt><g:message code="budget.amount.label" default="Amount"/></dt>
+    <dd>${fieldValue(bean: budgetInstance, field: "amount")} €</dd>
 
-        </tr>
+    <dt><g:message code="budget.note.label" default="Note"/></dt>
+    <dd>${fieldValue(bean: budgetInstance, field: "note")}</dd>
 
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="budget.amount.label" default="Amount" /></td>
+    <dt><g:message code="budget.lastUpdated.label" default="Last Updated"/></dt>
+    <dd><g:formatDate date="${budgetInstance?.lastUpdated}"/></dd>
 
-        <td valign="top" class="value">${fieldValue(bean: budgetInstance, field: "amount")}€</td>
+    <dt><g:message code="budget.active.label" default="Active"/></dt>
+    <dd><g:formatBoolean boolean="${budgetInstance?.active}"/></dd>
 
-        </tr>
-
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="budget.note.label" default="Note" /></td>
-
-        <td valign="top" class="value limitedSize">${fieldValue(bean: budgetInstance, field: "note")}</td>
-
-        </tr>
-
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="budget.lastUpdated.label" default="Last Updated" /></td>
-
-        <td valign="top" class="value"><g:formatDate date="${budgetInstance?.lastUpdated}" /></td>
-
-        </tr>
-
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="budget.active.label" default="Active" /></td>
-
-        <td valign="top" class="value"><g:formatBoolean boolean="${budgetInstance?.active}" /></td>
-
-        </tr>
-
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="budget.attachedCategories.label" default="Attached Categories" /></td>
-
-        <td valign="top" style="text-align: left;" class="value">
-          <ul>
+    <dt><g:message code="budget.attachedCategories.label" default="Attached Categories"/></dt>
+    <dd>
+        <ul>
             <g:each in="${budgetInstance.attachedCategories}" var="a">
-              <li><g:link controller="category" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
+                <li><g:link controller="category" action="operations" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
             </g:each>
-          </ul>
-        </td>
+        </ul>
+    </dd>
 
-        </tr>
+    <dt><g:message code="budget.dateCreated.label" default="Date Created"/></dt>
+    <dd><g:formatDate date="${budgetInstance?.dateCreated}"/></dd>
 
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="budget.dateCreated.label" default="Date Created" /></td>
+</dl>
 
-        <td valign="top" class="value"><g:formatDate date="${budgetInstance?.dateCreated}" /></td>
-
-        </tr>
-
-        </tbody>
-      </table>
-    </div>
-    <div class="buttons">
-      <g:form>
-        <g:hiddenField name="id" value="${budgetInstance?.id}" />
-        <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
-        <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
-      </g:form>
-    </div>
-  </div>
+<div class="modal-footer">
+    <g:form>
+        <g:hiddenField name="id" value="${budgetInstance?.id}"/>
+        <span class="button"><g:actionSubmit class="edit btn btn-primary" action="edit"
+                                             value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
+        <span class="button"><g:actionSubmit class="delete btn btn-danger" action="delete"
+                                             value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+    </g:form>
+</div>
 </body>
 </html>

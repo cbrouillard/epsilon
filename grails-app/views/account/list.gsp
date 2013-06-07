@@ -90,7 +90,7 @@
                         </tbody>
                     </table>
 
-                    <div class="paginateButtons">
+                    <div class="pagination text-right">
                         <g:paginate total="${accountInstanceTotal}"/>
                     </div>
 
