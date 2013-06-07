@@ -31,6 +31,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="span12">
             <div class="around-border">
@@ -72,7 +73,7 @@
 
                                 <td><g:formatDate date="${bankInstance.lastUpdated}"/></td>
 
-                                <td class="center">
+                                <td class="tdcenter">
                                     <g:link title="Afficher les détails" action="show" data-toggle="modal" data-target="#modalWindow_show"
                                             id="${bankInstance.id}"><img src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
                                     <g:link title="Editer" action="edit" id="${bankInstance.id}"><img src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
@@ -95,16 +96,13 @@
 <div id="modalWindow_show" class="modal hide fade">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
+
         <h3>Détails d'un établissement</h3>
     </div>
 
     <div class="modal-body">
-        <img src="${resource(dir:'images', file:'spinner.gif')}" />
+        <img src="${resource(dir: 'images', file: 'spinner.gif')}"/>
     </div>
-
-    %{--<div class="modal-footer">--}%
-        %{--<a href="#" class="btn" data-dismiss="modal">Fermer</a>--}%
-    %{--</div>--}%
 </div>
 
 </body>

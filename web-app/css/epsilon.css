@@ -13,6 +13,10 @@ html * {
     /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
 }
 
+input{
+    min-height: 30px;
+}
+
 body {
     color: #333;
     font: 11px verdana, arial, helvetica, sans-serif;
@@ -386,4 +390,9 @@ label.mandatory {
     background-color: #92E07F;
     text-align: right;
     margin-bottom: 10px;;
+}
+
+div.errors input{
+    border: 1px solid red;
+    font-weight: bold;
 }

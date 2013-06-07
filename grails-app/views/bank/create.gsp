@@ -48,9 +48,9 @@
                     <div class="control-group">
                         <label for="name" class="control-label mandatory"><g:message code="bank.name.label" default="Name"/></label>
 
-                        <div class="controls">
+                        <div class="controls ${hasErrors(bean: bankInstance, field: 'name', 'errors')}">
                             <g:textField required="true" name="name" value="${bankInstance?.name}"
-                                         class="input-block-level ${hasErrors(bean: bankInstance, field: 'name', 'errors')}"/>
+                                         class="input-block-level"/>
                         </div>
                     </div>
 
