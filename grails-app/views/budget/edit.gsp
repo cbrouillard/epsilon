@@ -48,7 +48,7 @@
                 </g:hasErrors>
 
                 <g:form action="save" class="form-horizontal">
-                    <g:hiddenField name="id" value="${budgetInstance?.id}" />
+                    <g:hiddenField name="id" value="${budgetInstance?.id}"/>
 
                     <div class="control-group">
                         <label for="name" class="control-label mandatory"><g:message code="budget.name.label" default="Name"/></label>
@@ -100,9 +100,10 @@
                     <div class="control-group">
                         <div class="controls">
                             <span class="button"><g:actionSubmit class="save btn btn-primary" action="update" value="${message(code:
-                                    'default.button.update.label', default: 'Update')}" /></span>
+                                    'default.button.update.label', default: 'Update')}"/></span>
                             <span class="button"><g:actionSubmit class="delete btn btn-danger" action="delete" value="${message(code:
-                                    'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                                    'default.button.delete.label', default: 'Delete')}"
+                                                                 onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
                         </div>
                     </div>
                 </g:form>
@@ -113,8 +114,5 @@
 
 </div>
 
-<div class="body">
-
-</div>
 </body>
 </html>
