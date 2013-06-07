@@ -12,85 +12,55 @@
 -->
 <%@ page import="com.headbangers.epsilon.Bank" %>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="popup" />
-        <g:set var="entityName" value="${message(code: 'bank.label', default: 'Bank')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
-    </head>
-    <body>
-        <div class="undernav">
-            <span class="menuButton"><g:link class="list" action="list">Liste des établissements</g:link></span>
-            <span class="menuButton"><g:link class="create" action="create">Nouvel établissement</g:link></span>
-        </div>
-        <div class="body">
-            <h1>Détails d'un établissement</h1>
-            <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
-            </g:if>
-            <div class="dialog">
-                <table>
-                    <tbody>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bank.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: bankInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bank.name.label" default="Name" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: bankInstance, field: "name")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bank.description.label" default="Description" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: bankInstance, field: "description")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bank.dateCreated.label" default="Date Created" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${bankInstance?.dateCreated}" /></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bank.lastUpdated.label" default="Last Updated" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${bankInstance?.lastUpdated}" /></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="bank.accounts.label" default="Accounts" /></td>
-                            
-                            <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${bankInstance?.accounts}" var="a">
-                                    <li><g:link controller="operation" action="list" params="[account:a.id]">
-                                        <img src="${resource(dir:'img', file:'operation.png')}" alt="€"/> ${a?.name}</g:link></li>
-                                </g:each>
-                                </ul>
-                            </td>
-                            
-                        </tr>
-                    
-                    </tbody>
-                </table>
-            </div>
-            <div class="buttons">
-                <g:form>
-                    <g:hiddenField name="id" value="${bankInstance?.id}" />
-                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
-                </g:form>
-            </div>
-        </div>
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="popup"/>
+</head>
+
+<body>
+<div class="body">
+    <g:if test="${flash.message}">
+        <div class="message">${flash.message}</div>
+    </g:if>
+
+    <dl class="dl-horizontal">
+        <dt><g:message code="bank.id.label" default="ID"/></dt>
+        <dd>${fieldValue(bean: bankInstance, field: "id")}</dd>
+
+        <dt><g:message code="bank.name.label" default="Name"/></dt>
+        <dd>${fieldValue(bean: bankInstance, field: "name")}</dd>
+
+        <dt><g:message code="bank.description.label" default="Description"/></dt>
+        <dd>${fieldValue(bean: bankInstance, field: "description")}</dd>
+
+        <dt><g:message code="bank.dateCreated.label" default="Date Created"/></dt>
+        <dd><g:formatDate date="${bankInstance?.dateCreated}"/></dd>
+
+        <dt><g:message code="bank.lastUpdated.label" default="Last Updated"/></dt>
+        <dd><g:formatDate date="${bankInstance?.lastUpdated}"/></dd>
+
+        <dt><g:message code="bank.accounts.label" default="Accounts"/></dt>
+        <dd>
+            <ul>
+                <g:each in="${bankInstance?.accounts}" var="a">
+                    <li><g:link controller="operation" action="list" params="[account: a.id]">
+                        <img src="${resource(dir: 'img', file: 'operation.png')}" alt="€"/> ${a?.name}</g:link></li>
+                </g:each>
+            </ul>
+        </dd>
+    </dl>
+
+    <div class="modal-footer">
+        <g:form>
+            <g:hiddenField name="id" value="${bankInstance?.id}"/>
+            <span
+                    class="button"><g:actionSubmit class="btn btn-primary edit" action="edit"
+                                                   value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
+            <span class="button"><g:actionSubmit class="btn btn-danger delete" action="delete"
+                                                 value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                                                 onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+        </g:form>
+    </div>
+</div>
+</body>
 </html>

@@ -20,7 +20,7 @@ body {
 
 body.pig {
     background: #fff url(../img/pig.png) no-repeat right bottom;
-    background-attachment:fixed;
+    background-attachment: fixed;
 }
 
 a.yellow {
@@ -368,10 +368,22 @@ div.export {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
 
-ul.nav li.dropdown:hover > ul.dropdown-menu{
+ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;
 }
 
 .navbar .dropdown-menu {
     margin-top: 0px;
+}
+
+label.mandatory {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.logo{
+    padding:10px;
+    background-color: #92E07F;
+    text-align: right;
+    margin-bottom: 10px;;
 }

@@ -13,38 +13,26 @@
 <html>
 <head>
     <title><g:layoutTitle default="Grails"/></title>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'epsilon.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'datePicker.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'datePicker.css')}"/>--}%
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon"/>
 
-    %{--<script src="${resource(dir:'/js/jquery',file:'jquery-1.4.2-min.js')}" type="text/javascript" library="jquery"></script>--}%
-
-    <script src="${resource(dir: '/js', file: 'date.js')}"></script>
-    <script src="${resource(dir: '/js', file: 'jquery.datePicker.js')}"></script>
-    <script src="${resource(dir: '/js/calculator', file: 'jquery.calculator.js')}"></script>
-
-    <script src="${resource(dir: '/js/fancybox', file: 'jquery.fancybox-1.3.1.js')}"></script>
-    <link rel="stylesheet" href="${resource(dir: '/js/fancybox', file: 'jquery.fancybox-1.3.1.css')}"/>
-
-    <export:resource/>
+    <r:require module="jquery"/>
+    %{--<script src="${resource(dir: '/js', file: 'date.js')}"></script>--}%
+    %{--<export:resource/>--}%
 
     <style>
     #container {
         padding-top: 60px;
-        padding-bottom: 40px;
+        padding-bottom: 60px;
     }
     </style>
 
-    <script>
-        jQuery.noConflict();
-    </script>
-    <script src="${resource(dir: '/js', file: 'password.js')}"></script>
+    %{--<script src="${resource(dir: '/js', file: 'password.js')}"></script>--}%
+    %{--<script src="${resource(dir: '/js', file: 'application.js')}"></script>--}%
 
-    <script src="${resource(dir: '/js/prototype', file: 'prototype.js')}"></script>
-    <script src="${resource(dir: '/js', file: 'application.js')}"></script>
+    %{--<ofchart:resources/>--}%
 
-    <ofchart:resources/>
 
     <r:require module="bootstrap"/>
     <g:layoutHead/>
@@ -53,23 +41,6 @@
 </head>
 
 <body class="pig">
-
-<jq:jquery>
-    jQuery("a.popup").fancybox(
-    {showNavArrows:false, 'zoomSpeedIn' : 300,
-    'zoomSpeedOut': 300,
-    'overlayShow': true,
-    'hideOnContentClick': false,
-    'callbackOnShow': function() {
-    jQuery("#fancy_right").hide();
-    jQuery("#fancy_left").hide();
-    }
-    }
-    );
-    //jQuery("a[title]").qtip({ style: { name: 'dark', tip: true }, position : {corner:{target:'topRight', tooltip:'bottomLeft'}} });
-</jq:jquery>
-
-
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -86,8 +57,6 @@
     <g:layoutBody/>
 </div>
 
-<div class="clean"></div>
-
 <footer>
     <div class="navbar navbar-fixed-bottom">
         <div class="navbar-inner">
@@ -95,7 +64,7 @@
 
                 <p class="navbar-text pull-left">
                     <sec:ifAllGranted roles="ROLE_ADMIN">
-                        <g:link controller="admin" class="yellow">Administration</g:link> -
+                        <g:link controller="admin">Administration</g:link> -
                     </sec:ifAllGranted>
                     © BROUILLARD Cyril - 2013 - <g:message
                             code="app.name"/> - Gestion simplifiée de compte bancaires</p>
