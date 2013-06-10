@@ -12,57 +12,84 @@
 -->
 <%@ page import="com.headbangers.epsilon.Operation" %>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="layout" content="main" />
-  <g:set var="entityName" value="${message(code: 'operation.label', default: 'Operation')}" />
-  <title><g:message code="default.list.label" args="[entityName]" /></title>
-
-  <resource:tabView skin="custom_tab"/>
-  <resource:autoComplete skin="default" />
-
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="main"/>
+    <g:set var="entityName" value="${message(code: 'operation.label', default: 'Operation')}"/>
+    <title><g:message code="default.list.label" args="[entityName]"/></title>
 </head>
+
 <body>
-  
-  <div class="undernav">   
-    
-    <g:form action="list" method="get" >
-      <span class="menuButton special"><a class="operation" href="#write-operation">Saisir une opération</a></span>
-      
-      <g:if test="${selected}">
-      <label for="account">Changer de compte:</label>
-      <g:select optionValue="${{it.name+' = '+formatNumber('number':it.getSold(), 'format':'0.##')+'€'}}" name="account" from="${accounts}" optionKey="id" value="${selected?.id}" onChange="this.form.submit();"/>
-      </g:if>
-      
-      <g:if test="${selected?.bank?.url}">
-          <span class="menuButton"><a class="bank" href="${selected?.bank?.url}">Site de la banque</a></span>
-        </g:if>
-      
-      
-    </g:form>
-    
-  </div>
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h1>Opérations <small>${selected?.getNameAndSold()}</small>
+                <g:if test="${selected?.bank?.url}">
+                    <a class="bank btn" href="${selected?.bank?.url}"><img src="${resource(dir: 'img', file: 'bank.png')}" alt=">"/> Site de la banque</a>
+                </g:if>
+            </h1>
+            <hr/>
+        </div>
+    </div>
 
-  <div class="body">
-    
-    <g:if test="${flash.message}">
-      <div class="message">${flash.message}</div>
-    </g:if>
+    <div class="row">
 
-    <g:if test="${selected}">
-      <div id="register">
-        
-        <g:render template="register"/>
-        
+        <div class="span9">
+            <div class="around-border">
 
-      </div>
-    </g:if><g:else>
-      <h1 class="red">Aucun compte enregistré.</h1>
-      <ul>
-        <li><g:link controller="bank" action="create"><img src="${resource(dir:'img', file:'bank.png')}" alt=">"/> Créer un nouvel établissement</g:link></li>
-        <li><g:link controller="account" action="create"><img src="${resource(dir:'img', file:'account.png')}" alt=">"/> Créer un nouveau compte</g:link></li>
-      </ul>
-    </g:else>
-  </div>
+                <g:if test="${selected}">
+                    <div id="register">
+
+                        <g:render template="register"/>
+
+                    </div>
+                </g:if>
+                <g:else>
+                    <h1 class="red">Aucun compte enregistré.</h1>
+                    <ul>
+                        <li><g:link controller="bank" action="create"><img src="${resource(dir: 'img', file: 'bank.png')}"
+                                                                           alt=">"/> Créer un nouvel établissement</g:link>
+                        </li>
+                        <li><g:link controller="account" action="create"><img src="${resource(dir: 'img', file: 'account.png')}"
+                                                                              alt=">"/> Créer un nouveau compte</g:link>
+                        </li>
+                    </ul>
+                </g:else>
+
+            </div>
+        </div>
+
+        <div class="span3">
+            <div class="around-border">
+
+                <g:if test="${flash.message}">
+                    <div class="alert alert-info">${flash.message}</div>
+                </g:if>
+
+                <g:hasErrors bean="${operationInstance}">
+                    <div class="alert alert-info">
+                        <g:renderErrors bean="${operationInstance}" as="list"/>
+                    </div>
+                </g:hasErrors>
+
+                <g:render template="registeractions"/>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="modalWindow_show" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+
+        <h3>Détails d'une opération</h3>
+    </div>
+
+    <div class="modal-body">
+        <img src="${resource(dir: 'images', file: 'spinner.gif')}"/>
+    </div>
+</div>
 </body>
 </html>

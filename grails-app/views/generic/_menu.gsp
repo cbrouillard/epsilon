@@ -118,7 +118,7 @@
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des catégories</g:link>
             </li>
             <li>
-                <g:link controller="tiers" class="create" action="create"><img
+                <g:link controller="tiers" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des tiers</g:link>
             </li>
         </ul>

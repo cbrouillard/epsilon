@@ -72,7 +72,7 @@
             </div>
         </div>
     </div>
-</footer>
+</footer><a name="bottom"></a>
 
 <r:layoutResources/>
 </body>

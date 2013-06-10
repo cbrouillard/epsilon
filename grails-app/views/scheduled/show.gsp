@@ -48,7 +48,7 @@
     <dd><g:formatNumber number="${scheduledInstance?.amount}" format="0.##"/> €</dd>
 
     <dt><g:message code="scheduled.note.label" default="Note"/></dt>
-    <dd>${fieldValue(bean: scheduledInstance, field: "note")}</dd>
+    <dd>${fieldValue(bean: scheduledInstance, field: "note")?:"&nbsp;"}</dd>
 
     <dt><g:message code="scheduled.lastUpdated.label" default="Last Updated"/></dt>
     <dd><g:formatDate date="${scheduledInstance?.lastUpdated}"/></dd>

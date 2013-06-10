@@ -10,85 +10,72 @@
  * GNU General Public License for more details.
  */
 -->
-<g:hasErrors bean="${operationInstance}">
-  <div class="errors">
-    <g:renderErrors bean="${operationInstance}" as="list" />
-  </div>
-</g:hasErrors>
-<g:form action="save${type}" method="post" >
-  <div class="dialog">
-    <table>
-      <tbody>
+<g:form action="save${type}" method="post">
+    <input name="account.id" type="hidden" value="${selected?.id}"/>
 
-      <input name="account.id" type="hidden" value="${selected?.id}"/>
+    <div class="control-group">
+        <label for="tiers${type}" class="control-label mandatory"><g:message code="operation.tiers.label" default="Tiers"/></label>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="tiers"><g:message code="operation.tiers.label" default="Tiers" /></label>
-        </td>
-        <td valign="top" class="mandatory value ${hasErrors(bean: operationInstance, field: 'tiers', 'errors')}">
+        <div class="controls ${hasErrors(bean: operationInstance, field: 'tiers', 'errors')}">
+            <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                                 value="${operationInstance?.tiers?.name}" class="input-block-level" required="true"/>
+            <g:if test="${parameterBayesianFilter.equals("true")}">
+                <jq:jquery>
+                    jQuery('#tiers${type}').focusout (function(){
+                      tryToGuessCategoryWithTiersId(jQuery('#tiers${type}').val(), 'category${type}');
+                    });
+                </jq:jquery>
+            </g:if>
+        </div>
+    </div>
 
-      <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}" value="${operationInstance?.tiers?.name}" />
-      <g:if test="${parameterBayesianFilter.equals("true")}" >
-        <jq:jquery>
-          jQuery('#tiers${type}').focusout (function(){
-          tryToGuessCategoryWithTiersId(jQuery('#tiers${type}').val(), 'category${type}');        
-          });
-        </jq:jquery>
-      </g:if>
-      </td>
+    <div class="control-group">
+        <label for="category${type}" class="control-label mandatory"><g:message code="operation.category.label" default="Category"/></label>
 
-      <td valign="top" class="name">
-        <label for="dateApplication"><g:message code="operation.dateApplication.label" default="Date Application" /></label>
-      </td>
-      <td valign="top" class="mandatory  value ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
-        <input type="text" value="${formatDate(format:'dd/MM/yyyy', date:operationInstance?.dateApplication)}" name="dateApplication" id="dateApplication${type}"/>
-      </td>
+        <div class="controls ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
+            <richui:autoComplete id="category${type}" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
+                                 value="${operationInstance?.category?.name}" class="input-block-level" required="true"/>
+        </div>
+    </div>
 
-      <jq:jquery>
-        jQuery("#dateApplication${type}").datePicker({clickInput:true, startDate:'01/01/1996'})
-        .val(new Date().asString()).trigger('change');
-      </jq:jquery>
+    <div class="control-group">
+        <label for="dateApplication${type}" class="control-label mandatory"><g:message code="operation.dateApplication.label"
+                                                                                       default="Date Application"/></label>
 
-      </tr>
+        <div class="controls ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
+            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}" name="dateApplication"
+                   id="dateApplication${type}" class="input-block-level" required="true"/>
+        </div>
+    </div>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="category"><g:message code="operation.category.label" default="Category" /></label>
-        </td>
-        <td valign="top" class="mandatory value ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
-      <richui:autoComplete id="category${type}" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/'+type)}"  value="${operationInstance?.category?.name}"/>
-      </td>
+    <div class="control-group">
+        <label for="amount${type}" class="control-label mandatory"><g:message code="operation.amount.label" default="Amount"/></label>
 
-      <td valign="top" class="name">
-        <label for="amount"><g:message code="operation.amount.label" default="Amount" /></label>
-      </td>
-      <td valign="top" class="mandatory  value ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
-      <g:textField name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" />
-      </td>
-      </tr>
+        <div class="controls ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
+            <g:textField id="amount${type}" name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" class="input-block-level"
+                         required="true"/>
+        </div>
+    </div>
 
+    <div class="control-group">
+        <label for="note${type}" class="control-label"><g:message code="operation.note.label" default="Note"/></label>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="note"><g:message code="operation.note.label" default="Note" /></label>
-        </td>
-        <td valign="top" class="value ${hasErrors(bean: operationInstance, field: 'note', 'errors')}">
-      <g:textArea name="note" cols="40" rows="50" value="${operationInstance?.note}"/>
-      </td>
+        <div class="controls ${hasErrors(bean: operationInstance, field: 'note', 'errors')}">
+            <g:textArea id="note${type}" name="note" cols="40" rows="5" value="${operationInstance?.note}" class="input-block-level"/>
+        </div>
+    </div>
 
-      <td valign="top" class="name">
-        <label for="pointed"><g:message code="operation.pointed.label" default="Pointed" /></label>
-      </td>
-      <td valign="top" class="value ${hasErrors(bean: operationInstance, field: 'pointed', 'errors')}">
-      <g:checkBox name="pointed" value="${operationInstance?.pointed}" />
-      </td>
-      </tr>
+    <div class="control-group">
+        <label for="pointed${type}">
+            <g:message code="operation.pointed.label"
+                       default="Pointed"/>
+            <g:checkBox id="pointed${type}" name="pointed" value="${operationInstance?.pointed}"/>
+        </label>
+    </div>
 
-      </tbody>
-    </table>
-  </div>
-  <div class="buttons">
-    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
-  </div>
+    <div class="control-group">
+        <div class="controls ">
+            <g:submitButton name="create" class="save btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}"/>
+        </div>
+    </div>
 </g:form>

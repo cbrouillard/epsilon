@@ -89,8 +89,8 @@ class OperationController {
             selectedAccount = accounts.get(0)
         }
 
-        def month = params["byMonth"]?params.int('byMonth'):0 // TODO 0 pas correct car 0 = Janvier
         def currentMonth = dateUtil.getMonth (null)
+        def month = params["byMonth"]?params.int('byMonth'):currentMonth
 
         [accounts:accounts, selected:selectedAccount, byMonth:month, currentMonth:currentMonth, parameterBayesianFilter:parameterService.getBayesianFilterParameter (person)]
     }
