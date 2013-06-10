@@ -13,67 +13,83 @@
 
 <%@ page import="com.headbangers.epsilon.Loan" %>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="layout" content="main" />
-  <g:set var="entityName" value="${message(code: 'loan.label', default: 'Loan')}" />
-  <title><g:message code="default.create.label" args="[entityName]" /></title>
-
-  <resource:tabView skin="custom_tab"/>
-  <resource:autoComplete skin="default" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="main"/>
+    <g:set var="entityName" value="${message(code: 'loan.label', default: 'Loan')}"/>
+    <title><g:message code="default.create.label" args="[entityName]"/></title>
 
 </head>
+
 <body>
-  <div class="undernav">
-    <span class="menuButton"><g:link class="list" action="list">Liste des prêts</g:link></span>
-    <span class="menuButton"><g:link class="create" action="create">Nouveau prêt</g:link></span>
-  </div>
-  <div class="body">
-    <h1>Créer un nouveau prêt</h1>
-    
-    <div class="help">
-      Saisissez les détails de votre prêt.<br/>
-      Epsilon sait gérer deux sens:
-      <ul>
-        <li>vous êtes l'emprunteur : sélectionnez l'onglet "Je doit de l'argent"</li>
-        <li>vous êtes le prêteur : sélectionnez l'onglet "On me doit de l'argent"</li>
-      </ul>
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div>
+                <h1>Créer un nouveau prêt</h1>
+
+                <div class="alert alert-info">
+                    Saisissez les détails de votre prêt.
+                    Epsilon sait gérer deux sens:
+                    <ul>
+                        <li>vous êtes l'emprunteur : sélectionnez l'onglet "Je doit de l'argent"</li>
+                        <li>vous êtes le prêteur : sélectionnez l'onglet "On me doit de l'argent"</li>
+                    </ul>
+                </div>
+                <hr/>
+            </div>
+        </div>
     </div>
-    
-    <g:if test="${flash.message}">
-      <div class="message">${flash.message}</div>
-    </g:if>
-    <g:hasErrors bean="${loanInstance}">
-      <div class="errors">
-        <g:renderErrors bean="${loanInstance}" as="list" />
-        <g:renderErrors bean="${scheduled}" as="list" />
-      </div>
-    </g:hasErrors>
+
+    <div class="row">
+        <div class="span12">
+            <div class="around-border">
+
+                <g:if test="${flash.message}">
+                    <div class="alert alert-info">${flash.message}</div>
+                </g:if>
+
+                <g:hasErrors bean="${loanInstance}">
+                    <div class="alert alert-error">
+                        <g:renderErrors bean="${loanInstance}" as="list"/>
+                        <g:renderErrors bean="${scheduled}" as="list"/>
+                    </div>
+                </g:hasErrors>
+
+                <div class="tabbable"><!-- Only required for left/right tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="${!tabToDisplay || tabToDisplay == 'metous' ? 'active' : ''}">
+                            <a href="#metous" data-toggle="tab">Je doit de l'argent</a>
+                        </li>
+                        <li class="${tabToDisplay == 'ustome' ? 'active' : ''}">
+                            <a href="#ustome" data-toggle="tab">On me doit de l'argent</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+
+                        <div class="tab-pane ${!tabToDisplay || tabToDisplay == 'metous' ? 'active' : ''}" id="metous">
+
+                            <g:render template="createloan" model="[type: 'ME_TO_US']"/>
+
+                        </div>
+
+                        <div class="tab-pane ${tabToDisplay == 'ustome' ? 'active' : ''}" id="ustome">
+
+                            <g:render template="createloan" model="[type: 'US_TO_ME']"/>
+
+                        </div>
 
 
-    <richui:tabView id="tabView">
-      <richui:tabLabels>
-        <g:if test="${!tabToDisplay || tabToDisplay=='metous'}">
-          <richui:tabLabel selected="true" title="Je doit de l'argent" />
-        </g:if><g:else><richui:tabLabel  title="Je doit de l'argent" /></g:else>
-        <g:if test="${tabToDisplay=='ustome'}">
-          <richui:tabLabel selected="true" title="On me doit de l'argent" />
-        </g:if><g:else><richui:tabLabel  title="On me doit de l'argent" /></g:else>
+                    </div>
 
-      </richui:tabLabels>
-      <richui:tabContents>
+                </div>
 
-        <richui:tabContent>
-          <g:render template="createloan" model="[type:'ME_TO_US']" />
-        </richui:tabContent>
+            </div>
+        </div>
+    </div>
 
-        <richui:tabContent>
-          <g:render template="createloan" model="[type:'US_TO_ME']" />
-        </richui:tabContent>
-
-      </richui:tabContents>
-    </richui:tabView>
-
-  </div>
+</div>
 </body>
 </html>

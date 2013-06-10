@@ -12,96 +12,80 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" %>
-<g:form action="save" >
-  <div class="dialog">
-    <g:hiddenField name="type" value="${type}" />
-    <table>
-      <tbody>
+<g:form action="save" class="form-horizontal">
 
-        <tr class="prop">
-          <td valign="top" class="name">
-            <label for="name"><g:message code="loan.name.label" default="Name" /></label>
-          </td>
-          <td valign="top" class="mandatory value ${hasErrors(bean: loanInstance, field: 'name', 'errors')}">
-      <g:textField name="name" value="${fieldValue(bean: loanInstance, field: 'name')}" />
-      </td>
-      </tr>
+    <g:hiddenField name="type" value="${type}"/>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="tiers"><g:message code="loan.tiers.label" default="Tiers" /></label>
-        </td>
-        <td valign="top" class="mandatory value ${hasErrors(bean: loanInstance, field: 'tiers', 'errors')}">
-      <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}" value="${loanInstance?.tiers?.name}"/>
-      </td>
-      </tr>
+    <div class="control-group">
+        <label for="name${type}" class="control-label mandatory"><g:message code="loan.name.label" default="Name"/></label>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="accountFrom"><g:message code="scheduled.account.label" default="Account" />:</label>
-        </td>
-        <td valign="top" class="mandatory value ${hasErrors(bean: scheduled, field: 'accountFrom', 'errors')}">
-      <g:select optionValue="name" name="accountFrom.id" from="${accounts}" optionKey="id" value="${scheduled?.accountFrom?.id}"  />
-      </td>
-      </tr>
+        <div class="controls ${hasErrors(bean: loanInstance, field: 'name', 'errors')}">
+            <g:textField id="name${type}" name="name" value="${fieldValue(bean: loanInstance, field: 'name')}" class="input-block-level" required="true"/>
+        </div>
+    </div>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="amount"><g:message code="loan.amount.label" default="Amount" /></label>
-        </td>
-        <td valign="top" class="mandatory value ${hasErrors(bean: loanInstance, field: 'amount', 'errors')}">
-      <g:textField name="amount" value="${fieldValue(bean: loanInstance, field: 'amount')}" />
-      </td>
-      </tr>
-      
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="interest"><g:message code="loan.interest.label" default="Interest" /></label>
-        </td>
-        <td valign="top" class="value ${hasErrors(bean: loanInstance, field: 'interest', 'errors')}">
-      <g:textField name="interest" value="${fieldValue(bean: loanInstance, field: 'interest')}" />
-      </td>
-      </tr>
+    <div class="control-group">
+        <label for="tiers${type}" class="control-label mandatory"><g:message code="loan.tiers.label" default="Tiers"/></label>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="refundValue"><g:message code="loan.refundValue.label" default="Refund" /></label>
-        </td>
-        <td valign="top" class="mandatory value ${hasErrors(bean: loanInstance, field: 'refundValue', 'errors')}">
-      <g:textField name="refundValue" value="${fieldValue(bean: loanInstance, field: 'refundValue')}" />
-      </td>
-      </tr>
+        <div class="controls ${hasErrors(bean: loanInstance, field: 'tiers', 'errors')}">
+            <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                                 value="${loanInstance?.tiers?.name}" class="input-block-level" required="true"/>
+        </div>
+    </div>
 
+    <div class="control-group">
+        <label for="account${type}" class="control-label mandatory"><g:message code="scheduled.account.label" default="Account"/></label>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="dateApplication"><g:message code="scheduled.dateApplication.label" default="Date Application" /></label>
-        </td>
-        <td valign="top" class="mandatory value ${hasErrors(bean: scheduled, field: 'dateApplication', 'errors')}">
-          <input type="text" value="${formatDate(format:'dd/MM/yyyy', date:scheduled?.dateApplication)}" name="dateApplication" id="dateApplication${type}"/>
-        </td>
+        <div class="controls ${hasErrors(bean: scheduled, field: 'accountFrom', 'errors')}">
+            <g:select id="account${type}" optionValue="name" name="accountFrom.id" from="${accounts}" optionKey="id" value="${scheduled?.accountFrom?.id}"/>
+        </div>
+    </div>
 
-      </tr>
+    <div class="control-group">
+        <label for="amount${type}" class="control-label mandatory"><g:message code="loan.amount.label" default="Amount"/></label>
 
-      <tr class="prop">
-        <td valign="top" class="name">
-          <label for="description"><g:message code="loan.description.label" default="Description" /></label>
-        </td>
-        <td valign="top" class="value ${hasErrors(bean: loanInstance, field: 'description', 'errors')}">
-      <g:textArea name="description" cols="40" rows="5" value="${loanInstance?.description}" />
-      </td>
-      </tr>
+        <div class="controls ${hasErrors(bean: loanInstance, field: 'amount', 'errors')}">
+            <g:textField id="amount${type}" name="amount" value="${fieldValue(bean: loanInstance, field: 'amount')}" required="true"/>
+        </div>
+    </div>
 
-      </tbody>
-    </table>
-  </div>
-  <div class="buttons">
-    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
-  </div>
+    <div class="control-group">
+        <label for="interest${type}" class="control-label mandatory"><g:message code="loan.interest.label" default="Interest"/></label>
 
-  <jq:jquery>
-    jQuery("#dateApplication${type}").datePicker({clickInput:true, startDate:'01/01/1996'});
-    jQuery("#dateLastApplication${type}").datePicker({clickInput:true, startDate:'01/01/1996'});
-  </jq:jquery>
+        <div class="controls ${hasErrors(bean: loanInstance, field: 'interest', 'errors')}">
+            <g:textField id="interest${type}" name="interest" value="${fieldValue(bean: loanInstance, field: 'interest')}" required="true"/>
+        </div>
+    </div>
 
+    <div class="control-group">
+        <label for="refund${type}" class="control-label mandatory"><g:message code="loan.refundValue.label" default="Refund"/></label>
+
+        <div class="controls ${hasErrors(bean: loanInstance, field: 'refundValue', 'errors')}">
+            <g:textField id="refund${type}" name="refundValue" value="${fieldValue(bean: loanInstance, field: 'refundValue')}" required="true"/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label for="dateApplication${type}" class="control-label mandatory"><g:message code="scheduled.dateApplication.label"
+                                                                                       default="Date Application"/></label>
+
+        <div class="controls ${hasErrors(bean: scheduled, field: 'dateApplication', 'errors')}">
+            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}" name="dateApplication"
+                   id="dateApplication${type}" required="true"/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label for="description${type}" class="control-label"><g:message code="loan.description.label" default="Description"/></label>
+
+        <div class="controls ${hasErrors(bean: loanInstance, field: 'description', 'errors')}">
+            <g:textArea id="description${type}" name="description" cols="40" rows="5" value="${loanInstance?.description}" class="input-block-level"/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <g:submitButton name="create" class="save btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}"/>
+        </div>
+    </div>
 </g:form>
