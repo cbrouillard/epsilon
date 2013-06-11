@@ -14,12 +14,9 @@
 <head>
     <title><g:layoutTitle default="Grails"/></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'epsilon.css')}"/>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'datePicker.css')}"/>--}%
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon"/>
 
     <r:require module="jquery"/>
-    %{--<script src="${resource(dir: '/js', file: 'date.js')}"></script>--}%
-    %{--<export:resource/>--}%
 
     <style>
     #container {
@@ -35,6 +32,7 @@
 
     <ofchart:resources/>
     <r:require module="bootstrap"/>
+    <r:require module="jquery-ui"/>
     <g:layoutHead/>
     <r:layoutResources/>
 
@@ -77,4 +75,11 @@
 <r:layoutResources/>
 </body>
 
+<script type="text/javascript">
+    jQuery(function(){
+        $(".datepicker").datepicker({'dateFormat': 'dd/mm/yy', showOn: 'both', buttonText: '<i class="icon-calendar"></i>'});
+        $(".datepicker-inner").datepicker({'dateFormat': 'dd/mm/yy'});
+
+    });
+</script>
 </html>

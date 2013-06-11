@@ -36,7 +36,7 @@
     <label for="previsionBuyDate" class="control-label"><g:message code="wish.previsionBuy.label" default="Prevision Buy"/></label>
 
     <div class="controls ${hasErrors(bean: wishInstance, field: 'previsionBuy', 'errors')}">
-        <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: wishInstance?.previsionBuy)}" name="previsionBuy" id="previsionBuyDate"/>
+        <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: wishInstance?.previsionBuy)}" name="previsionBuy" id="previsionBuyDate" class="datePicker"/>
     </div>
 </div>
 

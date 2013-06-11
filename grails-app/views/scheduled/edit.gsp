@@ -74,7 +74,7 @@
 
                         <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateApplication', 'errors')}">
                             <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
-                                   id="dateApplication" required="true"/>
+                                   id="dateApplication" required="true" class="datePicker"/>
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@
                         <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateLastApplication', 'errors')}">
                             <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}"
                                    name="dateLastApplication"
-                                   id="dateLastApplication"/>
+                                   id="dateLastApplication" class="datePicker"/>
                         </div>
                     </div>
 

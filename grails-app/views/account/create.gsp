@@ -70,7 +70,8 @@
                             <label for="bank.id" class="control-label mandatory"><g:message code="account.bank.label" default="Bank"/></label>
 
                             <div class="controls ${hasErrors(bean: accountInstance, field: 'bank', 'errors')}">
-                                <g:select optionValue="name" name="bank.id" from="${banks}" optionKey="id" value="${accountInstance?.bank?.id}" required="true"/>
+                                <g:select optionValue="name" name="bank.id" from="${banks}" optionKey="id" value="${accountInstance?.bank?.id}"
+                                          required="true"/>
                             </div>
                         </div>
 
@@ -87,7 +88,7 @@
 
                             <div class="controls ${hasErrors(bean: accountInstance, field: 'dateOpened', 'errors')}">
                                 <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: accountInstance?.dateOpened)}" name="dateOpened"
-                                       id="dateOpened" required="true"/>
+                                       id="dateOpened" required="true" class="datePicker"/>
                             </div>
                         </div>
 

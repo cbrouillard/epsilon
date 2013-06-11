@@ -90,7 +90,7 @@
 
                         <div class="controls ${hasErrors(bean: scheduled, field: 'dateApplication', 'errors')}">
                             <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}" name="dateApplication"
-                                   id="dateApplication" required="true"/>
+                                   id="dateApplication" required="true" class="datePicker"/>
                         </div>
                     </div>
 

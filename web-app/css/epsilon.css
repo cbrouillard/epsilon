@@ -294,7 +294,7 @@ td.budget-REACHED {
 td.budget-KO {
     font-weight: bold;
     color: red;
-    background-color: #000;
+    background-color: #000 !important;
 }
 
 .account-informations {
@@ -394,5 +394,17 @@ label.mandatory {
 
 div.errors input{
     border: 1px solid red;
+    font-weight: bold;
+}
+
+.ui-datepicker-trigger{
+    min-height: 30px !important;
+    margin-left:5px;
+}
+
+.ui-widget-header {
+    border: 1px solid #48802C;
+    background: #92e07f url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x;
+    color: #ffffff;
     font-weight: bold;
 }

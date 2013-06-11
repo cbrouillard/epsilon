@@ -37,7 +37,7 @@
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
             <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}" name="dateApplication"
-                   id="dateApplicationvirement" class="input-block-level" required="true"/>
+                   id="dateApplicationvirement" class="datePicker-inner input-block-level" required="true"/>
         </div>
     </div>
 

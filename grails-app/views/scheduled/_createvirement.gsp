@@ -28,7 +28,7 @@
                 <label for="categoryvirement" class="control-label mandatory"><g:message code="scheduled.category.label" default="Category"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'category', 'errors')}">
-                    <richui:autoComplete id="categoryvirement" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
+                    <g:textField id="categoryvirement" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
                                          value="${scheduledInstance?.category?.name}" required="true" class="input-block-level"/>
                 </div>
             </div>
@@ -59,7 +59,7 @@
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateApplication', 'errors')}">
                     <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
-                           id="dateApplicationvirement" required="true"/>
+                           id="dateApplicationvirement" required="true" class="datePicker"/>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateLasApplication', 'errors')}">
                     <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}" name="dateLastApplication"
-                           id="dateLastApplicationvirement"/>
+                           id="dateLastApplicationvirement" class="datePicker"/>
                 </div>
             </div>
 

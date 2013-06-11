@@ -28,7 +28,7 @@
                 <label for="tiers${type}" class="control-label mandatory"><g:message code="scheduled.tiers.label" default="Tiers"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'tiers', 'errors')}">
-                    <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                    <g:textField id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
                                          value="${scheduledInstance?.tiers?.name}" class="input-block-level" required="true"/>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <label for="category${type}" class="control-label mandatory"><g:message code="scheduled.category.label" default="Category"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'category', 'errors')}">
-                    <richui:autoComplete id="category${type}" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
+                    <g:textField id="category${type}" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
                                          value="${scheduledInstance?.category?.name}" required="true" class="input-block-level"/>
                 </div>
             </div>
@@ -60,7 +60,7 @@
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateApplication', 'errors')}">
                     <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
-                           id="dateApplication${type}" required="true"/>
+                           id="dateApplication${type}" required="true" class="datePicker"/>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateLastApplication', 'errors')}">
                     <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}" name="dateLastApplication"
-                           id="dateLastApplication${type}"/>
+                           id="dateLastApplication${type}" class="datePicker"/>
                 </div>
             </div>
 
