@@ -131,6 +131,12 @@ public class DateUtil {
         calendar.setTime(date != null ? date : getTodayMorning());
         return calendar.get(Calendar.MONTH);
     }
+
+    public Integer getYear (Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date != null ? date : getTodayMorning());
+        return calendar.get(Calendar.YEAR);
+    }
     
     public Integer getCurrentYear (){
         Calendar calendar = Calendar.getInstance();

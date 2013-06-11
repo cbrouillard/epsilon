@@ -10,38 +10,56 @@
  * GNU General Public License for more details.
  */
 -->
-<div class="list">
-  <table>
+<div class="pagination text-right">
+    <ul>
+        <li>
+            <a href="#top"><i class="icon-arrow-up"></i></a>
+        </li>
+        <li>
+            <a href="#bottom"><i class="icon-arrow-down"></i></a>
+        </li>
+    </ul>
+</div>
+<table class="table table-striped table-hover">
     <thead>
-      <tr>
+    <tr>
         <th>Date</th>
         <th>Catégorie</th>
         <th>Paiement</th>
         <th>Dépôt</th>
         <th>Total</th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
-    <g:set var="total" value="${0D}" />
+    <g:set var="total" value="${0D}"/>
     <g:each in="${operations}" status="i" var="operation">
-      <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-        <td><g:formatDate date="${operation.dateApplication}" /></td>
-      <td>${operation.category.name}</td>
-      <td class="tdright">
-      <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.RETRAIT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
-<g:formatNumber number="${operation?.amount}" format="0.##" /> €
-        <g:set var="total" value="${total - operation?.amount}" />
-      </g:if>
-      </td>
-      <td class="tdright">
-      <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.DEPOT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_PLUS}">
-<g:formatNumber number="${operation?.amount}" format="0.##" /> €
-        <g:set var="total" value="${total + operation?.amount}" />
-      </g:if>
-      </td>
-      <td class="tdright"><g:formatNumber number="${total}" format="0.##" /> €</td>
-      </tr>
+        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+            <td><g:formatDate date="${operation.dateApplication}"/></td>
+            <td>${operation.category.name}</td>
+            <td class="tdright">
+                <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.RETRAIT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
+                    <b><g:formatNumber number="${operation?.amount}" format="0.##"/> €</b>
+                    <g:set var="total" value="${total - operation?.amount}"/>
+                </g:if>
+            </td>
+            <td class="tdright">
+                <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.DEPOT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_PLUS}">
+                    <b><g:formatNumber number="${operation?.amount}" format="0.##"/> €</b>
+                    <g:set var="total" value="${total + operation?.amount}"/>
+                </g:if>
+            </td>
+            <td class="tdright"><g:formatNumber number="${total}" format="0.##"/> €</td>
+        </tr>
     </g:each>
     </tbody>
-  </table>
+</table>
+<div class="pagination text-right">
+    <ul>
+        <li>
+            <a href="#top"><i class="icon-arrow-up"></i></a>
+        </li>
+        <li>
+            <a href="#bottom"><i class="icon-arrow-down"></i></a>
+        </li>
+    </ul>
 </div>

@@ -45,6 +45,7 @@ class ChartService {
 
         def currentMonth
         def prevMonth
+        def currentYear
         def totalMonthAmount = 0
         if (operations && operations.size() > 0){
             prevMonth = dateUtil.getMonth (operations.get(0).dateApplication)
@@ -54,13 +55,14 @@ class ChartService {
         operations.each {operation ->
             log.info "Adding this operation : ${operation.id} : ${operation.amount} // ${operation.dateApplication}"
             currentMonth = dateUtil.getMonth(operation.dateApplication)
+            currentYear = dateUtil.getYear(operation.dateApplication)
 
             if (currentMonth != prevMonth){
                 // on a changé de mois !
-                axis.addLabels (new Label("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))}").setRotation(Rotation.DIAGONAL))
+                axis.addLabels (new Label("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))} $currentYear").setRotation(Rotation.DIAGONAL))
 
                 def operationBar = new BarChart.Bar(totalMonthAmount,barColor)
-                operationBar.setTooltip("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))}<br>#val# €");
+                operationBar.setTooltip("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))} $currentYear<br>#val# €");
                 barChart.addBars(operationBar)
 
                 if (totalMonthAmount >= yAxis.getMax()){
@@ -77,7 +79,7 @@ class ChartService {
         }
 
         if (totalMonthAmount!=0){
-            axis.addLabels (new Label("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))}").setRotation(Rotation.DIAGONAL))
+            axis.addLabels (new Label("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))} $currentYear").setRotation(Rotation.DIAGONAL))
 
             if (totalMonthAmount >= yAxis.getMax()){
                 yAxis.setMax (totalMonthAmount+100)
@@ -85,7 +87,7 @@ class ChartService {
 
             
             def operationBar = new BarChart.Bar(totalMonthAmount,barColor)
-            operationBar.setTooltip("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))}<br>#val# €");
+            operationBar.setTooltip("${messageSource.getMessage('month.'+prevMonth,null,new Locale("fr"))} $currentYear<br>#val# €");
             barChart.addBars(operationBar)
         }
 

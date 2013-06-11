@@ -33,7 +33,7 @@
 
     %{--<ofchart:resources/>--}%
 
-
+    <ofchart:resources/>
     <r:require module="bootstrap"/>
     <g:layoutHead/>
     <r:layoutResources/>
