@@ -28,7 +28,7 @@
     }
     </style>
 
-    %{--<script src="${resource(dir: '/js', file: 'password.js')}"></script>--}%
+    <script src="${resource(dir: '/js', file: 'password.js')}"></script>
     %{--<script src="${resource(dir: '/js', file: 'application.js')}"></script>--}%
 
     %{--<ofchart:resources/>--}%

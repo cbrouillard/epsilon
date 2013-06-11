@@ -25,7 +25,7 @@
     <div class="row">
         <div class="span12">
             <div>
-                <h1>Editer un compte</h1>
+                <h1>Editer un compte <small>${accountInstance.name}</small></h1>
                 <hr/>
             </div>
         </div>

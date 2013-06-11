@@ -23,7 +23,7 @@
 </g:if>
 
 <dl class="dl-horizontal">
-    <dt><g:message code="category.id.label" default="Id"/></dt>
+    <dt><g:message code="category.id.label" default="ID"/></dt>
     <dd>${fieldValue(bean: categoryInstance, field: "id")}</dd>
 
     <dt><g:message code="category.name.label" default="Name"/></dt>
@@ -39,7 +39,7 @@
     <dd><g:formatDate date="${categoryInstance?.dateCreated}"/></dd>
 
     <dt><g:message code="category.lastUpdated.label" default="Last Updated"/></dt>
-    <dd><g:formatDate date="${categoryInstance?.lastUpdated}"/></dd>
+    <dd><g:formatDate date="${categoryInstance?.lastUpdated}"/>&nbsp;</dd>
 
     <dt><g:message code="category.operations.label" default="Operations"/></dt>
     <dd>

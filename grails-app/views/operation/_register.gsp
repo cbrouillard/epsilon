@@ -22,8 +22,6 @@
 %{--</g:if>--}%
 %{--</div>--}%
 <g:render template="monthpagination"/>
-
-
 <table class="table table-striped table-hover">
     <thead>
     <tr>

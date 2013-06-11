@@ -13,7 +13,7 @@
     <div class="row">
         <div class="span12">
             <div>
-                <h1>Editer un souhait d'achat</h1>
+                <h1>Editer un souhait d'achat <small>${wishInstance.name}</small></h1>
                 <hr/>
             </div>
         </div>

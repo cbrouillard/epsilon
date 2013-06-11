@@ -27,7 +27,7 @@
     <div class="row">
         <div class="span12">
             <div>
-                <h1>Editer un budget</h1>
+                <h1>Editer un budget <small>${budgetInstance.name}</small></h1>
                 <hr/>
             </div>
         </div>

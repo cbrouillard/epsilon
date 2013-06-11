@@ -26,7 +26,7 @@
     <div class="row">
         <div class="span12">
             <div>
-                <h1>Editer un établissement</h1>
+                <h1>Editer un établissement <small>${bankInstance.name}</small></h1>
                 <hr/>
             </div>
         </div>

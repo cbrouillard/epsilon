@@ -26,7 +26,7 @@
     <div class="row">
         <div class="span12">
             <div>
-                <h1>Editer une échéance</h1>
+                <h1>Editer une échéance <small>${scheduledInstance.name}</small></h1>
                 <hr/>
             </div>
         </div>

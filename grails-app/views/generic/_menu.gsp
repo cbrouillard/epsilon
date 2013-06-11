@@ -133,7 +133,7 @@
         <ul class="dropdown-menu">
             <g:each in="${accounts}" var="account">
                 <li>
-                    <g:link controller="operation" params="[account: account.id]" action="list">${account.nameAndSold}</g:link>
+                    <g:link controller="operation" params="[account: account.id]" action="list"><img src="${resource(dir: 'img', file: 'operation.png')}"/> ${account.nameAndSold}</g:link>
                 </li>
             </g:each>
         </ul>

@@ -25,7 +25,7 @@
     <div class="row">
         <div class="span12">
             <div>
-                <h1>Edition d'un prêt</h1>
+                <h1>Edition d'un prêt <small>${loanInstance.name}</small></h1>
                 <hr/>
             </div>
         </div>
