@@ -61,7 +61,7 @@
                             </td>
                             <td><a href="mailto:${fieldValue(bean: person, field: "email")}">${fieldValue(bean: person, field: "email")}</a></td>
                             <td class="tdcenter">
-                                <g:link title="Afficher les détails" class="popup" action="showuser" id="${person.id}"><img
+                                <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show" action="showuser" id="${person.id}"><img
                                         src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
                                 <g:link title="Editer" action="edituser" id="${person.id}"><img src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
                             </td>
@@ -78,5 +78,18 @@
     </div>
 
 </div>
+
+<div id="modalWindow_show" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+
+        <h3>Détails d'un utilisateur</h3>
+    </div>
+
+    <div class="modal-body">
+        <img src="${resource(dir: 'images', file: 'spinner.gif')}"/>
+    </div>
+</div>
+
 </body>
 </html>
