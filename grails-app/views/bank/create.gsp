@@ -44,7 +44,7 @@
                     </div>
                 </g:hasErrors>
 
-                <form class="form-horizontal" method="post">
+                <form class="form-horizontal" method="post" action="save">
                     <div class="control-group">
                         <label for="name" class="control-label mandatory"><g:message code="bank.name.label" default="Name"/></label>
 

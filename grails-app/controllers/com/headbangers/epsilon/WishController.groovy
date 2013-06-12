@@ -9,6 +9,7 @@ class WishController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def springSecurityService
+    def genericService
 
     def index() {
         redirect(action: "list", params: params)
@@ -16,7 +17,11 @@ class WishController {
 
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [wishInstanceList: Wish.list(params), wishInstanceTotal: Wish.count()]
+
+        def person = springSecurityService.getCurrentUser()
+        def wishes = genericService.loadUserObjects (person, Wish.class, params)
+
+        [wishInstanceList: wishes, wishInstanceTotal: wishes.totalCount]
     }
 
     def create() {
