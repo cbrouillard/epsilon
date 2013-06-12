@@ -11,23 +11,24 @@
 
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
-grails.project.test.reports.dir	= "target/test-reports"
+grails.project.test.reports.dir = "target/test-reports"
+grails.project.target.level = 1.6
+grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
-    inherits( "global" ) {
+    inherits("global") {
         // uncomment to disable ehcache
         excludes 'ehcache'
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
-    repositories {        
+    repositories {
         grailsPlugins()
         grailsHome()
         grailsCentral()
-        // uncomment the below to enable remote dependency resolution
-        // from public Maven repositories
-        //mavenLocal()
-        //mavenCentral()
+        mavenLocal()
+        mavenCentral()
+
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -35,26 +36,26 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
         //runtime 'mysql:mysql-connector-java:5.1.5'
-        runtime 'hsqldb:hsqldb:1.8.0.10'
         runtime 'postgresql:postgresql:9.1-901.jdbc4'
     }
 
     plugins {
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.8.0"
-        runtime ":resources:1.1.6"
+        runtime ":resources:1.2.RC2"
 
         build ":tomcat:$grailsVersion"
-        
-        compile ":richui:0.8"
+
         compile ":ofchart:0.6.3"
-        compile ":export:1.3"
-        compile ":quartz:1.0-RC2"
-        compile ":bayes:0.4"
+        compile ":quartz:1.0-RC8"
+        //        compile ":bayes:0.4"
         compile ":multi-select:0.2"
-        compile ":mail:1.0"
+        compile ":mail:1.0.1"
+
+        compile ":jquery-ui:1.8.24"
+        compile ":spring-security-core:1.2.7.3"
+        compile ":twitter-bootstrap:2.3.2"
     }
-    
+
 }

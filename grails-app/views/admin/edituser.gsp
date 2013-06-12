@@ -77,10 +77,10 @@
                     </div>
 
                     <div class="control-group">
-                        <label for="password" class="control-label mandatory"><g:message code="person.pass.label" default="Pass"/></label>
+                        <label for="password" class="control-label"><g:message code="person.pass.label" default="Pass"/></label>
 
                         <div class="controls ${hasErrors(bean: person, field: 'passwd', 'errors')}">
-                            <g:textField id="password" name="pass" class="password input-block-level" required="true"/>
+                            <g:textField id="password" name="pass" class="password input-block-level"/>
                             <div style="color:green" id='result'></div>
                         </div>
                     </div>

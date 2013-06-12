@@ -33,8 +33,8 @@ class Person {
     static constraints = {
         username blank: false, unique: true
         password blank: false
-        
-        mobileToken (blank:false, nullable:true, unique:true)
+
+        mobileToken (blank:false, nullable:true)
         userRealName blank:false
     }
 

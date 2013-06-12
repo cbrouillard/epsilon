@@ -401,10 +401,3 @@ div.errors input{
     min-height: 30px !important;
     margin-left:5px;
 }
-
-.ui-widget-header {
-    border: 1px solid #48802C;
-    background: #92e07f url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x;
-    color: #ffffff;
-    font-weight: bold;
-}

@@ -48,14 +48,16 @@ class AdminController {
             //person.passwd = springSecurityService.passwordEncoder(person.pass)
             person.password = params.pass
         }
-        
+
         if (person.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), person.username])}"
 
             def role = Role.findByAuthority ("ROLE_USER")
-            role.addToPeople (person)
-            role.save(flush:true)
-
+            if (!role) {
+                // Should not happen
+                role = new Role(authority: "ROLE_USER").save(flush: true)
+            }
+            PersonRole.create(person, role, true)
             redirect(action: "index")
         }
         else {
@@ -110,15 +112,11 @@ class AdminController {
         def person = Person.get(params.id)
         if (person){
 
-            def role = Role.findByAuthority ("ROLE_USER")
-            role.removeFromPeople (person)
-            role.save(flush:true)
-
             person.delete(flush:true)
             flash.message = "Personne ${person.username} effacée"
 
         } else {
-            flash.message = "Personne introuvable"            
+            flash.message = "Personne introuvable"
         }
 
         redirect(action:'index')

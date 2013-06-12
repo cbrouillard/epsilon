@@ -33,43 +33,40 @@
 </head>
 
 <body>
-<g:if test='${flash.message}'>
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="alert alert-error">${flash.message}</div>
+<div class="container">
+    <div class="row">
+
+        <div class="span2">&nbsp;</div>
+
+        <div class="span4">
+
+            <g:if test='${flash.message}'>
+                <div class="alert alert-error">${flash.message}</div>
+            </g:if>
+
+            <form class="form-signin" action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
+                <h2 class="form-signin-heading alert alert-success"><g:message code="springSecurity.login.header"/></h2>
+                <input type="text" class="input-block-level" placeholder="${message(code: 'springSecurity.login.username.label')}"
+                       name='j_username' required="true">
+                <input type="password" class="input-block-level" placeholder="${message(code: 'springSecurity.login.password.label')}"
+                       name='j_password' required="true">
+
+                <div class="pull-right">
+                    <label>
+                        <g:message code="springSecurity.login.remember.me.label"/>
+                        <input type="checkbox" name='${rememberMeParameter}'
+                               <g:if test='${hasCookie}'>checked='checked'</g:if>>
+                    </label>
+                    <button class="btn btn-large btn-primary" type="submit"><g:message code="springSecurity.login.button"/></button>
+                </div>
+
+                <div class="clearfix">&nbsp;</div>
+            </form>
+
         </div>
+
+        <div class="span6">&nbsp;</div>
     </div>
-</g:if>
-
-<div class="row-fluid">
-
-    <div class="span2">&nbsp;</div>
-
-    <div class="span4">
-
-        <form class="form-signin" action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
-            <h2 class="form-signin-heading alert alert-success"><g:message code="springSecurity.login.header"/></h2>
-            <input type="text" class="input-block-level" placeholder="${message(code: 'springSecurity.login.username.label')}"
-                   name='j_username' required="true">
-            <input type="password" class="input-block-level" placeholder="${message(code: 'springSecurity.login.password.label')}"
-                   name='j_password' required="true">
-
-            <div class="pull-right">
-                <label>
-                    <g:message code="springSecurity.login.remember.me.label"/>
-                    <input type="checkbox" name='${rememberMeParameter}'
-                           <g:if test='${hasCookie}'>checked='checked'</g:if>>
-                </label>
-                <button class="btn btn-large btn-primary" type="submit"><g:message code="springSecurity.login.button"/></button>
-            </div>
-
-            <div class="clearfix">&nbsp;</div>
-        </form>
-
-    </div>
-
-    <div class="span6">&nbsp;</div>
-
 </div>
 
 <script type='text/javascript'>

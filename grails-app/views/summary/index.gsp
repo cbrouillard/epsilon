@@ -67,22 +67,21 @@
                     </table>
                 </g:if>
                 <g:else>
-                    <h1 class="red">Aucun compte enregistré.</h1>
+                    <div class="alert alert-warning">
+                        Il semble que ce soit la première fois que vous accédez à Epsilon.<br/>Avant toute chose, il va falloir créer un "compte". Un compte est obligatoirement
+                    lié à un "établissement". <br/>Commencez donc par <b>créer un nouvel établissement bancaire</b> (ex: Crédit Agricole). Une fois
+                    l'établissement enregistré, <b>ajoutez simplement un nouveau compte</b> et commencez à utiliser Epsilon !<br/><br/>
 
-                    <div class="help">
-                        Il semble que ce soit la première fois que vous accédez à Epsilon.<br/>
-                        Avant toute chose, il va falloir créer un "compte". <br/><br/>Un compte est obligatoirement
-                    lié à un "établissement". <br/>Commencez donc par <g:link controller="bank"
-                                                                              action="create">créer un nouvel établissement bancaire</g:link> (ex: Crédit Agricole, BNP, ...).<br/><br/>
-                        Une fois l'établissement enregistré, <g:link controller="account"
-                                                                     action="create">ajoutez simplement un nouveau compte</g:link> et commencez à utiliser Epsilon !
+                        <ol>
+                            <li><g:link controller="bank" action="create"><img
+                                    src="${resource(dir: 'img', file: 'bank.png')}"
+                                    alt=">"/> Créer un nouvel établissement</g:link></li>
+                            <li><g:link controller="account" action="create"><img src="${resource(dir: 'img', file: 'account.png')}"
+                                                                                  alt=">"/> Créer un nouveau compte</g:link></li>
+                        </ol>
+
                     </div>
-                    <ul>
-                        <li><g:link controller="bank" action="create"><img src="${resource(dir: 'img', file: 'bank.png')}"
-                                                                           alt=">"/> Créer un nouvel établissement</g:link></li>
-                        <li><g:link controller="account" action="create"><img src="${resource(dir: 'img', file: 'account.png')}"
-                                                                              alt=">"/> Créer un nouveau compte</g:link></li>
-                    </ul>
+
                 </g:else>
             </div>
 
@@ -171,7 +170,6 @@
 
             </div>
         </div>
-
 
     </div>
 
