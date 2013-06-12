@@ -26,8 +26,10 @@
         <label for="categoryvirement" class="control-label mandatory"><g:message code="operation.category.label" default="Category"/></label>
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
-            <richui:autoComplete id="categoryvirement" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
-                                 value="${operationInstance?.category?.name}" class="input-block-level" required="true"/>
+            <g:textField id="categoryvirement" name="category.name"
+                         value="${operationInstance?.category?.name}"
+                         class="input-block-level typeahead-categories-virement" required="true"
+                         autocomplete="off"/>
         </div>
     </div>
 

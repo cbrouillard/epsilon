@@ -76,9 +76,51 @@
 </body>
 
 <script type="text/javascript">
-    jQuery(function(){
+    jQuery(function () {
         $(".datepicker").datepicker({'dateFormat': 'dd/mm/yy', showOn: 'both', buttonText: '<i class="icon-calendar"></i>'});
         $(".datepicker-inner").datepicker({'dateFormat': 'dd/mm/yy'});
+
+        $(".datepicker, .datepicker-inner").attr("autocomplete", "off");
+
+        $('.typeahead-tiers').typeahead({
+            source: function (query, process) {
+                return $.get('${createLink(controller: 'tiers', action:'simpleautocomplete')}', { query: query },
+                        function
+                                (data) {
+                            return process(data);
+                        });
+            }
+        });
+
+        $('.typeahead-categories-facture, .typeahead-categories-retrait').typeahead({
+            source: function (query, process) {
+                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query },
+                        function
+                                (data) {
+                            return process(data);
+                        });
+            }
+        });
+
+        $('.typeahead-categories-depot').typeahead({
+            source: function (query, process) {
+                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query, type: 'depot' },
+                        function
+                                (data) {
+                            return process(data);
+                        });
+            }
+        });
+
+        $('.typeahead-categories-virement').typeahead({
+            source: function (query, process) {
+                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query, type: 'virement' },
+                        function
+                                (data) {
+                            return process(data);
+                        });
+            }
+        });
 
     });
 </script>

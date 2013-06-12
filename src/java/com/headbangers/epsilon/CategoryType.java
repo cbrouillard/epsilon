@@ -18,4 +18,20 @@ public enum CategoryType {
     VIREMENT,
     ;
 
+    public static CategoryType guess (String from){
+        if (from.equals("depot")){
+            return REVENU;
+        }
+
+        if (from.equals("facture")){
+            return DEPENSE;
+        }
+
+        if (from.equals("virement")){
+            return VIREMENT;
+        }
+
+        return DEPENSE;
+    }
+
 }

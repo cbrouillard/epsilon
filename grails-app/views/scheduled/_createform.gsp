@@ -28,8 +28,9 @@
                 <label for="tiers${type}" class="control-label mandatory"><g:message code="scheduled.tiers.label" default="Tiers"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'tiers', 'errors')}">
-                    <g:textField id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                         value="${scheduledInstance?.tiers?.name}" class="input-block-level" required="true"/>
+                    <g:textField id="tiers${type}" name="tiers.name" value="${scheduledInstance?.tiers?.name}" class="input-block-level typeahead-tiers"
+                                 required="true"
+                                 autocomplete="off"/>
                 </div>
             </div>
 
@@ -37,8 +38,9 @@
                 <label for="category${type}" class="control-label mandatory"><g:message code="scheduled.category.label" default="Category"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'category', 'errors')}">
-                    <g:textField id="category${type}" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
-                                         value="${scheduledInstance?.category?.name}" required="true" class="input-block-level"/>
+                    <g:textField id="category${type}" name="category.name"
+                                 value="${scheduledInstance?.category?.name}" required="true" class="input-block-level typeahead-categories-${type}"
+                                 autocomplete="off"/>
                 </div>
             </div>
 

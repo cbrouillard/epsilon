@@ -28,8 +28,8 @@
         <label for="tiers${type}" class="control-label mandatory"><g:message code="loan.tiers.label" default="Tiers"/></label>
 
         <div class="controls ${hasErrors(bean: loanInstance, field: 'tiers', 'errors')}">
-            <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                 value="${loanInstance?.tiers?.name}" class="input-block-level" required="true"/>
+            <g:textField id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                                 value="${loanInstance?.tiers?.name}" class="input-block-level typeahead-tiers" required="true" autocomplete="off"/>
         </div>
     </div>
 

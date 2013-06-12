@@ -28,8 +28,10 @@
                 <label for="categoryvirement" class="control-label mandatory"><g:message code="scheduled.category.label" default="Category"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'category', 'errors')}">
-                    <g:textField id="categoryvirement" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
-                                         value="${scheduledInstance?.category?.name}" required="true" class="input-block-level"/>
+                    <g:textField id="categoryvirement" name="category.name"
+                                 value="${scheduledInstance?.category?.name}" required="true"
+                                 class="input-block-level typeahead-categories-virement"
+                                 autocomplete="off"/>
                 </div>
             </div>
 

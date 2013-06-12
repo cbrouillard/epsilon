@@ -10,6 +10,8 @@
  */
 
 package com.headbangers.epsilon
+
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
 
@@ -89,7 +91,7 @@ class CategoryController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (categoryInstance.version > version) {
-                    
+
                     categoryInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'category.label', default: 'Category')] as Object[], "Another user has updated this Category while you were editing")
                     render(view: "edit", model: [categoryInstance: categoryInstance])
                     return
@@ -129,30 +131,20 @@ class CategoryController {
         }
     }
 
-    def autocomplete = {
-
-        def categoryType = null
+    def simpleautocomplete(){
+        def categoryType = CategoryType.DEPENSE
         if (params.type){
-            categoryType= params.type.equals ("depot") ? CategoryType.REVENU : CategoryType.DEPENSE
+            categoryType= CategoryType.guess(params.type)
         }
         def person = springSecurityService.getCurrentUser()
         def categories = Category.createCriteria ().list {
             owner{eq("id", person.id)}
-            if (categoryType) eq("type", categoryType)
+            if (categoryType && categoryType != CategoryType.VIREMENT) eq("type", categoryType)
             ilike ("name", "${params.query}%")
         }
 
-        render(contentType: "text/xml") {
-	    results() {
-	        categories.each { category ->
-		    result(){
-		        name(category.name)
-                        //Optional id which will be available in onItemSelect
-                        id(category.id)
-		    }
-		}
-            }
-        }
+        render categories*.name as JSON
+        return
     }
 
     def operations = {
@@ -171,22 +163,22 @@ class CategoryController {
         def person = springSecurityService.getCurrentUser()
         def cat = genericService.loadUserObject (person, Category.class, params.id)
         def operations = categoryService.retrieveOperations(cat)
-        
+
         // pour une catégorie, déterminer la somme des opérations sur chaque mois
         render chartService.createByMonthOperationsChart (cat.name, 500, "#428547", operations)
     }
 
-    
+
     def search = {
         def person = springSecurityService.getCurrentUser()
-        
+
         def categories = Category.createCriteria().list(params){
             ilike ("name", "%${params.query}%")
             owner{eq("id", person.id)}
         }
-        
+
         render (view:'list',  model:[categoryInstanceList: categories, categoryInstanceTotal: categories.size()])
-        
+
     }
-    
+
 }

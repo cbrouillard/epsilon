@@ -10,6 +10,8 @@
  */
 
 package com.headbangers.epsilon
+
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -30,7 +32,7 @@ class TiersController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 
         def person = springSecurityService.getCurrentUser()
-        def tiers = genericService.loadUserObjects (person, Tiers.class, params)
+        def tiers = genericService.loadUserObjects(person, Tiers.class, params)
 
         [tiersInstanceList: tiers, tiersInstanceTotal: tiers.totalCount]
     }
@@ -49,8 +51,7 @@ class TiersController {
         if (tiersInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'tiers.label', default: 'Tiers'), tiersInstance.name])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             render(view: "create", model: [tiersInstance: tiersInstance])
         }
     }
@@ -60,8 +61,7 @@ class TiersController {
         if (!tiersInstance || !tiersInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'tiers.label', default: 'Tiers'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             [tiersInstance: tiersInstance]
         }
     }
@@ -71,8 +71,7 @@ class TiersController {
         if (!tiersInstance || !tiersInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'tiers.label', default: 'Tiers'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             return [tiersInstance: tiersInstance]
         }
     }
@@ -83,8 +82,9 @@ class TiersController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (tiersInstance.version > version) {
-                    
-                    tiersInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'tiers.label', default: 'Tiers')] as Object[], "Another user has updated this Tiers while you were editing")
+
+                    tiersInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'tiers.label',
+                            default: 'Tiers')] as Object[], "Another user has updated this Tiers while you were editing")
                     render(view: "edit", model: [tiersInstance: tiersInstance])
                     return
                 }
@@ -93,12 +93,10 @@ class TiersController {
             if (!tiersInstance.hasErrors() && tiersInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'tiers.label', default: 'Tiers'), tiersInstance.name])}"
                 redirect(action: "list")
-            }
-            else {
+            } else {
                 render(view: "edit", model: [tiersInstance: tiersInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'tiers.label', default: 'Tiers'), params.id])}"
             redirect(action: "list")
         }
@@ -116,35 +114,41 @@ class TiersController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'tiers.label', default: 'Tiers'), tiersInstance.name])}"
                 redirect(action: "list")
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'tiers.label', default: 'Tiers'), params.id])}"
             redirect(action: "list")
         }
+    }
+
+    def simpleautocomplete = {
+        def tiers = Tiers.findAllByNameLikeAndOwner("%${params.query}%", springSecurityService.getCurrentUser())
+
+        render tiers*.name as JSON
+        return
     }
 
     def autocomplete = {
         def tiers = Tiers.findAllByNameLikeAndOwner("%${params.query}%", springSecurityService.getCurrentUser())
 
         render(contentType: "text/xml") {
-	    results() {
-	        tiers.each { tier ->
-		    result(){
-		        name(tier.name)
+            results() {
+                tiers.each {tier ->
+                    result() {
+                        name(tier.name)
                         //Optional id which will be available in onItemSelect
                         id(tier.id)
-		    }
-		}
+                    }
+                }
             }
         }
     }
 
     def operations = {
-        def tiers = genericService.loadUserObject (springSecurityService.getCurrentUser(), Tiers.class, params.id)
-        if (tiers){
-            [tiers:tiers]
+        def tiers = genericService.loadUserObject(springSecurityService.getCurrentUser(), Tiers.class, params.id)
+        if (tiers) {
+            [tiers: tiers]
         } else {
-            redirect(action:"list")
+            redirect(action: "list")
         }
     }
 
@@ -152,22 +156,22 @@ class TiersController {
 
         // getting category
         def person = springSecurityService.getCurrentUser()
-        def tiers = genericService.loadUserObject (person, Tiers.class, params.id)
+        def tiers = genericService.loadUserObject(person, Tiers.class, params.id)
         def operations = tiersService.retrieveOperations(tiers)
 
         // pour une catégorie, déterminer la somme des opérations sur chaque mois
-        render chartService.createByMonthOperationsChart (tiers.name, 500, "#428547", operations)
+        render chartService.createByMonthOperationsChart(tiers.name, 500, "#428547", operations)
     }
-    
+
     def search = {
         def person = springSecurityService.getCurrentUser()
-        
-        def tiers = Tiers.createCriteria().list(params){
-            ilike ("name", "%${params.query}%")
-            owner{eq("id", person.id)}
+
+        def tiers = Tiers.createCriteria().list(params) {
+            ilike("name", "%${params.query}%")
+            owner {eq("id", person.id)}
         }
-        
-        render (view:'list',  model:[tiersInstanceList: tiers, tiersInstanceTotal: tiers.size()])
-        
+
+        render(view: 'list', model: [tiersInstanceList: tiers, tiersInstanceTotal: tiers.size()])
+
     }
 }

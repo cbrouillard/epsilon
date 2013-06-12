@@ -17,8 +17,9 @@
         <label for="tiers${type}" class="control-label mandatory"><g:message code="operation.tiers.label" default="Tiers"/></label>
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'tiers', 'errors')}">
-            <richui:autoComplete id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                 value="${operationInstance?.tiers?.name}" class="input-block-level" required="true"/>
+            <g:textField id="tiers${type}" name="tiers.name"
+                         value="${operationInstance?.tiers?.name}"
+                         class="input-block-level typeahead-tiers" required="true" autocomplete="off"/>
             <g:if test="${parameterBayesianFilter.equals("true")}">
                 <jq:jquery>
                     jQuery('#tiers${type}').focusout (function(){
@@ -33,8 +34,10 @@
         <label for="category${type}" class="control-label mandatory"><g:message code="operation.category.label" default="Category"/></label>
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
-            <richui:autoComplete id="category${type}" name="category.name" action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
-                                 value="${operationInstance?.category?.name}" class="input-block-level" required="true"/>
+            <g:textField id="category${type}" name="category.name"
+                                 value="${operationInstance?.category?.name}"
+                                 class="input-block-level typeahead-categories-${type}"
+                                 required="true" autocomplete="off"/>
         </div>
     </div>
 
@@ -44,7 +47,7 @@
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
             <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}" name="dateApplication"
-                   id="dateApplication${type}" class="datePicker-inner input-block-level" required="true" />
+                   id="dateApplication${type}" class="datePicker-inner input-block-level" required="true"/>
         </div>
     </div>
 
