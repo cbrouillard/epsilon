@@ -28,7 +28,7 @@
                     <div class="alert alert-info">${flash.message}</div>
                 </g:if>
 
-                <g:set var="type" value="DEPENSE"/>
+                <g:set var="type" value="facture"/>
 
                 <g:form action="save_operation" method="post" class="form-horizontal">
                     <g:hiddenField name="whish.id" value="${wishInstance.id}"/>
@@ -40,9 +40,9 @@
                                 <label for="tiers${type}" class="control-label mandatory"><g:message code="operation.tiers.label" default="Tiers"/></label>
 
                                 <div class="controls ${hasErrors(bean: operationInstance, field: 'tiers', 'errors')}">
-                                    <richui:autoComplete id="tiers${type}" name="tiers.name"
-                                                         action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                                         value="${operationInstance?.tiers?.name}" class="input-block-level" required="true"/>
+                                    <g:textField id="tiers${type}" name="tiers.name"
+                                                         value="${operationInstance?.tiers?.name}" class="input-block-level typeahead-tiers" required="true"
+                                                         autocomplete="off"/>
                                 </div>
                             </div>
 
@@ -51,9 +51,9 @@
                                                                                                         default="Category"/></label>
 
                                 <div class="controls ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
-                                    <richui:autoComplete id="category${type}" name="category.name"
-                                                         action="${createLinkTo('dir': 'category/autocomplete/' + type)}"
-                                                         value="${operationInstance?.category?.name}"/>
+                                    <g:textField id="category${type}" name="category.name"
+                                                 value="${operationInstance?.category?.name}" class="input-block-level typeahead-categories-${type}"
+                                                 autocomplete="off"/>
                                 </div>
                             </div>
 
@@ -74,9 +74,12 @@
                                                                                                                default="Date Application"/></label>
 
                                 <div class="controls ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
-                                    <input type="text"
-                                           value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}"
-                                           name="dateApplication" id="dateApplication${type}"/>
+                                    <div class="input-append">
+                                        <input type="text"
+                                               value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}"
+                                               name="dateApplication" id="dateApplication${type}" class="datePicker input-xlarge"/>
+                                        <span class="add-on"><i class="icon-calendar"></i></span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -84,7 +87,10 @@
                                 <label for="amount" class="control-label mandatory"><g:message code="operation.amount.label" default="Amount"/></label>
 
                                 <div class="controls ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
-                                    <g:textField name="amount" value="${fieldValue(bean: wishInstance, field: 'price')}"/>
+                                    <div class="input-append">
+                                        <g:textField name="amount" value="${fieldValue(bean: wishInstance, field: 'price')}" class="input-xlarge"/>
+                                        <span class="add-on"><b>€</b></span>
+                                    </div>
                                 </div>
                             </div>
 

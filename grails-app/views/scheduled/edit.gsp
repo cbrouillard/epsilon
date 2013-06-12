@@ -73,8 +73,11 @@
                                                                                                 default="Date Application"/></label>
 
                         <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateApplication', 'errors')}">
-                            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
-                                   id="dateApplication" required="true" class="datePicker"/>
+                            <div class="input-append">
+                                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
+                                       id="dateApplication" required="true" class="datePicker input-xlarge"/>
+                                <span class="add-on"><i class="icon-calendar"></i></span>
+                            </div>
                         </div>
                     </div>
 
@@ -83,9 +86,12 @@
                                                                                           default="Date Application"/></label>
 
                         <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateLastApplication', 'errors')}">
-                            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}"
-                                   name="dateLastApplication"
-                                   id="dateLastApplication" class="datePicker"/>
+                            <div class="input-append">
+                                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}"
+                                       name="dateLastApplication"
+                                       id="dateLastApplication" class="datePicker input-xlarge"/>
+                                <span class="add-on"><i class="icon-calendar"></i></span>
+                            </div>
                         </div>
                     </div>
 
@@ -93,7 +99,11 @@
                         <label for="amount" class="control-label mandatory"><g:message code="scheduled.amount.label" default="Amount"/></label>
 
                         <div class="controls ${hasErrors(bean: scheduledInstance, field: 'amount', 'errors')}">
-                            <g:textField name="amount" value="${fieldValue(bean: scheduledInstance, field: 'amount')}" required="true"/>
+                            <div class="input-append">
+                                <g:textField name="amount" value="${fieldValue(bean: scheduledInstance, field: 'amount')}" required="true"
+                                             class="input-xlarge"/>
+                                <span class="add-on"><b>€</b></span>
+                            </div>
                         </div>
                     </div>
 

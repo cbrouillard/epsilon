@@ -10,8 +10,11 @@
  * GNU General Public License for more details.
  */
 -->
-<form action="search" method="post" class="form-search">
-    <input type="text" class="input-medium search-query" name="query">
+<form action="search" method="post" >
+
+    <div class="input-append">
+        <input type="text" class="input-medium" name="query">
+        <button type="submit" class="btn" type="button">chercher</button>
+    </div>
     %{--<richui:autoComplete class="input-medium search-query" id="search${controllerName}" name="query" action="${createLinkTo('dir': controllerName + '/autocomplete')}"/>--}%
-    <button type="submit" class="btn">chercher</button>
 </form>

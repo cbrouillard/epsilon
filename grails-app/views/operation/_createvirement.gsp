@@ -14,7 +14,7 @@
     <input name="account.id" type="hidden" value="${selected?.id}"/>
 
     <div class="control-group">
-        <label for="account.to" class="control-label mandatory">Virement vers</label>
+        <label for="account.to" class="control-label mandatory">Virement depuis "${selected.name}" vers</label>
 
         <div class="controls ">
             <g:select optionValue="${{it.name + ' = ' + formatNumber('number': it.getSold(), 'format': '0.##') + '€'}}" name="account.to"
@@ -38,8 +38,11 @@
                                                                                         default="Date Application"/></label>
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
+            <div class="input-append">
             <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}" name="dateApplication"
-                   id="dateApplicationvirement" class="datePicker-inner input-block-level" required="true"/>
+                   id="dateApplicationvirement" class="datePicker-inner input-xlarge" required="true"/>
+                <span class="add-on"><i class="icon-calendar"></i></span>
+            </div>
         </div>
     </div>
 
@@ -47,7 +50,10 @@
         <label for="amount" class="control-label mandatory"><g:message code="operation.amount.label" default="Amount"/></label>
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
-            <g:textField name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" class="input-block-level" required="true"/>
+            <div class="input-append">
+                <g:textField name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" class="input-xlarge" required="true"/>
+                <span class="add-on"><b>€</b></span>
+            </div>
         </div>
     </div>
 

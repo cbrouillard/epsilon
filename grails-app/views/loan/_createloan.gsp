@@ -29,7 +29,7 @@
 
         <div class="controls ${hasErrors(bean: loanInstance, field: 'tiers', 'errors')}">
             <g:textField id="tiers${type}" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                 value="${loanInstance?.tiers?.name}" class="input-block-level typeahead-tiers" required="true" autocomplete="off"/>
+                         value="${loanInstance?.tiers?.name}" class="input-block-level typeahead-tiers" required="true" autocomplete="off"/>
         </div>
     </div>
 
@@ -37,7 +37,8 @@
         <label for="account${type}" class="control-label mandatory"><g:message code="scheduled.account.label" default="Account"/></label>
 
         <div class="controls ${hasErrors(bean: scheduled, field: 'accountFrom', 'errors')}">
-            <g:select id="account${type}" optionValue="name" name="accountFrom.id" from="${accounts}" optionKey="id" value="${scheduled?.accountFrom?.id}"/>
+            <g:select id="account${type}" optionValue="name" name="accountFrom.id" from="${accounts}" optionKey="id" value="${scheduled?.accountFrom?.id}"
+                      class="input-xlarge"/>
         </div>
     </div>
 
@@ -45,7 +46,11 @@
         <label for="amount${type}" class="control-label mandatory"><g:message code="loan.amount.label" default="Amount"/></label>
 
         <div class="controls ${hasErrors(bean: loanInstance, field: 'amount', 'errors')}">
-            <g:textField id="amount${type}" name="amount" value="${fieldValue(bean: loanInstance, field: 'amount')}" required="true"/>
+            <div class="input-append">
+                <g:textField id="amount${type}" name="amount" value="${fieldValue(bean: loanInstance, field: 'amount')}" required="true"
+                             class="input-xlarge"/>
+                <span class="add-on"><b>€</b></span>
+            </div>
         </div>
     </div>
 
@@ -53,7 +58,11 @@
         <label for="interest${type}" class="control-label mandatory"><g:message code="loan.interest.label" default="Interest"/></label>
 
         <div class="controls ${hasErrors(bean: loanInstance, field: 'interest', 'errors')}">
-            <g:textField id="interest${type}" name="interest" value="${fieldValue(bean: loanInstance, field: 'interest')}" required="true"/>
+            <div class="input-append">
+                <g:textField id="interest${type}" name="interest" value="${fieldValue(bean: loanInstance, field: 'interest')}" required="true"
+                             class="input-xlarge"/>
+                <span class="add-on"><b>€</b></span>
+            </div>
         </div>
     </div>
 
@@ -61,7 +70,11 @@
         <label for="refund${type}" class="control-label mandatory"><g:message code="loan.refundValue.label" default="Refund"/></label>
 
         <div class="controls ${hasErrors(bean: loanInstance, field: 'refundValue', 'errors')}">
-            <g:textField id="refund${type}" name="refundValue" value="${fieldValue(bean: loanInstance, field: 'refundValue')}" required="true"/>
+            <div class="input-append">
+                <g:textField id="refund${type}" name="refundValue" value="${fieldValue(bean: loanInstance, field: 'refundValue')}" required="true"
+                             class="input-xlarge"/>
+                <span class="add-on"><b>€</b></span>
+            </div>
         </div>
     </div>
 
@@ -70,8 +83,11 @@
                                                                                        default="Date Application"/></label>
 
         <div class="controls ${hasErrors(bean: scheduled, field: 'dateApplication', 'errors')}">
-            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}" name="dateApplication"
-                   id="dateApplication${type}" required="true" class="datePicker"/>
+            <div class="input-append">
+                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}" name="dateApplication"
+                       id="dateApplication${type}" required="true" class="datePicker input-xlarge"/>
+                <span class="add-on"><i class="icon-calendar"></i></span>
+            </div>
         </div>
     </div>
 

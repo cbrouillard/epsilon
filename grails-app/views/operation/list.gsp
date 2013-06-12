@@ -42,7 +42,7 @@
 
     <div class="row">
 
-        <div class="span9">
+        <div class="span8">
             <div class="around-border">
 
                 <g:if test="${selected}">
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        <div class="span3">
+        <div class="span4">
             <div class="around-border">
 
                 <g:hasErrors bean="${operationInstance}">

@@ -62,8 +62,9 @@
                         <label for="tiers" class="control-label mandatory"><g:message code="loan.tiers.label" default="Tiers"/></label>
 
                         <div class="controls ${hasErrors(bean: loanInstance, field: 'tiers', 'errors')}">
-                            <richui:autoComplete id="tiers" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                                 value="${loanInstance?.tiers?.name}" class="input-block-level" required="true"/>
+                            <g:textField id="tiers" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                                         value="${loanInstance?.tiers?.name}" class="input-block-level typeahead-tiers" required="true"
+                                         autocomplete="off"/>
                         </div>
                     </div>
 
@@ -72,7 +73,7 @@
 
                         <div class="controls ${hasErrors(bean: scheduled, field: 'accountFrom', 'errors')}">
                             <g:select id="account" optionValue="name" name="accountFrom.id" from="${accounts}" optionKey="id"
-                                      value="${scheduled?.accountFrom?.id}"/>
+                                      value="${scheduled?.accountFrom?.id}" class="input-xlarge"/>
                         </div>
                     </div>
 
@@ -80,7 +81,11 @@
                         <label for="refund" class="control-label mandatory"><g:message code="loan.refundValue.label" default="Refund"/></label>
 
                         <div class="controls ${hasErrors(bean: loanInstance, field: 'refundValue', 'errors')}">
-                            <g:textField id="refund" name="refundValue" value="${fieldValue(bean: loanInstance, field: 'refundValue')}" required="true"/>
+                            <div class="input-append">
+                                <g:textField id="refund" name="refundValue" value="${fieldValue(bean: loanInstance, field: 'refundValue')}" required="true"
+                                             class="input-xlarge"/>
+                                <span class="add-on"><b>€</b></span>
+                            </div>
                         </div>
                     </div>
 
@@ -89,8 +94,11 @@
                                                                                                 default="Date Application"/></label>
 
                         <div class="controls ${hasErrors(bean: scheduled, field: 'dateApplication', 'errors')}">
-                            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}" name="dateApplication"
-                                   id="dateApplication" required="true" class="datePicker"/>
+                            <div class="input-append">
+                                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}" name="dateApplication"
+                                       id="dateApplication" required="true" class="datePicker input-xlarge"/>
+                                <span class="add-on"><i class="icon-calendar"></i></span>
+                            </div>
                         </div>
                     </div>
 

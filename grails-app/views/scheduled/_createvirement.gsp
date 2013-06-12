@@ -39,12 +39,15 @@
                 <label for="amount" class="control-label mandatory"><g:message code="scheduled.amount.label" default="Amount"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'amount', 'errors')}">
-                    <g:textField name="amount" value="${fieldValue(bean: scheduledInstance, field: 'amount')}" required="true"/>
+                    <div class="input-append">
+                        <g:textField name="amount" value="${fieldValue(bean: scheduledInstance, field: 'amount')}" required="true" class="input-xlarge"/>
+                        <span class="add-on"><b>€</b></span>
+                    </div>
                 </div>
             </div>
 
             <div class="control-group">
-                <label for="note" class="control-label mandatory"><g:message code="scheduled.note.label" default="Note"/></label>
+                <label for="note" class="control-label"><g:message code="scheduled.note.label" default="Note"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'note', 'errors')}">
                     <g:textArea name="note" cols="40" rows="5" value="${scheduledInstance?.note}" class="input-block-level"/>
@@ -60,8 +63,11 @@
                                                                                                 default="Date Application"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateApplication', 'errors')}">
-                    <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
-                           id="dateApplicationvirement" required="true" class="datePicker"/>
+                    <div class="input-append">
+                        <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
+                               id="dateApplicationvirement" required="true" class="datePicker input-xlarge"/>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
                 </div>
             </div>
 
@@ -71,8 +77,11 @@
                                                                                           default="Date Last Application"/></label>
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateLasApplication', 'errors')}">
-                    <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}" name="dateLastApplication"
-                           id="dateLastApplicationvirement" class="datePicker"/>
+                    <div class="input-append">
+                        <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}" name="dateLastApplication"
+                               id="dateLastApplicationvirement" class="datePicker input-xlarge"/>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
                 </div>
             </div>
 
@@ -81,7 +90,7 @@
 
                 <div class="controls  ${hasErrors(bean: scheduledInstance, field: 'accountFrom', 'errors')}">
                     <g:select optionValue="name" name="accountFrom.id" from="${accounts}" optionKey="id" value="${scheduledInstance?.accountFrom?.id}"
-                              required="true"/>
+                              required="true" class="input-xlarge"/>
                 </div>
             </div>
 
@@ -90,7 +99,7 @@
 
                 <div class="controls ${hasErrors(bean: scheduledInstance, field: 'accountTo', 'errors')}">
                     <g:select optionValue="name" name="accountTo.id" from="${accounts}" optionKey="id" value="${scheduledInstance?.accountTo?.id}"
-                              required="true"/>
+                              required="true" class="input-xlarge"/>
                 </div>
             </div>
 

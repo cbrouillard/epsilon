@@ -77,8 +77,8 @@
 
 <script type="text/javascript">
     jQuery(function () {
-        $(".datepicker").datepicker({'dateFormat': 'dd/mm/yy', showOn: 'both', buttonText: '<i class="icon-calendar"></i>'});
-        $(".datepicker-inner").datepicker({'dateFormat': 'dd/mm/yy'});
+//        , showOn: 'both', buttonText: '<i class="icon-calendar"></i>'
+        $(".datepicker, .datepicker-inner").datepicker({'dateFormat': 'dd/mm/yy'});
 
         $(".datepicker, .datepicker-inner").attr("autocomplete", "off");
 

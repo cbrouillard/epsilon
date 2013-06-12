@@ -61,7 +61,10 @@
                         <label for="amount" class="control-label mandatory"><g:message code="budget.amount.label" default="Amount"/></label>
 
                         <div class="controls ${hasErrors(bean: budgetInstance, field: 'amount', 'errors')}">
-                            <g:textField name="amount" value="${fieldValue(bean: budgetInstance, field: 'amount')}" required="true"/>
+                            <div class="input-append">
+                                <g:textField name="amount" value="${fieldValue(bean: budgetInstance, field: 'amount')}" required="true" class="input-xlarge"/>
+                                <span class="add-on"><b>€</b></span>
+                            </div>
                         </div>
                     </div>
 
@@ -76,7 +79,7 @@
                                     from="${availableCategories*.name}"
                                     value="${budgetInstance.attachedCategories*.name}"
                                     noSelection="['': 'Choisissez dans la liste']"
-                                    isLeftAligned="true"/>
+                                    isLeftAligned="true" class="input-xlarge"/>
                         </div>
                     </div>
 

@@ -59,7 +59,7 @@
                         <label for="type" class="control-label mandatory"><g:message code="category.type.label" default="Type"/></label>
 
                         <div class="controls ${hasErrors(bean: categoryInstance, field: 'type', 'errors')}">
-                            <g:select name="type" from="${com.headbangers.epsilon.CategoryType?.values()}" value="${categoryInstance?.type}"/>
+                            <g:select name="type" from="${com.headbangers.epsilon.CategoryType?.values()}" value="${categoryInstance?.type}" class="input-xlarge"/>
                         </div>
                     </div>
 

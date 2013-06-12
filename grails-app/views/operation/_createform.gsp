@@ -35,9 +35,9 @@
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
             <g:textField id="category${type}" name="category.name"
-                                 value="${operationInstance?.category?.name}"
-                                 class="input-block-level typeahead-categories-${type}"
-                                 required="true" autocomplete="off"/>
+                         value="${operationInstance?.category?.name}"
+                         class="input-block-level typeahead-categories-${type}"
+                         required="true" autocomplete="off"/>
         </div>
     </div>
 
@@ -46,8 +46,11 @@
                                                                                        default="Date Application"/></label>
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
-            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}" name="dateApplication"
-                   id="dateApplication${type}" class="datePicker-inner input-block-level" required="true"/>
+            <div class="input-append">
+                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}" name="dateApplication"
+                       id="dateApplication${type}" class="datePicker-inner input-xlarge" required="true"/>
+                <span class="add-on"><i class="icon-calendar"></i></span>
+            </div>
         </div>
     </div>
 
@@ -55,8 +58,11 @@
         <label for="amount${type}" class="control-label mandatory"><g:message code="operation.amount.label" default="Amount"/></label>
 
         <div class="controls ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
-            <g:textField id="amount${type}" name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" class="input-block-level"
-                         required="true"/>
+            <div class="input-append">
+                <g:textField id="amount${type}" name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" class="input-xlarge"
+                             required="true"/>
+                <span class="add-on"><b>€</b></span>
+            </div>
         </div>
     </div>
 

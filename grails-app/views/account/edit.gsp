@@ -61,7 +61,8 @@
                         <label for="type" class="control-label mandatory"><g:message code="account.type.label" default="Type"/></label>
 
                         <div class="controls ${hasErrors(bean: accountInstance, field: 'type', 'errors')}">
-                            <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}" value="${accountInstance?.type}" required="true"/>
+                            <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}" value="${accountInstance?.type}" required="true"
+                                      class="input-xlarge"/>
                         </div>
                     </div>
 

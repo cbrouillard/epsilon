@@ -9,7 +9,7 @@
 </div>
 
 <div class="control-group">
-    <label for="webShopUrl" class="control-label mandatory"><g:message code="wish.webShopUrl.label" default="Web Shop Url"/></label>
+    <label for="webShopUrl" class="control-label "><g:message code="wish.webShopUrl.label" default="Web Shop Url"/></label>
 
     <div class="controls ${hasErrors(bean: wishInstance, field: 'webShopUrl', 'errors')}">
         <g:textField name="webShopUrl" value="${wishInstance?.webShopUrl}" class="input-block-level"/>
@@ -20,7 +20,8 @@
     <label for="account" class="control-label mandatory"><g:message code="wish.account.label" default="Account"/></label>
 
     <div class="controls ${hasErrors(bean: wishInstance, field: 'account', 'errors')}">
-        <g:select id="account" name="account.id" from="${accounts}" optionKey="id" value="${wishInstance?.account?.id}" class="many-to-one" required="true"/>
+        <g:select id="account" name="account.id" from="${accounts}" optionKey="id" value="${wishInstance?.account?.id}" class="many-to-one input-xlarge"
+                  required="true"/>
     </div>
 </div>
 
@@ -28,7 +29,10 @@
     <label for="price" class="control-label mandatory"><g:message code="wish.price.label" default="Price"/></label>
 
     <div class="controls ${hasErrors(bean: wishInstance, field: 'price', 'errors')}">
-        <g:textField name="price" value="${fieldValue(bean: wishInstance, field: 'price')}" required="true"/>
+        <div class="input-append">
+            <g:textField name="price" value="${fieldValue(bean: wishInstance, field: 'price')}" required="true" class="input-xlarge"/>
+            <span class="add-on"><b>€</b></span>
+        </div>
     </div>
 </div>
 
@@ -36,7 +40,11 @@
     <label for="previsionBuyDate" class="control-label"><g:message code="wish.previsionBuy.label" default="Prevision Buy"/></label>
 
     <div class="controls ${hasErrors(bean: wishInstance, field: 'previsionBuy', 'errors')}">
-        <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: wishInstance?.previsionBuy)}" name="previsionBuy" id="previsionBuyDate" class="datePicker"/>
+        <div class="input-append">
+            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: wishInstance?.previsionBuy)}" name="previsionBuy" id="previsionBuyDate"
+                   class="datePicker input-xlarge"/>
+            <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
     </div>
 </div>
 

@@ -71,7 +71,7 @@
 
                             <div class="controls ${hasErrors(bean: accountInstance, field: 'bank', 'errors')}">
                                 <g:select optionValue="name" name="bank.id" from="${banks}" optionKey="id" value="${accountInstance?.bank?.id}"
-                                          required="true"/>
+                                          required="true" class="input-xlarge"/>
                             </div>
                         </div>
 
@@ -79,7 +79,8 @@
                             <label for="type" class="control-label mandatory"><g:message code="account.type.label" default="Type"/></label>
 
                             <div class="controls ${hasErrors(bean: accountInstance, field: 'type', 'errors')}">
-                                <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}" value="${accountInstance?.type}" required="true"/>
+                                <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}" value="${accountInstance?.type}" required="true"
+                                          class="input-xlarge"/>
                             </div>
                         </div>
 
@@ -87,8 +88,11 @@
                             <label for="dateOpened" class="control-label mandatory"><g:message code="account.dateOpened.label" default="Date Opened"/></label>
 
                             <div class="controls ${hasErrors(bean: accountInstance, field: 'dateOpened', 'errors')}">
-                                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: accountInstance?.dateOpened)}" name="dateOpened"
-                                       id="dateOpened" required="true" class="datePicker"/>
+                                <div class="input-append">
+                                    <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: accountInstance?.dateOpened)}" name="dateOpened"
+                                           id="dateOpened" required="true" class="datePicker input-xlarge"/>
+                                    <span class="add-on"><i class="icon-calendar"></i></span>
+                                </div>
                             </div>
                         </div>
 
@@ -96,7 +100,11 @@
                             <label for="amount" class="control-label mandatory"><g:message code="account.amount.label" default="Amount"/></label>
 
                             <div class="controls ${hasErrors(bean: accountInstance, field: 'amount', 'errors')}">
-                                <g:textField name="amount" value="${fieldValue(bean: accountInstance, field: 'amount')}" required="true"/>
+                                <div class="input-append">
+                                    <g:textField name="amount" value="${fieldValue(bean: accountInstance, field: 'amount')}" required="true"
+                                                 class="input-xlarge"/>
+                                    <span class="add-on"><b>€</b></span>
+                                </div>
                             </div>
                         </div>
 
