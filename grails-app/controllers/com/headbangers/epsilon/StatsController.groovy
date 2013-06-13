@@ -29,15 +29,8 @@ class StatsController {
     def chartService
 
     def index = {
-        redirect (action:category)
     }
 
-    def category = {        
-    }
-    
-    def revenues = {}
-    
-    
     def revenuesChart = {
         def person = springSecurityService.getCurrentUser()
 

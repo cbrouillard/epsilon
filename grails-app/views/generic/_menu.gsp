@@ -148,6 +148,10 @@
         </g:link>
         <ul class="dropdown-menu">
             <li>
+                <g:link class="stats"
+                        controller="stats"><img src="${resource(dir: 'img', file: 'stats.png')}"/> Statistiques</g:link>
+            </li>
+            <li>
                 <g:link class="personal"
                         controller="person"
                         action="infos"><img src="${resource(dir: 'img', file: 'details.png')}"/> Vos informations</g:link>
