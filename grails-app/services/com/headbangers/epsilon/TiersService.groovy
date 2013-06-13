@@ -13,6 +13,8 @@ package com.headbangers.epsilon
 
 class TiersService {
 
+    def genericService
+
     def findAllTiers (person){
         return Tiers.findAllByOwner (person)
     }
@@ -22,7 +24,7 @@ class TiersService {
         def tiers = Tiers.findByOwnerAndName (person, tiersName)
         if (!tiers){
             log.debug ("Creating a new Tiers : ${tiersName}")
-            return new Tiers (name:tiersName, owner:person).save(flush:true);
+            return new Tiers (name:tiersName, owner:person, color:genericService.buildColor(tiersName)).save(flush:true);
         }
         return tiers
     }

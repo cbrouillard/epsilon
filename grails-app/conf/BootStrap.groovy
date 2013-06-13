@@ -12,12 +12,14 @@
 
 import com.headbangers.epsilon.*
 import java.text.SimpleDateFormat
+
 class BootStrap {
 
     def springSecurityService
     def accountService
-    
-    def init = { servletContext ->
+    def genericService
+
+    def init = {servletContext ->
 
         //        def md5pass = springSecurityService.passwordEncoder("admin")
         //        def testpass = springSecurityService.passwordEncoder("test")
@@ -143,25 +145,29 @@ class BootStrap {
         //            amount:105D,
         //            automatic:false, owner:user_admin).save(flush:true)
 
-        
         //        accountService.rebuildAllSnapshots()
-        
-//        def persons = Person.list()
-//        persons.each { person -> 
-//        
-//            def parameters = new HashMap<String, String>()
-//            person.parameters.each{parameter -> 
-//                parameters.put (parameter.name, parameter.value)
-//            }
-//            
-//            if (!parameters.bayesian_filter){
-//                Parameter bayesianFilter = new Parameter (name:"bayesian_filter", value:"true", owner:person, type:"boolean")
-//                bayesianFilter.save(flush:true)
-//            }
-//            
-//        }
-        
-        
+
+        //        def persons = Person.list()
+        //        persons.each { person ->
+        //
+        //            def parameters = new HashMap<String, String>()
+        //            person.parameters.each{parameter ->
+        //                parameters.put (parameter.name, parameter.value)
+        //            }
+        //
+        //            if (!parameters.bayesian_filter){
+        //                Parameter bayesianFilter = new Parameter (name:"bayesian_filter", value:"true", owner:person, type:"boolean")
+        //                bayesianFilter.save(flush:true)
+        //            }
+        //
+        //        }
+
+        //        def tiers = Tiers.list()
+        //        tiers.each {tier ->
+        //            tier.color = genericService.buildColor(tier.name)
+        //            tier.save()
+        //        }
+
     }
     def destroy = {
     }

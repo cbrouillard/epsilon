@@ -24,6 +24,8 @@ class Category {
 
     Person owner
 
+    SortedSet<Operation> operations
+
     static constraints = {
         name nullable:false, blank:false
         type nullable:false

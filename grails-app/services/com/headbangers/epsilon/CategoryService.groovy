@@ -18,6 +18,8 @@ class CategoryService {
 
     def  springSecurityService
 
+    def genericService
+
     def findAllCategoriesByType (person, categoryType){
         return Category.createCriteria ().list {
             owner{eq("id", person.id)}
@@ -25,17 +27,12 @@ class CategoryService {
         }
     }
 
-    def buildColor (catName){
-        def md5 = springSecurityService.encodePassword(catName).toString()
-        return "#${md5.substring(0,6)}"
-    }
-
     def findOrCreateCategory(person, categoryName, categoryType) {
 
         def category = Category.findByOwnerAndName (person, categoryName)
         if (!category){
             log.debug ("Creating a new Category : ${categoryName}")
-            return new Category (name:categoryName, type:categoryType, owner:person, color:buildColor(categoryName)).save(flush:true);
+            return new Category (name:categoryName, type:categoryType, owner:person, color:genericService.buildColor(categoryName)).save(flush:true);
         }
         return category
     }

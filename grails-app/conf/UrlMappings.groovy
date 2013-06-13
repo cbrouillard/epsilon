@@ -11,29 +11,39 @@
 
 class UrlMappings {
     static mappings = {
-       
-        "/operation/$account?/list"{
+
+        "/operation/$account?/list" {
             controller = "operation"
             action = "list"
         }
 
-        "/category/autocomplete/$type"{
+        "/category/autocomplete/$type" {
             controller = "category"
             action = "autocomplete"
         }
 
-        "/$controller/$action?/$id?"{
+        "/category/operationsChart/$id/$fromYear/$toYear" {
+            controller = "category"
+            action = "operationsChart"
+        }
+
+        "/tiers/operationsChart/$id/$fromYear/$toYear" {
+            controller = "tiers"
+            action = "operationsChart"
+        }
+
+        "/$controller/$action?/$id?" {
             constraints {
                 // apply constraints here
             }
         }
-      
-        "/index.gsp"{
+
+        "/index.gsp" {
             controller = "summary"
         }
-        "/"{
+        "/" {
             controller = "summary"
         }
-	"500"(view:'/error')
+        "500"(view: '/error')
     }
 }

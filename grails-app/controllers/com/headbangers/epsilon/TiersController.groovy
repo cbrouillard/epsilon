@@ -23,6 +23,7 @@ class TiersController {
     def genericService
     def tiersService
     def chartService
+    def dateUtil
 
     def index = {
         redirect(action: "list", params: params)
@@ -127,26 +128,27 @@ class TiersController {
         return
     }
 
-    def autocomplete = {
-        def tiers = Tiers.findAllByNameLikeAndOwner("%${params.query}%", springSecurityService.getCurrentUser())
-
-        render(contentType: "text/xml") {
-            results() {
-                tiers.each {tier ->
-                    result() {
-                        name(tier.name)
-                        //Optional id which will be available in onItemSelect
-                        id(tier.id)
-                    }
-                }
-            }
-        }
-    }
-
     def operations = {
         def tiers = genericService.loadUserObject(springSecurityService.getCurrentUser(), Tiers.class, params.id)
         if (tiers) {
-            [tiers: tiers]
+            def currentYear = dateUtil.currentYear
+            def oldestYear = dateUtil.getYear(tiers.operations? tiers.operations.first().dateApplication : new Date())
+            def yearRange = oldestYear..currentYear
+
+            def selectedFrom = (params.fromYear?:oldestYear) as Integer
+            def selectedTo = (params.toYear?:currentYear) as Integer
+
+            def fromDate = dateUtil.firstDayOfYear ( selectedFrom )
+            def toDate = dateUtil.lastDayOfYear( selectedTo )
+
+            def operations = Operation.createCriteria().list(params){
+                between("dateApplication", fromDate, toDate)
+                eq("tiers", tiers)
+            }
+
+            [tiers: tiers, yearRange: yearRange, fromYear:selectedFrom, toYear:selectedTo, operations:operations]
+
+
         } else {
             redirect(action: "list")
         }
@@ -157,10 +159,17 @@ class TiersController {
         // getting category
         def person = springSecurityService.getCurrentUser()
         def tiers = genericService.loadUserObject(person, Tiers.class, params.id)
-        def operations = tiersService.retrieveOperations(tiers)
+
+        def fromDate = dateUtil.firstDayOfYear ( params.fromYear as Integer )
+        def toDate = dateUtil.lastDayOfYear( (params.toYear?:dateUtil.currentYear) as Integer)
+
+        def operations = Operation.createCriteria().list(params){
+            between("dateApplication", fromDate, toDate)
+            eq("tiers", tiers)
+        }
 
         // pour une catégorie, déterminer la somme des opérations sur chaque mois
-        render chartService.createByMonthOperationsChart(tiers.name, 500, "#428547", operations)
+        render chartService.createByMonthOperationsChart(tiers.name, 500, tiers.color ?: "#428547", operations)
     }
 
     def search = {

@@ -113,6 +113,10 @@ public class DateUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date != null ? date : getTodayMorning());
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTime();
     }
 
@@ -148,5 +152,19 @@ public class DateUtil {
         calendar.setTime(date != null ? date : getTodayMorning());
         calendar.roll(Calendar.MONTH, -6);
         return calendar.get(Calendar.MONTH);
+    }
+
+    public Date firstDayOfYear(int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        return getFirstDayOfTheMonth(calendar.getTime());
+    }
+
+    public Date lastDayOfYear(int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+        return getLastDayOfTheMonth(calendar.getTime());
     }
 }

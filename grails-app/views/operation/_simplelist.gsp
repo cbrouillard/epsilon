@@ -20,7 +20,7 @@
         </li>
     </ul>
 </div>
-<table class="table table-striped table-hover table-condensed">
+<table class="table table-striped table-hover table-condensed table-fixed">
     <thead>
     <tr>
         <th>Date</th>

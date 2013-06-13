@@ -68,7 +68,7 @@ class Account {
     }
 
     def getNameAndSold() {
-        return "${name} - ${getFormattedSold()}€"
+        return "${name} = ${getFormattedSold()}€"
     }
 
     def getSold() {

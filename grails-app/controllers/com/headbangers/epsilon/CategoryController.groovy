@@ -11,6 +11,7 @@
 
 package com.headbangers.epsilon
 
+import com.headbangers.epsilon.util.DateUtil
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
@@ -22,7 +23,7 @@ class CategoryController {
 
     def springSecurityService
     def genericService
-    def dateUtil
+    DateUtil dateUtil
     def categoryService
     def chartService
 
@@ -150,10 +151,27 @@ class CategoryController {
     def operations = {
         // loading category
         def category = genericService.loadUserObject(springSecurityService.getCurrentUser(), Category.class, params.id)
-        if (category){
-            [category:category]
+
+        if (category) {
+
+            def currentYear = dateUtil.currentYear
+            def oldestYear = dateUtil.getYear(category.operations? category.operations.first().dateApplication : new Date())
+            def yearRange = oldestYear..currentYear
+
+            def selectedFrom = (params.fromYear?:oldestYear) as Integer
+            def selectedTo = (params.toYear?:currentYear) as Integer
+
+            def fromDate = dateUtil.firstDayOfYear ( selectedFrom )
+            def toDate = dateUtil.lastDayOfYear( selectedTo )
+
+            def operations = Operation.createCriteria().list(params){
+                between("dateApplication", fromDate, toDate)
+                eq("category", category)
+            }
+
+            [category: category, yearRange: yearRange, fromYear:selectedFrom, toYear:selectedTo, operations:operations]
         } else {
-            redirect(action:"list")
+            redirect(action: "list")
         }
     }
 
@@ -161,23 +179,30 @@ class CategoryController {
 
         // getting category
         def person = springSecurityService.getCurrentUser()
-        def cat = genericService.loadUserObject (person, Category.class, params.id)
-        def operations = categoryService.retrieveOperations(cat)
+        def cat = genericService.loadUserObject(person, Category.class, params.id)
+
+        def fromDate = dateUtil.firstDayOfYear ( params.fromYear as Integer )
+        def toDate = dateUtil.lastDayOfYear( (params.toYear?:dateUtil.currentYear) as Integer)
+
+        def operations = Operation.createCriteria().list(params){
+            between("dateApplication", fromDate, toDate)
+            eq("category", cat)
+        }
 
         // pour une catégorie, déterminer la somme des opérations sur chaque mois
-        render chartService.createByMonthOperationsChart (cat.name, 500, "#428547", operations)
+        render chartService.createByMonthOperationsChart(cat.name, 500, cat.color, operations)
     }
 
 
     def search = {
         def person = springSecurityService.getCurrentUser()
 
-        def categories = Category.createCriteria().list(params){
-            ilike ("name", "%${params.query}%")
-            owner{eq("id", person.id)}
+        def categories = Category.createCriteria().list(params) {
+            ilike("name", "%${params.query}%")
+            owner {eq("id", person.id)}
         }
 
-        render (view:'list',  model:[categoryInstanceList: categories, categoryInstanceTotal: categories.size()])
+        render(view: 'list', model: [categoryInstanceList: categories, categoryInstanceTotal: categories.size()])
 
     }
 

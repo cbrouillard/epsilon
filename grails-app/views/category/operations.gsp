@@ -39,20 +39,24 @@
                     <div class="alert alert-info">${flash.message}</div>
                 </g:if>
 
-                <g:render template="/operation/simplelist" model="[operations: category.operations]"/>
+                <g:render template="/operation/simplelist" model="[operations: operations]"/>
 
             </div>
         </div>
 
         <div class="span7">
             <div class="around-border">
+                <g:render template="/generic/statsfilter" model="[id: category.id, action: 'operations', controller: 'category']"/>
+            </div><br/>
+
+            <div class="around-border">
 
                 <div class="alert alert-info">Statistiques</div>
 
-                <div class="chart" id="opChart">
-                    <g:render template="/generic/chart"
-                              model="[name: 'OpChart', controller: 'category', action: 'operationsChart', params: ['id': category.id]]"/>
-                </div>
+
+                <g:render template="/generic/chart"
+                          model="[name: 'OpChart', controller: 'category', action: 'operationsChart',
+                                  parameters: ['id': category.id, 'fromYear': fromYear, 'toYear': toYear]]"/>
 
             </div>
         </div>

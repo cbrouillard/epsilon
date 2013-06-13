@@ -83,7 +83,7 @@
                                         src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
                                 <g:link title="Editer" action="edit" id="${tiersInstance.id}"><img src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
                                 <g:link title="Opérations pour ce tiers" action="operations" id="${tiersInstance.id}"><img
-                                        src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                                        src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
                             </td>
 
                         </tr>

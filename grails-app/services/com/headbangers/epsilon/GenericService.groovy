@@ -13,6 +13,13 @@ package com.headbangers.epsilon
 
 class GenericService {
 
+    def  springSecurityService
+
+    def buildColor (name){
+        def md5 = springSecurityService.encodePassword(name).toString()
+        return "#${md5.substring(0,6)}"
+    }
+
     def loadUserObjects(person, object) {
         return object.createCriteria().list(sort:'dateCreated', order:'desc'){
             owner {eq ("id", person.id)}

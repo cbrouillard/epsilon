@@ -13,40 +13,44 @@ package com.headbangers.epsilon
 
 class Tiers {
     String id
-    static hasMany = [operations:Operation]
+    static hasMany = [operations: Operation]
     static belongsTo = [Person]
 
     String name
+    String color
+    // couleur graph
     String description
 
     Person owner
 
+    SortedSet<Operation> operations
+
     static constraints = {
 
-        name nullable:false, blank:false
+        name nullable: false, blank: false
+        color nullable: true
+        description nullable: true, widget: 'textarea'
 
-        description nullable:true, widget:'textarea'
-
-        lastUpdated nullable:true
+        lastUpdated nullable: true
     }
 
     static mapping = {
-        id generator:'uuid'
-        description type:'text'
+        id generator: 'uuid'
+        description type: 'text'
     }
 
     Date dateCreated
     Date lastUpdated
 
-    def getSold (){
+    def getSold() {
         def sold = 0D
         operations.each {operation ->
             sold += operation.amount
         }
         return sold
     }
-    
-    String toString(){
+
+    String toString() {
         return name
     }
 }
