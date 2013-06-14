@@ -70,6 +70,7 @@ class StatsController {
 
                 def operationsBar = new BarChart.Bar(sum, color)
                 operationsBar.setTooltip("${catName} #val# €<br>${type}")
+                operationsBar.setOnClick("goToCategory('" + operationsList[0].category.id + "')")
                 barChart.addBars(operationsBar)
 
                 if (sum >= yAxis.getMax()) {
@@ -77,9 +78,8 @@ class StatsController {
                 }
             }
         }
-
         chart.setYAxis(yAxis)
-        chart.setXAxis (axis)
+        chart.setXAxis(axis)
         chart.addElements(barChart)
 
         render chart
@@ -126,6 +126,7 @@ class StatsController {
                 sums.each {sum ->
                     def dot = new LineChart.Dot(sum)
                     dot.tooltip = "${category.name} #val# €"
+                    dot.onClick = "goToCategory('" + category.id + "')"
                     dots.add(dot)
                 }
                 lineChart.addDots(dots)
@@ -195,6 +196,7 @@ class StatsController {
                 sums.each {sum ->
                     def dot = new LineChart.Dot(sum)
                     dot.tooltip = "${category.name} #val# €"
+                    dot.onClick = "goToCategory('" + category.id + "')"
                     dots.add(dot)
                 }
                 lineChart.addDots(dots)

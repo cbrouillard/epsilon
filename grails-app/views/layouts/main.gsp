@@ -153,5 +153,14 @@
         });
 
     });
+
+    function goToCategory(catId){
+        window.location.href= '${createLink(controller:'category', action:'operations')}/'+catId
+    }
+
+    function goToTiers(tiersId){
+        window.location.href= '${createLink(controller:'tiers', action:'operations')}/'+tiersId
+    }
+
 </script>
 </html>
