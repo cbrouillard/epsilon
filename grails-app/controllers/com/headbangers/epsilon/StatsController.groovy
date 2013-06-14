@@ -58,7 +58,7 @@ class StatsController {
         def yAxis = new YAxis()
         def axis = new XAxis()
         yAxis.setMax(1000)
-        yAxis.setSteps(100)
+        yAxis.setSteps(500)
         def barChart = new BarChart(BarChart.Style.NORMAL)
         byCategories.each {catName, operationsList ->
             axis.addLabels(new Label(catName).setRotation(Rotation.DIAGONAL))
@@ -66,9 +66,10 @@ class StatsController {
             if (operationsList) {
                 def sum = (operationsList*.amount).sum()
                 def color = operationsList[0].category.color
+                def type = operationsList[0].type
 
                 def operationsBar = new BarChart.Bar(sum, color)
-                operationsBar.setTooltip("${catName} #val# €")
+                operationsBar.setTooltip("${catName} #val# €<br>${type}")
                 barChart.addBars(operationsBar)
 
                 if (sum >= yAxis.getMax()) {

@@ -47,6 +47,9 @@
 
                 <g:if test="${selected}">
                     <div id="register">
+                        <ofchart:chart name="byMonthChartT" url="${createLink(controller: 'stats', action: 'thismonthoperationsChart', params: [account:
+                                selected.id])}"
+                                       width="100%" height="150px"/>
 
                         <g:render template="register"/>
 
@@ -79,13 +82,6 @@
                 <div class="alert alert-info">Création</div>
 
                 <g:render template="registeractions"/>
-            </div>
-            <br/>
-
-            <div class="around-border">
-                <div class="alert alert-info">Statistiques</div>
-                <ofchart:chart name="byMonthChart" url="${createLink(controller: 'stats', action: 'thismonthoperationsChart', params: [account: selected.id])}"
-                               width="100%" height="300px"/>
             </div>
         </div>
     </div>
