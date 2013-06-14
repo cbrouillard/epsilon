@@ -10,6 +10,8 @@
  */
 
 package com.headbangers.epsilon
+
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -195,5 +197,28 @@ class BudgetController {
         } else{
             redirect(action: "list")
         }
+    }
+
+    def search = {
+        def person = springSecurityService.getCurrentUser()
+
+        def budgets = Budget.createCriteria().list(params) {
+            ilike("name", "%${params.query}%")
+            owner {eq("id", person.id)}
+        }
+
+        render(view: 'list', model: [budgetInstanceList:  budgets, budgetInstanceTotal: budgets.size(), query:params.query])
+
+    }
+
+    def simpleautocomplete(){
+        def person = springSecurityService.getCurrentUser()
+        def budgets = Budget.createCriteria ().list {
+            owner{eq("id", person.id)}
+            ilike ("name", "${params.query}%")
+        }
+
+        render budgets*.name as JSON
+        return
     }
 }

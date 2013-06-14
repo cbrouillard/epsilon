@@ -49,13 +49,14 @@
     <div class="row">
         <div class="span12">
             <div class="around-border">
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
 
                 <div class="text-right">
                     <g:render template="/generic/search"/>
                 </div>
+
+                <g:if test="${flash.message}">
+                    <div class="alert alert-info">${flash.message}</div>
+                </g:if>
 
                 <table class="table table-striped table-hover">
                     <thead>

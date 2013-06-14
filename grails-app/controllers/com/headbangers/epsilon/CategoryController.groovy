@@ -202,7 +202,7 @@ class CategoryController {
             owner {eq("id", person.id)}
         }
 
-        render(view: 'list', model: [categoryInstanceList: categories, categoryInstanceTotal: categories.size()])
+        render(view: 'list', model: [categoryInstanceList: categories, categoryInstanceTotal: categories.size(), query:params.query])
 
     }
 

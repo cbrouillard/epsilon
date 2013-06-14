@@ -268,7 +268,7 @@ class ScheduledController {
             owner {eq("id", person.id)}
         }
 
-        render(view: 'list', model: [scheduledInstanceList:  scheduled, scheduledInstanceTotal: scheduled.size()])
+        render(view: 'list', model: [scheduledInstanceList:  scheduled, scheduledInstanceTotal: scheduled.size(), query:params.query])
 
     }
 

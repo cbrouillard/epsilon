@@ -10,6 +10,7 @@
  */
 
 package com.headbangers.epsilon
+
 import jofc2.model.Chart
 import jofc2.model.elements.LineChart
 import jofc2.model.axis.YAxis
@@ -31,49 +32,60 @@ class StatsController {
     def index = {
     }
 
+    def thismonthoperations = {
+        // toutes les opérations de ce mois, toutes catégories confondues, rangées par catégories
+
+
+    }
+
     def revenuesChart = {
         def person = springSecurityService.getCurrentUser()
 
         // affichage des catégories par mois
         // zone par défaut - (MAINTENANT-6) > MAINTENANT
         def today = new Date()
-        def monthStart = params["month.start"] ? params["month.start"] : 0 //dateUtil.getSixMonthAgo (today)
-        def monthEnd = params["month.end"] ? params["month.end"] : dateUtil.getMonth (today)
+        def monthStart = params["month.start"] ? params["month.start"] : 0
+        //dateUtil.getSixMonthAgo (today)
+        def monthEnd = params["month.end"] ? params["month.end"] : dateUtil.getMonth(today)
 
-        def year = params["year"] ? params["year"] : dateUtil.getCurrentYear ()
-        
+        def year = params["year"] ? params["year"] : dateUtil.getCurrentYear()
+
         params["sort"] = "name"
         params["order"] = "asc"
 
         // récupération des Categories de l'utilisateur
-        def categories = genericService.loadUserObjects (person, Category.class, params)
+        def categories = genericService.loadUserObjects(person, Category.class, params)
 
         // création du chart global
         def chart = new Chart("Opérations de revenus par catégories")
         def yAxis = new YAxis()
-        yAxis.setMax (100)
+        yAxis.setMax(100)
         yAxis.setSteps(100)
 
-        categories.each { category ->
-            
-            if (category.type == CategoryType.REVENU){
-            
-            
+        categories.each {category ->
+
+            if (category.type == CategoryType.REVENU) {
+
                 // calcul des dates d'intervalles
                 def firstDate = dateUtil.getFirstDayOfTheMonth(monthStart)
                 def endDate = dateUtil.getLastDayOfTheMonth(monthEnd)
                 log.info "Traitement de la catégorie ${category.name} : du ${firstDate} au ${endDate}"
-            
+
                 // somme des operations par mois
                 def lineChart = new LineChart()
-                lineChart.setColour (category.color)
-                def sums = categoryService.sumRevenueForEachMonth (monthStart, monthEnd, category)
-                lineChart.addValues (sums)
-                lineChart.setTooltip ("${category.name}<br>#val# €")
+                lineChart.setColour(category.color)
+                def dots = new ArrayList<LineChart.Dot>()
+                def sums = categoryService.sumRevenueForEachMonth(monthStart, monthEnd, category)
+                sums.each {sum ->
+                    def dot = new LineChart.Dot(sum)
+                    dot.tooltip = "${category.name} #val# €"
+                    dots.add(dot)
+                }
+                lineChart.addDots(dots)
 
                 sums.each {sum ->
-                    if (sum > yAxis.getMax()){
-                        yAxis.setMax(sum+50)
+                    if (sum > yAxis.getMax()) {
+                        yAxis.setMax(sum + 50)
                     }
                 }
 
@@ -82,18 +94,18 @@ class StatsController {
             }
         }
 
-        def xAxis = new XAxis ()
+        def xAxis = new XAxis()
         def cpt = monthStart
-        while (cpt <= monthEnd){
-            xAxis.addLabels (new Label("${message(code:'month.'+cpt)}").setRotation(Rotation.DIAGONAL))
+        while (cpt <= monthEnd) {
+            xAxis.addLabels(new Label("${message(code: 'month.' + cpt)}").setRotation(Rotation.DIAGONAL))
             cpt++
         }
 
         chart.setYAxis(yAxis)
-        chart.setXAxis (xAxis)
+        chart.setXAxis(xAxis)
         render chart
     }
-    
+
     def categoryChart = {
 
         def person = springSecurityService.getCurrentUser()
@@ -101,43 +113,48 @@ class StatsController {
         // affichage des catégories par mois
         // zone par défaut - (MAINTENANT-6) > MAINTENANT
         def today = new Date()
-        def monthStart = params["month.start"] ? params["month.start"] : 0 //dateUtil.getSixMonthAgo (today)
-        def monthEnd = params["month.end"] ? params["month.end"] : dateUtil.getMonth (today)
+        def monthStart = params["month.start"] ? params["month.start"] : 0
+        //dateUtil.getSixMonthAgo (today)
+        def monthEnd = params["month.end"] ? params["month.end"] : dateUtil.getMonth(today)
 
-        def year = params["year"] ? params["year"] : dateUtil.getCurrentYear ()
-        
+        def year = params["year"] ? params["year"] : dateUtil.getCurrentYear()
+
         params["sort"] = "name"
         params["order"] = "asc"
 
         // récupération des Categories de l'utilisateur
-        def categories = genericService.loadUserObjects (person, Category.class, params)
+        def categories = genericService.loadUserObjects(person, Category.class, params)
 
         // création du chart global
         def chart = new Chart("Opérations de dépenses par catégories")
         def yAxis = new YAxis()
-        yAxis.setMax (100)
+        yAxis.setMax(100)
         yAxis.setSteps(100)
 
-        categories.each { category ->
-            
-            if (category.type == CategoryType.DEPENSE){
-            
-            
+        categories.each {category ->
+
+            if (category.type == CategoryType.DEPENSE) {
+
                 // calcul des dates d'intervalles
                 def firstDate = dateUtil.getFirstDayOfTheMonth(monthStart)
                 def endDate = dateUtil.getLastDayOfTheMonth(monthEnd)
                 log.info "Traitement de la catégorie ${category.name} : du ${firstDate} au ${endDate}"
-            
+
                 // somme des operations par mois
                 def lineChart = new LineChart()
-                lineChart.setColour (category.color)
-                def sums = categoryService.sumDepenseForEachMonth (monthStart, monthEnd, category)
-                lineChart.addValues (sums)
-                lineChart.setTooltip ("${category.name}<br>#val# €")
+                lineChart.setColour(category.color)
+                def dots = new ArrayList<LineChart.Dot>()
+                def sums = categoryService.sumDepenseForEachMonth(monthStart, monthEnd, category)
+                sums.each {sum ->
+                    def dot = new LineChart.Dot(sum)
+                    dot.tooltip = "${category.name} #val# €"
+                    dots.add(dot)
+                }
+                lineChart.addDots(dots)
 
                 sums.each {sum ->
-                    if (sum > yAxis.getMax()){
-                        yAxis.setMax(sum+50)
+                    if (sum > yAxis.getMax()) {
+                        yAxis.setMax(sum + 50)
                     }
                 }
 
@@ -146,15 +163,15 @@ class StatsController {
             }
         }
 
-        def xAxis = new XAxis ()
+        def xAxis = new XAxis()
         def cpt = monthStart
-        while (cpt <= monthEnd){
-            xAxis.addLabels (new Label("${message(code:'month.'+cpt)}").setRotation(Rotation.DIAGONAL))
+        while (cpt <= monthEnd) {
+            xAxis.addLabels(new Label("${message(code: 'month.' + cpt)}").setRotation(Rotation.DIAGONAL))
             cpt++
         }
 
         chart.setYAxis(yAxis)
-        chart.setXAxis (xAxis)
+        chart.setXAxis(xAxis)
         render chart
 
     }

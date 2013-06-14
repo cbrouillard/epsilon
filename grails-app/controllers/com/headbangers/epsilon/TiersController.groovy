@@ -180,7 +180,7 @@ class TiersController {
             owner {eq("id", person.id)}
         }
 
-        render(view: 'list', model: [tiersInstanceList: tiers, tiersInstanceTotal: tiers.size()])
+        render(view: 'list', model: [tiersInstanceList: tiers, tiersInstanceTotal: tiers.size(), query:params.query])
 
     }
 }

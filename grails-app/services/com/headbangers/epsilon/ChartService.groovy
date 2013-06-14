@@ -51,7 +51,7 @@ class ChartService {
             prevMonth = dateUtil.getMonth (operations.get(0).dateApplication)
         }
 
-        def barChart = new BarChart(BarChart.Style.GLASS)
+        def barChart = new BarChart(BarChart.Style.NORMAL)
         operations.each {operation ->
             log.info "Adding this operation : ${operation.id} : ${operation.amount} // ${operation.dateApplication}"
             currentMonth = dateUtil.getMonth(operation.dateApplication)

@@ -8,9 +8,9 @@
 %{--* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the--}%
 %{--* GNU General Public License for more details.--}%
 %{--*/--}%
-<form action="search" method="post">
+<form action="search" method="get">
     <div class="input-append">
-        <input type="text" class="input-medium typeahead-${controllerName}" name="query" autocomplete="off">
+        <input type="text" class="input-medium typeahead-${controllerName}" name="query" autocomplete="off" value="${query?:""}">
         <button type="submit" class="btn" type="button">chercher</button>
     </div>
 </form>
