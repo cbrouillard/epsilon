@@ -11,7 +11,9 @@
 
 package com.headbangers.epsilon
 
+import grails.converters.JSON
 import jofc2.model.Chart
+import jofc2.model.elements.BarChart
 import jofc2.model.elements.LineChart
 import jofc2.model.axis.YAxis
 import jofc2.model.axis.XAxis
@@ -32,10 +34,54 @@ class StatsController {
     def index = {
     }
 
-    def thismonthoperations = {
-        // toutes les opérations de ce mois, toutes catégories confondues, rangées par catégories
+    def thismonthoperationsChart = {
+        // toutes les opérations de ce mois, toutes catégories confondues, rangées par catégories pour un compte donné (parametre)
+        def person = springSecurityService.getCurrentUser()
+        def account = Account.findByOwnerAndId(person, params.account)
 
+        def operations = account.getLastOperations()
 
+        // Construction de la MAP
+        Map<String, List<Operation>> byCategories = new HashMap<String, List<Operation>>()
+        operations.each {operation ->
+            def inMap = byCategories.get(operation.category.name)
+            if (!inMap) {
+                inMap = new ArrayList<Operation>()
+                byCategories.put(operation.category.name, inMap)
+            }
+
+            inMap.add(operation)
+        }
+
+        // Construction du CHART
+        def chart = new Chart(account.name)
+        def yAxis = new YAxis()
+        def axis = new XAxis()
+        yAxis.setMax(1000)
+        yAxis.setSteps(100)
+        def barChart = new BarChart(BarChart.Style.NORMAL)
+        byCategories.each {catName, operationsList ->
+            axis.addLabels(new Label(catName).setRotation(Rotation.DIAGONAL))
+
+            if (operationsList) {
+                def sum = (operationsList*.amount).sum()
+                def color = operationsList[0].category.color
+
+                def operationsBar = new BarChart.Bar(sum, color)
+                operationsBar.setTooltip("${catName} #val# €")
+                barChart.addBars(operationsBar)
+
+                if (sum >= yAxis.getMax()) {
+                    yAxis.setMax(sum + 100)
+                }
+            }
+        }
+
+        chart.setYAxis(yAxis)
+        chart.setXAxis (axis)
+        chart.addElements(barChart)
+
+        render chart
     }
 
     def revenuesChart = {

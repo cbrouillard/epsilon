@@ -86,4 +86,3 @@
 </table>
 
 <g:render template="monthpagination"/>
-
