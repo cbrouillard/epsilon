@@ -10,6 +10,8 @@
  */
 
 package com.headbangers.epsilon
+
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -257,4 +259,28 @@ class ScheduledController {
             redirect(action: "list")
         }
     }
+
+    def search = {
+        def person = springSecurityService.getCurrentUser()
+
+        def scheduled = Scheduled.createCriteria().list(params) {
+            ilike("name", "%${params.query}%")
+            owner {eq("id", person.id)}
+        }
+
+        render(view: 'list', model: [scheduledInstanceList:  scheduled, scheduledInstanceTotal: scheduled.size()])
+
+    }
+
+    def simpleautocomplete(){
+        def person = springSecurityService.getCurrentUser()
+        def scheduled = Scheduled.createCriteria ().list {
+            owner{eq("id", person.id)}
+            ilike ("name", "${params.query}%")
+        }
+
+        render scheduled*.name as JSON
+        return
+    }
+
 }

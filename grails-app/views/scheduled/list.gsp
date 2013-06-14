@@ -53,6 +53,10 @@
                     <div class="alert alert-info">${flash.message}</div>
                 </g:if>
 
+                <div class="text-right">
+                    <g:render template="/generic/search"/>
+                </div>
+
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>

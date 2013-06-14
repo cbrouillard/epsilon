@@ -92,9 +92,29 @@
             }
         });
 
-        $('.typeahead-categories-facture, .typeahead-categories-retrait').typeahead({
+        $('.typeahead-category').typeahead({
             source: function (query, process) {
                 return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query },
+                        function
+                                (data) {
+                            return process(data);
+                        });
+            }
+        });
+
+        $('.typeahead-scheduled').typeahead({
+            source: function (query, process) {
+                return $.get('${createLink(controller: 'scheduled', action:'simpleautocomplete')}', { query: query },
+                        function
+                                (data) {
+                            return process(data);
+                        });
+            }
+        });
+
+        $('.typeahead-categories-facture, .typeahead-categories-retrait').typeahead({
+            source: function (query, process) {
+                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query, type: 'facture' },
                         function
                                 (data) {
                             return process(data);

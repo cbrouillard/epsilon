@@ -133,7 +133,7 @@ class CategoryController {
     }
 
     def simpleautocomplete(){
-        def categoryType = CategoryType.DEPENSE
+        def categoryType = null
         if (params.type){
             categoryType= CategoryType.guess(params.type)
         }
