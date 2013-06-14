@@ -18,7 +18,7 @@
     <div class="row">
         <div class="span12">
             <div>
-                <h1>Statistiques <small>De jolis graphiques</small></h1>
+                <h1>Statistiques <small>De jolis graphiques.</small></h1>
                 <hr/>
             </div>
         </div>

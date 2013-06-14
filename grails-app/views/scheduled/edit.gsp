@@ -54,8 +54,9 @@
                         <label for="tiers" class="control-label mandatory"><g:message code="scheduled.tiers.label" default="Tiers"/></label>
 
                         <div class="controls ${hasErrors(bean: scheduledInstance, field: 'tiers', 'errors')}">
-                            <richui:autoComplete id="tiers" name="tiersname" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                                 value="${scheduledInstance?.tiers?.name}" required="true" class="input-block-level"/>
+                            <g:textField id="tiers" name="tiersname" action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                                         value="${scheduledInstance?.tiers?.name}" required="true" class="input-block-level typeahead-tiers"
+                                         autocomplete="off"/>
                         </div>
                     </div>
 
@@ -63,8 +64,9 @@
                         <label for="category" class="control-label mandatory"><g:message code="scheduled.category.label" default="Category"/></label>
 
                         <div class="controls ${hasErrors(bean: scheduledInstance, field: 'category', 'errors')}">
-                            <richui:autoComplete id="category" name="categoryname" action="${createLinkTo('dir': 'category/autocomplete/')}"
-                                                 value="${scheduledInstance?.category?.name}" required="true" class="input-block-level"/>
+                            <g:textField id="category" name="categoryname" action="${createLinkTo('dir': 'category/autocomplete/')}"
+                                         value="${scheduledInstance?.category?.name}" required="true" class="input-block-level typeahead-categories-${scheduledInstance.type}"
+                                         autocomplete="off"/>
                         </div>
                     </div>
 
