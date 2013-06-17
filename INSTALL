@@ -7,4 +7,3 @@ Mini guide d'installation:
 5 - Si vous compilez Epsilon, il faut également installer grails : grails.org
 6 - Pour compiler : grails prod war
 7 - Placer le war epsilon-VERSION.war dans Tomcat
-8 - TEST lolcommits:

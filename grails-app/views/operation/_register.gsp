@@ -44,7 +44,7 @@
         <g:set var="operations" value="${selected?.lastOperationsByMonth(currentMonth ? currentMonth : 0)}"/>
     </g:else>
 
-    <g:set var="accountAmount" value="${selected?.lastSnapshot?.amount}"/>
+    <g:set var="accountAmount" value="${selected?.lastSnapshot?.amount ?: selected.amount}"/>
     <g:each in="${operations}" status="i" var="operationInstance">
         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
             <td>${i + 1}</td>
