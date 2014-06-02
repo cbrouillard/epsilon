@@ -74,7 +74,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://chiptunes.fr:8081/epsilon"
+        grails.serverURL = "http://tacticalwarreport.com/epsilon"
     }
 }
 
