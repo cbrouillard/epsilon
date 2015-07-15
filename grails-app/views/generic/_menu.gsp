@@ -11,7 +11,7 @@
  * GNU General Public License for more details.
  */
 -->
-<ul class="nav">
+<ul class="nav navbar-nav">
     <li class="${controllerName == 'bank' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
             <img src="${resource(dir: 'img', file: 'bank.png')}"/> Etablissements <b class="caret"></b>
@@ -141,7 +141,7 @@
 
 </ul>
 
-<ul class="nav pull-right">
+<ul class="nav navbar-nav navbar-right">
     <li class="${controllerName == 'person' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
             <img src="${resource(dir: 'img', file: 'personal-information.png')}"/> Profil [<b><sec:username/></b>] <b class="caret"></b>

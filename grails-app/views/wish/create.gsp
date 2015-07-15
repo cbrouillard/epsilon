@@ -9,45 +9,37 @@
 
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Créer un nouveau souhait</h1>
-                <hr/>
+<div class="col-sm-12">
+    <h1>Créer un nouveau souhait</h1>
+    <hr/>
+</div>
+
+<div class="col-sm-12">
+    <div class="around-border">
+
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+
+        <g:hasErrors bean="${wishInstance}">
+            <div class="alert alert-danger">
+                <g:renderErrors bean="${wishInstance}" as="list"/>
             </div>
-        </div>
-    </div>
+        </g:hasErrors>
 
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
+        <g:form action="save" class="form-horizontal">
+            <g:render template="form"/>
 
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
-
-                <g:hasErrors bean="${wishInstance}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${wishInstance}" as="list"/>
-                    </div>
-                </g:hasErrors>
-
-                <g:form action="save" class="form-horizontal">
-                    <g:render template="form"/>
-
-                    <div class="control-group">
-                        <div class="controls">
-                            <g:submitButton name="create" class="save btn btn-primary"
-                                            value="${message(code: 'default.button.create.label', default: 'Create')}"/>
-                        </div>
-                    </div>
-                </g:form>
-
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-save"></span> ${message(code: 'default.button.create.label', default: 'Save')}
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
+        </g:form>
 
+    </div>
 </div>
 
 </body>

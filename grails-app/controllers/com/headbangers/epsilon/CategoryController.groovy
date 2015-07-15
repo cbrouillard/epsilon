@@ -52,7 +52,7 @@ class CategoryController {
         categoryInstance.owner = springSecurityService.getCurrentUser()
 
         if (categoryInstance.name){
-            categoryInstance.color = categoryService.buildColor (categoryInstance.name)
+            categoryInstance.color = genericService.buildColor (categoryInstance.name)
         }
 
         if (categoryInstance.save(flush: true)) {

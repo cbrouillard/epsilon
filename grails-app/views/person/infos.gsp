@@ -21,97 +21,88 @@
 
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Utilisateur <small>${person.userRealName}</small></h1>
-                <hr/>
-            </div>
-        </div>
+<div class="col-sm-12">
+    <h1>Utilisateur <small>${person.userRealName}</small></h1>
+    <hr/>
+</div>
+
+<g:if test="${flash.message}">
+    <div class="col-sm-12">
+        <div class="alert alert-info">${flash.message}</div>
     </div>
+</g:if>
 
-    <g:if test="${flash.message}">
-        <div class="row">
-            <div class="span12">
-                <div class="alert alert-info">${flash.message}</div>
-            </div>
+<div class="col-sm-6">
+    <div class="around-border">
+
+        <div class="alert alert-info">
+            Paramètrage de l'application
         </div>
-    </g:if>
 
-    <div class="row">
-        <div class="span6">
-            <div class="around-border">
+        <g:form action="parameterize" method="post" class="form-horizontal">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Valeur</th>
+                </tr>
+                </thead>
+                <tbody>
 
-                <div class="alert alert-info">
-                    Paramètrage de l'application
+                <tr>
+                    <td><g:message code="parameter.bayesian.label"/></td>
+                    <td><g:message code="parameter.bayesian.description"/></td>
+                    <td class="tdright"><g:checkBox name="bayesian_filter"
+                                                    value="${new Boolean(parameters.bayesian_filter)}"/></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+            <div class="control-group">
+                <div class="controls text-right">
+
+                    <span class="button"><g:submitButton name="parameterize" class="save btn btn-primary"
+                                                         value="${message(code: 'default.button.update.label', default: 'Update')}"/></span>
                 </div>
-
-                <g:form action="parameterize" method="post" class="form-horizontal">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Description</th>
-                            <th>Valeur</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <tr>
-                            <td><g:message code="parameter.bayesian.label"/></td>
-                            <td><g:message code="parameter.bayesian.description"/></td>
-                            <td class="tdright"><g:checkBox name="bayesian_filter" value="${new Boolean(parameters.bayesian_filter)}"/></td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-
-
-                    <div class="control-group">
-                        <div class="controls text-right">
-
-                            <span class="button"><g:submitButton name="parameterize" class="save btn btn-primary"
-                                                                 value="${message(code: 'default.button.update.label', default: 'Update')}"/></span>
-                        </div>
-                    </div>
-                </g:form>
-
             </div>
-        </div>
-
-        <div class="span6">
-            <div class="around-border">
-
-                <div class="alert alert-info">
-                    Vos informations personnelles
-                </div>
-
-                <dl class="dl-horizontal">
-                    <dt><g:message code="person.email.label" default="Email"/></dt>
-                    <dd>${fieldValue(bean: person, field: "email")}</dd>
-
-                    <dt><g:message code="person.username.label" default="Username"/></dt>
-                    <dd>${fieldValue(bean: person, field: "username")}</dd>
-
-                    <dt><g:message code="person.userRealName.label" default="UserRealName"/></dt>
-                    <dd>${fieldValue(bean: person, field: "userRealName")}</dd>
-                </dl>
-
-
-                <g:form action="edit" method="post" class="form-horizontal">
-                    <div class="control-group">
-                        <div class="controls">
-                            <span class="button"><g:actionSubmit action="edit" class="edit btn btn-primary" name="edit"
-                                                                 value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-                        </div>
-                    </div>
-                </g:form>
-
-            </div>
-        </div>
+        </g:form>
 
     </div>
 </div>
+
+<div class="col-sm-6">
+    <div class="around-border">
+
+        <div class="alert alert-info">
+            Vos informations personnelles
+        </div>
+
+        <dl class="dl-horizontal">
+            <dt><g:message code="person.email.label" default="Email"/></dt>
+            <dd>${fieldValue(bean: person, field: "email")}</dd>
+
+            <dt><g:message code="person.username.label" default="Username"/></dt>
+            <dd>${fieldValue(bean: person, field: "username")}</dd>
+
+            <dt><g:message code="person.userRealName.label" default="UserRealName"/></dt>
+            <dd>${fieldValue(bean: person, field: "userRealName")}</dd>
+        </dl>
+
+
+        <g:form action="edit" method="post" class="form-horizontal">
+            <div class="control-group">
+                <div class="controls  text-right">
+                    <span class="button"><g:actionSubmit action="edit" class="edit btn btn-primary" name="edit"
+                                                         value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
+                </div>
+            </div>
+        </g:form>
+
+    </div>
+</div>
+
 </body>
 </html>

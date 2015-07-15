@@ -22,6 +22,6 @@ class PersonService {
     }
 
     def findByLoginAndPass (login, pass){
-        return Person.findByUsernameAndPasswd (login, springSecurityService.encodePassword(pass))
+        return Person.findByUsernameAndPassword (login, springSecurityService.encodePassword(pass))
     }
 }

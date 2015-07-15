@@ -10,71 +10,137 @@
  * GNU General Public License for more details.
  */
 -->
-<g:form action="savevirement" method="post">
-    <input name="account.id" type="hidden" value="${selected?.id}"/>
+<div class="around-border-within-tab">
+    <g:form action="savevirement" method="post">
+        <fieldset class="form">
+            <div id="formContainer">
 
-    <div class="control-group">
-        <label for="account.to" class="control-label mandatory">Virement depuis "${selected.name}" vers</label>
+                <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'accountTo', 'errors')}">
 
-        <div class="controls ">
-            <g:select optionValue="${{it.name + ' = ' + formatNumber('number': it.getSold(), 'format': '0.##') + '€'}}" name="account.to"
-                      from="${accounts}" optionKey="id" class="input-block-level" required="true"/>
-        </div>
-    </div>
+                    <label for="account.to"
+                           class="col-sm-12 control-label mandatory">Virement depuis "${selected.name}" vers</label>
 
-    <div class="control-group">
-        <label for="categoryvirement" class="control-label mandatory"><g:message code="operation.category.label" default="Category"/></label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-piggy-bank"></span></span>
+                            <g:select optionValue="${{
+                                it.name + ' = ' + formatNumber('number': it.getSold(), 'format': '0.##') + '€'
+                            }}" name="account.to"
+                                      from="${accounts}" optionKey="id" class="form-control" required="true"/>
+                        </div>
 
-        <div class="controls ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
-            <g:textField id="categoryvirement" name="category.name"
-                         value="${operationInstance?.category?.name}"
-                         class="input-block-level typeahead-categories-virement" required="true"
-                         autocomplete="off"/>
-        </div>
-    </div>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
 
-    <div class="control-group">
-        <label for="dateApplicationvirement" class="control-label mandatory"><g:message code="operation.dateApplication.label"
-                                                                                        default="Date Application"/></label>
+                <div class="form-group ${hasErrors(bean: operationInstance, field: 'category', 'errors')}">
 
-        <div class="controls ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
-            <div class="input-append">
-            <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}" name="dateApplication"
-                   id="dateApplicationvirement" class="datePicker-inner input-xlarge" required="true"/>
-                <span class="add-on"><i class="icon-calendar"></i></span>
+                    <label for="categoryvirement" class="col-sm-12 control-label mandatory"><g:message
+                            code="operation.category.label"/></label>
+
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-tag"></span></span>
+
+                            <g:textField id="categoryvirement" name="category.name"
+                                         value="${operationInstance?.category?.name}" required="true"
+                                         class="form-control typeahead-categories-virement"
+                                         autocomplete="off"/>
+
+                        </div>
+
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group ${hasErrors(bean: operationInstance, field: 'dateApplication', 'errors')}">
+
+                    <label for="dateApplicationvirement" class="col-sm-12 control-label mandatory"><g:message
+                            code="operation.dateApplication.label"/></label>
+
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-calendar"></span></span>
+                            <input type="text"
+                                   value="${formatDate(format: 'dd/MM/yyyy', date: operationInstance?.dateApplication)}"
+                                   name="dateApplication"
+                                   id="dateApplicationvirement" required="true" class="datePicker form-control"/>
+
+                        </div>
+
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
+
+                    <label for="amount" class="col-sm-12 control-label mandatory"><g:message
+                            code="operation.amount.label"/></label>
+
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-euro"></span></span>
+                            <g:textField pattern="^([0-9.,])*" id="amount" name="amount"
+                                     value="${fieldValue(bean: operationInstance, field: 'amount')}"
+                                     required="true"
+                                     class="form-control"/>
+                        </div>
+
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group ${hasErrors(bean: operationInstance, field: 'note', 'errors')}">
+
+                    <label for="note" class="col-sm-12 control-label"><g:message
+                            code="operation.note.label"/></label>
+
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-star"></span></span>
+                            <g:textArea name="note" id="note" cols="40" rows="5"
+                                        value="${operationInstance?.note}"
+                                        class="form-control editor"/>
+
+                        </div>
+
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3  control-label" for="pointed"><g:message
+                            code="operation.pointed.label"/></label>
+
+                    <div class="col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                <g:checkBox id="pointed" name="pointed"
+                                            value="${operationInstance?.pointed}" class="checkbox"
+                                            style="margin-top: -13px;"/>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-save"></span> ${message(code: 'default.button.create.label', default: 'Save')}
+                </button>
             </div>
         </div>
-    </div>
+        <input name="account.id" type="hidden" value="${selected?.id}"/>
 
-    <div class="control-group">
-        <label for="amount" class="control-label mandatory"><g:message code="operation.amount.label" default="Amount"/></label>
-
-        <div class="controls ${hasErrors(bean: operationInstance, field: 'amount', 'errors')}">
-            <div class="input-append">
-                <g:textField name="amount" value="${fieldValue(bean: operationInstance, field: 'amount')}" class="input-xlarge" required="true"/>
-                <span class="add-on"><b>€</b></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label for="note" class="control-label"><g:message code="operation.note.label" default="Note"/></label>
-
-        <div class="controls ${hasErrors(bean: operationInstance, field: 'note', 'errors')}">
-            <g:textArea name="note" cols="40" rows="5" value="${operationInstance?.note}" class="input-block-level"/>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label for="pointed">
-            <g:message code="operation.pointed.label" default="Pointed"/>
-            <g:checkBox name="pointed" value="${operationInstance?.pointed}"/>
-        </label>
-    </div>
-
-    <div class="control-group">
-        <div class="controls ">
-            <g:submitButton name="create" class="save btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}"/>
-        </div>
-    </div>
-</g:form>
+        <div class="clearfix">&nbsp;</div>
+    </g:form>
+</div>

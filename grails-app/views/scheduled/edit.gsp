@@ -22,124 +22,181 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Editer une échéance <small>${scheduledInstance.name}</small></h1>
-                <hr/>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
-
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
-
-                <g:hasErrors bean="${scheduledInstance}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${scheduledInstance}" as="list"/>
-                    </div>
-                </g:hasErrors>
-
-                <g:form method="post" class="form-horizontal">
-                    <g:hiddenField name="id" value="${scheduledInstance?.id}"/>
-                    <g:hiddenField name="version" value="${scheduledInstance?.version}"/>
-
-                    <div class="control-group">
-                        <label for="tiers" class="control-label mandatory"><g:message code="scheduled.tiers.label" default="Tiers"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduledInstance, field: 'tiers', 'errors')}">
-                            <g:textField id="tiers" name="tiersname" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                         value="${scheduledInstance?.tiers?.name}" required="true" class="input-block-level typeahead-tiers"
-                                         autocomplete="off"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="category" class="control-label mandatory"><g:message code="scheduled.category.label" default="Category"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduledInstance, field: 'category', 'errors')}">
-                            <g:textField id="category" name="categoryname" action="${createLinkTo('dir': 'category/autocomplete/')}"
-                                         value="${scheduledInstance?.category?.name}" required="true" class="input-block-level typeahead-categories-${scheduledInstance.type}"
-                                         autocomplete="off"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="dateApplication" class="control-label mandatory"><g:message code="scheduled.dateApplication.label"
-                                                                                                default="Date Application"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateApplication', 'errors')}">
-                            <div class="input-append">
-                                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}" name="dateApplication"
-                                       id="dateApplication" required="true" class="datePicker input-xlarge"/>
-                                <span class="add-on"><i class="icon-calendar"></i></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="dateLastApplication" class="control-label"><g:message code="scheduled.dateLastApplication.label"
-                                                                                          default="Date Application"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduledInstance, field: 'dateLastApplication', 'errors')}">
-                            <div class="input-append">
-                                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}"
-                                       name="dateLastApplication"
-                                       id="dateLastApplication" class="datePicker input-xlarge"/>
-                                <span class="add-on"><i class="icon-calendar"></i></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="amount" class="control-label mandatory"><g:message code="scheduled.amount.label" default="Amount"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduledInstance, field: 'amount', 'errors')}">
-                            <div class="input-append">
-                                <g:textField name="amount" value="${fieldValue(bean: scheduledInstance, field: 'amount')}" required="true"
-                                             class="input-xlarge"/>
-                                <span class="add-on"><b>€</b></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="note" class="control-label"><g:message code="scheduled.note.label" default="Note"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduledInstance, field: 'note', 'errors')}">
-                            <g:textArea name="note" cols="40" rows="5" value="${scheduledInstance?.note}" class="input-block-level"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="automatic" class="control-label"><g:message code="scheduled.automatic.label" default="Automatic"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduledInstance, field: 'automatic', 'errors')}">
-                            <g:checkBox name="automatic" value="${scheduledInstance?.automatic}"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <div class="controls">
-                            <span class="button"><g:actionSubmit class="save btn btn-primary" action="update"
-                                                                 value="${message(code: 'default.button.update.label', default: 'Update')}"/></span>
-                            <span class="button"><g:actionSubmit class="delete btn btn-danger" action="delete" value="${message(code:
-                                    'default.button.delete.label', default: 'Delete')}"
-                                                                 onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
-                        </div>
-                    </div>
-                </g:form>
-            </div>
-        </div>
-    </div>
-
+<div class="col-sm-12">
+    <h1>Editer une échéance <small>${scheduledInstance.name}</small></h1>
+    <hr/>
 </div>
 
+<div class="col-sm-12">
+    <div class="around-border">
+
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+
+        <g:hasErrors bean="${scheduledInstance}">
+            <div class="alert alert-error">
+                <g:renderErrors bean="${scheduledInstance}" as="list"/>
+            </div>
+        </g:hasErrors>
+
+        <g:form method="post" class="form-horizontal">
+            <g:hiddenField name="id" value="${scheduledInstance?.id}"/>
+            <g:hiddenField name="version" value="${scheduledInstance?.version}"/>
+
+            <fieldset class="form">
+                <div id="formContainer">
+
+                    <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'tiers', 'errors')}">
+
+                        <label for="tiers" class="col-sm-2 control-label mandatory"><g:message
+                                code="scheduled.tiers.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-user"></span></span>
+
+                                <g:textField id="tiers" name="tiersname" action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                                             value="${scheduledInstance?.tiers?.name}" required="true"
+                                             class="form-control typeahead-tiers"
+                                             autocomplete="off"/>
+
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'category', 'errors')}">
+
+                        <label for="category" class="col-sm-2 control-label mandatory"><g:message
+                                code="scheduled.category.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-tag"></span></span>
+
+                                <g:textField id="category" name="categoryname"
+                                             action="${createLinkTo('dir': 'category/autocomplete/')}"
+                                             value="${scheduledInstance?.category?.name}" required="true"
+                                             class="form-control typeahead-categories-${scheduledInstance.type}"
+                                             autocomplete="off"/>
+
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'dateApplication', 'errors')}">
+
+                <label for="dateApplication" class="col-sm-2 control-label mandatory"><g:message
+                        code="scheduled.dateApplication.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-calendar"></span></span>
+                        <input type="text"
+                               value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateApplication)}"
+                               name="dateApplication"
+                               id="dateApplication" required="true" class="datePicker form-control"/>
+
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'dateLastApplication', 'errors')}">
+
+                <label for="dateLastApplication" class="col-sm-2 control-label"><g:message
+                        code="scheduled.dateLastApplication.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-calendar"></span></span>
+                        <input type="text"
+                               value="${formatDate(format: 'dd/MM/yyyy', date: scheduledInstance?.dateLastApplication)}"
+                               name="dateLastApplication"
+                               id="dateLastApplication" class="datePicker form-control"/>
+
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'amount', 'errors')}">
+
+                <label for="amount" class="col-sm-2 control-label mandatory"><g:message
+                        code="scheduled.amount.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-euro"></span></span>
+                        <g:textField pattern="^([0-9.,])*" id="amount" name="amount"
+                                 value="${fieldValue(bean: scheduledInstance, field: 'amount')}"
+                                 required="true"
+                                 class="form-control"/>
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'note', 'errors')}">
+
+                <label for="note" class="col-sm-2 control-label"><g:message
+                        code="scheduled.note.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-star"></span></span>
+                        <g:textArea name="note" id="note" cols="40" rows="5"
+                                    value="${scheduledInstance?.note}"
+                                    class="form-control editor"/>
+
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="automatic" class="col-sm-2 control-label"><g:message
+                        code="scheduled.automatic.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <g:checkBox id="automatic" name="automatic"
+                                        value="${scheduledInstance?.automatic}" class="checkbox"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <g:actionSubmit class="save btn btn-primary" action="update"
+                                    value="${message(code: 'default.button.update.label', default: 'Update')}"/>
+                    <g:actionSubmit class="delete btn btn-danger" action="delete"
+                                    value="${message(code:
+                                            'default.button.delete.label', default: 'Delete')}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                </div>
+            </div>
+        </g:form>
+    </div>
+</div>
 </body>
 </html>

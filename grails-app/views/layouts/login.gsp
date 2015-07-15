@@ -24,10 +24,7 @@
     }
     </style>
 
-    <script>
-        jQuery.noConflict();
-    </script>
-
+    <r:require module="jquery"/>
     <r:require module="bootstrap"/>
     <g:layoutHead/>
     <r:layoutResources/>
@@ -35,33 +32,38 @@
 
 <body class="pig">
 
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
         <div class="container-fluid">
-            <a class="brand" href="${createLink(uri: '/')}"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Epsilon" border="0"
-                                                                 style="height: 20px;"/></a>
+            <a class="navbar-brand" href="${createLink(uri: '/')}"><img
+                    src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Epsilon" border="0"
+                    style="height: 20px;"/></a>
         </div>
     </div>
-</div>
+</nav>
 
-<div id="container">
+<div id="container-fluid">
     <g:layoutBody/>
 </div>
 
 <footer>
-    <div class="navbar navbar-fixed-bottom">
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div class="navbar-inner">
             <div class="container-fluid">
 
-                <p class="navbar-text pull-left">© BROUILLARD Cyril - 2013 - <g:message
+                <p class="navbar-text pull-left"><span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;" class="grand">&copy;</span> BROUILLARD Cyril - [2009-2015] - <g:message
                         code="app.name"/> - Gestion simplifiée de compte bancaires</p>
 
             </div>
         </div>
-    </div>
+    </nav>
 </footer>
 
 <r:layoutResources/>
 </body>
+
+<script>
+    jQuery.noConflict();
+</script>
 
 </html>

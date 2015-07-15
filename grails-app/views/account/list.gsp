@@ -20,97 +20,95 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Liste des comptes <small>Tous vos comptes sont ici.</small> <g:link controller="account" action="create" class="btn"><img
-                        src="${resource(dir: 'img', file: 'account.png')}"
-                        alt=">"/> Créer un nouveau compte</g:link></h1>
-                <hr/>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
-
-                <g:if test="${!accountInstanceList}">
-                    <div class="alert alert-error">Aucun compte enregistré.</div>
-                </g:if>
-                <g:else>
-                    <g:if test="${flash.message}">
-                        <div class="alert alert-info">${flash.message}</div>
-                    </g:if>
-
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-
-                            <th><g:message code="account.bank.label" default="Bank"/></th>
-
-                            <g:sortableColumn property="name" title="${message(code: 'account.name.label', default: 'Name')}"/>
-
-                            <g:sortableColumn property="type" title="${message(code: 'account.type.label', default: 'Type')}"/>
-
-                            <g:sortableColumn property="dateOpened" title="${message(code: 'account.dateOpened.label', default: 'Date Opened')}"/>
-
-                            <g:sortableColumn property="amount" title="${message(code: 'account.calculatedAmount.label', default: 'Amount')}"/>
-
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <g:each in="${accountInstanceList}" status="i" var="accountInstance">
-                            <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
-                                <td>${fieldValue(bean: accountInstance, field: "bank.name")}</td>
-
-                                <td>${fieldValue(bean: accountInstance, field: "name")}</td>
-
-                                <td>${fieldValue(bean: accountInstance, field: "type")}</td>
-
-                                <td><g:formatDate date="${accountInstance.dateOpened}"/></td>
-
-                                <td class="tdright"><b><g:formatNumber number="${accountInstance?.sold}" format="0.##"/> €</b></td>
-
-                                <td class="tdcenter">
-                                    <g:link title="Afficher les détails" action="show" id="${accountInstance.id}" data-toggle="modal"
-                                            data-target="#modalWindow_show"><img
-                                            src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
-
-                                    <g:link title="Editer" action="edit" id="${accountInstance.id}"><img
-                                            src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
-                                    <g:link title="Afficher le registre" controller="operation" action="list" params="[account: accountInstance.id]"><img
-                                            src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
-                                </td>
-                            </tr>
-                        </g:each>
-                        </tbody>
-                    </table>
-
-                    <div class="pagination text-right">
-                        <g:paginate total="${accountInstanceTotal}"/>
-                    </div>
-
-                </g:else>
-
-            </div>
-        </div>
-    </div>
-
+<div class="col-sm-12">
+    <h1>Liste des comptes <small>Tous vos comptes sont ici.</small> <g:link controller="account" action="create"
+                                                                            class="btn btn-success"><img
+                src="${resource(dir: 'img', file: 'account.png')}"
+                alt=">"/> Créer un nouveau compte</g:link></h1>
+    <hr/>
 </div>
 
-<div id="modalWindow_show" class="modal hide fade">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
+<div class="col-sm-12">
+    <div class="around-border">
 
-        <h3>Détails d'un compte</h3>
+        <g:if test="${!accountInstanceList}">
+            <div class="alert alert-danger">Aucun compte enregistré.
+            </div>
+        </g:if>
+        <g:else>
+            <g:if test="${flash.message}">
+                <div class="alert alert-info">${flash.message}</div>
+            </g:if>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+
+                    <th><g:message code="account.bank.label" default="Bank"/></th>
+
+                    <g:sortableColumn property="name"
+                                      title="${message(code: 'account.name.label', default: 'Name')}"/>
+
+                    <g:sortableColumn property="type"
+                                      title="${message(code: 'account.type.label', default: 'Type')}"/>
+
+                    <g:sortableColumn property="dateOpened"
+                                      title="${message(code: 'account.dateOpened.label', default: 'Date Opened')}"/>
+
+                    <g:sortableColumn property="amount"
+                                      title="${message(code: 'account.calculatedAmount.label', default: 'Amount')}"
+                                      class="text-right"/>
+
+                    <th class="text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <g:each in="${accountInstanceList}" status="i" var="accountInstance">
+                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+
+                        <td>${fieldValue(bean: accountInstance, field: "bank.name")}</td>
+
+                        <td>${fieldValue(bean: accountInstance, field: "name")}</td>
+
+                        <td>${fieldValue(bean: accountInstance, field: "type")}</td>
+
+                        <td><g:formatDate date="${accountInstance.dateOpened}"/></td>
+
+                        <td class="text-right"><b><g:formatNumber number="${accountInstance?.sold}"
+                                                                  format="0.##"/> €</b></td>
+
+                        <td class="text-right">
+                            <g:link title="Afficher les détails" action="show" id="${accountInstance.id}"
+                                    data-toggle="modal"
+                                    data-target="#modalWindow_show"><img
+                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+
+                            <g:link title="Editer" action="edit" id="${accountInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                            <g:link title="Afficher le registre" controller="operation" action="list"
+                                    params="[account: accountInstance.id]"><img
+                                    src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                        </td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+
+            <div class="pagination pull-right">
+                <g:paginate total="${accountInstanceTotal}"/>
+            </div>
+
+            <div class="clearfix">&nbsp;</div>
+        </g:else>
+
     </div>
+</div>
 
-    <div class="modal-body">
-        <img src="${resource(dir: 'images', file: 'spinner.gif')}"/>
+<div class="modal fade" id="modalWindow_show" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
     </div>
 </div>
 

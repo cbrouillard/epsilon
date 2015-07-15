@@ -18,48 +18,57 @@
 </head>
 
 <body>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Détails d'un budget</h4>
+</div>
+
 <g:if test="${flash.message}">
     <div class="alert alert-info">${flash.message}</div>
 </g:if>
 
-<dl class="dl-horizontal">
-    <dt><g:message code="budget.name.label" default="Name"/></dt>
-    <dd>${fieldValue(bean: budgetInstance, field: "name")}</dd>
+<div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt><g:message code="budget.name.label" default="Name"/></dt>
+        <dd>${fieldValue(bean: budgetInstance, field: "name")}</dd>
 
-    <dt><g:message code="budget.amount.label" default="Amount"/></dt>
-    <dd>${fieldValue(bean: budgetInstance, field: "amount")} €</dd>
+        <dt><g:message code="budget.amount.label" default="Amount"/></dt>
+        <dd>${fieldValue(bean: budgetInstance, field: "amount")} €</dd>
 
-    <dt><g:message code="budget.note.label" default="Note"/></dt>
-    <dd>${fieldValue(bean: budgetInstance, field: "note")}</dd>
+        <dt><g:message code="budget.note.label" default="Note"/></dt>
+        <dd>${fieldValue(bean: budgetInstance, field: "note")}</dd>
 
-    <dt><g:message code="budget.lastUpdated.label" default="Last Updated"/></dt>
-    <dd><g:formatDate date="${budgetInstance?.lastUpdated}"/></dd>
+        <dt><g:message code="budget.lastUpdated.label" default="Last Updated"/></dt>
+        <dd><g:formatDate date="${budgetInstance?.lastUpdated}"/></dd>
 
-    <dt><g:message code="budget.active.label" default="Active"/></dt>
-    <dd><g:formatBoolean boolean="${budgetInstance?.active}"/></dd>
+        <dt><g:message code="budget.active.label" default="Active"/></dt>
+        <dd><g:formatBoolean boolean="${budgetInstance?.active}"/></dd>
 
-    <dt><g:message code="budget.attachedCategories.label" default="Attached Categories"/></dt>
-    <dd>
-        <ul>
-            <g:each in="${budgetInstance.attachedCategories}" var="a">
-                <li><g:link controller="category" action="operations" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
-            </g:each>
-        </ul>
-    </dd>
+        <dt><g:message code="budget.attachedCategories.label" default="Attached Categories"/></dt>
+        <dd>
+            <ul>
+                <g:each in="${budgetInstance.attachedCategories}" var="a">
+                    <li><g:link controller="category" action="operations"
+                                id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
+                </g:each>
+            </ul>
+        </dd>
 
-    <dt><g:message code="budget.dateCreated.label" default="Date Created"/></dt>
-    <dd><g:formatDate date="${budgetInstance?.dateCreated}"/></dd>
+        <dt><g:message code="budget.dateCreated.label" default="Date Created"/></dt>
+        <dd><g:formatDate date="${budgetInstance?.dateCreated}"/></dd>
 
-</dl>
+    </dl>
+</div>
 
 <div class="modal-footer">
     <g:form>
         <g:hiddenField name="id" value="${budgetInstance?.id}"/>
-        <span class="button"><g:actionSubmit class="edit btn btn-primary" action="edit"
-                                             value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-        <span class="button"><g:actionSubmit class="delete btn btn-danger" action="delete"
+        <g:actionSubmit class="edit btn btn-primary" action="edit"
+                                             value="${message(code: 'default.button.edit.label', default: 'Edit')}"/>
+        <g:actionSubmit class="delete btn btn-danger" action="delete"
                                              value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+                                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
     </g:form>
 </div>
 </body>

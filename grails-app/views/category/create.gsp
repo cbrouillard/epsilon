@@ -21,67 +21,94 @@
 
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Créer une nouvelle catégorie</h1>
-                <hr/>
+<div class="col-sm-12">
+    <h1>Créer une nouvelle catégorie</h1>
+    <hr/>
+</div>
+
+<div class="col-sm-12">
+    <div class="around-border">
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+
+        <g:hasErrors bean="${categoryInstance}">
+            <div class="alert alert-danger">
+                <g:renderErrors bean="${categoryInstance}" as="list"/>
             </div>
-        </div>
-    </div>
+        </g:hasErrors>
 
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
+        <g:form action="save" method="post" class="form-horizontal">
 
-                <g:hasErrors bean="${categoryInstance}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${categoryInstance}" as="list"/>
-                    </div>
-                </g:hasErrors>
+            <fieldset class="form">
+                <div id="formContainer">
 
-                <g:form action="save" method="post" class="form-horizontal">
+                    <div class="form-group ${hasErrors(bean: categoryInstance, field: 'name', 'has-error')}">
 
-                    <div class="control-group">
-                        <label for="name" class="control-label mandatory"><g:message code="category.name.label" default="Name"/></label>
+                        <label for="name" class="col-sm-2 control-label mandatory"><g:message
+                                code="category.name.label"/></label>
 
-                        <div class="controls ${hasErrors(bean: categoryInstance, field: 'name', 'errors')}">
-                            <g:textField name="name" value="${categoryInstance?.name}" class="input-block-level" required="true"/>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-font"></span></span>
+                                <g:textField name="name" required="true" value="${categoryInstance?.name}"
+                                             class="form-control" autofocus=""/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label for="type" class="control-label mandatory"><g:message code="category.type.label" default="Type"/></label>
+                    <div class="form-group ${hasErrors(bean: categoryInstance, field: 'type', 'has-error')}">
 
-                        <div class="controls ${hasErrors(bean: categoryInstance, field: 'type', 'errors')}">
-                            <g:select name="type" from="${com.headbangers.epsilon.CategoryType?.values()}" value="${categoryInstance?.type}"
-                                      class="input-xlarge"/>
+                        <label for="type" class="col-sm-2 control-label mandatory"><g:message
+                                code="category.type.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-asterisk"></span></span>
+                                <g:select name="type" from="${com.headbangers.epsilon.CategoryType?.values()}"
+                                          value="${categoryInstance?.type}"
+                                          class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label for="description" class="control-label"><g:message code="category.description.label" default="Description"/></label>
+                    <div class="form-group ${hasErrors(bean: categoryInstance, field: 'description', 'has-error')}">
 
-                        <div class="controls ${hasErrors(bean: categoryInstance, field: 'description', 'errors')}">
-                            <g:textArea name="description" cols="40" rows="5" value="${categoryInstance?.description}" class="input-block-level"/>
+                        <label for="description" class="col-sm-2 control-label mandatory"><g:message
+                                code="category.description.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-star"></span></span>
+                                <g:textArea name="description" cols="40" rows="5"
+                                            value="${categoryInstance?.description}"
+                                            class="form-control editor"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <div class="controls">
-                            <g:submitButton name="create" class="save btn btn-primary"
-                                            value="${message(code: 'default.button.create.label', default: 'Create')}"/>
-                        </div>
-                    </div>
+                </div>
+            </fieldset>
 
-                </g:form>
-
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-save"></span> ${message(code: 'default.button.create.label', default: 'Save')}
+                    </button>
+                </div>
             </div>
-        </div>
+
+        </g:form>
+
     </div>
 </div>
 </body>

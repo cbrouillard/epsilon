@@ -1,5 +1,6 @@
 sendToServer.sh
 target
 stacktrace.log
-.idea
+.idea/
 *.iml
+

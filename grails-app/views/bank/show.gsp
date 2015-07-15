@@ -19,46 +19,57 @@
 
 <body>
 <div class="body">
-    <g:if test="${flash.message}">
-        <div class="alert alert-info">${flash.message}</div>
-    </g:if>
 
-    <dl class="dl-horizontal">
-        <dt><g:message code="bank.id.label" default="ID"/></dt>
-        <dd>${fieldValue(bean: bankInstance, field: "id")}</dd>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Détails d'un établissement</h4>
+    </div>
 
-        <dt><g:message code="bank.name.label" default="Name"/></dt>
-        <dd>${fieldValue(bean: bankInstance, field: "name")}</dd>
+    <div class="modal-body">
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
 
-        <dt><g:message code="bank.description.label" default="Description"/></dt>
-        <dd>${fieldValue(bean: bankInstance, field: "description")}</dd>
 
-        <dt><g:message code="bank.dateCreated.label" default="Date Created"/></dt>
-        <dd><g:formatDate date="${bankInstance?.dateCreated}"/></dd>
 
-        <dt><g:message code="bank.lastUpdated.label" default="Last Updated"/></dt>
-        <dd><g:formatDate date="${bankInstance?.lastUpdated}"/></dd>
+        <dl class="dl-horizontal">
+            <dt><g:message code="ID" default="ID"/></dt>
+            <dd>${fieldValue(bean: bankInstance, field: "id")}</dd>
 
-        <dt><g:message code="bank.accounts.label" default="Accounts"/></dt>
-        <dd>
-            <ul>
-                <g:each in="${bankInstance?.accounts}" var="a">
-                    <li><g:link controller="operation" action="list" params="[account: a.id]">
-                        <img src="${resource(dir: 'img', file: 'operation.png')}" alt="€"/> ${a?.name}</g:link></li>
-                </g:each>
-            </ul>
-        </dd>
-    </dl>
+            <dt><g:message code="bank.name.label" default="Name"/></dt>
+            <dd>${fieldValue(bean: bankInstance, field: "name")}</dd>
+
+            <dt><g:message code="bank.description.label" default="Description"/></dt>
+            <dd>${fieldValue(bean: bankInstance, field: "description")}</dd>
+
+            <dt><g:message code="bank.dateCreated.label" default="Date Created"/></dt>
+            <dd><g:formatDate date="${bankInstance?.dateCreated}"/></dd>
+
+            <dt><g:message code="bank.lastUpdated.label" default="Last Updated"/></dt>
+            <dd><g:formatDate date="${bankInstance?.lastUpdated}"/></dd>
+
+            <dt><g:message code="bank.accounts.label" default="Accounts"/></dt>
+            <dd>
+                <ul>
+                    <g:each in="${bankInstance?.accounts}" var="a">
+                        <li><g:link controller="operation" action="list" params="[account: a.id]">
+                            <img src="${resource(dir: 'img', file: 'operation.png')}" alt="€"/> ${a?.name}</g:link></li>
+                    </g:each>
+                </ul>
+            </dd>
+        </dl>
+
+    </div>
 
     <div class="modal-footer">
         <g:form>
             <g:hiddenField name="id" value="${bankInstance?.id}"/>
-            <span
-                    class="button"><g:actionSubmit class="btn btn-primary edit" action="edit"
-                                                   value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-            <span class="button"><g:actionSubmit class="btn btn-danger delete" action="delete"
-                                                 value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                                 onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+            <g:actionSubmit class="btn btn-primary edit" action="edit"
+                            value="${message(code: 'default.button.edit.label', default: 'Edit')}"/>
+            <g:actionSubmit class="btn btn-danger delete" action="delete"
+                            value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
         </g:form>
     </div>
 </div>

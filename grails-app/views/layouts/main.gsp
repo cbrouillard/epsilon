@@ -19,7 +19,7 @@
     <r:require module="jquery"/>
 
     <style>
-    #container {
+    body {
         padding-top: 60px;
         padding-bottom: 60px;
     }
@@ -36,27 +36,40 @@
     <g:layoutHead/>
     <r:layoutResources/>
 
+    <gvisualization:apiImport/>
 </head>
 
 <body class="pig">
 
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="brand" href="${createLink(uri: '/')}"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Epsilon" border="0"
-                                                                 style="height: 20px;"/></a>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
 
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="${createLink(uri: '/')}"><img
+                    src="${resource(dir: 'images', file: 'grails_logo.png')}"
+                    alt="Epsilon" border="0"
+                    style="height: 20px;"/></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <g:render template="/generic/menu"/>
         </div>
     </div>
-</div>
+</nav>
 
-<div id="container">
-    <g:layoutBody/>
+<div class="container-fluid"">
+<g:layoutBody/>
 </div>
 
 <footer>
-    <div class="navbar navbar-fixed-bottom">
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div class="navbar-inner">
             <div class="container-fluid">
 
@@ -64,102 +77,112 @@
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <g:link controller="admin">Administration</g:link> -
                     </sec:ifAllGranted>
-                    © BROUILLARD Cyril - 2013 - <g:message
+                    <span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;" class="grand">&copy;</span> BROUILLARD Cyril - [2009-2015] - <g:message
                             code="app.name"/> - Gestion simplifiée de compte bancaires</p>
 
             </div>
         </div>
-    </div>
+    </nav>
 </footer><a name="bottom"></a>
 
 <r:layoutResources/>
 </body>
 
+<script src="${resource(dir: '/js/typeahead', file: 'typeahead.bundle.js')}"></script>
 <script type="text/javascript">
     jQuery(function () {
 //        , showOn: 'both', buttonText: '<i class="icon-calendar"></i>'
         $(".datepicker, .datepicker-inner").datepicker({'dateFormat': 'dd/mm/yy'});
-
         $(".datepicker, .datepicker-inner").attr("autocomplete", "off");
 
-        $('.typeahead-tiers').typeahead({
-            source: function (query, process) {
-                return $.get('${createLink(controller: 'tiers', action:'simpleautocomplete')}', { query: query },
-                        function
-                                (data) {
-                            return process(data);
-                        });
-            }
+
+        $('.typeahead-tiers').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'tiers', action:'simpleautocomplete')}?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
         });
 
-        $('.typeahead-category').typeahead({
-            source: function (query, process) {
-                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query },
-                        function
-                                (data) {
-                            return process(data);
-                        });
-            }
+
+        $('.typeahead-category').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'category', action:'simpleautocomplete')}?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
         });
 
-        $('.typeahead-scheduled').typeahead({
-            source: function (query, process) {
-                return $.get('${createLink(controller: 'scheduled', action:'simpleautocomplete')}', { query: query },
-                        function
-                                (data) {
-                            return process(data);
-                        });
-            }
+        $('.typeahead-scheduled').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'scheduled', action:'simpleautocomplete')}?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
         });
 
-        $('.typeahead-budget').typeahead({
-            source: function (query, process) {
-                return $.get('${createLink(controller: 'budget', action:'simpleautocomplete')}', { query: query },
-                        function
-                                (data) {
-                            return process(data);
-                        });
-            }
+        $('.typeahead-budget').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'budget', action:'simpleautocomplete')}?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
         });
 
-        $('.typeahead-categories-facture, .typeahead-categories-retrait').typeahead({
-            source: function (query, process) {
-                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query, type: 'facture' },
-                        function
-                                (data) {
-                            return process(data);
-                        });
-            }
+        $('.typeahead-categories-facture, .typeahead-categories-retrait').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'category', action:'simpleautocomplete')}?type=facture&query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
         });
 
-        $('.typeahead-categories-depot').typeahead({
-            source: function (query, process) {
-                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query, type: 'depot' },
-                        function
-                                (data) {
-                            return process(data);
-                        });
-            }
+        $('.typeahead-categories-depot').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'category', action:'simpleautocomplete')}?type=depot&query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
         });
 
-        $('.typeahead-categories-virement').typeahead({
-            source: function (query, process) {
-                return $.get('${createLink(controller: 'category', action:'simpleautocomplete')}', { query: query, type: 'virement' },
-                        function
-                                (data) {
-                            return process(data);
-                        });
-            }
+        $('.typeahead-categories-virement').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'category', action:'simpleautocomplete')}?type=virement&query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
         });
 
+        $('.tt-query').css('background-color', '#fff');
     });
 
-    function goToCategory(catId){
-        window.location.href= '${createLink(controller:'category', action:'operations')}/'+catId
+    function goToCategory(catId) {
+        window.location.href = '${createLink(controller:'category', action:'operations')}/' + catId
     }
 
-    function goToTiers(tiersId){
-        window.location.href= '${createLink(controller:'tiers', action:'operations')}/'+tiersId
+    function goToTiers(tiersId) {
+        window.location.href = '${createLink(controller:'tiers', action:'operations')}/' + tiersId
     }
 
 </script>

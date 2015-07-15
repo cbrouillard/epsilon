@@ -22,63 +22,51 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Créer une nouvelle échéance</h1>
-                <hr/>
-            </div>
+<div class="col-sm-12">
+    <h1>Créer une nouvelle échéance</h1>
+    <hr/>
+</div>
+
+<div class="col-sm-12">
+    <g:if test="${flash.message}">
+        <div class="alert alert-info">${flash.message}</div>
+    </g:if>
+
+    <g:hasErrors bean="${scheduledInstance}">
+        <div class="alert alert-error">
+            <g:renderErrors bean="${scheduledInstance}" as="list"/>
         </div>
-    </div>
+    </g:hasErrors>
 
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
+    <div class="tabbable"><!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs">
+            <li class="${tabToDisplay == 'depot' ? 'active' : ''}">
+                <a href="#depot" data-toggle="tab">Dépôt</a>
+            </li>
+            <li class="${tabToDisplay == 'virement' ? 'active' : ''}">
+                <a href="#virement" data-toggle="tab">Virement</a>
+            </li>
+            <li class="${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}">
+                <a href="#facture" data-toggle="tab">Facture</a>
+            </li>
+        </ul>
 
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
+        <div class="tab-content">
+            <div class="tab-pane ${tabToDisplay == 'depot' ? 'active' : ''}" id="depot">
 
-                <g:hasErrors bean="${scheduledInstance}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${scheduledInstance}" as="list"/>
-                    </div>
-                </g:hasErrors>
+                <g:render template="createform" model="[type: 'depot', selected: selected]"/>
 
-                <div class="tabbable"><!-- Only required for left/right tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="${tabToDisplay == 'depot' ? 'active' : ''}">
-                            <a href="#depot" data-toggle="tab">Dépôt</a>
-                        </li>
-                        <li class="${tabToDisplay == 'virement' ? 'active' : ''}">
-                            <a href="#virement" data-toggle="tab">Virement</a>
-                        </li>
-                        <li class="${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}">
-                            <a href="#facture" data-toggle="tab">Facture</a>
-                        </li>
-                    </ul>
+            </div>
 
-                    <div class="tab-content">
-                        <div class="tab-pane ${tabToDisplay == 'depot' ? 'active' : ''}" id="depot">
+            <div class="tab-pane ${tabToDisplay == 'virement' ? 'active' : ''}" id="virement">
 
-                            <g:render template="createform" model="[type: 'depot', selected: selected]"/>
+                <g:render template="createvirement" model="[selected: selected]"/>
 
-                        </div>
+            </div>
 
-                        <div class="tab-pane ${tabToDisplay == 'virement' ? 'active' : ''}" id="virement">
+            <div class="tab-pane ${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}" id="facture">
 
-                            <g:render template="createvirement" model="[selected: selected]"/>
-
-                        </div>
-
-                        <div class="tab-pane ${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}" id="facture">
-
-                            <g:render template="createform" model="[type: 'facture', selected: selected]"/>
-
-                        </div>
-                    </div>
-                </div>
+                <g:render template="createform" model="[type: 'facture', selected: selected]"/>
 
             </div>
         </div>

@@ -28,11 +28,11 @@
         <th>N°</th>
         <th>${message(code: 'operation.dateApplication.label', default: 'Date Application')}</th>
         <th>Détails</th>
-        <th>Pointée</th>
-        <th>Paiement</th>
-        <th>Dépôt</th>
-        <th>Solde</th>
-        <th>Actions</th>
+        <th class="text-center">Pointée</th>
+        <th class="text-right">Paiement</th>
+        <th class="text-right">Dépôt</th>
+        <th class="text-right">Solde</th>
+        <th class="text-right">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -73,7 +73,7 @@
                 <g:formatNumber number="${accountAmount}" format="0.##"/> €
             </td>
 
-            <td class="tdcenter">
+            <td class="text-right">
                 <g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal" data-target="#modalWindow_show"><img
                         src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
                 <g:link title="Editer" action="edit" id="${operationInstance.id}"><img src="${resource(dir: 'img', file: 'edit.png')}"

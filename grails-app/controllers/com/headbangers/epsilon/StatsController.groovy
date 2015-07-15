@@ -43,7 +43,7 @@ class StatsController {
 
         // Construction de la MAP
         Map<String, List<Operation>> byCategories = new HashMap<String, List<Operation>>()
-        operations.each {operation ->
+        operations.each { operation ->
             def inMap = byCategories.get(operation.category.name)
             if (!inMap) {
                 inMap = new ArrayList<Operation>()
@@ -60,7 +60,7 @@ class StatsController {
         yAxis.setMax(1000)
         yAxis.setSteps(500)
         def barChart = new BarChart(BarChart.Style.NORMAL)
-        byCategories.each {catName, operationsList ->
+        byCategories.each { catName, operationsList ->
             axis.addLabels(new Label(catName).setRotation(Rotation.DIAGONAL))
 
             if (operationsList) {
@@ -109,7 +109,7 @@ class StatsController {
         yAxis.setMax(100)
         yAxis.setSteps(100)
 
-        categories.each {category ->
+        categories.each { category ->
 
             if (category.type == CategoryType.REVENU) {
 
@@ -123,7 +123,7 @@ class StatsController {
                 lineChart.setColour(category.color)
                 def dots = new ArrayList<LineChart.Dot>()
                 def sums = categoryService.sumRevenueForEachMonth(monthStart, monthEnd, category)
-                sums.each {sum ->
+                sums.each { sum ->
                     def dot = new LineChart.Dot(sum)
                     dot.tooltip = "${category.name} #val# €"
                     dot.onClick = "goToCategory('" + category.id + "')"
@@ -131,7 +131,7 @@ class StatsController {
                 }
                 lineChart.addDots(dots)
 
-                sums.each {sum ->
+                sums.each { sum ->
                     if (sum > yAxis.getMax()) {
                         yAxis.setMax(sum + 50)
                     }
@@ -179,7 +179,7 @@ class StatsController {
         yAxis.setMax(100)
         yAxis.setSteps(100)
 
-        categories.each {category ->
+        categories.each { category ->
 
             if (category.type == CategoryType.DEPENSE) {
 
@@ -193,7 +193,7 @@ class StatsController {
                 lineChart.setColour(category.color)
                 def dots = new ArrayList<LineChart.Dot>()
                 def sums = categoryService.sumDepenseForEachMonth(monthStart, monthEnd, category)
-                sums.each {sum ->
+                sums.each { sum ->
                     def dot = new LineChart.Dot(sum)
                     dot.tooltip = "${category.name} #val# €"
                     dot.onClick = "goToCategory('" + category.id + "')"
@@ -201,7 +201,7 @@ class StatsController {
                 }
                 lineChart.addDots(dots)
 
-                sums.each {sum ->
+                sums.each { sum ->
                     if (sum > yAxis.getMax()) {
                         yAxis.setMax(sum + 50)
                     }

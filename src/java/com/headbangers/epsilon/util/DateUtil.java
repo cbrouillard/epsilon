@@ -18,32 +18,32 @@ import java.util.Date;
 
 public class DateUtil {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+    static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     static SimpleDateFormat sdfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    
-    public static String format (Date date){
+
+    public static String format(Date date) {
         return sdf.format(date);
     }
 
     public String formatDateForSQL(Date date) {
         return sdfSQL.format(date);
     }
-    
-    public Date parseFromView (String string){
+
+    public Date parseFromView(String string) {
         try {
             return sdf.parse(string);
         } catch (ParseException ex) {
             return getTodayMorning();
         }
     }
-    
-    public Date addMonthToDate (Date date, int nb){
+
+    public Date addMonthToDate(Date date, int nb) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.MONTH, nb);
         return calendar.getTime();
     }
-    
+
     public Date getTodayMorning() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -85,15 +85,19 @@ public class DateUtil {
         return getFirstDayOfTheMonth(null);
     }
 
+    public Date getFirstDayOfTheYear() {
+        return getFirstDayOfTheMonth(1);
+    }
+
     public Date getFirstDayOfTheMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date != null ? date : getTodayMorning());
         calendar.set(Calendar.DAY_OF_MONTH, 1);
-        
+
         return calendar.getTime();
     }
 
-    public Date getFirstDayOfTheMonth(int monthInt){
+    public Date getFirstDayOfTheMonth(int monthInt) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, monthInt);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -136,13 +140,13 @@ public class DateUtil {
         return calendar.get(Calendar.MONTH);
     }
 
-    public Integer getYear (Date date){
+    public Integer getYear(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date != null ? date : getTodayMorning());
         return calendar.get(Calendar.YEAR);
     }
-    
-    public Integer getCurrentYear (){
+
+    public Integer getCurrentYear() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.YEAR);
     }

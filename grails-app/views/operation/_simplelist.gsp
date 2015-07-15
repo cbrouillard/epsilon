@@ -10,24 +10,22 @@
  * GNU General Public License for more details.
  */
 -->
-<div class="pagination text-right">
-    <ul>
-        <li>
-            <a href="#top"><i class="icon-arrow-up"></i></a>
-        </li>
-        <li>
-            <a href="#bottom"><i class="icon-arrow-down"></i></a>
-        </li>
-    </ul>
-</div>
+<ul class="pagination pull-right">
+    <li>
+        <a href="#top"><span class="glyphicon glyphicon-arrow-up"/></a>
+    </li>
+    <li>
+        <a href="#bottom"><span class="glyphicon glyphicon-arrow-down"/></a>
+    </li>
+</ul>
 <table class="table table-striped table-hover table-condensed table-fixed">
     <thead>
     <tr>
         <th>Date</th>
         <th>Catégorie</th>
-        <th>Paiement</th>
-        <th>Dépôt</th>
-        <th>Total</th>
+        <th class="text-right">Paiement</th>
+        <th class="text-right">Dépôt</th>
+        <th class="text-right">Total</th>
     </tr>
     </thead>
     <tbody>
@@ -53,13 +51,13 @@
     </g:each>
     </tbody>
 </table>
-<div class="pagination text-right">
-    <ul>
-        <li>
-            <a href="#top"><i class="icon-arrow-up"></i></a>
-        </li>
-        <li>
-            <a href="#bottom"><i class="icon-arrow-down"></i></a>
-        </li>
-    </ul>
-</div>
+<ul class="pagination pull-right">
+    <li>
+        <a href="#top"><span class="glyphicon glyphicon-arrow-up"/></a>
+    </li>
+    <li>
+        <a href="#bottom"><span class="glyphicon glyphicon-arrow-down"/></a>
+    </li>
+</ul>
+
+<div class="clearfix">&nbsp;</div>

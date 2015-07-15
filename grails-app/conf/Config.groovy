@@ -74,7 +74,8 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://tacticalwarreport.com/epsilon"
+        grails.serverURL = props.get("epsilon.grails.server.url")
+	    //"http://tacticalwarreport.com/epsilon"
     }
 }
 

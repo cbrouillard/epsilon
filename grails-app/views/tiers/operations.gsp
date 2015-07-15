@@ -20,44 +20,37 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Liste des opérations <small>${tiers.name}</small></h1>
-                <hr/>
-            </div>
-        </div>
+<div class="col-sm-12">
+    <h1>Liste des opérations <small>${tiers.name}</small></h1>
+    <hr/>
+</div>
+
+<div class="col-sm-6">
+    <div class="around-border">
+
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+
+        <g:render template="/operation/simplelist" model="[operations: operations]"/>
+
     </div>
+</div>
 
-    <div class="row">
 
-        <div class="span5">
-            <div class="around-border">
+<div class="col-sm-6">
+    <div class="around-border">
+        <g:render template="/generic/statsfilter"
+                  model="[id: tiers.id, action: 'operations', controller: 'tiers']"/>
+    </div><br/>
 
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
+    <div class="around-border">
 
-                <g:render template="/operation/simplelist" model="[operations: operations]"/>
+        <div class="alert alert-info">Statistiques</div>
 
-            </div>
-        </div>
+        <g:render template="/generic/chart"
+                  model="[name: 'OpChart', controller: 'tiers', action: 'operationsChart', parameters: ['id': tiers.id, 'fromYear': fromYear, 'toYear': toYear]]"/>
 
-        <div class="span7">
-            <div class="around-border">
-                <g:render template="/generic/statsfilter" model="[id: tiers.id, action: 'operations', controller: 'tiers']"/>
-            </div><br/>
-
-            <div class="around-border">
-
-                <div class="alert alert-info">Statistiques</div>
-
-                <g:render template="/generic/chart"
-                          model="[name: 'OpChart', controller: 'tiers', action: 'operationsChart', parameters: ['id': tiers.id, 'fromYear': fromYear, 'toYear': toYear]]"/>
-
-            </div>
-        </div>
     </div>
 </div>
 </body>

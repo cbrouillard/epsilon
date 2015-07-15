@@ -8,9 +8,15 @@
 %{--* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the--}%
 %{--* GNU General Public License for more details.--}%
 %{--*/--}%
-<form action="search" method="get">
-    <div class="input-append">
-        <input type="text" class="input-medium typeahead-${controllerName}" name="query" autocomplete="off" value="${query?:""}">
-        <button type="submit" class="btn" type="button">chercher</button>
+<form action="search" method="get" class="form-inline">
+
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><span
+                    class="glyphicon glyphicon-search"></span></span>
+            <input type="text" class="form-control typeahead-${controllerName}" name="query" autocomplete="off"
+                   value="${query ?: ""}">
+        </div>
+        <button type="submit" class="btn btn-default" style="display: none;">chercher</button>
     </div>
 </form>

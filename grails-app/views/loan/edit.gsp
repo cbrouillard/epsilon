@@ -21,111 +21,156 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Edition d'un prêt <small>${loanInstance.name}</small></h1>
-                <hr/>
+<div class="col-sm-12">
+    <h1>Edition d'un prêt <small>${loanInstance.name}</small></h1>
+    <hr/>
+</div>
+
+<div class="col-sm-12">
+    <div class="around-border">
+
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+
+        <g:hasErrors bean="${loanInstance}">
+            <div class="alert alert-error">
+                <g:renderErrors bean="${loanInstance}" as="list"/>
             </div>
-        </div>
-    </div>
+        </g:hasErrors>
 
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
+        <g:form method="post" class="form-horizontal">
+            <g:hiddenField name="id" value="${loanInstance?.id}"/>
+            <g:hiddenField name="version" value="${loanInstance?.version}"/>
 
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
+            <fieldset class="form">
+                <div id="formContainer">
+                    <div class="form-group ${hasErrors(bean: loanInstance, field: 'name', 'has-error')}">
 
-                <g:hasErrors bean="${loanInstance}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${loanInstance}" as="list"/>
-                    </div>
-                </g:hasErrors>
+                        <label for="name${type}" class="col-sm-2 control-label mandatory"><g:message
+                                code="loan.name.label"/></label>
 
-                <g:form method="post" class="form-horizontal">
-                    <g:hiddenField name="id" value="${loanInstance?.id}"/>
-                    <g:hiddenField name="version" value="${loanInstance?.version}"/>
-
-                    <div class="control-group">
-                        <label for="name" class="control-label mandatory"><g:message code="loan.name.label" default="Name"/></label>
-
-                        <div class="controls ${hasErrors(bean: loanInstance, field: 'name', 'errors')}">
-                            <g:textField id="name" name="name" value="${fieldValue(bean: loanInstance, field: 'name')}" class="input-block-level"
-                                         required="true"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="tiers" class="control-label mandatory"><g:message code="loan.tiers.label" default="Tiers"/></label>
-
-                        <div class="controls ${hasErrors(bean: loanInstance, field: 'tiers', 'errors')}">
-                            <g:textField id="tiers" name="tiers.name" action="${createLinkTo('dir': 'tiers/autocomplete')}"
-                                         value="${loanInstance?.tiers?.name}" class="input-block-level typeahead-tiers" required="true"
-                                         autocomplete="off"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="account" class="control-label mandatory"><g:message code="scheduled.account.label" default="Account"/></label>
-
-                        <div class="controls ${hasErrors(bean: scheduled, field: 'accountFrom', 'errors')}">
-                            <g:select id="account" optionValue="name" name="accountFrom.id" from="${accounts}" optionKey="id"
-                                      value="${scheduled?.accountFrom?.id}" class="input-xlarge"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="refund" class="control-label mandatory"><g:message code="loan.refundValue.label" default="Refund"/></label>
-
-                        <div class="controls ${hasErrors(bean: loanInstance, field: 'refundValue', 'errors')}">
-                            <div class="input-append">
-                                <g:textField id="refund" name="refundValue" value="${fieldValue(bean: loanInstance, field: 'refundValue')}" required="true"
-                                             class="input-xlarge"/>
-                                <span class="add-on"><b>€</b></span>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-font"></span></span>
+                                <g:textField name="name" id="name${type}" required="true" value="${loanInstance?.name}"
+                                             class="form-control" autofocus=""/>
                             </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label for="dateApplication" class="control-label mandatory"><g:message code="scheduled.dateApplication.label"
-                                                                                                default="Date Application"/></label>
+                    <div class="form-group ${hasErrors(bean: loanInstance, field: 'tiers', 'has-error')}">
 
-                        <div class="controls ${hasErrors(bean: scheduled, field: 'dateApplication', 'errors')}">
-                            <div class="input-append">
-                                <input type="text" value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}" name="dateApplication"
-                                       id="dateApplication" required="true" class="datePicker input-xlarge"/>
-                                <span class="add-on"><i class="icon-calendar"></i></span>
+                        <label for="tiers${type}" class="col-sm-2 control-label mandatory"><g:message
+                                code="loan.tiers.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-user"></span></span>
+                                <g:textField id="tiers${type}" name="tiers.name"
+                                             action="${createLinkTo('dir': 'tiers/autocomplete')}"
+                                             value="${loanInstance?.tiers?.name}" class="form-control typeahead-tiers"
+                                             required="true" autocomplete="off"/>
                             </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label for="description" class="control-label"><g:message code="loan.description.label" default="Description"/></label>
+                    <div class="form-group ${hasErrors(bean: scheduled, field: 'accountFrom', 'has-error')}">
 
-                        <div class="controls ${hasErrors(bean: loanInstance, field: 'description', 'errors')}">
-                            <g:textArea id="description" name="description" cols="40" rows="5" value="${loanInstance?.description}" class="input-block-level"/>
+                        <label for="account${type}" class="col-sm-2 control-label mandatory"><g:message
+                                code="loan.account.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-user"></span></span>
+                                <g:select id="account${type}" optionValue="name" name="accountFrom.id"
+                                          from="${accounts}"
+                                          optionKey="id"
+                                          value="${scheduled?.accountFrom?.id}"
+                                          class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
+                    <div class="form-group ${hasErrors(bean: loanInstance, field: 'refundValue', 'has-error')}">
 
-                    <div class="control-group">
-                        <div class="controls">
-                            <g:actionSubmit class="save btn btn-primary" action="update"
-                                            value="${message(code: 'default.button.update.label', default: 'Update')}"/>
-                            <g:actionSubmit class="delete btn btn-danger" action="delete"
-                                            value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                        <label for="refundValue${type}" class="col-sm-2 control-label mandatory"><g:message
+                                code="loan.refundValue.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-euro"></span></span>
+                                <g:textField pattern="^([0-9.,])*" name="refundValue" id="refundValue${type}" required="true"
+                                         value="${loanInstance?.refundValue}"
+                                         class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
-                </g:form>
 
+                    <div class="form-group ${hasErrors(bean: loanInstance, field: 'dateApplication', 'has-error')}">
+
+                        <label for="dateApplication${type}" class="col-sm-2 control-label mandatory"><g:message
+                                code="scheduled.dateApplication.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-calendar"></span></span>
+                                <input type="text"
+                                       value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}"
+                                       name="dateApplication"
+                                       id="dateApplication${type}" required="true" class="datePicker form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ${hasErrors(bean: loanInstance, field: 'description', 'has-error')}">
+
+                        <label for="description${type}" class="col-sm-2 control-label"><g:message
+                                code="loan.description.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-star"></span></span>
+                                <g:textArea name="description" id="description${type}" cols="40" rows="5"
+                                            value="${loanInstance?.description}"
+                                            class="form-control editor"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <g:actionSubmit class="save btn btn-primary" action="update"
+                                    value="${message(code: 'default.button.update.label', default: 'Update')}"/>
+                    <g:actionSubmit class="delete btn btn-danger" action="delete"
+                                    value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                </div>
             </div>
-        </div>
-    </div>
+        </g:form>
 
+    </div>
 </div>
 </body>
 </html>

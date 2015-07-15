@@ -22,66 +22,96 @@
 
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Créer un nouvel établissement</h1>
-                <hr/>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
-                <g:hasErrors bean="${bankInstance}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${bankInstance}" as="list"/>
-                    </div>
-                </g:hasErrors>
-
-                <form class="form-horizontal" method="post" action="save">
-                    <div class="control-group">
-                        <label for="name" class="control-label mandatory"><g:message code="bank.name.label" default="Name"/></label>
-
-                        <div class="controls ${hasErrors(bean: bankInstance, field: 'name', 'errors')}">
-                            <g:textField required="true" name="name" value="${bankInstance?.name}"
-                                         class="input-block-level"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="description" class="control-label"><g:message code="bank.description.label" default="Description"/></label>
-
-                        <div class="controls">
-                            <g:textArea name="description" cols="40" rows="5" value="${bankInstance?.description}" class="input-block-level"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="url" class="control-label"><g:message code="bank.url.label" default="URL"/></label>
-
-                        <div class="controls">
-                            <g:textField name="url" value="${bankInstance?.url}" class="input-block-level"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <div class="controls">
-                            <g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}"/>
-                        </div>
-                    </div>
-
-                </form>
-
-            </div>
-        </div>
-    </div>
-
+<div class="col-sm-12">
+    <h1>Créer un nouvel établissement</h1>
+    <hr/>
 </div>
+
+<div class="col-sm-12">
+    <div class="around-border">
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+        <g:hasErrors bean="${bankInstance}">
+            <div class="alert alert-error">
+                <g:renderErrors bean="${bankInstance}" as="list"/>
+            </div>
+        </g:hasErrors>
+
+        <form class="form-horizontal" method="post" action="save">
+
+            <fieldset class="form">
+                <div id="formContainer">
+
+                    <div class="form-group ${hasErrors(bean: bankInstance, field: 'name', 'has-error')}">
+
+                        <label for="name" class="col-sm-2 control-label mandatory"><g:message
+                                code="bank.name.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-font"></span></span>
+                                <g:textField name="name" required="true" value="${bankInstance?.name}"
+                                             class="form-control" autofocus=""/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ${hasErrors(bean: bankInstance, field: 'description', 'has-error')}">
+
+                        <label for="description" class="col-sm-2 control-label"><g:message
+                                code="bank.description.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-star"></span></span>
+                                <g:textArea name="description" cols="40" rows="5" value="${bankInstance?.description}"
+                                            class="form-control editor"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ${hasErrors(bean: bankInstance, field: 'url', 'has-error')}">
+
+                        <label for="url" class="col-sm-2 control-label"><g:message
+                                code="bank.url.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-link"></span></span>
+                                <g:textField name="url" value="${bankInstance?.url}"
+                                             class="form-control" autofocus=""/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </fieldset>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-save"></span> ${message(code: 'default.button.create.label', default: 'Save')}
+                    </button>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
 </body>
 </html>

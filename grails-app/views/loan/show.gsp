@@ -19,51 +19,59 @@
 
 <body>
 
-<g:if test="${flash.message}">
-    <div class="alert alert-info">${flash.message}</div>
-</g:if>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Détails d'un prêt/emprunt</h4>
+</div>
+
+<div class="modal-body">
+    <g:if test="${flash.message}">
+        <div class="alert alert-info">${flash.message}</div>
+    </g:if>
 
 
-<dl class="dl-horizontal">
-    <dt><g:message code="loan.type.label" default="Type"/></dt>
-    <dd><g:message code="loan.type.value.${fieldValue(bean: loanInstance, field: "type")}"/></dd>
+    <dl class="dl-horizontal">
+        <dt><g:message code="loan.type.label" default="Type"/></dt>
+        <dd><g:message code="loan.type.value.${fieldValue(bean: loanInstance, field: "type")}"/></dd>
 
-    <dt><g:message code="loan.tiers.label" default="Tiers"/></dt>
-    <dd><g:link controller="tiers" action="edit"
-                id="${loanInstance?.tiers?.id}">${loanInstance?.tiers?.encodeAsHTML()}</g:link></dd>
+        <dt><g:message code="loan.tiers.label" default="Tiers"/></dt>
+        <dd><g:link controller="tiers" action="edit"
+                    id="${loanInstance?.tiers?.id}">${loanInstance?.tiers?.encodeAsHTML()}</g:link></dd>
 
-    <dt><g:message code="loan.amount.label" default="Amount"/></dt>
-    <dd>${fieldValue(bean: loanInstance, field: "amount")} €</dd>
+        <dt><g:message code="loan.amount.label" default="Amount"/></dt>
+        <dd>${fieldValue(bean: loanInstance, field: "amount")} €</dd>
 
-    <dt><g:message code="loan.refundValue.label" default="Refund"/></dt>
-    <dd>${fieldValue(bean: loanInstance, field: "refundValue")} €</dd>
+        <dt><g:message code="loan.refundValue.label" default="Refund"/></dt>
+        <dd>${fieldValue(bean: loanInstance, field: "refundValue")} €</dd>
 
-    <dt><g:message code="loan.currentCalculatedAmountValue.label" default="Refund"/></dt>
-    <dd>${fieldValue(bean: loanInstance, field: "currentCalculatedAmountValue")} €</dd>
+        <dt><g:message code="loan.currentCalculatedAmountValue.label" default="Refund"/></dt>
+        <dd>${fieldValue(bean: loanInstance, field: "currentCalculatedAmountValue")} €</dd>
 
-    <dt><g:message code="loan.scheduled.label" default="Scheduled"/></dt>
-    <dd><g:link controller="scheduled" action="edit"
-                id="${loanInstance?.scheduled?.id}">${loanInstance?.scheduled?.name}</g:link></dd>
+        <dt><g:message code="loan.scheduled.label" default="Scheduled"/></dt>
+        <dd><g:link controller="scheduled" action="edit"
+                    id="${loanInstance?.scheduled?.id}">${loanInstance?.scheduled?.name}</g:link></dd>
 
-    <dt><g:message code="loan.description.label" default="Description"/></dt>
-    <dd>${fieldValue(bean: loanInstance, field: "description")}</dd>
+        <dt><g:message code="loan.description.label" default="Description"/></dt>
+        <dd>${fieldValue(bean: loanInstance, field: "description")}</dd>
 
-    <dt><g:message code="loan.dateCreated.label" default="Date Created"/></dt>
-    <dd><g:formatDate date="${loanInstance?.dateCreated}"/></dd>
+        <dt><g:message code="loan.dateCreated.label" default="Date Created"/></dt>
+        <dd><g:formatDate date="${loanInstance?.dateCreated}"/></dd>
 
-    <dt><g:message code="loan.lastUpdated.label" default="Last Updated"/></dt>
-    <dd><g:formatDate date="${loanInstance?.lastUpdated}"/></dd>
+        <dt><g:message code="loan.lastUpdated.label" default="Last Updated"/></dt>
+        <dd><g:formatDate date="${loanInstance?.lastUpdated}"/></dd>
 
-</dl>
+    </dl>
+</div>
 
 <div class="modal-footer">
     <g:form>
         <g:hiddenField name="id" value="${loanInstance?.id}"/>
-        <span class="button"><g:actionSubmit class="edit btn btn-primary" action="edit"
-                                             value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-        <span class="button"><g:actionSubmit class="delete btn btn-danger" action="delete"
-                                             value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+        <g:actionSubmit class="edit btn btn-primary" action="edit"
+                        value="${message(code: 'default.button.edit.label', default: 'Edit')}"/>
+        <g:actionSubmit class="delete btn btn-danger" action="delete"
+                        value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                        onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
     </g:form>
 </div>
 

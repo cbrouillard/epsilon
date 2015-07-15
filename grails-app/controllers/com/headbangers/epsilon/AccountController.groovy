@@ -120,6 +120,14 @@ class AccountController {
         def accountInstance = Account.get(params.id)
         if (accountInstance && accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
             try {
+                accountInstance.snapshots.clear()
+                accountInstance.operations.clear()
+                Scheduled.findAllByAccountFromOrAccountTo (accountInstance, accountInstance).each {oneScheduled ->
+                    oneScheduled.delete()
+                }
+                Wish.findAllByAccount(accountInstance).each {oneScheduled ->
+                    oneScheduled.delete()
+                }
                 accountInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'account.label', default: 'Account'), accountInstance.name])}"
                 redirect(action: "list")

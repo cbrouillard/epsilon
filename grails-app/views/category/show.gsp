@@ -18,47 +18,53 @@
 </head>
 
 <body>
-<g:if test="${flash.message}">
-    <div class="alert alert-info">${flash.message}</div>
-</g:if>
 
-<dl class="dl-horizontal">
-    <dt><g:message code="category.id.label" default="ID"/></dt>
-    <dd>${fieldValue(bean: categoryInstance, field: "id")}</dd>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Détails d'une catégorie</h4>
+</div>
 
-    <dt><g:message code="category.name.label" default="Name"/></dt>
-    <dd>${fieldValue(bean: categoryInstance, field: "name")}</dd>
+<div class="modal-body">
+    <g:if test="${flash.message}">
+        <div class="alert alert-info">${flash.message}</div>
+    </g:if>
 
-    <dt><g:message code="category.type.label" default="Type"/></dt>
-    <dd>${categoryInstance?.type?.encodeAsHTML()}</dd>
+    <dl class="dl-horizontal">
+        <dt><g:message code="category.id.label" default="ID"/></dt>
+        <dd>${fieldValue(bean: categoryInstance, field: "id")}</dd>
 
-    <dt><g:message code="category.description.label" default="Description"/></dt>
-    <dd>${fieldValue(bean: categoryInstance, field: "description") ?:"&nbsp"}</dd>
+        <dt><g:message code="category.name.label" default="Name"/></dt>
+        <dd>${fieldValue(bean: categoryInstance, field: "name")}</dd>
 
-    <dt><g:message code="category.dateCreated.label" default="Date Created"/></dt>
-    <dd><g:formatDate date="${categoryInstance?.dateCreated}"/></dd>
+        <dt><g:message code="category.type.label" default="Type"/></dt>
+        <dd>${categoryInstance?.type?.encodeAsHTML()}</dd>
 
-    <dt><g:message code="category.lastUpdated.label" default="Last Updated"/></dt>
-    <dd><g:formatDate date="${categoryInstance?.lastUpdated}"/>&nbsp;</dd>
+        <dt><g:message code="category.description.label" default="Description"/></dt>
+        <dd>${fieldValue(bean: categoryInstance, field: "description") ?: "&nbsp"}</dd>
 
-    <dt><g:message code="category.operations.label" default="Operations"/></dt>
-    <dd>
-        <g:link action="operations" id="${categoryInstance?.id}">
-            <img src="${resource(dir: 'img', file: 'operation.png')}" alt="€"/> Voir les opérations de cette catégorie
-        </g:link>
-    </dd>
-</dl>
+        <dt><g:message code="category.dateCreated.label" default="Date Created"/></dt>
+        <dd><g:formatDate date="${categoryInstance?.dateCreated}"/></dd>
 
+        <dt><g:message code="category.lastUpdated.label" default="Last Updated"/></dt>
+        <dd><g:formatDate date="${categoryInstance?.lastUpdated}"/>&nbsp;</dd>
+
+    </dl>
+</div>
 
 <div class="modal-footer">
     <g:form>
         <g:hiddenField name="id" value="${categoryInstance?.id}"/>
-        <span
-                class="button"><g:actionSubmit class="edit btn btn-primary" action="edit"
-                                               value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-        <span class="button"><g:actionSubmit class="delete btn btn-danger" action="delete"
+        <g:link action="operations" id="${categoryInstance?.id}" class="btn btn-default">
+            <img src="${resource(dir: 'img', file: 'operation.png')}"
+                 alt="€"/> Voir les opérations de cette catégorie
+        </g:link>
+
+        <g:actionSubmit class="edit btn btn-primary" action="edit"
+                                               value="${message(code: 'default.button.edit.label', default: 'Edit')}"/>
+        <g:actionSubmit class="delete btn btn-danger" action="delete"
                                              value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+                                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
     </g:form>
 </div>
 </body>

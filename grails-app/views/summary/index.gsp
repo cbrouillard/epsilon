@@ -19,159 +19,180 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Vos comptes <small>Résumé de la situation</small></h1>
-                <g:if test="${accounts}">
-                    <div id="mobile-activation" class="alert alert-info">
-                        <g:render template="mobile" model="[person: person]"/>
-                    </div>
-                </g:if>
-                <hr/>
+<div class="row-fluid">
+    <div class="col-sm-12">
+        <h1>Vos comptes <small>Résumé de la situation</small></h1>
+        <g:if test="${accounts}">
+            <div id="mobile-activation" class="alert alert-info">
+                <g:render template="mobile" model="[person: person]"/>
             </div>
-        </div>
+        </g:if>
+        <hr/>
     </div>
 
-    <div class="row">
+</div>
 
-        <div class="span6">
-            <div class="around-border">
-                <div class="alert alert-info">Comptes</div>
+<div class="col-sm-4">
+    <div class="around-border">
+        <div class="alert alert-info">Comptes</div>
+        <g:if test="${accounts}">
+            <table class="table table-striped">
+                <tbody>
+                <g:set var="accountAmount" value="${0D}"/>
+                <g:each in="${accounts}" status="i" var="account">
+                    <tr>
+                        <td class="principal">${account.name}</td>
+                        <td class="tdright fixedsize"><g:formatNumber number="${account.sold}"
+                                                                      format="0.##"/> €</td>
+                        <td class="tdright fixedsize">
+                            <g:link controller="operation" action="list" params="[account: account.id]"
+                                    title="Afficher le registre">
+                                <img src="${resource(dir: 'img', file: 'operation.png')}"/>
+                            </g:link>
+                        </td>
+                    </tr>
+
+                    <g:set var="accountAmount" value="${accountAmount + account.sold}"/>
+                </g:each>
                 <g:if test="${accounts}">
-                    <table class="table table-striped">
-                        <tbody>
-                        <g:set var="accountAmount" value="${0D}"/>
-                        <g:each in="${accounts}" status="i" var="account">
-                            <tr>
-                                <td class="principal">${account.name}</td>
-                                <td class="tdright fixedsize"><g:formatNumber number="${account.sold}" format="0.##"/> €</td>
-                                <td class="tdright fixedsize">
-                                    <g:link controller="operation" action="list" params="[account: account.id]" title="Afficher le registre">
-                                        <img src="${resource(dir: 'img', file: 'operation.png')}"/>
-                                    </g:link>
-                                </td>
-                            </tr>
-
-                            <g:set var="accountAmount" value="${accountAmount + account.sold}"/>
-                        </g:each>
-                        <g:if test="${accounts}">
-                            <tr class="important">
-                                <td class="principal">&nbsp;</td>
-                                <td class="tdright fixedsize">= <g:formatNumber number="${accountAmount}" format="0.##"/> €</td>
-                                <td class="tdright fixedsize">&nbsp;</td>
-                            </tr>
-                        </g:if>
-                        </tbody>
-                    </table>
+                    <tr class="important">
+                        <td class="principal">&nbsp;</td>
+                        <td class="tdright fixedsize">= <g:formatNumber number="${accountAmount}"
+                                                                        format="0.##"/> €</td>
+                        <td class="tdright fixedsize">&nbsp;</td>
+                    </tr>
                 </g:if>
-                <g:else>
-                    <div class="alert alert-warning">
-                        Il semble que ce soit la première fois que vous accédez à Epsilon.<br/>Avant toute chose, il va falloir créer un "compte". Un compte est obligatoirement
-                    lié à un "établissement". <br/>Commencez donc par <b>créer un nouvel établissement bancaire</b> (ex: Crédit Agricole). Une fois
-                    l'établissement enregistré, <b>ajoutez simplement un nouveau compte</b> et commencez à utiliser Epsilon !<br/><br/>
+                </tbody>
+            </table>
+        </g:if>
+        <g:else>
+            <div class="alert alert-warning">
+                Il semble que ce soit la première fois que vous accédez à Epsilon.<br/>Avant toute chose, il va falloir créer un "compte". Un compte est obligatoirement
+            lié à un "établissement". <br/>Commencez donc par <b>créer un nouvel établissement bancaire</b> (ex: Crédit Agricole). Une fois
+            l'établissement enregistré, <b>ajoutez simplement un nouveau compte</b> et commencez à utiliser Epsilon !<br/><br/>
 
-                        <ol>
-                            <li><g:link controller="bank" action="create"><img
-                                    src="${resource(dir: 'img', file: 'bank.png')}"
-                                    alt=">"/> Créer un nouvel établissement</g:link></li>
-                            <li><g:link controller="account" action="create"><img src="${resource(dir: 'img', file: 'account.png')}"
-                                                                                  alt=">"/> Créer un nouveau compte</g:link></li>
-                        </ol>
+                <ol>
+                    <li><g:link controller="bank" action="create"><img
+                            src="${resource(dir: 'img', file: 'bank.png')}"
+                            alt=">"/> Créer un nouvel établissement</g:link></li>
+                    <li><g:link controller="account" action="create"><img
+                            src="${resource(dir: 'img', file: 'account.png')}"
+                            alt=">"/> Créer un nouveau compte</g:link></li>
+                </ol>
 
-                    </div>
-
-                </g:else>
             </div>
 
-            <hr/>
+        </g:else>
+    </div>
 
-            <div class="around-border">
-                <div class="alert alert-info">Les budgets</div>
-                <g:if test="${budgets}">
-                    <div class="budgets list">
-                        <table class="table table-striped">
-                            <tbody>
-                            <g:set var="budgetAmount" value="${0D}"/>
-                            <g:set var="budgetUsedAmount" value="${0D}"/>
-                            <g:each in="${budgets}" var="budget" status="b">
-                                <tr>
-                                    <td class="principal">${budget.name}</td>
+    <hr/>
 
-                                    <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
+    <div class="around-border">
+        <div class="alert alert-info">Les budgets</div>
+        <g:if test="${budgets}">
+            <div class="budgets list">
+                <table class="table table-striped">
+                    <tbody>
+                    <g:set var="budgetAmount" value="${0D}"/>
+                    <g:set var="budgetUsedAmount" value="${0D}"/>
+                    <g:each in="${budgets}" var="budget" status="b">
+                        <tr>
+                            <td class="principal">${budget.name}</td>
 
-                                    <g:if test="${currentSold < budget.amount}">
-                                        <td class="tdright budget-OK">
-                                    </g:if>
-                                    <g:elseif test="${currentSold >= budget.amount - 1 && currentSold <= budget.amount + 1}">
-                                        <td class="tdright  budget-REACHED">
-                                    </g:elseif>
-                                    <g:elseif test="${currentSold > budget.amount}">
-                                        <td class="tdright budget-KO">
-                                    </g:elseif>
-                                    <g:else>
-                                        <td class="tdright budget">
-                                    </g:else>
-                                    <g:formatNumber number="${currentSold}" format="0.##" /> / <g:formatNumber number="${budget.amount}" format="0.##" /> €</td>
-                                    <td class="tdright fixedsize">
-                                        <g:link title="Afficher le registre" controller="budget" action="operations" params="[budget: budget.id]"><img
-                                                src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
-                                    </td>
-                                    <g:set var="budgetAmount" value="${budgetAmount + budget.amount}"/>
-                                    <g:set var="budgetUsedAmount" value="${budgetUsedAmount + currentSold}"/>
-                                </tr>
-                            </g:each>
-                            <tr class="important">
-                                <td class="principal">&nbsp;</td>
-                                <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}" format="0.##"/> / <g:formatNumber number="${budgetAmount}"
-                                                                                                                                     format="0.##"/> €</td>
-                                <td class="tdright fixedsize">&nbsp;</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </g:if>
-                <g:else>
+                            <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
 
-                </g:else>
+                            <g:if test="${currentSold < budget.amount}">
+                                <td class="tdright budget-OK">
+                            </g:if>
+                            <g:elseif
+                                    test="${currentSold >= budget.amount - 1 && currentSold <= budget.amount + 1}">
+                                <td class="tdright  budget-REACHED">
+                            </g:elseif>
+                            <g:elseif test="${currentSold > budget.amount}">
+                                <td class="tdright budget-KO">
+                            </g:elseif>
+                            <g:else>
+                                <td class="tdright budget">
+                            </g:else>
+                            <g:formatNumber number="${currentSold}" format="0.##" /> / <g:formatNumber number="${budget.amount}" format="0.##" /> €</td>
+                            <td class="tdright fixedsize">
+                                <g:link title="Afficher le registre" controller="budget" action="operations"
+                                        params="[budget: budget.id]"><img
+                                        src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                            </td>
+                            <g:set var="budgetAmount" value="${budgetAmount + budget.amount}"/>
+                            <g:set var="budgetUsedAmount" value="${budgetUsedAmount + currentSold}"/>
+                        </tr>
+                    </g:each>
+                    <tr class="important">
+                        <td class="principal">&nbsp;</td>
+                        <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}"
+                                                              format="0.##"/> / <g:formatNumber
+                                number="${budgetAmount}"
+                                format="0.##"/> €</td>
+                        <td class="tdright fixedsize">&nbsp;</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </g:if>
+        <g:else>
 
-        <div class="span6">
-            <div class="around-border">
-                <div class="alert alert-info">Les échéances</div>
+        </g:else>
+    </div>
+</div>
 
-                <g:if test="${lates}">
-                    <h6><small>En retard</small></h6>
+<div class="col-sm-4">
 
-                    <div class="scheduled list">
-                        <g:render template="scheduledtable" model="[cssClass: 'red', scheduleds: lates, forceActionDisplay: true]"/>
-                    </div>
-                </g:if>
+    <div class="around-border">
+        <div class="alert alert-info">Les échéances</div>
 
-                <g:if test="${today}">
-                    <small>Paiements du jour</small>
+        <g:if test="${lates}">
+            <h6><small>En retard</small></h6>
 
-                    <div class="scheduled list">
-                        <div class="alert alert-warning">Les paiements gérés automatiquement sont marqués d'une horloge et n'ont pas besoin
-                        d'être validés manuellement: le système s'en charge.</div>
-                        <g:render template="scheduledtable" model="[cssClass: 'green', scheduleds: today, filterAutomatic: false]"/>
-                    </div>
-                </g:if>
-
-                <g:if test="${future}">
-                    <small>Paiements futurs</small>
-
-                    <div class="scheduled list">
-                        <g:render template="scheduledtable" model="[cssClass: 'blue', scheduleds: future]"/>
-                    </div>
-                </g:if>
-
+            <div class="scheduled list">
+                <g:render template="scheduledtable"
+                          model="[cssClass: 'red', scheduleds: lates, forceActionDisplay: true]"/>
             </div>
-        </div>
+        </g:if>
+
+        <g:if test="${today}">
+            <small>Paiements du jour</small>
+
+            <div class="scheduled list">
+                <div class="alert alert-warning">Les paiements gérés automatiquement sont marqués d'une horloge et n'ont pas besoin
+                d'être validés manuellement: le système s'en charge.</div>
+                <g:render template="scheduledtable"
+                          model="[cssClass: 'green', scheduleds: today, filterAutomatic: false]"/>
+            </div>
+        </g:if>
+
+        <g:if test="${future}">
+            <small>Paiements futurs</small>
+
+            <div class="scheduled list">
+                <g:render template="scheduledtable" model="[cssClass: 'blue', scheduleds: future]"/>
+            </div>
+        </g:if>
 
     </div>
+
+</div>
+
+<div class="col-sm-4">
+    <div class="around-border">
+        <div class="alert alert-info">Graphe des dépenses du mois</div>
+
+        <%
+            def dataCol = [['string', 'category'], ['number', 'amount']]
+        %>
+        <gvisualization:pieCoreChart elementId="piechart"
+                                     columns="${dataCol}" data="${graphData}"
+                                     pieHole="${0.4}" legend="${[position: 'none', alignment: 'center']}"/>
+        <div id="piechart"
+             style="width: 100%; height: 500px; margin: auto;display: block;background: transparent;"></div>
+    </div>
+</div>
 
 </div>
 

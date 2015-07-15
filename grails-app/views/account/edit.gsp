@@ -21,72 +21,98 @@
 
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Editer un compte <small>${accountInstance.name}</small></h1>
-                <hr/>
+<div class="col-sm-12">
+    <h1>Editer un compte <small>${accountInstance.name}</small></h1>
+    <hr/>
+</div>
+
+<div class="col-sm-12">
+    <div class="around-border">
+
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+
+        <g:hasErrors bean="${accountInstance}">
+            <div class="alert alert-error">
+                <g:renderErrors bean="${accountInstance}" as="list"/>
             </div>
-        </div>
-    </div>
+        </g:hasErrors>
 
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
+        <g:form action="save" method="post" class="form-horizontal">
+            <g:hiddenField name="id" value="${accountInstance?.id}"/>
+            <g:hiddenField name="version" value="${accountInstance?.version}"/>
 
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
+            <fieldset class="form">
+                <div id="formContainer">
 
-                <g:hasErrors bean="${accountInstance}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${accountInstance}" as="list"/>
-                    </div>
-                </g:hasErrors>
+                    <div class="form-group ${hasErrors(bean: accountInstance, field: 'name', 'has-error')}">
 
-                <g:form action="save" method="post" class="form-horizontal">
-                    <g:hiddenField name="id" value="${accountInstance?.id}"/>
-                    <g:hiddenField name="version" value="${accountInstance?.version}"/>
+                        <label for="name" class="col-sm-2 control-label mandatory"><g:message
+                                code="account.name.label"/></label>
 
-                    <div class="control-group">
-                        <label for="name" class="control-label mandatory"><g:message code="account.name.label" default="Name"/></label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-font"></span></span>
+                                <g:textField name="name" required="true" value="${accountInstance?.name}"
+                                             class="form-control" autofocus=""/>
+                            </div>
 
-                        <div class="controls ${hasErrors(bean: accountInstance, field: 'name', 'errors')}">
-                            <g:textField name="name" value="${accountInstance?.name}" class="input-block-level" required="true"/>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label for="type" class="control-label mandatory"><g:message code="account.type.label" default="Type"/></label>
+                    <div class="form-group ${hasErrors(bean: accountInstance, field: 'type', 'errors')}">
 
-                        <div class="controls ${hasErrors(bean: accountInstance, field: 'type', 'errors')}">
-                            <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}" value="${accountInstance?.type}" required="true"
-                                      class="input-xlarge"/>
+                        <label for="type" class="col-sm-2 control-label mandatory"><g:message
+                                code="account.type.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-asterisk"></span></span>
+                                <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}"
+                                          value="${accountInstance?.type}" required="true"
+                                          class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label for="description" class="control-label"><g:message code="account.description.label" default="Description"/></label>
+                    <div class="form-group ${hasErrors(bean: accountInstance, field: 'description', 'has-error')}">
 
-                        <div class="controls ${hasErrors(bean: accountInstance, field: 'description', 'errors')}">
-                            <g:textArea name="description" cols="40" rows="5" value="${accountInstance?.description}" class="input-block-level"/>
+                        <label for="description" class="col-sm-2 control-label"><g:message
+                                code="bank.description.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-star"></span></span>
+                                <g:textArea name="description" cols="40" rows="5"
+                                            value="${accountInstance?.description}"
+                                            class="form-control editor"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <div class="controls">
-                            <span class="button"><g:actionSubmit class="save btn btn-primary" action="update"
-                                                                 value="${message(code: 'default.button.update.label', default: 'Update')}"/></span>
-                            <span class="button"><g:actionSubmit class="delete btn btn-danger" action="delete"
-                                                                 value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                                                 onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
-                        </div>
-                    </div>
+                </div>
+            </fieldset>
 
-                </g:form>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <g:actionSubmit class="save btn btn-primary" action="update"
+                                    value="${message(code: 'default.button.update.label', default: 'Update')}"/>
+                    <g:actionSubmit class="delete btn btn-danger" action="delete"
+                                    value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                </div>
             </div>
-        </div>
+
+        </g:form>
     </div>
 </div>
 

@@ -20,88 +20,87 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Liste des établissements <small>Banques, assurances, ...</small> <g:link controller="bank" action="create" class="btn"><img
-                        src="${resource(dir: 'img', file: 'bank.png')}"
-                        alt=">"/> Créer un nouvel établissement</g:link></h1>
-                <hr/>
-            </div>
-        </div>
-    </div>
+<div class="col-sm-12">
+    <h1>Liste des établissements <small>Banques, assurances, ...</small> <g:link controller="bank" action="create"
+                                                                                 class="btn btn-success"><img
+                src="${resource(dir: 'img', file: 'bank.png')}"
+                alt=">"/> Créer un nouvel établissement</g:link></h1>
+    <hr/>
+</div>
 
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
+<div class="col-sm-12">
+    <div class="around-border">
 
-                <g:if test="${!bankInstanceList}">
-                    <div class="alert alert-error">Aucun établissement enregistré !</div>
-                </g:if>
-                <g:else>
-                    <g:if test="${flash.message}">
-                        <div class="alert alert-info">${flash.message}</div>
-                    </g:if>
-
-
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-
-                            <g:sortableColumn property="name" title="${message(code: 'bank.name.label', default: 'Name')}"/>
-
-                            <g:sortableColumn property="description" title="${message(code: 'bank.description.label', default: 'Description')}"/>
-
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'bank.dateCreated.label', default: 'Date Created')}"/>
-
-                            <g:sortableColumn property="lastUpdated" title="${message(code: 'bank.lastUpdated.label', default: 'Last Updated')}"/>
-
-                            <th>Actions</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <g:each in="${bankInstanceList}" status="i" var="bankInstance">
-                            <tr>
-
-                                <td>${fieldValue(bean: bankInstance, field: "name")}</td>
-
-                                <td>${fieldValue(bean: bankInstance, field: "description")}</td>
-
-                                <td><g:formatDate date="${bankInstance.dateCreated}"/></td>
-
-                                <td><g:formatDate date="${bankInstance.lastUpdated}"/></td>
-
-                                <td class="tdcenter">
-                                    <g:link title="Afficher les détails" action="show" data-toggle="modal" data-target="#modalWindow_show"
-                                            id="${bankInstance.id}"><img src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
-                                    <g:link title="Editer" action="edit" id="${bankInstance.id}"><img src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
-                                </td>
-                            </tr>
-                        </g:each>
-                        </tbody>
-                    </table>
-
-                    <div class="pagination text-right">
-                        <g:paginate total="${bankInstanceTotal}"/>
-                    </div>
-                </g:else>
+        <g:if test="${!bankInstanceList}">
+            <div class="alert alert-danger">Aucun établissement enregistré !
 
             </div>
-        </div>
+        </g:if>
+        <g:else>
+            <g:if test="${flash.message}">
+                <div class="alert alert-info">${flash.message}</div>
+            </g:if>
+
+
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+
+                    <g:sortableColumn property="name" title="${message(code: 'bank.name.label', default: 'Name')}"/>
+
+                    <g:sortableColumn property="description"
+                                      title="${message(code: 'bank.description.label', default: 'Description')}"/>
+
+                    <g:sortableColumn property="dateCreated"
+                                      title="${message(code: 'bank.dateCreated.label', default: 'Date Created')}"/>
+
+                    <g:sortableColumn property="lastUpdated"
+                                      title="${message(code: 'bank.lastUpdated.label', default: 'Last Updated')}"/>
+
+                    <th class="text-right">Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <g:each in="${bankInstanceList}" status="i" var="bankInstance">
+                    <tr>
+
+                        <td>${fieldValue(bean: bankInstance, field: "name")}</td>
+
+                        <td>${fieldValue(bean: bankInstance, field: "description")}</td>
+
+                        <td><g:formatDate date="${bankInstance.dateCreated}"/></td>
+
+                        <td><g:formatDate date="${bankInstance.lastUpdated}"/></td>
+
+                        <td class="text-right">
+                            <g:link title="Afficher les détails" action="show" data-toggle="modal"
+                                    data-target="#modalWindow_show"
+                                    id="${bankInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+                            <g:link title="Editer" action="edit" id="${bankInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                        </td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+
+            <div class="pagination pull-right">
+                <g:paginate total="${bankInstanceTotal}"/>
+            </div>
+
+            <div class="clearfix">&nbsp;</div>
+        </g:else>
+
     </div>
 </div>
 
-<div id="modalWindow_show" class="modal hide fade">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-
-        <h3>Détails d'un établissement</h3>
-    </div>
-
-    <div class="modal-body">
-        <img src="${resource(dir: 'images', file: 'spinner.gif')}"/>
+<div class="modal fade" id="modalWindow_show" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
     </div>
 </div>
 
