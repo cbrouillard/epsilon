@@ -72,6 +72,7 @@
 
                 <td class="tdright">
                     <g:formatNumber number="${accountAmount}" format="0.##"/> €
+                    <g:set var="finalAmount" value="${accountAmount}"/>
                 </td>
 
                 <td class="text-right">
@@ -85,6 +86,13 @@
 
             </tr>
         </g:each>
+        <tr>
+            <td colspan="6">&nbsp;</td>
+            <td class="tdright important">
+                = <g:formatNumber number="${finalAmount}" format="0.##"/> €
+            </td>
+            <td>&nbsp;</td>
+        </tr>
         </tbody>
     </table>
 </div>

@@ -12,6 +12,7 @@
 package com.headbangers.epsilon
 
 import grails.plugins.springsecurity.Secured
+import org.hibernate.Criteria
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class OperationController {
@@ -98,7 +99,7 @@ class OperationController {
                 'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.account a where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ?) and a.id = ? group by c.name',
                 [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.DEPOT, OperationType.VIREMENT_PLUS, selectedAccount.id]).asList()
 
-        graphData +=  Operation.executeQuery(
+        graphData += Operation.executeQuery(
                 'select c.name, - sum(o.amount) from Operation o inner join o.category c inner join o.account a where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ? or o.type = ?) and a.id = ? group by c.name',
                 [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.FACTURE, OperationType.RETRAIT, OperationType.VIREMENT_MOINS, selectedAccount.id]).asList()
 
@@ -106,7 +107,16 @@ class OperationController {
         def revenu = operationService.calculateRevenuForThisMonthByAccount(person, selectedAccount)
 
         def lastDayOfMonth = dateUtil.getLastDayOfTheMonth(new Date())
-        def programmedScheduleds = Scheduled.findAllByDateApplicationLessThanEqualsAndDateApplicationGreaterThan(lastDayOfMonth, new Date())
+        def programmedScheduleds = Scheduled.createCriteria().list {
+            createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+            createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
+            lte("dateApplication", lastDayOfMonth)
+            gt("dateApplication", new Date())
+            or {
+                eq("accountTo.id", selectedAccount.id)
+                eq("accountFrom.id", selectedAccount.id)
+            }
+        }
 
         [accounts    : accounts, selected: selectedAccount, byMonth: month,
          currentMonth: currentMonth, parameterBayesianFilter: parameterService.getBayesianFilterParameter(person), graphData: graphData,

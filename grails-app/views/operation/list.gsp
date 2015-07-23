@@ -21,7 +21,7 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Opérations <small>${selected?.getNameAndSold()}</small>
+    <h1>Opérations <span class="label label-primary">${selected?.getNameAndSold()}</span>
         <g:if test="${selected?.bank?.url}">
             <a class="bank btn btn-default" href="${selected?.bank?.url}"><img
                     src="${resource(dir: 'img', file: 'bank.png')}"
@@ -41,9 +41,13 @@
     <g:if test="${selected}">
         <div class="around-border">
 
+
+
+            <g:render template="/chart/situation" model="[account: selected, idChart: 'situation', byMonth: byMonth, futures:futures]"/>
+
             <div class="row">
 
-                <div class="counter-shower col-xs-12 col-sm-6">
+                <div class="counter-shower-no-line col-xs-12 col-sm-6">
 
                     <div class="number">
                         <span class="label label-default">
@@ -58,7 +62,7 @@
 
                 </div>
 
-                <div class="counter-shower col-xs-12 col-sm-6">
+                <div class="counter-shower-no-line col-xs-12 col-sm-6">
 
                     <div class="number">
                         <span class="label label-default">
@@ -74,8 +78,6 @@
                 </div>
 
             </div>
-
-            <g:render template="/chart/situation" model="[account: selected, idChart: 'situation', byMonth: byMonth, futures:futures]"/>
 
         </div>
         <br/>
@@ -123,7 +125,7 @@
         %>
         <gvisualization:barCoreChart elementId="byMonthChart"
                                      columns="${dataCol}" data="${graphData}"
-                                     legend="${[position: 'none', alignment: 'center']}"/>
+                                     legend="${[position: 'none', alignment: 'center']}" colors="['92e07f']"/>
         <div id="byMonthChart"
              style="width: 100%; margin: auto;display: block;background: transparent;"></div>
 

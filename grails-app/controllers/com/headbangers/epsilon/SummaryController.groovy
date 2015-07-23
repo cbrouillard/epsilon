@@ -38,15 +38,12 @@ class SummaryController {
 
         def budgets = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
 
-        def lastDayOfMonth = dateUtil.getLastDayOfTheMonth(new Date())
-        def futuresForThisMonth = Scheduled.findAllByDateApplicationLessThanEqualsAndDateApplicationGreaterThan(lastDayOfMonth, new Date())
-
         def data = Operation.executeQuery(
                 'select c.name, sum(o.amount) from Operation o inner join o.category c where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? group by c.name',
                 [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.RETRAIT, CategoryType.DEPENSE]).asList()
 
         [accounts: accounts, lates: lateScheduled, today: todayScheduled,
-         future  : futuresScheduled, depense: depense, revenu: revenu, person: person, budgets: budgets, graphData: data,
-         futures : futuresForThisMonth]
+         future  : futuresScheduled, depense: depense, revenu: revenu, person: person, budgets: budgets, graphData: data
+        ]
     }
 }

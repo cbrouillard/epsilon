@@ -32,7 +32,11 @@
         if (operation.type.equals(OperationType.DEPOT) || operation.type.equals(OperationType.VIREMENT_PLUS)) {
             bufferAmount += operation.amount
         } else {
-            bufferAmount -= operation.amount
+            if (operation instanceof Scheduled && operation.accountTo && operation.accountTo.id.equals(account.id)) {
+                bufferAmount += operation.amount
+            } else {
+                bufferAmount -= operation.amount
+            }
         }
     }
     depenseCourbe.add(["$prevDay ${sdf.format(cal.getTime())}", bufferAmount])
@@ -40,5 +44,5 @@
 <gvisualization:areaCoreChart elementId="lineChart${idChart}"
                               columns="${columns}" data="${depenseCourbe}"
                               legend="[position: 'bottom']"
-                              width="100%"/>
+                              width="100%" colors="['92e07f']"/>
 <div id="lineChart${idChart}"></div>

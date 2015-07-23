@@ -502,12 +502,16 @@ div.counter-shower {
     text-align: center;
     padding-bottom: 15px;
 }
+div.counter-shower-no-line {
+    text-align: center;
+    padding-bottom: 15px;
+}
 
-div.counter-shower .number {
+div.counter-shower .number, div.counter-shower-no-line .number {
     font-size: 32px;
 }
 
-div.counter-shower .lbl {
+div.counter-shower .lbl , div.counter-shower-no-line .lbl{
     font-weight: bold;
     font-size: 16px;
     margin-top: 15px;
