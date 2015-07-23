@@ -17,8 +17,15 @@ class ParameterService {
     
     public void setBayesianFilterParameter (Person person, boolean value){
         def zeParameter = this.findParameter (person, "bayesian_filter")
-        log.error "Parameter = ${zeParameter}"
-        
+        if (!zeParameter){
+            zeParameter = new Parameter()
+            zeParameter.name = "bayesian_filter"
+            zeParameter.owner = person
+            zeParameter.type = "boolean"
+        }
+
+        log.debug "Parameter = ${zeParameter}"
+
         zeParameter.value = "${value}"
         zeParameter.save(flush:true)
     }

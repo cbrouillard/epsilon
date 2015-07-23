@@ -32,12 +32,9 @@
         Chaque "budget" est "branché" sur une ou plusieurs catégories de dépenses. Lorsqu'un retrait
         est enregistré avec l'une des catégories affectée à un budget, ce dernier voit son "montant
         utilisé" augmenter.<br/><br/>
-        Tant que le budget est respecté, la valeur du "montant utilisé" s'affichera en <font
-            style="color:green;">VERT</font><br/>
-        Si vous flirtez avec la valeur maximale, alors l'affichage se notera en <font
-            style="color:orange;">ORANGE</font><br/>
-        Enfin, en cas de non respect de votre budget, l'affichage sera sévèrement colorié en <font
-            style="color:red; background-color: #000;">ROUGE SUR FOND NOIR</font>
+        Tant que le budget est respecté, la valeur du "montant utilisé" s'affichera en <span class="label label-success">VERT</span><br/>
+        Si vous flirtez avec la valeur maximale, alors l'affichage se notera en <span class="label label-warning">ORANGE</span><br/>
+        Enfin, en cas de non respect de votre budget, l'affichage sera sévèrement colorié en <span class="label label-danger">ROUGE</span>
     </div>
     <hr/>
 </div>
@@ -52,7 +49,7 @@
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
-
+        <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -77,19 +74,22 @@
                     <g:set var="currentSold" value="${budgetInstance.currentMonthOperationsSum}"/>
 
                     <g:if test="${currentSold < budgetInstance.amount}">
-                        <td class="budget-OK tdright">
+                        <td class="tdright">
+                        <span class="label label-success">
                     </g:if>
                     <g:elseif
                             test="${currentSold >= budgetInstance.amount - 1 && currentSold <= budgetInstance.amount + 1}">
-                        <td class="budget-REACHED tdright">
+                        <td class="tdright">
+                        <span class="label label-warning">
                     </g:elseif>
                     <g:elseif test="${currentSold > budgetInstance.amount}">
-                        <td class="budget-KO tdright">
+                        <td class="tdright">
+                        <span class="label label-danger">
                     </g:elseif>
                     <g:else>
                         <td class="budget tdright">
                     </g:else>
-                    <g:formatNumber number="${currentSold}" format="0.##" /> €</td>
+                    <g:formatNumber number="${currentSold}" format="0.##" /> €</span></td>
 
                     <td class="tdright"><b>${fieldValue(bean: budgetInstance, field: "amount")} €</b></td>
                     <td>
@@ -122,6 +122,7 @@
             </g:each>
             </tbody>
         </table>
+            </div>
 
         <div class="pagination pull-right">
             <g:paginate total="${budgetInstanceTotal}"/>

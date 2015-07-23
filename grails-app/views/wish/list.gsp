@@ -40,62 +40,64 @@
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
 
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-
-                <g:sortableColumn property="name" title="${message(code: 'wish.name.label', default: 'Name')}"/>
-
-                <g:sortableColumn property="description"
-                                  title="${message(code: 'wish.description.label', default: 'Description')}"/>
-
-                <g:sortableColumn property="webShopUrl"
-                                  title="${message(code: 'wish.webShopUrl.label', default: 'Web Shop Url')}"/>
-
-                <g:sortableColumn property="price" title="${message(code: 'wish.price.label', default: 'Price')}"
-                                  class="text-right"/>
-
-                <g:sortableColumn property="previsionBuy"
-                                  title="${message(code: 'wish.previsionBuy.label', default: 'Prevision Buy')}"/>
-
-                <g:sortableColumn property="boughtDate"
-                                  title="${message(code: 'wish.boughtDate.label', default: 'Bought Date')}"/>
-                <th class="text-right">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <g:each in="${wishInstanceList}" status="i" var="wishInstance">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
                 <tr>
 
-                    <td>${fieldValue(bean: wishInstance, field: "name")}</td>
+                    <g:sortableColumn property="name" title="${message(code: 'wish.name.label', default: 'Name')}"/>
 
-                    <td>${fieldValue(bean: wishInstance, field: "description")}</td>
-                    <td>
-                        <g:if test="${wishInstance.webShopUrl}">
-                            <a href="${wishInstance.webShopUrl}" target="_blank">${wishInstance.webShopUrl}</a>
-                        </g:if>
-                    </td>
+                    <g:sortableColumn property="description"
+                                      title="${message(code: 'wish.description.label', default: 'Description')}"/>
 
-                    <td class="text-right">${fieldValue(bean: wishInstance, field: "price")} €</td>
+                    <g:sortableColumn property="webShopUrl"
+                                      title="${message(code: 'wish.webShopUrl.label', default: 'Web Shop Url')}"/>
 
-                    <td><g:formatDate date="${wishInstance.previsionBuy}"/></td>
+                    <g:sortableColumn property="price" title="${message(code: 'wish.price.label', default: 'Price')}"
+                                      class="text-right"/>
 
-                    <td><g:formatDate date="${wishInstance.boughtDate}"/></td>
-                    <td class="text-right">
-                        <g:link title="Afficher les détails" action="show" id="${wishInstance.id}"
-                                data-toggle="modal" data-target="#modalWindow_show"><img
-                                src="${resource(dir: 'img', file: 'details.png')}"
-                                alt="Détails"/></g:link>
-                        <g:link title="Editer" action="edit" id="${wishInstance.id}"><img
-                                src="${resource(dir: 'img', file: 'edit.png')}" alt="Editer"/></g:link>
-                        <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"><img
-                                src="${resource(dir: 'img', file: 'buy.png')}" alt="Acheter!"/></g:link>
-                    </td>
+                    <g:sortableColumn property="previsionBuy"
+                                      title="${message(code: 'wish.previsionBuy.label', default: 'Prevision Buy')}"/>
 
+                    <g:sortableColumn property="boughtDate"
+                                      title="${message(code: 'wish.boughtDate.label', default: 'Bought Date')}"/>
+                    <th class="text-right">Actions</th>
                 </tr>
-            </g:each>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <g:each in="${wishInstanceList}" status="i" var="wishInstance">
+                    <tr>
+
+                        <td>${fieldValue(bean: wishInstance, field: "name")}</td>
+
+                        <td>${fieldValue(bean: wishInstance, field: "description")}</td>
+                        <td>
+                            <g:if test="${wishInstance.webShopUrl}">
+                                <a href="${wishInstance.webShopUrl}" target="_blank">${wishInstance.webShopUrl}</a>
+                            </g:if>
+                        </td>
+
+                        <td class="text-right">${fieldValue(bean: wishInstance, field: "price")} €</td>
+
+                        <td><g:formatDate date="${wishInstance.previsionBuy}"/></td>
+
+                        <td><g:formatDate date="${wishInstance.boughtDate}"/></td>
+                        <td class="text-right">
+                            <g:link title="Afficher les détails" action="show" id="${wishInstance.id}"
+                                    data-toggle="modal" data-target="#modalWindow_show"><img
+                                    src="${resource(dir: 'img', file: 'details.png')}"
+                                    alt="Détails"/></g:link>
+                            <g:link title="Editer" action="edit" id="${wishInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'edit.png')}" alt="Editer"/></g:link>
+                            <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'buy.png')}" alt="Acheter!"/></g:link>
+                        </td>
+
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+        </div>
 
         <div class="pagination pull-right">
             <g:paginate total="${wishInstanceTotal}"/>
@@ -113,7 +115,6 @@
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

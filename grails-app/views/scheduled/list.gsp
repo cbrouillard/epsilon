@@ -54,57 +54,59 @@
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
 
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <g:sortableColumn property="name"
-                                  title="${message(code: 'scheduled.name.label', default: 'Name')}"/>
-                <th><g:message code="scheduled.account.label" default="Account"/></th>
-                <th><g:message code="scheduled.tiers.label" default="Tiers"/></th>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <g:sortableColumn property="name"
+                                      title="${message(code: 'scheduled.name.label', default: 'Name')}"/>
+                    <th><g:message code="scheduled.account.label" default="Account"/></th>
+                    <th><g:message code="scheduled.tiers.label" default="Tiers"/></th>
 
-                <g:sortableColumn property="dateApplication"
-                                  title="${message(code: 'scheduled.dateApplication.label', default: 'Date Application')}"/>
+                    <g:sortableColumn property="dateApplication"
+                                      title="${message(code: 'scheduled.dateApplication.label', default: 'Date Application')}"/>
 
-                <g:sortableColumn property="type"
-                                  title="${message(code: 'scheduled.type.label', default: 'Type')}"/>
-                <g:sortableColumn property="automatic"
-                                  title="${message(code: 'scheduled.automatic.label', default: 'Automatic')}"/>
-                <g:sortableColumn property="amount" class="text-right"
-                                  title="${message(code: 'scheduled.amount.label', default: 'Amount')}"/>
-                <th class="text-center">Active ?</th>
-                <th class="text-right">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <g:each in="${scheduledInstanceList}" status="i" var="scheduledInstance">
-                <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                    <td>${fieldValue(bean: scheduledInstance, field: "name")}</td>
-                    <td>${fieldValue(bean: scheduledInstance, field: "accountFrom.name")}</td>
-                    <td>${fieldValue(bean: scheduledInstance, field: "tiers.name")}</td>
-                    <td><g:formatDate date="${scheduledInstance.dateApplication}"/></td>
-
-                    <td>${fieldValue(bean: scheduledInstance, field: "type")}</td>
-                    <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/></td>
-                    <td class="tdright"><b><g:formatNumber number="${scheduledInstance?.amount}"
-                                                           format="0.##"/> €</b></td>
-                    <td class="tdcenter">
-                        <div id="scheduled${scheduledInstance.id}-activation">
-                            <g:render template="activateactions" model="[scheduled: scheduledInstance]"/>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <g:link title="Afficher les détails" action="show" id="${scheduledInstance.id}"
-                                data-toggle="modal"
-                                data-target="#modalWindow_show"><img
-                                src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
-                        <g:link title="Editer" action="edit" id="${scheduledInstance.id}"><img
-                                src="${resource(dir: 'img', file: 'edit.png')}"
-                                alt="Editer"/></g:link>
-                    </td>
+                    <g:sortableColumn property="type"
+                                      title="${message(code: 'scheduled.type.label', default: 'Type')}"/>
+                    <g:sortableColumn property="automatic"
+                                      title="${message(code: 'scheduled.automatic.label', default: 'Automatic')}"/>
+                    <g:sortableColumn property="amount" class="text-right"
+                                      title="${message(code: 'scheduled.amount.label', default: 'Amount')}"/>
+                    <th class="text-center">Active ?</th>
+                    <th class="text-right">Actions</th>
                 </tr>
-            </g:each>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <g:each in="${scheduledInstanceList}" status="i" var="scheduledInstance">
+                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <td>${fieldValue(bean: scheduledInstance, field: "name")}</td>
+                        <td>${fieldValue(bean: scheduledInstance, field: "accountFrom.name")}</td>
+                        <td>${fieldValue(bean: scheduledInstance, field: "tiers.name")}</td>
+                        <td><g:formatDate date="${scheduledInstance.dateApplication}"/></td>
+
+                        <td>${fieldValue(bean: scheduledInstance, field: "type")}</td>
+                        <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/></td>
+                        <td class="tdright"><b><g:formatNumber number="${scheduledInstance?.amount}"
+                                                               format="0.##"/> €</b></td>
+                        <td class="tdcenter">
+                            <div id="scheduled${scheduledInstance.id}-activation">
+                                <g:render template="activateactions" model="[scheduled: scheduledInstance]"/>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <g:link title="Afficher les détails" action="show" id="${scheduledInstance.id}"
+                                    data-toggle="modal"
+                                    data-target="#modalWindow_show"><img
+                                    src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
+                            <g:link title="Editer" action="edit" id="${scheduledInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'edit.png')}"
+                                    alt="Editer"/></g:link>
+                        </td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+        </div>
 
         <div class="pagination pull-right">
             <g:paginate total="${scheduledInstanceTotal}"/>

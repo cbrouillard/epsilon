@@ -27,6 +27,7 @@ class OperationController {
     def dateUtil
     def exportService
     def bayesClassifierService
+    def operationService
 
     def parameterService
 
@@ -94,14 +95,22 @@ class OperationController {
         def month = params["byMonth"] ? params.int('byMonth') : currentMonth
 
         def graphData = Operation.executeQuery(
-                'select c.name, - sum(o.amount) from Operation o inner join o.category c where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ? or o.type = ?) group by c.name',
-                [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.FACTURE, OperationType.RETRAIT, OperationType.VIREMENT_MOINS]).asList()
+                'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.account a where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ?) and a.id = ? group by c.name',
+                [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.DEPOT, OperationType.VIREMENT_PLUS, selectedAccount.id]).asList()
 
-        graphData += Operation.executeQuery(
-                'select c.name, sum(o.amount) from Operation o inner join o.category c where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ?) group by c.name',
-                [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.DEPOT, OperationType.VIREMENT_PLUS]).asList()
+        graphData +=  Operation.executeQuery(
+                'select c.name, - sum(o.amount) from Operation o inner join o.category c inner join o.account a where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ? or o.type = ?) and a.id = ? group by c.name',
+                [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.FACTURE, OperationType.RETRAIT, OperationType.VIREMENT_MOINS, selectedAccount.id]).asList()
 
-        [accounts: accounts, selected: selectedAccount, byMonth: month, currentMonth: currentMonth, parameterBayesianFilter: parameterService.getBayesianFilterParameter(person), graphData: graphData]
+        def depense = operationService.calculateDepenseForThisMonthByAccount(person, selectedAccount)
+        def revenu = operationService.calculateRevenuForThisMonthByAccount(person, selectedAccount)
+
+        def lastDayOfMonth = dateUtil.getLastDayOfTheMonth(new Date())
+        def programmedScheduleds = Scheduled.findAllByDateApplicationLessThanEqualsAndDateApplicationGreaterThan(lastDayOfMonth, new Date())
+
+        [accounts    : accounts, selected: selectedAccount, byMonth: month,
+         currentMonth: currentMonth, parameterBayesianFilter: parameterService.getBayesianFilterParameter(person), graphData: graphData,
+         depense     : depense, revenu: revenu, futures: programmedScheduleds]
     }
 
     private def save(Operation operationInstance, CategoryType type, params) {

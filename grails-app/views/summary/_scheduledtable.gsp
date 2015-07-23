@@ -12,7 +12,24 @@
 -->
 <table class="${cssClass} table table-striped">
     <tbody>
+    <g:set var="actualMonth" value="${scheduleds ? scheduleds.get(0).dateApplication.getMonth() + 1 : 0}"/>
+    <g:set var="prev" value="${actualMonth}"/>
+    <g:set var="amount" value="${0}"/>
     <g:each in="${scheduleds}" status="i" var="scheduled">
+
+        <g:set var="actualMonth" value="${scheduled.dateApplication.getMonth() + 1}"/>
+
+        <g:if test="${actualMonth != prev}">
+            <tr class="important">
+                <td colspan="2">&nbsp;</td>
+                <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="0.##"/> €</td>
+                <td class="tdright fixedsize">&nbsp;</td>
+
+                <g:set var="amount" value="${0}"/>
+                <g:set var="prev" value="${actualMonth}"/>
+            </tr>
+        </g:if>
+
         <tr>
             <td class="principal">${scheduled.name}</td>
             <td><g:formatDate date="${scheduled.dateApplication}"/></td>
@@ -32,6 +49,22 @@
                 </g:if>
             </td>
         </tr>
+
+        <g:if test="${scheduled.type.sign.equals("-")}">
+            <g:set var="amount" value="${amount + scheduled.amount}"/>
+        </g:if>
+        <g:else>
+            <g:set var="amount" value="${amount - scheduled.amount}"/>
+        </g:else>
+
     </g:each>
+    <g:if test="${scheduleds}">
+        <tr class="important">
+            <td colspan="2">&nbsp;</td>
+            <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="0.##"/> €</td>
+            <td class="tdright fixedsize">&nbsp;</td>
+            <g:set var="amount" value="${0}"/>
+        </tr>
+    </g:if>
     </tbody>
 </table>

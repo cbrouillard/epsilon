@@ -44,56 +44,58 @@
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <g:sortableColumn property="name" title="${message(code: 'tiers.name.label', default: 'Name')}"/>
 
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <g:sortableColumn property="name" title="${message(code: 'tiers.name.label', default: 'Name')}"/>
+                    <g:sortableColumn property="description"
+                                      title="${message(code: 'tiers.description.label', default: 'Description')}"/>
 
-                <g:sortableColumn property="description"
-                                  title="${message(code: 'tiers.description.label', default: 'Description')}"/>
+                    <g:sortableColumn property="dateCreated"
+                                      title="${message(code: 'tiers.dateCreated.label', default: 'Date Created')}"/>
 
-                <g:sortableColumn property="dateCreated"
-                                  title="${message(code: 'tiers.dateCreated.label', default: 'Date Created')}"/>
+                    <g:sortableColumn property="lastUpdated"
+                                      title="${message(code: 'tiers.lastUpdated.label', default: 'Last Updated')}"/>
 
-                <g:sortableColumn property="lastUpdated"
-                                  title="${message(code: 'tiers.lastUpdated.label', default: 'Last Updated')}"/>
+                    <th class="text-right">Solde</th>
 
-                <th class="text-right">Solde</th>
-
-                <th class="text-right">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <g:each in="${tiersInstanceList}" status="i" var="tiersInstance">
-                <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
-                    <td>${fieldValue(bean: tiersInstance, field: "name")}</td>
-
-                    <td>${fieldValue(bean: tiersInstance, field: "description")}</td>
-
-                    <td><g:formatDate date="${tiersInstance.dateCreated}"/></td>
-
-                    <td><g:formatDate date="${tiersInstance.lastUpdated}"/></td>
-                    <td class="tdright"><b><g:formatNumber number="${tiersInstance.sold}" format="0.##"/> €</b></td>
-                    <td class="text-right">
-                        <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
-                                action="show" id="${tiersInstance.id}"><img
-                                src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
-                        <g:link title="Editer" action="edit" id="${tiersInstance.id}"><img
-                                src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
-                        <g:link title="Opérations pour ce tiers" action="operations" id="${tiersInstance.id}"><img
-                                src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
-                    </td>
-
+                    <th class="text-right">Actions</th>
                 </tr>
-            </g:each>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <g:each in="${tiersInstanceList}" status="i" var="tiersInstance">
+                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+
+                        <td>${fieldValue(bean: tiersInstance, field: "name")}</td>
+
+                        <td>${fieldValue(bean: tiersInstance, field: "description")}</td>
+
+                        <td><g:formatDate date="${tiersInstance.dateCreated}"/></td>
+
+                        <td><g:formatDate date="${tiersInstance.lastUpdated}"/></td>
+                        <td class="tdright"><b><g:formatNumber number="${tiersInstance.sold}" format="0.##"/> €</b></td>
+                        <td class="text-right">
+                            <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
+                                    action="show" id="${tiersInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+                            <g:link title="Editer" action="edit" id="${tiersInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                            <g:link title="Opérations pour ce tiers" action="operations" id="${tiersInstance.id}"><img
+                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                        </td>
+
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+        </div>
 
         <div class="pagination pull-right">
             <g:paginate total="${tiersInstanceTotal}"/>
         </div>
+
         <div class="clearfix">&nbsp;</div>
 
     </div>

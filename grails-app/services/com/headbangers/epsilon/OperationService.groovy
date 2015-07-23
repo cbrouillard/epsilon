@@ -16,45 +16,70 @@ class OperationService {
     def dateUtil
 
     def findAllDepenseForThisMonth(person) {
-        return Operation.createCriteria ().list (sort:'dateApplication', order:'desc'){
-            owner{eq("id", person.id)}
-            category{eq("type", CategoryType.DEPENSE)}
+        return Operation.createCriteria().list(sort: 'dateApplication', order: 'desc') {
+            owner { eq("id", person.id) }
+            category { eq("type", CategoryType.DEPENSE) }
             between("dateApplication", dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth())
         }
     }
 
-    def findAllRevenuForThisMonth (person) {
-        return Operation.createCriteria ().list (sort:'dateApplication', order:'desc'){
-            owner{eq("id", person.id)}
-            category{eq("type", CategoryType.REVENU)}
+    def findAllRevenuForThisMonth(person) {
+        return Operation.createCriteria().list(sort: 'dateApplication', order: 'desc') {
+            owner { eq("id", person.id) }
+            category { eq("type", CategoryType.REVENU) }
             between("dateApplication", dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth())
         }
     }
 
-    def findAllOperationsForMonth (concernedAccount, date) {
-        return Operation.createCriteria ().list (sort:'dateApplication', order:'desc'){
-            account{eq("id", concernedAccount.id)}
+    def findAllOperationsForMonth(concernedAccount, date) {
+        return Operation.createCriteria().list(sort: 'dateApplication', order: 'desc') {
+            account { eq("id", concernedAccount.id) }
             between("dateApplication", dateUtil.getFirstDayOfTheMonth(date), dateUtil.getLastDayOfTheMonth(date))
         }
     }
 
-    def calculateDepenseForThisMonth (person){
+    def calculateDepenseForThisMonth(person) {
         def operations = findAllDepenseForThisMonth(person)
         def amount = 0D
-        operations.each {operation ->
+        operations.each { operation ->
             amount += operation.amount
         }
 
         return amount
     }
 
-    def calculateRevenuForThisMonth (person){
+    def calculateRevenuForThisMonth(person) {
         def operations = findAllRevenuForThisMonth(person)
         def amount = 0D
-        operations.each {operation ->
+        operations.each { operation ->
             amount += operation.amount
         }
 
         return amount
     }
+
+    def calculateDepenseForThisMonthByAccount(person, account) {
+        def operations = findAllOperationsForMonth(account, new Date())
+        def amount = 0D
+        operations.each { operation ->
+            if (operation.type.equals(OperationType.FACTURE) || operation.type.equals(OperationType.RETRAIT) || operation.type.equals(OperationType.VIREMENT_MOINS)) {
+                amount += operation.amount
+            }
+        }
+
+        return amount
+    }
+
+    def calculateRevenuForThisMonthByAccount(person, account) {
+        def operations = findAllOperationsForMonth(account, new Date())
+        def amount = 0D
+        operations.each { operation ->
+            if (operation.type.equals(OperationType.DEPOT) || operation.type.equals(OperationType.VIREMENT_PLUS)) {
+                amount += operation.amount
+            }
+        }
+
+        return amount
+    }
+
 }

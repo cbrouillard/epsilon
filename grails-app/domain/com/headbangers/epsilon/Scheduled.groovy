@@ -74,4 +74,10 @@ class Scheduled{
         }
         return sold
     }
+
+    public int getApplicationDayInMonth(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(this.dateApplication)
+        return cal.get(Calendar.DAY_OF_MONTH)
+    }
 }

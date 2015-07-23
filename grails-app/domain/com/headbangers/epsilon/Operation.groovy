@@ -58,6 +58,12 @@ class Operation implements Comparable {
         return dateApplication <=> other?.dateApplication
     }
 
+    public int getApplicationDayInMonth(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(this.dateApplication)
+        return cal.get(Calendar.DAY_OF_MONTH)
+    }
+
     //
     //    int hashCode (){
     //        return (id.hashCode()+dateApplication.hashCode()+dateCreated.hashCode()+type.hashCode())*500*35

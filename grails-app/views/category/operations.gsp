@@ -21,8 +21,11 @@
 
 <body>
 <div class="col-sm-12">
+    <g:render template="/generic/statsfilter"
+              model="[id: category.id, action: 'operations', controller: 'category', css:'margin-top: 25px;']"/>
     <h1>Liste des opérations <small>${category.name}</small></h1>
-    <hr/>
+
+    <hr class="clearfix"/>
 </div>
 
 <div class="col-sm-6">
@@ -39,11 +42,6 @@
 </div>
 
 <div class="col-sm-6">
-
-    <div class="around-border">
-        <g:render template="/generic/statsfilter"
-                  model="[id: category.id, action: 'operations', controller: 'category']"/>
-    </div><br/>
 
     <div class="around-border">
 

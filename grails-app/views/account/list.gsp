@@ -40,59 +40,61 @@
                 <div class="alert alert-info">${flash.message}</div>
             </g:if>
 
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
 
-                    <th><g:message code="account.bank.label" default="Bank"/></th>
+                        <th><g:message code="account.bank.label" default="Bank"/></th>
 
-                    <g:sortableColumn property="name"
-                                      title="${message(code: 'account.name.label', default: 'Name')}"/>
+                        <g:sortableColumn property="name"
+                                          title="${message(code: 'account.name.label', default: 'Name')}"/>
 
-                    <g:sortableColumn property="type"
-                                      title="${message(code: 'account.type.label', default: 'Type')}"/>
+                        <g:sortableColumn property="type"
+                                          title="${message(code: 'account.type.label', default: 'Type')}"/>
 
-                    <g:sortableColumn property="dateOpened"
-                                      title="${message(code: 'account.dateOpened.label', default: 'Date Opened')}"/>
+                        <g:sortableColumn property="dateOpened"
+                                          title="${message(code: 'account.dateOpened.label', default: 'Date Opened')}"/>
 
-                    <g:sortableColumn property="amount"
-                                      title="${message(code: 'account.calculatedAmount.label', default: 'Amount')}"
-                                      class="text-right"/>
+                        <g:sortableColumn property="amount"
+                                          title="${message(code: 'account.calculatedAmount.label', default: 'Amount')}"
+                                          class="text-right"/>
 
-                    <th class="text-right">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <g:each in="${accountInstanceList}" status="i" var="accountInstance">
-                    <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
-                        <td>${fieldValue(bean: accountInstance, field: "bank.name")}</td>
-
-                        <td>${fieldValue(bean: accountInstance, field: "name")}</td>
-
-                        <td>${fieldValue(bean: accountInstance, field: "type")}</td>
-
-                        <td><g:formatDate date="${accountInstance.dateOpened}"/></td>
-
-                        <td class="text-right"><b><g:formatNumber number="${accountInstance?.sold}"
-                                                                  format="0.##"/> €</b></td>
-
-                        <td class="text-right">
-                            <g:link title="Afficher les détails" action="show" id="${accountInstance.id}"
-                                    data-toggle="modal"
-                                    data-target="#modalWindow_show"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
-
-                            <g:link title="Editer" action="edit" id="${accountInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
-                            <g:link title="Afficher le registre" controller="operation" action="list"
-                                    params="[account: accountInstance.id]"><img
-                                    src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
-                        </td>
+                        <th class="text-right">Actions</th>
                     </tr>
-                </g:each>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <g:each in="${accountInstanceList}" status="i" var="accountInstance">
+                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+
+                            <td>${fieldValue(bean: accountInstance, field: "bank.name")}</td>
+
+                            <td>${fieldValue(bean: accountInstance, field: "name")}</td>
+
+                            <td>${fieldValue(bean: accountInstance, field: "type")}</td>
+
+                            <td><g:formatDate date="${accountInstance.dateOpened}"/></td>
+
+                            <td class="text-right"><b><g:formatNumber number="${accountInstance?.sold}"
+                                                                      format="0.##"/> €</b></td>
+
+                            <td class="text-right">
+                                <g:link title="Afficher les détails" action="show" id="${accountInstance.id}"
+                                        data-toggle="modal"
+                                        data-target="#modalWindow_show"><img
+                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+
+                                <g:link title="Editer" action="edit" id="${accountInstance.id}"><img
+                                        src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                <g:link title="Afficher le registre" controller="operation" action="list"
+                                        params="[account: accountInstance.id]"><img
+                                        src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                            </td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="pagination pull-right">
                 <g:paginate total="${accountInstanceTotal}"/>

@@ -22,67 +22,71 @@
 %{--</g:if>--}%
 %{--</div>--}%
 <g:render template="monthpagination"/>
-<table class="table table-striped table-hover table-condensed">
-    <thead>
-    <tr>
-        <th>N°</th>
-        <th>${message(code: 'operation.dateApplication.label', default: 'Date Application')}</th>
-        <th>Détails</th>
-        <th class="text-center">Pointée</th>
-        <th class="text-right">Paiement</th>
-        <th class="text-right">Dépôt</th>
-        <th class="text-right">Solde</th>
-        <th class="text-right">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <g:if test="${byMonth}">
-        <g:set var="operations" value="${selected?.lastOperationsByMonth(byMonth ? byMonth : 0)}"/>
-    </g:if>
-    <g:else>
-        <g:set var="operations" value="${selected?.lastOperationsByMonth(currentMonth ? currentMonth : 0)}"/>
-    </g:else>
-
-    <g:set var="accountAmount" value="${selected?.lastSnapshot?.amount ?: selected.amount}"/>
-    <g:each in="${operations}" status="i" var="operationInstance">
-        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-            <td>${i + 1}</td>
-            <td><g:formatDate date="${operationInstance.dateApplication}"/></td>
-            <td>${fieldValue(bean: operationInstance, field: "category.name")} - ${fieldValue(bean: operationInstance, field: "tiers.name")}</td>
-            <td class="tdcenter">
-                <div id="operation${operationInstance.id}-point">
-                    <g:render template="pointactions" model="[operation: operationInstance]"/>
-                </div>
-            </td>
-
-            <td class="tdright">
-                <g:if test="${operationInstance?.type == com.headbangers.epsilon.OperationType.RETRAIT || operationInstance?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
-                    <b><g:formatNumber number="${operationInstance?.amount}" format="0.##"/> €</b>
-                    <g:set var="accountAmount" value="${accountAmount - operationInstance?.amount}"/>
-                </g:if>
-            </td>
-            <td class="tdright">
-                <g:if test="${operationInstance?.type == com.headbangers.epsilon.OperationType.DEPOT || operationInstance?.type == com.headbangers.epsilon.OperationType.VIREMENT_PLUS}">
-                    <b><g:formatNumber number="${operationInstance?.amount}" format="0.##"/> €</b>
-                    <g:set var="accountAmount" value="${accountAmount + operationInstance?.amount}"/>
-                </g:if>
-            </td>
-
-            <td class="tdright">
-                <g:formatNumber number="${accountAmount}" format="0.##"/> €
-            </td>
-
-            <td class="text-right">
-                <g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal" data-target="#modalWindow_show"><img
-                        src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
-                <g:link title="Editer" action="edit" id="${operationInstance.id}"><img src="${resource(dir: 'img', file: 'edit.png')}"
-                                                                                       alt="Editer"/></g:link>
-            </td>
-
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+        <tr>
+            <th>N°</th>
+            <th>${message(code: 'operation.dateApplication.label', default: 'Date Application')}</th>
+            <th>Détails</th>
+            <th class="text-center">Pointée</th>
+            <th class="text-right">Paiement</th>
+            <th class="text-right">Dépôt</th>
+            <th class="text-right">Solde</th>
+            <th class="text-right">Actions</th>
         </tr>
-    </g:each>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+
+        <g:if test="${byMonth}">
+            <g:set var="operations" value="${selected?.lastOperationsByMonth(byMonth ? byMonth : 0)}"/>
+        </g:if>
+        <g:else>
+            <g:set var="operations" value="${selected?.lastOperationsByMonth(currentMonth ? currentMonth : 0)}"/>
+        </g:else>
+
+        <g:set var="accountAmount" value="${selected?.lastSnapshot?.amount ?: selected.amount}"/>
+        <g:each in="${operations}" status="i" var="operationInstance">
+            <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                <td>${i + 1}</td>
+                <td><g:formatDate date="${operationInstance.dateApplication}"/></td>
+                <td>${fieldValue(bean: operationInstance, field: "category.name")} - ${fieldValue(bean: operationInstance, field: "tiers.name")}</td>
+                <td class="tdcenter">
+                    <div id="operation${operationInstance.id}-point">
+                        <g:render template="pointactions" model="[operation: operationInstance]"/>
+                    </div>
+                </td>
+
+                <td class="tdright">
+                    <g:if test="${operationInstance?.type == com.headbangers.epsilon.OperationType.RETRAIT || operationInstance?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
+                        <b><g:formatNumber number="${operationInstance?.amount}" format="0.##"/> €</b>
+                        <g:set var="accountAmount" value="${accountAmount - operationInstance?.amount}"/>
+                    </g:if>
+                </td>
+                <td class="tdright">
+                    <g:if test="${operationInstance?.type == com.headbangers.epsilon.OperationType.DEPOT || operationInstance?.type == com.headbangers.epsilon.OperationType.VIREMENT_PLUS}">
+                        <b><g:formatNumber number="${operationInstance?.amount}" format="0.##"/> €</b>
+                        <g:set var="accountAmount" value="${accountAmount + operationInstance?.amount}"/>
+                    </g:if>
+                </td>
+
+                <td class="tdright">
+                    <g:formatNumber number="${accountAmount}" format="0.##"/> €
+                </td>
+
+                <td class="text-right">
+                    <g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal"
+                            data-target="#modalWindow_show"><img
+                            src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
+                    <g:link title="Editer" action="edit" id="${operationInstance.id}"><img
+                            src="${resource(dir: 'img', file: 'edit.png')}"
+                            alt="Editer"/></g:link>
+                </td>
+
+            </tr>
+        </g:each>
+        </tbody>
+    </table>
+</div>
 
 <g:render template="monthpagination"/>

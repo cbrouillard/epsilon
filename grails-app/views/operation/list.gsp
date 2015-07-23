@@ -10,7 +10,7 @@
  * GNU General Public License for more details.
  */
 -->
-<%@ page import="org.grails.plugins.google.visualization.formatter.BarFormatter; com.headbangers.epsilon.Operation" %>
+<%@ page import="java.text.SimpleDateFormat; grails.converters.JSON; com.headbangers.epsilon.OperationType; org.grails.plugins.google.visualization.formatter.BarFormatter; com.headbangers.epsilon.Operation" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -37,25 +37,58 @@
     </div>
 </g:if>
 
-<div class="col-xs-12 col-md-9">
-    <div class="around-border">
+<div class="col-sm-12 col-md-9">
+    <g:if test="${selected}">
+        <div class="around-border">
 
-        <g:if test="${selected}">
-            <div id="register">
-                <%
-                    def dataCol = [['string', 'category'], ['number', 'Montant']]
-                %>
-                <gvisualization:columnCoreChart elementId="byMonthChart"
-                                                columns="${dataCol}" data="${graphData}"
-                                                legend="${[position: 'none', alignment: 'center']}"/>
-                <div id="byMonthChart"
-                     style="width: 100%; height: 150px; margin: auto;display: block;background: transparent;"></div>
+            <div class="row">
 
-                <g:render template="register"/>
+                <div class="counter-shower col-xs-12 col-sm-6">
+
+                    <div class="number">
+                        <span class="label label-default">
+                            <g:formatNumber number="${depense}"
+                                            format="0.##"/> €
+                        </span>
+                    </div>
+
+                    <div class="lbl">
+                        Opérations à débit
+                    </div>
+
+                </div>
+
+                <div class="counter-shower col-xs-12 col-sm-6">
+
+                    <div class="number">
+                        <span class="label label-default">
+                            <g:formatNumber number="${revenu}"
+                                            format="0.##"/> €
+                        </span>
+                    </div>
+
+                    <div class="lbl">
+                        Opérations à crédit
+                    </div>
+
+                </div>
 
             </div>
-        </g:if>
-        <g:else>
+
+            <g:render template="/chart/situation" model="[account: selected, idChart: 'situation', byMonth: byMonth, futures:futures]"/>
+
+        </div>
+        <br/>
+
+        <div class="around-border">
+            <div id="register">
+                <g:render template="register"/>
+            </div>
+        </div>
+
+    </g:if>
+    <g:else>
+        <div class="around-border">
             <h1 class="red">Aucun compte enregistré.</h1>
             <ul>
                 <li><g:link controller="bank" action="create"><img src="${resource(dir: 'img', file: 'bank.png')}"
@@ -66,12 +99,13 @@
                         alt=">"/> Créer un nouveau compte</g:link>
                 </li>
             </ul>
-        </g:else>
+        </div>
+    </g:else>
 
-    </div>
+    <br/>
 </div>
 
-<div class="col-xs-12 col-md-3">
+<div class="col-sm-12 col-md-3">
 
     <g:hasErrors bean="${operationInstance}">
         <div class="alert alert-info">
@@ -80,6 +114,24 @@
     </g:hasErrors>
 
     <g:render template="registeractions"/>
+
+    <br/>
+
+    <div class="around-border">
+        <%
+            def dataCol = [['string', 'category'], ['number', 'Montant']]
+        %>
+        <gvisualization:barCoreChart elementId="byMonthChart"
+                                     columns="${dataCol}" data="${graphData}"
+                                     legend="${[position: 'none', alignment: 'center']}"/>
+        <div id="byMonthChart"
+             style="width: 100%; margin: auto;display: block;background: transparent;"></div>
+
+    </div>
+</div>
+
+<div class="col-sm-12 col-md-9">
+
 </div>
 
 <div class="modal fade" id="modalWindow_show" tabindex="-1" role="dialog" aria-labelledby="modalLabel"

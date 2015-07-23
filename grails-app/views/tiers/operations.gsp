@@ -21,6 +21,8 @@
 
 <body>
 <div class="col-sm-12">
+    <g:render template="/generic/statsfilter"
+              model="[id: tiers.id, action: 'operations', controller: 'tiers', css:'margin-top: 25px;']"/>
     <h1>Liste des opérations <small>${tiers.name}</small></h1>
     <hr/>
 </div>
@@ -39,10 +41,6 @@
 
 
 <div class="col-sm-6">
-    <div class="around-border">
-        <g:render template="/generic/statsfilter"
-                  model="[id: tiers.id, action: 'operations', controller: 'tiers']"/>
-    </div><br/>
 
     <div class="around-border">
 

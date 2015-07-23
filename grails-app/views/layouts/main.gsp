@@ -26,9 +26,6 @@
     </style>
 
     <script src="${resource(dir: '/js', file: 'password.js')}"></script>
-    %{--<script src="${resource(dir: '/js', file: 'application.js')}"></script>--}%
-
-    %{--<ofchart:resources/>--}%
 
     <ofchart:resources/>
     <r:require module="bootstrap"/>
@@ -91,6 +88,8 @@
 <script src="${resource(dir: '/js/typeahead', file: 'typeahead.bundle.js')}"></script>
 <script type="text/javascript">
     jQuery(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
 //        , showOn: 'both', buttonText: '<i class="icon-calendar"></i>'
         $(".datepicker, .datepicker-inner").datepicker({'dateFormat': 'dd/mm/yy'});
         $(".datepicker, .datepicker-inner").attr("autocomplete", "off");

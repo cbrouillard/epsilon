@@ -21,18 +21,19 @@
 <body>
 <div class="row-fluid">
     <div class="col-sm-12">
-        <h1>Vos comptes <small>Résumé de la situation</small></h1>
+        <h1>Vos comptes <small>Résumé de la situation</small>
         <g:if test="${accounts}">
-            <div id="mobile-activation" class="alert alert-info">
+            <span id="mobile-activation" data-toggle="tooltip" data-placement="bottom" title="${person.mobileToken ? "Désactivation" : "Activation"} du client mobile">
                 <g:render template="mobile" model="[person: person]"/>
-            </div>
+            </span>
         </g:if>
+        </h1>
         <hr/>
     </div>
 
 </div>
 
-<div class="col-sm-4">
+<div class="col-lg-4 col-md-6 col-sm-12">
     <div class="around-border">
         <div class="alert alert-info">Comptes</div>
         <g:if test="${accounts}">
@@ -102,19 +103,22 @@
                             <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
 
                             <g:if test="${currentSold < budget.amount}">
-                                <td class="tdright budget-OK">
+                                <td class="tdright">
+                                <span class="label label-success">
                             </g:if>
                             <g:elseif
                                     test="${currentSold >= budget.amount - 1 && currentSold <= budget.amount + 1}">
-                                <td class="tdright  budget-REACHED">
+                                <td class="tdright">
+                                <span class="label label-warning">
                             </g:elseif>
                             <g:elseif test="${currentSold > budget.amount}">
-                                <td class="tdright budget-KO">
+                                <td class="tdright">
+                                <span class="label label-danger">
                             </g:elseif>
                             <g:else>
-                                <td class="tdright budget">
+                                <td class="tdright budget"><span>
                             </g:else>
-                            <g:formatNumber number="${currentSold}" format="0.##" /> / <g:formatNumber number="${budget.amount}" format="0.##" /> €</td>
+                            <g:formatNumber number="${currentSold}" format="0.##" /> / <g:formatNumber number="${budget.amount}" format="0.##" /> €</span></td>
                             <td class="tdright fixedsize">
                                 <g:link title="Afficher le registre" controller="budget" action="operations"
                                         params="[budget: budget.id]"><img
@@ -135,14 +139,13 @@
                     </tbody>
                 </table>
             </div>
-        </g:if>
-        <g:else>
 
-        </g:else>
+        </g:if>
     </div>
+    <br/>
 </div>
 
-<div class="col-sm-4">
+<div class="col-lg-4 col-md-6 col-sm-12">
 
     <div class="around-border">
         <div class="alert alert-info">Les échéances</div>
@@ -179,21 +182,52 @@
 
 </div>
 
-<div class="col-sm-4">
+<div class="col-lg-4 col-md-12 col-sm-12">
     <div class="around-border">
-        <div class="alert alert-info">Graphe des dépenses du mois</div>
+        <div class="alert alert-info">Statistiques du mois</div>
+
+        <div class="row">
+
+            <div class="counter-shower col-xs-12 col-sm-6">
+
+                <div class="number">
+                    <span class="label label-default">
+                        <g:formatNumber number="${depense}"
+                                        format="0.##"/> €
+                    </span>
+                </div>
+                <div class="lbl">
+                    Dépenses du mois
+                </div>
+
+            </div>
+
+            <div class="counter-shower col-xs-12 col-sm-6">
+
+                <div class="number">
+                    <span class="label label-default">
+                        <g:formatNumber number="${revenu}"
+                                        format="0.##"/> €
+                    </span>
+                </div>
+                <div class="lbl">
+                    Revenus du mois
+                </div>
+
+            </div>
+
+        </div>
 
         <%
             def dataCol = [['string', 'category'], ['number', 'amount']]
         %>
         <gvisualization:pieCoreChart elementId="piechart"
                                      columns="${dataCol}" data="${graphData}"
-                                     pieHole="${0.4}" legend="${[position: 'none', alignment: 'center']}"/>
+                                     pieHole="${0.4}" legend="${[position: 'bottom', alignment: 'center']}"/>
         <div id="piechart"
-             style="width: 100%; height: 500px; margin: auto;display: block;background: transparent;"></div>
-    </div>
-</div>
+             style="width: 100%; height: 450px; margin: auto;display: block;background: transparent;"></div>
 
+    </div>
 </div>
 
 </body>

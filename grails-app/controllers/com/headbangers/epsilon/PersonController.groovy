@@ -15,7 +15,7 @@ import grails.plugins.springsecurity.Secured
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonController {
 
-    static allowedMethods = [edit: "POST", update: "POST", parameterize:"POST"]
+    static allowedMethods = [edit: "GET", update: "POST", parameterize:"POST"]
     
     def springSecurityService
     def parameterService
@@ -91,12 +91,8 @@ class PersonController {
     }
     
     def parameterize = {
-        log.error "test"
         def person = springSecurityService.getCurrentUser()
-        
         parameterService.setBayesianFilterParameter (person, params.bayesian_filter?true:false)
-        
         redirect (action:'infos')
-        
     }
 }

@@ -496,3 +496,19 @@ div.errors input{
 .gist {
     font-size: 14px;
 }
+
+div.counter-shower {
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+div.counter-shower .number {
+    font-size: 32px;
+}
+
+div.counter-shower .lbl {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 15px;
+}

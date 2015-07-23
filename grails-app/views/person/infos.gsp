@@ -92,14 +92,11 @@
         </dl>
 
 
-        <g:form action="edit" method="post" class="form-horizontal">
-            <div class="control-group">
-                <div class="controls  text-right">
-                    <span class="button"><g:actionSubmit action="edit" class="edit btn btn-primary" name="edit"
-                                                         value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-                </div>
+        <div class="control-group">
+            <div class="controls  text-right">
+                <g:link action="edit" class="btn btn-primary">${message(code: 'default.button.edit.label', default: 'Edit')}</g:link>
             </div>
-        </g:form>
+        </div>
 
     </div>
 </div>

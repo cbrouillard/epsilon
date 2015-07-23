@@ -41,50 +41,51 @@
                 <div class="alert alert-info">${flash.message}</div>
             </g:if>
 
-
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-
-                    <g:sortableColumn property="name" title="${message(code: 'bank.name.label', default: 'Name')}"/>
-
-                    <g:sortableColumn property="description"
-                                      title="${message(code: 'bank.description.label', default: 'Description')}"/>
-
-                    <g:sortableColumn property="dateCreated"
-                                      title="${message(code: 'bank.dateCreated.label', default: 'Date Created')}"/>
-
-                    <g:sortableColumn property="lastUpdated"
-                                      title="${message(code: 'bank.lastUpdated.label', default: 'Last Updated')}"/>
-
-                    <th class="text-right">Actions</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <g:each in="${bankInstanceList}" status="i" var="bankInstance">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
                     <tr>
 
-                        <td>${fieldValue(bean: bankInstance, field: "name")}</td>
+                        <g:sortableColumn property="name" title="${message(code: 'bank.name.label', default: 'Name')}"/>
 
-                        <td>${fieldValue(bean: bankInstance, field: "description")}</td>
+                        <g:sortableColumn property="description"
+                                          title="${message(code: 'bank.description.label', default: 'Description')}"/>
 
-                        <td><g:formatDate date="${bankInstance.dateCreated}"/></td>
+                        <g:sortableColumn property="dateCreated"
+                                          title="${message(code: 'bank.dateCreated.label', default: 'Date Created')}"/>
 
-                        <td><g:formatDate date="${bankInstance.lastUpdated}"/></td>
+                        <g:sortableColumn property="lastUpdated"
+                                          title="${message(code: 'bank.lastUpdated.label', default: 'Last Updated')}"/>
 
-                        <td class="text-right">
-                            <g:link title="Afficher les détails" action="show" data-toggle="modal"
-                                    data-target="#modalWindow_show"
-                                    id="${bankInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
-                            <g:link title="Editer" action="edit" id="${bankInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
-                        </td>
+                        <th class="text-right">Actions</th>
+
                     </tr>
-                </g:each>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <g:each in="${bankInstanceList}" status="i" var="bankInstance">
+                        <tr>
+
+                            <td>${fieldValue(bean: bankInstance, field: "name")}</td>
+
+                            <td>${fieldValue(bean: bankInstance, field: "description")}</td>
+
+                            <td><g:formatDate date="${bankInstance.dateCreated}"/></td>
+
+                            <td><g:formatDate date="${bankInstance.lastUpdated}"/></td>
+
+                            <td class="text-right">
+                                <g:link title="Afficher les détails" action="show" data-toggle="modal"
+                                        data-target="#modalWindow_show"
+                                        id="${bankInstance.id}"><img
+                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+                                <g:link title="Editer" action="edit" id="${bankInstance.id}"><img
+                                        src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                            </td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="pagination pull-right">
                 <g:paginate total="${bankInstanceTotal}"/>
