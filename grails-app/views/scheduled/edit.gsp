@@ -11,7 +11,7 @@
  */
 -->
 
-<%@ page import="com.headbangers.epsilon.Scheduled" %>
+<%@ page import="com.headbangers.epsilon.Account; com.headbangers.epsilon.Scheduled" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -127,6 +127,27 @@
                                name="dateLastApplication"
                                id="dateLastApplication" class="datePicker form-control"/>
 
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'accountFrom', 'errors')}">
+
+                <label for="accountFrom" class="col-sm-2 control-label mandatory"><g:message
+                        code="scheduled.account.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-piggy-bank"></span></span>
+                        <g:select id="accountFrom" optionValue="name" name="accountFrom.id"
+                                  from="${Account.findAllByOwner(scheduledInstance.owner)}"
+                                  optionKey="id"
+                                  value="${scheduledInstance?.accountFrom?.id}"
+                                  required="true"
+                                  class="form-control"/>
                     </div>
 
                     <div class="help-block with-errors"></div>

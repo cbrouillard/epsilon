@@ -27,7 +27,13 @@
                     src="${resource(dir: 'img', file: 'bank.png')}"
                     alt=">"/> Site de la banque</a>
         </g:if>
+
     </h1>
+    <g:if test="${selected?.description}">
+        <blockquote>
+            ${selected.description}
+        </blockquote>
+    </g:if>
     <hr/>
 </div>
 

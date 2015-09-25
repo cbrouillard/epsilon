@@ -56,9 +56,11 @@
                         <g:sortableColumn property="dateOpened"
                                           title="${message(code: 'account.dateOpened.label', default: 'Date Opened')}"/>
 
+                        <th>Détails</th>
                         <g:sortableColumn property="amount"
                                           title="${message(code: 'account.calculatedAmount.label', default: 'Amount')}"
                                           class="text-right"/>
+
 
                         <th class="text-right">Actions</th>
                     </tr>
@@ -75,6 +77,7 @@
 
                             <td><g:formatDate date="${accountInstance.dateOpened}"/></td>
 
+                            <td>${accountInstance.description}</td>
                             <td class="text-right"><b><g:formatNumber number="${accountInstance?.sold}"
                                                                       format="0.##"/> €</b></td>
 
