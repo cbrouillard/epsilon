@@ -39,8 +39,8 @@ class SummaryController {
         def budgets = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
 
         def data = Operation.executeQuery(
-                'select c.name, sum(o.amount) from Operation o inner join o.category c where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? group by c.name',
-                [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.RETRAIT, CategoryType.DEPENSE]).asList()
+                'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.owner p where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? and p.id = ? group by c.name',
+                [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.RETRAIT, CategoryType.DEPENSE, person.id]).asList()
 
         [accounts: accounts, lates: lateScheduled, today: todayScheduled,
          future  : futuresScheduled, depense: depense, revenu: revenu, person: person, budgets: budgets, graphData: data

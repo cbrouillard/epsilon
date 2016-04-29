@@ -21,7 +21,7 @@
 <body>
 
 <g:if test='${flash.message}'>
-    <div class='alert-info alert'>${raw(flash.message)}</div>
+    <div class='alert-info alert'>${flash.message}</div>
 </g:if>
 
 <div class="col-sm-4 col-sm-offset-4">
