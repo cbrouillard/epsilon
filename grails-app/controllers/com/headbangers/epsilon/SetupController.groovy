@@ -46,7 +46,7 @@ class SetupController {
             //            PersonRole.create (firstUser, role_user, true);
             
             
-            def adminRole = new Role(authority: 'ROLE_ADMIN', description:'Administrateur').save(flush: true) 
+            def adminRole = new Role(authority: 'ROLE_ADMIN', description:'Administrateur').save(flush: true)
             def userRole = new Role(authority: 'ROLE_USER', description:'Utilisateur').save(flush: true)
 
             def adminUser = new Person(username:"admin",
@@ -56,7 +56,7 @@ class SetupController {
                 email:"no_email@internet.epsilon",
                 emailShow:false,
                 description:"Administrateur Epsilon",
-                accountExpired:false, accountLocked:false, passwordExpired:false).save(flush:true) 
+                accountExpired:false, accountLocked:false, passwordExpired:false).save(flush: true)
             
             def firstUser = new Person(username:setup.username,
                 userRealName:setup.userRealName,
@@ -65,7 +65,7 @@ class SetupController {
                 email:setup.email,
                 emailShow:false,
                 description:"Premier utilisateur Epsilon",
-                accountExpired:false, accountLocked:false, passwordExpired:false).save(flush:true)
+                accountExpired:false, accountLocked:false, passwordExpired:false).save(flush: true)
 
             PersonRole.create adminUser, adminRole, true
             PersonRole.create firstUser, userRole, true

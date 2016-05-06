@@ -1,32 +1,28 @@
-/*
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 3 of the License.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- */
-
 package com.headbangers.epsilon
+
+import grails.gorm.DetachedCriteria
+import groovy.transform.ToString
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
+@ToString(cache=true, includeNames=true, includePackage=false)
 class PersonRole implements Serializable {
+
+    private static final long serialVersionUID = 1
 
     Person person
     Role role
 
+    @Override
     boolean equals(other) {
         if (!(other instanceof PersonRole)) {
             return false
         }
 
-        other.person?.id == person?.id &&
-        other.role?.id == role?.id
+        other.person?.id == person?.id && other.role?.id == role?.id
     }
 
+    @Override
     int hashCode() {
         def builder = new HashCodeBuilder()
         if (person) builder.append(person.id)
@@ -35,35 +31,68 @@ class PersonRole implements Serializable {
     }
 
     static PersonRole get(String personId, String roleId) {
-        find 'from PersonRole where person.id=:personId and role.id=:roleId',
-        [personId: personId, roleId: roleId]
+        criteriaFor(personId, roleId).get()
+    }
+
+    static boolean exists(String personId, String roleId) {
+        criteriaFor(personId, roleId).count()
+    }
+
+    private static DetachedCriteria criteriaFor(String personId, String roleId) {
+        PersonRole.where {
+            person == Person.load(personId) &&
+                    role == Role.load(roleId)
+        }
     }
 
     static PersonRole create(Person person, Role role, boolean flush = false) {
-        new PersonRole(person: person, role: role).save(flush: flush, insert: true)
+        def instance = new PersonRole(person: person, role: role)
+        instance.save(flush: flush, insert: true)
+        instance
     }
 
-    static boolean remove(Person person, Role role, boolean flush = false) {
-        PersonRole instance = PersonRole.findByPersonAndRole(person, role)
-        if (!instance) {
-            return false
+    static boolean remove(Person u, Role r, boolean flush = false) {
+        if (u == null || r == null) return false
+
+        int rowCount = PersonRole.where { person == u && role == r }.deleteAll()
+
+        if (flush) { PersonRole.withSession { it.flush() } }
+
+        rowCount
+    }
+
+    static void removeAll(Person u, boolean flush = false) {
+        if (u == null) return
+
+        PersonRole.where { person == u }.deleteAll()
+
+        if (flush) { PersonRole.withSession { it.flush() } }
+    }
+
+    static void removeAll(Role r, boolean flush = false) {
+        if (r == null) return
+
+        PersonRole.where { role == r }.deleteAll()
+
+        if (flush) { PersonRole.withSession { it.flush() } }
+    }
+
+    static constraints = {
+        role validator: { Role r, PersonRole ur ->
+            if (ur.person == null || ur.person.id == null) return
+            boolean existing = false
+            PersonRole.withNewSession {
+                existing = PersonRole.exists(ur.person.id, r.id)
+            }
+            if (existing) {
+                return 'userRole.exists'
+            }
         }
-
-        instance.delete(flush: flush)
-        true
-    }
-
-    static void removeAll(Person person) {
-        executeUpdate 'DELETE FROM PersonRole WHERE person=:person', [person: person]
-    }
-
-    static void removeAll(Role role) {
-        executeUpdate 'DELETE FROM PersonRole WHERE role=:role', [role: role]
     }
 
     static mapping = {
-        id composite: ['role', 'person']
-        version false
         table 'role_people'
+        id composite: ['person', 'role']
+        version false
     }
 }

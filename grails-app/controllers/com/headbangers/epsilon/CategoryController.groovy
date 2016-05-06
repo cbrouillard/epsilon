@@ -13,7 +13,7 @@ package com.headbangers.epsilon
 
 import com.headbangers.epsilon.util.DateUtil
 import grails.converters.JSON
-import grails.plugins.springsecurity.Secured
+import grails.plugin.springsecurity.annotation.Secured
 
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])

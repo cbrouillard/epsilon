@@ -43,11 +43,11 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
+        runtime ":hibernate:3.6.10.4"
         runtime ":jquery:1.11.1"
         runtime ":resources:1.2.RC2"
 
-        build ":tomcat:$grailsVersion"
+        build ":tomcat:7.0.47"
 
         compile ":ofchart:0.6.3"
         compile ":quartz:1.0.2"
@@ -56,7 +56,7 @@ grails.project.dependency.resolution = {
         compile ":mail:1.0.7"
 
         compile ":jquery-ui:1.10.4"
-        compile ":spring-security-core:1.2.7.3"
+        compile ":spring-security-core:2.0.0"
         runtime ":webxml:1.4.1"
         compile ":twitter-bootstrap:3.3.2.1"
         compile ":google-visualization:1.0.2"

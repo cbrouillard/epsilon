@@ -103,12 +103,29 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
+grails.databinding.dateFormats = ['dd/MM/yyyy', 'yyyy-MM-dd HH:mm:ss.S', "yyyy-MM-dd'T'hh:mm:ss'Z'"]
+
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.headbangers.epsilon.Person'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.headbangers.epsilon.PersonRole'
-grails.plugins.springsecurity.authority.className = 'com.headbangers.epsilon.Role'
-grails.plugins.springsecurity.securityConfigType = "Annotation"
-grails.plugins.springsecurity.password.algorithm="SHA-256"
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.headbangers.epsilon.Person'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.headbangers.epsilon.PersonRole'
+grails.plugin.springsecurity.authority.className = 'com.headbangers.epsilon.Role'
+grails.plugin.springsecurity.securityConfigType = "Annotation"
+grails.plugin.springsecurity.password.algorithm="SHA-256"
+grails.plugin.springsecurity.password.hash.iterations = 1
+grails.plugin.springsecurity.rejectIfNoRule = false
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+grails.plugin.springsecurity.logout.postOnly = false
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+        '/':                              ['permitAll'],
+        '/index':                         ['permitAll'],
+        '/index.gsp':                     ['permitAll'],
+        '/assets/**':                     ['permitAll'],
+        '/**/js/**':                      ['permitAll'],
+        '/**/css/**':                     ['permitAll'],
+        '/**/images/**':                  ['permitAll'],
+        '/**/favicon.ico':                ['permitAll'],
+        '//bootstrap.css.map':            ['permitAll']
+]
 
 grails.mail.host = props.get("mail.host")
 grails.mail.port = props.get("mail.port")
@@ -123,3 +140,27 @@ grails.mail.props = ["mail.smtp.auth":"true",
               "mail.smtp.socketFactory.fallback":"false"]
 
 grails.plugins.twitterbootstrap.fixtaglib = true
+
+// Uncomment and edit the following lines to start using Grails encoding & escaping improvements
+
+/* remove this line 
+// GSP settings
+grails {
+    views {
+        gsp {
+            encoding = 'UTF-8'
+            htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
+            codecs {
+                expression = 'html' // escapes values inside null
+                scriptlet = 'none' // escapes output from scriptlets in GSPs
+                taglib = 'none' // escapes output from taglibs
+                staticparts = 'none' // escapes output from static template parts
+            }
+        }
+        // escapes all not-encoded output at final stage of outputting
+        filteringCodecForContentType {
+            //'text/html' = 'html'
+        }
+    }
+}
+remove this line */

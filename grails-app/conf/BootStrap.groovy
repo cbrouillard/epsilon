@@ -32,18 +32,23 @@ class BootStrap {
         //            emailShow:false,
         //            description:"Administrateur Epsilon").save(flush:true)
         //
-        //        def user_test = new Person(username:"test",
-        //            userRealName:"User Test",
-        //            passwd: testpass,
-        //            enabled:true,
-        //            email:"test@epsilon.com",
-        //            emailShow:false,
-        //            description:"Le test Epsilon").save(flush:true)
-        //
+                /*def user_test = new Person(username:"test",
+                    userRealName:"User Test",
+                    password: "azerty",
+                    enabled:true,
+                    email:"test@epsilon.com",
+                    emailShow:false,
+                    description:"Le test Epsilon")
+                user_test.save(flush:true)
+*/
         //        def role_admin = new Role(description:"Administrateur",
         //            authority:"ROLE_ADMIN")
-        //        def role_user = new Role(description:"Utilisateur",
-        //            authority:"ROLE_USER")
+                /*def role_user = new Role(description:"Utilisateur",
+                    authority:"ROLE_USER")
+                role_user.save(flush:true)
+
+        PersonRole.create (user_test, role_user, true)*/
+
         //        role_admin.addToPeople(user_admin)
         //        role_admin.save(flush:true)
         //        role_user.addToPeople(user_test)

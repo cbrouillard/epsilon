@@ -11,7 +11,6 @@
 
 package com.headbangers.epsilon
 
-import grails.converters.JSON
 import jofc2.model.Chart
 import jofc2.model.elements.BarChart
 import jofc2.model.elements.LineChart
@@ -20,7 +19,7 @@ import jofc2.model.axis.XAxis
 import jofc2.model.axis.Label
 import jofc2.model.axis.Label.Rotation
 
-import grails.plugins.springsecurity.Secured
+import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class StatsController {

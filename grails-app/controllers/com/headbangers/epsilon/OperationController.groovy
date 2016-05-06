@@ -11,7 +11,7 @@
 
 package com.headbangers.epsilon
 
-import grails.plugins.springsecurity.Secured
+import grails.plugin.springsecurity.annotation.Secured
 import org.hibernate.Criteria
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])

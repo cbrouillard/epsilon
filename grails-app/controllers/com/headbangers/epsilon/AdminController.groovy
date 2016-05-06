@@ -10,7 +10,7 @@
  */
 
 package com.headbangers.epsilon
-import grails.plugins.springsecurity.Secured
+import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN'])
 class AdminController {

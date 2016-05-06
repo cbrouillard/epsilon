@@ -11,40 +11,35 @@
 
 package com.headbangers.epsilon
 
-class Person {
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+
+@EqualsAndHashCode(includes = 'username')
+@ToString(includes = 'username', includeNames = true, includePackage = false)
+class Person implements Serializable {
+
     String id
+
+    private static final long serialVersionUID = 1
+
+    static hasMany = [parameters: Parameter]
+
     transient springSecurityService
-    
-    static hasMany = [parameters:Parameter]
 
     String username
     String password
-    boolean enabled
+    boolean enabled = true
     boolean accountExpired = false
     boolean accountLocked = false
     boolean passwordExpired = false
-        
+
     String userRealName
     String email
     boolean emailShow
-        
     String mobileToken
 
-    static constraints = {
-        username blank: false, unique: true
-        password blank: false
-
-        mobileToken (blank:false, nullable:true)
-        userRealName blank:false
-    }
-
-    static mapping = {
-        password column: 'passwd'
-        id generator:'uuid'
-    }
-
     Set<Role> getAuthorities() {
-        PersonRole.findAllByPerson(this).collect { it.role } as Set
+        PersonRole.findAllByPerson(this)*.role
     }
 
     def beforeInsert() {
@@ -56,8 +51,23 @@ class Person {
             encodePassword()
         }
     }
-    
+
     protected void encodePassword() {
-        password = springSecurityService.encodePassword(password)
+        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+    }
+
+    static transients = ['springSecurityService']
+
+    static constraints = {
+        username blank: false, unique: true
+        password blank: false
+
+        mobileToken(blank: false, nullable: true)
+        userRealName blank: false
+    }
+
+    static mapping = {
+        password column: '`passwd`'
+        id generator: 'uuid'
     }
 }
