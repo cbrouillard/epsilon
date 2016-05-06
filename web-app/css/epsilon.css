@@ -520,3 +520,8 @@ div.counter-shower .lbl , div.counter-shower-no-line .lbl{
 .little-space-bottom{
     margin-bottom: 15px;
 }
+
+.selected-items-left-aligned {
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
