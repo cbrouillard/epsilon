@@ -32,12 +32,24 @@ class ScheduledController {
     }
 
     def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        params.max = Math.min(params.max ? params.int('max') : 20, 100)
 
         def person = springSecurityService.getCurrentUser()
-        def scheduleds = genericService.loadUserObjects (person, Scheduled.class, params)
+        def scheduleds = genericService.loadUserObjects(person, Scheduled.class, params)
 
-        [scheduledInstanceList: scheduleds, scheduledInstanceTotal: scheduleds.totalCount]
+        def depense = 0
+        def revenus = 0
+        scheduleds.each { scheduled ->
+            if (scheduled.active) {
+                if (scheduled.type == OperationType.DEPOT) {
+                    revenus += scheduled.amount
+                } else if (scheduled.type == OperationType.FACTURE) {
+                    depense += scheduled.amount
+                }
+            }
+        }
+
+        [scheduledInstanceList: scheduleds, scheduledInstanceTotal: scheduleds.totalCount, depense: depense, revenus:revenus]
     }
 
     def create = {
@@ -46,25 +58,25 @@ class ScheduledController {
 
         // loading reference data
         def person = springSecurityService.getCurrentUser()
-        def accounts = genericService.loadUserObjects (person, Account.class)
+        def accounts = genericService.loadUserObjects(person, Account.class)
 
-        return [scheduledInstance: scheduledInstance, accounts:accounts]
+        return [scheduledInstance: scheduledInstance, accounts: accounts]
     }
 
     private def save(Scheduled scheduledInstance, CategoryType type, params) {
         def person = springSecurityService.getCurrentUser()
         scheduledInstance.owner = person
 
-        if (params["category.name"]){
-            scheduledInstance.category = categoryService.findOrCreateCategory (person, params["category.name"], type)
+        if (params["category.name"]) {
+            scheduledInstance.category = categoryService.findOrCreateCategory(person, params["category.name"], type)
         }
 
-        if (params["tiers.name"]){
-            scheduledInstance.tiers = tiersService.findOrCreateTiers (person, params["tiers.name"])
+        if (params["tiers.name"]) {
+            scheduledInstance.tiers = tiersService.findOrCreateTiers(person, params["tiers.name"])
         }
 
         if (scheduledInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), scheduledInstance.id])}"         
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), scheduledInstance.id])}"
             return true
         }
 
@@ -74,22 +86,22 @@ class ScheduledController {
     def savefacture = {
         def scheduledInstance = new Scheduled(params)
         scheduledInstance.type = OperationType.FACTURE
-        if (save(scheduledInstance, CategoryType.DEPENSE, params)){
+        if (save(scheduledInstance, CategoryType.DEPENSE, params)) {
             redirect(action: "list")
         } else {
-            def accounts = genericService.loadUserObjects (springSecurityService.getCurrentUser(), Account.class)
-            render(view: "create", model: [scheduledInstance: scheduledInstance, accounts:accounts, tabToDisplay:'facture'])
+            def accounts = genericService.loadUserObjects(springSecurityService.getCurrentUser(), Account.class)
+            render(view: "create", model: [scheduledInstance: scheduledInstance, accounts: accounts, tabToDisplay: 'facture'])
         }
     }
 
     def savedepot = {
         def scheduledInstance = new Scheduled(params)
         scheduledInstance.type = OperationType.DEPOT
-        if (save(scheduledInstance, CategoryType.REVENU, params)){
+        if (save(scheduledInstance, CategoryType.REVENU, params)) {
             redirect(action: "list")
         } else {
-            def accounts = genericService.loadUserObjects (springSecurityService.getCurrentUser(), Account.class)
-            render(view: "create", model: [scheduledInstance: scheduledInstance, accounts:accounts, tabToDisplay:'depot'])
+            def accounts = genericService.loadUserObjects(springSecurityService.getCurrentUser(), Account.class)
+            render(view: "create", model: [scheduledInstance: scheduledInstance, accounts: accounts, tabToDisplay: 'depot'])
         }
     }
 
@@ -97,11 +109,11 @@ class ScheduledController {
         def scheduledInstance = new Scheduled(params)
         scheduledInstance.type = OperationType.VIREMENT
         params["tiers.name"] = springSecurityService.getCurrentUser().userRealName
-        if (save(scheduledInstance, CategoryType.VIREMENT, params)){
+        if (save(scheduledInstance, CategoryType.VIREMENT, params)) {
             redirect(action: "list")
         } else {
-            def accounts = genericService.loadUserObjects (springSecurityService.getCurrentUser(), Account.class)
-            render(view: "create", model: [scheduledInstance: scheduledInstance, accounts:accounts, tabToDisplay:'virement'])
+            def accounts = genericService.loadUserObjects(springSecurityService.getCurrentUser(), Account.class)
+            render(view: "create", model: [scheduledInstance: scheduledInstance, accounts: accounts, tabToDisplay: 'virement'])
         }
     }
 
@@ -110,8 +122,7 @@ class ScheduledController {
         if (!scheduledInstance || !scheduledInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             [scheduledInstance: scheduledInstance]
         }
     }
@@ -121,8 +132,7 @@ class ScheduledController {
         if (!scheduledInstance || !scheduledInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             return [scheduledInstance: scheduledInstance]
         }
     }
@@ -134,21 +144,21 @@ class ScheduledController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (scheduledInstance.version > version) {
-                    
+
                     scheduledInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'scheduled.label', default: 'Scheduled')] as Object[], "Another user has updated this Scheduled while you were editing")
                     render(view: "edit", model: [scheduledInstance: scheduledInstance])
                     return
                 }
             }
-            
-            if (params["categoryname"] && !params["categoryname"].equals(scheduledInstance.category.name)){
-                def category = categoryService.findOrCreateCategory (person, params["categoryname"], scheduledInstance.category.type)
+
+            if (params["categoryname"] && !params["categoryname"].equals(scheduledInstance.category.name)) {
+                def category = categoryService.findOrCreateCategory(person, params["categoryname"], scheduledInstance.category.type)
                 scheduledInstance.category = category
                 params.remove("categoryname")
             }
 
-            if (params["tiersname"] && !params["tiersname"].equals(scheduledInstance.tiers.name)){
-                def tiers = tiersService.findOrCreateTiers (person, params["tiersname"])
+            if (params["tiersname"] && !params["tiersname"].equals(scheduledInstance.tiers.name)) {
+                def tiers = tiersService.findOrCreateTiers(person, params["tiersname"])
                 scheduledInstance.tiers = tiers
                 params.remove("tiersname")
             }
@@ -158,12 +168,10 @@ class ScheduledController {
             if (!scheduledInstance.hasErrors() && scheduledInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), scheduledInstance.name])}"
                 redirect(action: "list")
-            }
-            else {
+            } else {
                 render(view: "edit", model: [scheduledInstance: scheduledInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
             redirect(action: "list")
         }
@@ -181,8 +189,7 @@ class ScheduledController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
                 redirect(action: "list")
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
             redirect(action: "list")
         }
@@ -190,25 +197,25 @@ class ScheduledController {
 
     def apply = {
         def person = springSecurityService.getCurrentUser()
-        def scheduled = genericService.loadUserObject (person, Scheduled.class, params.id)
+        def scheduled = genericService.loadUserObject(person, Scheduled.class, params.id)
 
-        if (scheduled){
-        
-            scheduledService.buildOperationFromScheduled (scheduled)
+        if (scheduled) {
+
+            scheduledService.buildOperationFromScheduled(scheduled)
 
             // if the operation's date is less than the last snapshot
-            if (scheduled.dateApplication.before(scheduled.accountFrom.lastSnapshot.dateCreated)){
-                log.error ("We have to sync the snapshot")
-                snapshotService.sync (scheduled.accountFrom, scheduled.dateApplication)
+            if (scheduled.dateApplication.before(scheduled.accountFrom.lastSnapshot.dateCreated)) {
+                log.error("We have to sync the snapshot")
+                snapshotService.sync(scheduled.accountFrom, scheduled.dateApplication)
 
-                if (scheduled.accountTo){
-                    snapshotService.sync (scheduled.accountTo, scheduled.dateApplication)
+                if (scheduled.accountTo) {
+                    snapshotService.sync(scheduled.accountTo, scheduled.dateApplication)
                 }
             }
 
             scheduled.dateApplication = dateUtil.getDatePlusOneMonth(scheduled.dateApplication)
 
-            redirect (controller:"summary")
+            redirect(controller: "summary")
 
         } else {
             redirect(action: "list")
@@ -218,13 +225,13 @@ class ScheduledController {
     def jump = {
         // the (almost) same code as apply ... not really cool :(
         def person = springSecurityService.getCurrentUser()
-        def scheduled = genericService.loadUserObject (person, Scheduled.class, params.id)
+        def scheduled = genericService.loadUserObject(person, Scheduled.class, params.id)
 
-        if (scheduled){
-            
+        if (scheduled) {
+
             scheduled.dateApplication = dateUtil.getDatePlusOneMonth(scheduled.dateApplication)
 
-            redirect (controller:"summary")
+            redirect(controller: "summary")
 
         } else {
             redirect(action: "list")
@@ -233,14 +240,14 @@ class ScheduledController {
 
     def deactivate = {
         def person = springSecurityService.getCurrentUser()
-        def scheduled = genericService.loadUserObject (person, Scheduled.class, params.id)
+        def scheduled = genericService.loadUserObject(person, Scheduled.class, params.id)
 
-        if (scheduled){
+        if (scheduled) {
             scheduled.active = false
-            scheduled.save(flush:true)
+            scheduled.save(flush: true)
 
-            render (template:'activateactions', model:[scheduled:scheduled])
-        } else{
+            render(template: 'activateactions', model: [scheduled: scheduled])
+        } else {
             redirect(action: "list")
         }
 
@@ -248,14 +255,14 @@ class ScheduledController {
 
     def activate = {
         def person = springSecurityService.getCurrentUser()
-        def scheduled = genericService.loadUserObject (person, Scheduled.class, params.id)
+        def scheduled = genericService.loadUserObject(person, Scheduled.class, params.id)
 
-        if (scheduled){
+        if (scheduled) {
             scheduled.active = true
-            scheduled.save(flush:true)
+            scheduled.save(flush: true)
 
-            render (template:'activateactions', model:[scheduled:scheduled])
-        } else{
+            render(template: 'activateactions', model: [scheduled: scheduled])
+        } else {
             redirect(action: "list")
         }
     }
@@ -265,18 +272,18 @@ class ScheduledController {
 
         def scheduled = Scheduled.createCriteria().list(params) {
             ilike("name", "%${params.query}%")
-            owner {eq("id", person.id)}
+            owner { eq("id", person.id) }
         }
 
-        render(view: 'list', model: [scheduledInstanceList:  scheduled, scheduledInstanceTotal: scheduled.size(), query:params.query])
+        render(view: 'list', model: [scheduledInstanceList: scheduled, scheduledInstanceTotal: scheduled.size(), query: params.query])
 
     }
 
-    def simpleautocomplete(){
+    def simpleautocomplete() {
         def person = springSecurityService.getCurrentUser()
-        def scheduled = Scheduled.createCriteria ().list {
-            owner{eq("id", person.id)}
-            ilike ("name", "${params.query}%")
+        def scheduled = Scheduled.createCriteria().list {
+            owner { eq("id", person.id) }
+            ilike("name", "${params.query}%")
         }
 
         render scheduled*.name as JSON

@@ -28,6 +28,8 @@ grails.project.dependency.resolution = {
         grailsCentral()
         mavenLocal()
         mavenCentral()
+    
+        mavenRepo "http://repo.grails.org/grails/repo/"
 
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
@@ -48,15 +50,16 @@ grails.project.dependency.resolution = {
         build ":tomcat:$grailsVersion"
 
         compile ":ofchart:0.6.3"
-        compile ":quartz:1.0-RC8"
+        compile ":quartz:1.0.2"
         //        compile ":bayes:0.4"
         compile ":multi-select:0.2"
-        compile ":mail:1.0.1"
+        compile ":mail:1.0.7"
 
         compile ":jquery-ui:1.10.4"
         compile ":spring-security-core:1.2.7.3"
+        runtime ":webxml:1.4.1"
         compile ":twitter-bootstrap:3.3.2.1"
-        compile ":google-visualization:1.0.1"
+        compile ":google-visualization:1.0.2"
     }
 
 }

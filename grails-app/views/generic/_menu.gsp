@@ -12,98 +12,78 @@
  */
 -->
 <ul class="nav navbar-nav">
-    <li class="${controllerName == 'bank' ? "active" : ""} dropdown">
+
+    <li class="${controllerName == 'bank' || controllerName == 'account' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'bank.png')}"/> Etablissements <b class="caret"></b>
+            <img src="${resource(dir: 'img', file: 'bank.png')}"/> La banque <b class="caret"></b>
         </g:link>
         <ul class="dropdown-menu">
+            <li class="dropdown-header">Etablissements</li>
             <li>
                 <g:link controller="bank" class="list" action="list"><img src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des
                  établissements</g:link>
             </li>
             <li>
                 <g:link controller="bank" class="create" action="create"><img
-                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouvel établissement</g:link>
+                        src="${resource(dir: 'img', file: 'bank.png')}"/> Nouvel établissement</g:link>
             </li>
-        </ul>
-    </li>
-
-    <li class="${controllerName == 'account' ? "active" : ""} dropdown">
-        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'account.png')}"/> Comptes <b class="caret"></b>
-        </g:link>
-        <ul class="dropdown-menu">
+            <li class="divider"></li>
+            <li class="dropdown-header">Comptes bancaires</li>
             <li>
                 <g:link controller="account" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des comptes</g:link>
             </li>
             <li>
                 <g:link controller="account" class="create" action="create"><img
-                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau compte</g:link>
+                        src="${resource(dir: 'img', file: 'account.png')}"/> Nouveau compte</g:link>
             </li>
         </ul>
     </li>
 
-    <li class="${controllerName == 'scheduled' ? "active" : ""} dropdown">
+    <li class="${controllerName == 'scheduled' || controllerName == 'budget' || controllerName == 'wish' || controllerName == 'loan' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'echeancy.png')}"/> Echéances <b class="caret"></b>
+            <img src="${resource(dir: 'img', file: 'coins.png')}"/> Gestion de l'argent <b class="caret"></b>
         </g:link>
         <ul class="dropdown-menu">
+            <li class="dropdown-header">Echéances</li>
             <li>
                 <g:link controller="scheduled" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des échéances</g:link>
             </li>
             <li>
                 <g:link controller="scheduled" class="create" action="create"><img
-                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouvelle échéance</g:link>
+                        src="${resource(dir: 'img', file: 'echeancy.png')}"/> Nouvelle échéance</g:link>
             </li>
-        </ul>
-    </li>
 
-    <li class="${controllerName == 'budget' ? "active" : ""} dropdown">
-        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'coins.png')}"/> Budgets <b class="caret"></b>
-        </g:link>
-        <ul class="dropdown-menu">
+            <li class="divider"></li>
+            <li class="dropdown-header">Budgets</li>
             <li>
                 <g:link controller="budget" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des budgets</g:link>
             </li>
             <li>
                 <g:link controller="budget" class="create" action="create"><img
-                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau budget</g:link>
+                        src="${resource(dir: 'img', file: 'coins.png')}"/> Nouveau budget</g:link>
             </li>
-        </ul>
-    </li>
-
-    <li class="${controllerName == 'wish' ? "active" : ""} dropdown">
-        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'gift.png')}"/> Futurs achats <b class="caret"></b>
-        </g:link>
-        <ul class="dropdown-menu">
+            <li class="divider"></li>
+            <li class="dropdown-header">Futurs achats</li>
             <li>
                 <g:link controller="wish" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des futurs achats</g:link>
             </li>
             <li>
                 <g:link controller="wish" class="create" action="create"><img
-                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau souhait d'achat</g:link>
+                        src="${resource(dir: 'img', file: 'gift.png')}"/> Nouveau souhait d'achat</g:link>
             </li>
-        </ul>
-    </li>
-
-    <li class="${controllerName == 'loan' ? "active" : ""} dropdown">
-        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'loan.png')}"/> Prêts <b class="caret"></b>
-        </g:link>
-        <ul class="dropdown-menu">
+            <li class="divider"></li>
+            <li class="dropdown-header">Prêts</li>
             <li>
                 <g:link controller="loan" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des prêts</g:link>
             </li>
             <li>
                 <g:link controller="loan" class="create" action="create"><img
-                        src="${resource(dir: 'images/skin', file: 'database_add.png')}"/> Nouveau prêt</g:link>
+                        src="${resource(dir: 'img', file: 'loan.png')}"/> Nouveau prêt</g:link>
             </li>
         </ul>
     </li>

@@ -28,20 +28,64 @@
                 src="${resource(dir: 'img', file: 'echeancy.png')}"
                 alt=">"/> Créer une nouvelle échéance</g:link></h1>
 
-    <div class="alert alert-info">
-        Les échéances sont des opérations récurrentes qui sont exécutées une seule fois par mois. Il peut s'agir par exemple du dépôt de salaire
-        ou encore du paiement d'un crédit.<br/><br/>
-        Une échéance peut être automatique ou manuelle.
-        <ul>
-            <li>En mode automatique, l'échéance est appliquée toute seule à la date indiquée: vous n'avez rien à faire.</li>
-            <li>En mode manuel, l'échéance est affichée sur la page d'accueil : un bouton permet de l'activer, un autre de l'ignorer pour le mois
-            en cours.</li>
-        </ul>
-        Une échéance peut également être active ou inactive: une échéance inactive est considérée comme supprimée et est simplement ignorée par le
-        système.
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="alert alert-info">
+                Les échéances sont des opérations récurrentes qui sont exécutées une seule fois par mois. Il peut s'agir par exemple du dépôt de salaire
+                ou encore du paiement d'un crédit.<br/><br/>
+                Une échéance peut être automatique ou manuelle.
+                <ul>
+                    <li>En mode automatique, l'échéance est appliquée toute seule à la date indiquée: vous n'avez rien à faire.</li>
+                    <li>En mode manuel, l'échéance est affichée sur la page d'accueil : un bouton permet de l'activer, un autre de l'ignorer pour le mois
+                    en cours.</li>
+                </ul>
+                Une échéance peut également être active ou inactive: une échéance inactive est considérée comme supprimée et est simplement ignorée par le
+                système.
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="around-border">
+                <div class="row">
+
+                    <div class="counter-shower col-xs-12 col-sm-6">
+
+                        <div class="number">
+                            <span class="label label-${depense > revenus ? 'danger' : 'default'}">
+                                <g:formatNumber number="${depense}"
+                                                format="0.##"/> €
+                            </span>
+                        </div>
+
+                        <div class="lbl">
+                            Dépenses prévues
+                        </div>
+
+                    </div>
+
+                    <div class="counter-shower col-xs-12 col-sm-6">
+
+                        <div class="number">
+                            <span class="label label-default">
+                                <g:formatNumber number="${revenus}"
+                                                format="0.##"/> €
+                            </span>
+                        </div>
+
+                        <div class="lbl">
+                            Revenus prévus
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
+
     <hr/>
 </div>
+
 
 <div class="col-sm-12">
     <div class="around-border">
@@ -53,6 +97,8 @@
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
+
+
 
         <div class="table-responsive">
             <table class="table table-striped table-hover">

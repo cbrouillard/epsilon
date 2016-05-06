@@ -86,8 +86,8 @@
         </g:else>
     </div>
 
+    <g:if test="${budgets}">
     <hr/>
-
     <div class="around-border">
         <div class="alert alert-info">Les budgets</div>
         <g:if test="${budgets}">
@@ -142,6 +142,7 @@
 
         </g:if>
     </div>
+    </g:if>
     <br/>
 </div>
 
@@ -197,7 +198,7 @@
                     </span>
                 </div>
                 <div class="lbl">
-                    Dépenses du mois
+                    Dépenses réelles du mois
                 </div>
 
             </div>
