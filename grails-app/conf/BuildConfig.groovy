@@ -46,7 +46,7 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:3.6.10.4"
         runtime ":jquery:1.11.1"
         runtime ":resources:1.2.RC2"
-	    runtime "org.grails.plugins:cors:1.1.8"
+	runtime "org.grails.plugins:cors:1.1.8"
         build ":tomcat:7.0.47"
 
         compile "org.grails.plugins:ofchart:0.6.3"
