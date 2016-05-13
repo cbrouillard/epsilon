@@ -35,7 +35,10 @@ class ScheduledController {
         params.max = Math.min(params.max ? params.int('max') : 20, 100)
 
         def person = springSecurityService.getCurrentUser()
-        def scheduleds = genericService.loadUserObjects(person, Scheduled.class, params)
+        def scheduleds = Scheduled.createCriteria().list (params) {
+            eq 'deleted', false
+            owner {eq ("id", person.id)}
+        }
 
         def depense = 0
         def revenus = 0
@@ -181,7 +184,9 @@ class ScheduledController {
         def scheduledInstance = Scheduled.get(params.id)
         if (scheduledInstance && scheduledInstance.owner.equals(springSecurityService.getCurrentUser())) {
             try {
-                scheduledInstance.delete(flush: true)
+                scheduledInstance.deleted = true
+                scheduledInstance.active = false
+                scheduledInstance.save(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
                 redirect(action: "list")
             }

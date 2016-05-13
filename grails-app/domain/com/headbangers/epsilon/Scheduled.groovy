@@ -35,6 +35,8 @@ class Scheduled{
 
     Person owner
 
+    boolean deleted = false
+
     static constraints = {
         name nullable:false, blank:false
         type nullable:false, blank:false
@@ -50,6 +52,7 @@ class Scheduled{
         note nullable:true, widget:'textarea'
 
         lastUpdated nullable:true
+        deleted nullable:true, default: false
     }
 
     static mapping = {
