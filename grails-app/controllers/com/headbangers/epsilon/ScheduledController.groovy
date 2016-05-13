@@ -42,7 +42,7 @@ class ScheduledController {
 
         def depense = 0
         def revenus = 0
-        scheduleds.each { scheduled ->
+        Scheduled.findAllByOwner(person).each { scheduled ->
             if (scheduled.active) {
                 if (scheduled.type == OperationType.DEPOT) {
                     revenus += scheduled.amount
