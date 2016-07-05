@@ -25,11 +25,17 @@ class Budget {
 
     boolean active = true
 
+    Date startDate
+    Date endDate
+
     static constraints = {
         name nullable: false, blank: false
         amount nullable: false
 
         note nullable: true, widget: 'textarea'
+
+        startDate nullable:true
+        endDate nullable:true
 
         lastUpdated nullable: true
     }
@@ -40,21 +46,54 @@ class Budget {
     }
 
     def getOperations() {
+        Date firstDay
+        Date lastDay
+
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
 
-        Date firstDay = calendar.getTime()
+        if (this.startDate || this.endDate){
 
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
+            if (this.startDate) {
+                calendar.setTime(this.startDate)
+            } else {
+                calendar.set(Calendar.DAY_OF_MONTH, 1);
+            }
 
-        Date lastDay = calendar.getTime()
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            firstDay = calendar.getTime()
+
+            if (this.endDate){
+                calendar.setTime(this.endDate)
+            } else {
+                calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            }
+
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 59);
+
+            lastDay = calendar.getTime()
+
+        } else {
+
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            firstDay = calendar.getTime()
+
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 59);
+
+            lastDay = calendar.getTime()
+        }
 
         // renvoie, pour le mois en cours, la somme des dépenses effectuées
         // pour ce budget

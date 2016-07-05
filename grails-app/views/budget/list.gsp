@@ -55,6 +55,7 @@
             <tr>
                 <g:sortableColumn property="name" title="${message(code: 'budget.name.label', default: 'Name')}"/>
                 <th class="text-right">Montant utilisé</th>
+                <th>Dates</th>
                 <g:sortableColumn property="amount" title="${message(code: 'budget.amount.label', default: 'Amount')}" class="text-right"/>
                 <th><g:message code="budget.categories.label" default="Categories"/></th>
                 <g:sortableColumn property="note" title="${message(code: 'budget.note.label', default: 'Note')}"/>
@@ -90,6 +91,21 @@
                         <td class="budget tdright">
                     </g:else>
                     <g:formatNumber number="${currentSold}" format="0.##" /> €</span></td>
+                    <td>
+                        <g:if test="${budgetInstance.startDate || budgetInstance.endDate}">
+                            <g:if test="${budgetInstance.startDate}">
+                                du <g:formatDate date="${budgetInstance.startDate}"/> au
+                            </g:if><g:else>
+                                du premier jour du mois au
+                            </g:else>
+                            <g:if test="${budgetInstance.endDate}">
+                                <g:formatDate date="${budgetInstance.endDate}"/>
+                            </g:if>
+                            <g:else>
+                                dernier jour du mois
+                            </g:else>
+                        </g:if><g:else>chaque mois</g:else>
+                    </td>
 
                     <td class="tdright"><b>${fieldValue(bean: budgetInstance, field: "amount")} €</b></td>
                     <td>

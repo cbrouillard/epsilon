@@ -22,7 +22,21 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Opérations sur un budget <small>${budget.name}</small></h1>
+    <h1>Opérations sur un budget <small>${budget.name}
+    <g:if test="${budget.startDate || budget.endDate}">
+        <g:if test="${budget.startDate}">
+            du <g:formatDate date="${budget.startDate}"/> au
+        </g:if><g:else>
+        du premier jour du mois au
+    </g:else>
+        <g:if test="${budget.endDate}">
+            <g:formatDate date="${budget.endDate}"/>
+        </g:if>
+        <g:else>
+            dernier jour du mois
+        </g:else>
+    </g:if>
+    </small></h1>
     <hr/>
 </div>
 

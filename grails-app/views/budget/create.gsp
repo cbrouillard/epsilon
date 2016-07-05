@@ -81,6 +81,46 @@
                         </div>
                     </div>
 
+                    <div class="form-group ${hasErrors(bean: budgetInstance, field: 'startDate', 'errors')} ${hasErrors(bean: budgetInstance, field: 'endDate', 'errors')}">
+
+                        <label for="startDate" class="col-sm-2 control-label mandatory"><g:message
+                                code="budget.dates.label"/></label>
+
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-calendar"></span></span>
+                                <input type="text"
+                                       value="${formatDate(format: 'dd/MM/yyyy', date: budgetInstance?.startDate)}"
+                                       name="startDate"
+                                       id="startDate" class="datePicker form-control"/>
+
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-calendar"></span></span>
+                                <input type="text"
+                                       value="${formatDate(format: 'dd/MM/yyyy', date: budgetInstance?.endDate)}"
+                                       name="endDate"
+                                       id="endDate" class="datePicker form-control"/>
+
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="help-block col-sm-10 col-sm-offset-2">
+                            Les dates ne sont pas obligatoires : renseignées, elles serviront à borner une période pour le budget. Non renseignées, le budget s'appliquera pour le mois en cours et se reinitialisera tout seul, mois après mois.
+                        </div>
+
+                    </div>
+
+
                     <div class="form-group ${hasErrors(bean: budgetInstance, field: 'attachedCategories', 'has-error')}">
 
                         <label for="selectedCategories-select" class="col-sm-2 control-label"><g:message
