@@ -118,6 +118,21 @@ class OperationController {
             }
         }
 
+        if (!programmedScheduleds) {
+            Date todayPlusOneMonth = dateUtil.getDatePlusOneMonth(new Date())
+            lastDayOfMonth = dateUtil.getLastDayOfTheMonth(todayPlusOneMonth)
+            programmedScheduleds = Scheduled.createCriteria().list {
+                createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+                createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
+                lte("dateApplication", lastDayOfMonth)
+                gt("dateApplication", new Date())
+                or {
+                    eq("accountTo.id", selectedAccount.id)
+                    eq("accountFrom.id", selectedAccount.id)
+                }
+            }
+        }
+
         [accounts    : accounts, selected: selectedAccount, byMonth: month,
          currentMonth: currentMonth, parameterBayesianFilter: parameterService.getBayesianFilterParameter(person), graphData: graphData,
          depense     : depense, revenu: revenu, futures: programmedScheduleds]

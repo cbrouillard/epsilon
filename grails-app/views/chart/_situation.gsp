@@ -7,13 +7,15 @@
     def accountAmount = account?.lastSnapshot?.amount ?: account.amount;
 
     def cal = Calendar.getInstance()
-    if (allOperations) {
-        cal.setTime(allOperations.get(0).dateApplication)
-    }
+
+
     def sdf = new SimpleDateFormat("MMMM")
     def actualDay = cal.get(Calendar.DAY_OF_MONTH);
     def prevDay = actualDay;
     def bufferAmount = accountAmount;
+
+    // TODAY
+    depenseCourbe.add(["$actualDay ${sdf.format(cal.getTime())}", bufferAmount])
 
     def operationsSortedByDaysIncludingFutures = allOperations + futures;
     operationsSortedByDaysIncludingFutures = operationsSortedByDaysIncludingFutures.sort {
@@ -21,13 +23,6 @@
     }
 
     operationsSortedByDaysIncludingFutures.each { operation ->
-
-        cal.setTime(operation.dateApplication)
-        actualDay = cal.get(Calendar.DAY_OF_MONTH)
-        if (actualDay != prevDay) {
-            depenseCourbe.add(["$prevDay ${sdf.format(cal.getTime())}", bufferAmount])
-            prevDay = actualDay;
-        }
 
         if (operation.type.equals(OperationType.DEPOT) || operation.type.equals(OperationType.VIREMENT_PLUS)) {
             bufferAmount += operation.amount
@@ -38,11 +33,20 @@
                 bufferAmount -= operation.amount
             }
         }
+
+        cal.setTime(operation.dateApplication)
+        actualDay = cal.get(Calendar.DAY_OF_MONTH)
+        if (actualDay != prevDay) {
+            depenseCourbe.add(["$actualDay ${sdf.format(cal.getTime())}", bufferAmount])
+            prevDay = actualDay;
+        }
+
     }
-    depenseCourbe.add(["$prevDay ${sdf.format(cal.getTime())}", bufferAmount])
+
+    //series="${[0:[color:'red', pointSize:10], 1:[color:'black', pointSize:0]]}"
 %>
 <gvisualization:areaCoreChart elementId="lineChart${idChart}"
                               columns="${columns}" data="${depenseCourbe}"
                               legend="[position: 'bottom']"
-                              width="100%" colors="['92e07f']"/>
+                              width="100%" colors="['92e07f']" />
 <div id="lineChart${idChart}"></div>
