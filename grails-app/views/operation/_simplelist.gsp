@@ -26,7 +26,7 @@
         <g:each in="${operations}" status="i" var="operation">
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td><g:formatDate date="${operation.dateApplication}"/></td>
-                <td>${operation.category.name}</td>
+                <td>${operation.category.name} - ${operation.tiers.name}</td>
                 <td class="tdright">
                     <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.RETRAIT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
                         <b><g:formatNumber number="${operation?.amount}" format="0.##"/> €</b>
