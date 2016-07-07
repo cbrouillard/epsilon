@@ -49,7 +49,6 @@ grails.project.dependency.resolution = {
 	runtime "org.grails.plugins:cors:1.1.8"
         build ":tomcat:7.0.47"
 
-        compile "org.grails.plugins:ofchart:0.6.3"
         compile ":quartz:1.0.2"
         //        compile ":bayes:0.4"
         compile ":multi-select:0.2"

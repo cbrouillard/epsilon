@@ -22,7 +22,6 @@ class TiersController {
     def springSecurityService
     def genericService
     def tiersService
-    def chartService
     def dateUtil
 
     def index = {
@@ -152,24 +151,6 @@ class TiersController {
         } else {
             redirect(action: "list")
         }
-    }
-
-    def operationsChart = {
-
-        // getting category
-        def person = springSecurityService.getCurrentUser()
-        def tiers = genericService.loadUserObject(person, Tiers.class, params.id)
-
-        def fromDate = dateUtil.firstDayOfYear ( params.fromYear as Integer )
-        def toDate = dateUtil.lastDayOfYear( (params.toYear?:dateUtil.currentYear) as Integer)
-
-        def operations = Operation.createCriteria().list(params){
-            between("dateApplication", fromDate, toDate)
-            eq("tiers", tiers)
-        }
-
-        // pour une catégorie, déterminer la somme des opérations sur chaque mois
-        render chartService.createByMonthOperationsChart(tiers.name, 500, tiers.color ?: "#428547", operations)
     }
 
     def search = {

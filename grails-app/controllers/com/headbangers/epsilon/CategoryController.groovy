@@ -24,8 +24,6 @@ class CategoryController {
     def springSecurityService
     def genericService
     DateUtil dateUtil
-    def categoryService
-    def chartService
 
     def index = {
         redirect(action: "list", params: params)
@@ -174,25 +172,6 @@ class CategoryController {
             redirect(action: "list")
         }
     }
-
-    def operationsChart = {
-
-        // getting category
-        def person = springSecurityService.getCurrentUser()
-        def cat = genericService.loadUserObject(person, Category.class, params.id)
-
-        def fromDate = dateUtil.firstDayOfYear ( params.fromYear as Integer )
-        def toDate = dateUtil.lastDayOfYear( (params.toYear?:dateUtil.currentYear) as Integer)
-
-        def operations = Operation.createCriteria().list(params){
-            between("dateApplication", fromDate, toDate)
-            eq("category", cat)
-        }
-
-        // pour une catégorie, déterminer la somme des opérations sur chaque mois
-        render chartService.createByMonthOperationsChart(cat.name, 500, cat.color, operations)
-    }
-
 
     def search = {
         def person = springSecurityService.getCurrentUser()

@@ -47,10 +47,7 @@
 
         <div class="alert alert-info">Statistiques</div>
 
-
-        <g:render template="/generic/chart"
-                  model="[name      : 'OpChart', controller: 'category', action: 'operationsChart',
-                          parameters: ['id': category.id, 'fromYear': fromYear, 'toYear': toYear]]"/>
+        <g:render template="/chart/operationsByMonth" model="[operations:operations, category:category]"/>
 
     </div>
 </div>
