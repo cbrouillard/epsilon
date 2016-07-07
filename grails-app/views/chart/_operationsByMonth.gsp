@@ -4,6 +4,10 @@
     def columns = [['string', 'Month'], ['number', 'Montant']];
     def data = new ArrayList();
 
+    if (operations) {
+        def operations = operations.sort { it.dateApplication }
+    }
+
     Calendar cal = Calendar.getInstance()
     Date previousDate = new Date()
     def sdf = new SimpleDateFormat("MMMM YYYY")

@@ -67,6 +67,18 @@ class Account {
         return null;
     }
 
+    def getSnapshot (int byMonth){
+        // reste dans la meme année ex: 0, mois actuel 5
+        Calendar cal = Calendar.getInstance()
+        def currentMonth = cal.get(Calendar.MONTH)
+
+        if (this.snapshots && this.snapshots.size() > 0) {
+            return this.snapshots.getAt(Math.abs(currentMonth - byMonth))
+        }
+
+        return null;
+    }
+
     def getNameAndSold() {
         return "${name} = ${getFormattedSold()}€"
     }
@@ -124,7 +136,6 @@ class Account {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-
         Date firstDay = calendar.getTime()
 
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));

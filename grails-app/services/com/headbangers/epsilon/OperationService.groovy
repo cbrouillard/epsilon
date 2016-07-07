@@ -58,8 +58,8 @@ class OperationService {
         return amount
     }
 
-    def calculateDepenseForThisMonthByAccount(person, account) {
-        def operations = findAllOperationsForMonth(account, new Date())
+    def calculateDepenseForThisMonthByAccount(person, account, date) {
+        def operations = findAllOperationsForMonth(account, date)
         def amount = 0D
         operations.each { operation ->
             if (operation.type.equals(OperationType.FACTURE) || operation.type.equals(OperationType.RETRAIT) || operation.type.equals(OperationType.VIREMENT_MOINS)) {
@@ -70,8 +70,8 @@ class OperationService {
         return amount
     }
 
-    def calculateRevenuForThisMonthByAccount(person, account) {
-        def operations = findAllOperationsForMonth(account, new Date())
+    def calculateRevenuForThisMonthByAccount(person, account, date) {
+        def operations = findAllOperationsForMonth(account, date)
         def amount = 0D
         operations.each { operation ->
             if (operation.type.equals(OperationType.DEPOT) || operation.type.equals(OperationType.VIREMENT_PLUS)) {

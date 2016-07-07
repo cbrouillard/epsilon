@@ -38,14 +38,16 @@
         </thead>
         <tbody>
 
-        <g:if test="${byMonth}">
-            <g:set var="operations" value="${selected?.lastOperationsByMonth(byMonth ? byMonth : 0)}"/>
+        <g:if test="${byMonth != null}">
+            <g:set var="operations" value="${selected?.lastOperationsByMonth(byMonth != null ? byMonth : 0)}"/>
+            <g:set var="accountAmount" value="${selected?.getSnapshot(byMonth)?.amount ?: selected.amount}"/>
         </g:if>
         <g:else>
             <g:set var="operations" value="${selected?.lastOperationsByMonth(currentMonth ? currentMonth : 0)}"/>
+            <g:set var="accountAmount" value="${selected?.lastSnapshot?.amount ?: selected.amount}"/>
         </g:else>
 
-        <g:set var="accountAmount" value="${selected?.lastSnapshot?.amount ?: selected.amount}"/>
+
         <g:each in="${operations}" status="i" var="operationInstance">
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td>${i + 1}</td>
@@ -89,7 +91,12 @@
         <tr>
             <td colspan="6">&nbsp;</td>
             <td class="tdright important">
+                <g:if test="${operations}">
                 = <g:formatNumber number="${finalAmount}" format="0.##"/> €
+                </g:if>
+                <g:else>
+                    = <g:formatNumber number="${accountAmount}" format="0.##"/> €
+                </g:else>
             </td>
             <td>&nbsp;</td>
         </tr>

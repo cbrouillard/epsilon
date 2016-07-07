@@ -93,7 +93,7 @@ class OperationController {
         }
 
         def currentMonth = dateUtil.getMonth(null)
-        def month = params["byMonth"] ? params.int('byMonth') : currentMonth
+        def month = params["byMonth"] != null ? params.int('byMonth') : currentMonth
 
         def graphData = Operation.executeQuery(
                 'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.account a where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ?) and a.id = ? group by c.name',
@@ -103,8 +103,10 @@ class OperationController {
                 'select c.name, - sum(o.amount) from Operation o inner join o.category c inner join o.account a where o.dateApplication >= ? and o.dateApplication <= ? and (o.type = ? or o.type = ? or o.type = ?) and a.id = ? group by c.name',
                 [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.FACTURE, OperationType.RETRAIT, OperationType.VIREMENT_MOINS, selectedAccount.id]).asList()
 
-        def depense = operationService.calculateDepenseForThisMonthByAccount(person, selectedAccount)
-        def revenu = operationService.calculateRevenuForThisMonthByAccount(person, selectedAccount)
+        Calendar cal = Calendar.getInstance()
+        cal.set(Calendar.MONTH, month)
+        def depense = operationService.calculateDepenseForThisMonthByAccount(person, selectedAccount, cal.getTime())
+        def revenu = operationService.calculateRevenuForThisMonthByAccount(person, selectedAccount, cal.getTime())
 
         def lastDayOfMonth = dateUtil.getLastDayOfTheMonth(new Date())
         def programmedScheduleds = Scheduled.createCriteria().list {

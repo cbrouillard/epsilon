@@ -4,20 +4,31 @@
     def depenseCourbe = new ArrayList();
 
     def allOperations = account?.lastOperationsByMonth(byMonth ? byMonth : 0);
-    def accountAmount = account?.lastSnapshot?.amount ?: account.amount;
+    def accountAmount = 0
+    if (byMonth != null){
+        accountAmount = account?.getSnapshot(byMonth)?.amount ?: account.amount;
+    }else {
+        accountAmount = account?.lastSnapshot?.amount ?: account.amount;
+    }
 
     def sdf = new SimpleDateFormat("MMMM")
     def cal = Calendar.getInstance()
+    if (byMonth != null){
+        cal.set(Calendar.MONTH, byMonth)
+    }
     def currentMonth = cal.get(Calendar.MONTH)
 
-    def operationsSortedByDaysIncludingFutures = allOperations + futures;
+    def operationsSortedByDaysIncludingFutures = allOperations;
+    if (byMonth == null || byMonth == currentMonth){
+        operationsSortedByDaysIncludingFutures += futures
+    }
     operationsSortedByDaysIncludingFutures = operationsSortedByDaysIncludingFutures.sort {
         it.dateApplication
     }
 
     def actualDay = 1;
     def prevDay = actualDay;
-    Date previousDate = new Date()
+    Date previousDate = cal.getTime()
     def bufferAmount = accountAmount;
 
     operationsSortedByDaysIncludingFutures.each { operation ->
@@ -42,9 +53,14 @@
         previousDate = operation.dateApplication
     }
 
-    depenseCourbe.add(["$prevDay ${sdf.format(cal.getTime())}", bufferAmount])
+    depenseCourbe.add(["$prevDay ${sdf.format(previousDate)}", bufferAmount])
     if (!operationsSortedByDaysIncludingFutures) {
-        cal.setTime(new Date())
+        if (byMonth != null){
+            cal.set(Calendar.MONTH, byMonth +1)
+            cal.set(Calendar.DAY_OF_MONTH, 0)
+        } else {
+            cal.setTime(new Date())
+        }
         depenseCourbe.add(["${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", bufferAmount])
     }
     //series="${[0:[color:'red', pointSize:10], 1:[color:'black', pointSize:0]]}"
