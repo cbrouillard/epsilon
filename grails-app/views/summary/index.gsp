@@ -90,60 +90,97 @@
     <hr/>
     <div class="around-border">
         <div class="alert alert-info">Les budgets</div>
-        <g:if test="${budgets}">
-            <div class="budgets list">
-                <table class="table table-striped">
-                    <tbody>
-                    <g:set var="budgetAmount" value="${0D}"/>
-                    <g:set var="budgetUsedAmount" value="${0D}"/>
-                    <g:each in="${budgets}" var="budget" status="b">
-                        <tr>
-                            <td class="principal">${budget.name}</td>
+        <div class="budgets list">
+            <table class="table table-striped">
+                <tbody>
+                <g:set var="budgetAmount" value="${0D}"/>
+                <g:set var="budgetUsedAmount" value="${0D}"/>
+                <g:each in="${budgets}" var="budget" status="b">
+                    <tr>
+                        <td class="principal">${budget.name}</td>
 
-                            <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
+                        <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
 
-                            <g:if test="${currentSold < budget.amount}">
-                                <td class="tdright">
-                                <span class="label label-success">
-                            </g:if>
-                            <g:elseif
-                                    test="${currentSold >= budget.amount - 1 && currentSold <= budget.amount + 1}">
-                                <td class="tdright">
-                                <span class="label label-warning">
-                            </g:elseif>
-                            <g:elseif test="${currentSold > budget.amount}">
-                                <td class="tdright">
-                                <span class="label label-danger">
-                            </g:elseif>
-                            <g:else>
-                                <td class="tdright budget"><span>
-                            </g:else>
-                            <g:formatNumber number="${currentSold}" format="0.##" /> / <g:formatNumber number="${budget.amount}" format="0.##" /> €</span></td>
-                            <td class="tdright fixedsize">
-                                <g:link title="Afficher le registre" controller="budget" action="operations"
-                                        params="[budget: budget.id]"><img
-                                        src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
-                            </td>
-                            <g:set var="budgetAmount" value="${budgetAmount + budget.amount}"/>
-                            <g:set var="budgetUsedAmount" value="${budgetUsedAmount + currentSold}"/>
-                        </tr>
-                    </g:each>
-                    <tr class="important">
-                        <td class="principal">&nbsp;</td>
-                        <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}"
-                                                              format="0.##"/> / <g:formatNumber
-                                number="${budgetAmount}"
-                                format="0.##"/> €</td>
-                        <td class="tdright fixedsize">&nbsp;</td>
+                        <g:if test="${currentSold < budget.amount}">
+                            <td class="tdright">
+                            <span class="label label-success">
+                        </g:if>
+                        <g:elseif
+                                test="${currentSold >= budget.amount - 1 && currentSold <= budget.amount + 1}">
+                            <td class="tdright">
+                            <span class="label label-warning">
+                        </g:elseif>
+                        <g:elseif test="${currentSold > budget.amount}">
+                            <td class="tdright">
+                            <span class="label label-danger">
+                        </g:elseif>
+                        <g:else>
+                            <td class="tdright budget"><span>
+                        </g:else>
+                        <g:formatNumber number="${currentSold}" format="0.##" /> / <g:formatNumber number="${budget.amount}" format="0.##" /> €</span></td>
+                        <td class="tdright fixedsize">
+                            <g:link title="Afficher le registre" controller="budget" action="operations"
+                                    params="[budget: budget.id]"><img
+                                    src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                        </td>
+                        <g:set var="budgetAmount" value="${budgetAmount + budget.amount}"/>
+                        <g:set var="budgetUsedAmount" value="${budgetUsedAmount + currentSold}"/>
                     </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </g:if>
+                </g:each>
+                <tr class="important">
+                    <td class="principal">&nbsp;</td>
+                    <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}"
+                                                          format="0.##"/> / <g:formatNumber
+                            number="${budgetAmount}"
+                            format="0.##"/> €</td>
+                    <td class="tdright fixedsize">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     </g:if>
     <br/>
+
+    <g:if test="${pinnedCat}">
+    <hr/>
+    <div class="around-border">
+        <div class="alert alert-info">Catégories surveillées</div>
+        <div class="budgets list">
+            <table class="table table-striped">
+                <tbody>
+                <g:set var="pinnedAmount" value="${0D}"/>
+                <g:each in="${pinnedCat}" var="cat" status="c">
+
+                    <g:set var="currentSold" value="${cat.currentMonthOperationsSum}"/>
+
+                    <tr>
+                        <td class="principal">${cat.name}</td>
+                        <td class="tdright">
+                            <span class="label label-default">
+                                <g:formatNumber number="${currentSold}" format="0.##"/> €
+                            </span>
+                        </td>
+                        <td class="tdright fixedsize">
+                            <g:link title="Afficher le registre" controller="category" action="operations"
+                                    params="[id: cat.id]"><img
+                                    src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                        </td>
+                    </tr>
+                    <g:set var="pinnedAmount" value="${pinnedAmount + currentSold}"/>
+                </g:each>
+                <tr class="important">
+                    <td class="principal">&nbsp;</td>
+                    <td class="tdright">= <g:formatNumber number="${pinnedAmount}"
+                                                          format="0.##"/> €</td>
+                    <td class="tdright fixedsize">&nbsp;</td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+        </div>
+    </g:if>
+
 </div>
 
 <div class="col-lg-4 col-md-6 col-sm-12">

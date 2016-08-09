@@ -64,6 +64,7 @@
 
                     <th class="text-right">Solde</th>
 
+                    <th class="text-center">Surveillance</th>
                     <th class="text-right">Actions</th>
                 </tr>
                 </thead>
@@ -81,6 +82,11 @@
 
                         <td><g:formatDate date="${categoryInstance.lastUpdated}"/></td>
                         <td class="tdright"><b><g:formatNumber number="${categoryInstance?.sold}" format="0.##"/> €</b>
+                        </td>
+                        <td class="text-center">
+                            <div id="category${categoryInstance.id}-pinned">
+                                <g:render template="pinnedactions" model="[category: categoryInstance]"/>
+                            </div>
                         </td>
                         <td class="text-right">
                             <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"

@@ -36,7 +36,7 @@
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
 
-        <g:render template="/operation/simplelist" model="[operations: operations]"/>
+        <g:render template="/operation/simplelist" model="[operations: operations, highlightMonth: currentMonth]"/>
 
     </div>
 </div>

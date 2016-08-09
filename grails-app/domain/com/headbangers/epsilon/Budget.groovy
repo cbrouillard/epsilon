@@ -34,8 +34,8 @@ class Budget {
 
         note nullable: true, widget: 'textarea'
 
-        startDate nullable:true
-        endDate nullable:true
+        startDate nullable: true
+        endDate nullable: true
 
         lastUpdated nullable: true
     }
@@ -51,7 +51,7 @@ class Budget {
 
         Calendar calendar = Calendar.getInstance();
 
-        if (this.startDate || this.endDate){
+        if (this.startDate || this.endDate) {
 
             if (this.startDate) {
                 calendar.setTime(this.startDate)
@@ -65,7 +65,7 @@ class Budget {
             calendar.set(Calendar.MILLISECOND, 0);
             firstDay = calendar.getTime()
 
-            if (this.endDate){
+            if (this.endDate) {
                 calendar.setTime(this.endDate)
             } else {
                 calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -101,7 +101,7 @@ class Budget {
         // présentes dans attachedCategories pour le mois actuel !
 
         def operations = Operation.createCriteria().list() {
-            owner {eq("id", this.owner.id)}
+            owner { eq("id", this.owner.id) }
             between("dateApplication", firstDay, lastDay)
             if (this.attachedCategories) {
                 'in'("category", this.attachedCategories)
@@ -116,9 +116,10 @@ class Budget {
         def operations = getOperations()
 
         Double sum = 0
-
-        operations.each {oneOp ->
-            sum += oneOp.amount
+        if (operations) {
+            operations.each { oneOp ->
+                sum += oneOp.amount
+            }
         }
 
         return sum

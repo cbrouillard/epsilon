@@ -149,7 +149,7 @@ class CategoryController {
     def operations = {
         // loading category
         def category = genericService.loadUserObject(springSecurityService.getCurrentUser(), Category.class, params.id)
-
+        def currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
         if (category) {
 
             def currentYear = dateUtil.currentYear
@@ -167,7 +167,7 @@ class CategoryController {
                 eq("category", category)
             }
 
-            [category: category, yearRange: yearRange, fromYear:selectedFrom, toYear:selectedTo, operations:operations]
+            [category: category, yearRange: yearRange, fromYear:selectedFrom, toYear:selectedTo, operations:operations, currentMonth:currentMonth]
         } else {
             redirect(action: "list")
         }
@@ -183,6 +183,35 @@ class CategoryController {
 
         render(view: 'list', model: [categoryInstanceList: categories, categoryInstanceTotal: categories.size(), query:params.query])
 
+    }
+
+    def pinne = {
+        def person = springSecurityService.getCurrentUser()
+        def cat = genericService.loadUserObject (person, Category.class, params.id)
+
+        if (cat){
+            cat.pinned = true
+            cat.save(flush:true)
+
+            render (template:'pinnedactions', model:[category: cat])
+        } else{
+            redirect(action: "list")
+        }
+
+    }
+
+    def unpinne = {
+        def person = springSecurityService.getCurrentUser()
+        def cat = genericService.loadUserObject (person, Category.class, params.id)
+
+        if (cat){
+            cat.pinned = false
+            cat.save(flush:true)
+
+            render (template:'pinnedactions', model:[category: cat])
+        } else{
+            redirect(action: "list")
+        }
     }
 
 }

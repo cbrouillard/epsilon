@@ -13,7 +13,7 @@ package com.headbangers.epsilon
 
 class Category {
     String id
-    static hasMany = [operations:Operation]
+    static hasMany = [operations: Operation]
     static belongsTo = [Person]
 
     String name
@@ -26,37 +26,72 @@ class Category {
 
     SortedSet<Operation> operations
 
+    Boolean pinned = false
+
     static constraints = {
-        name nullable:false, blank:false
-        type nullable:false
+        name nullable: false, blank: false
+        type nullable: false
 
-        description nullable:true, widget: 'textarea'
+        description nullable: true, widget: 'textarea'
 
-        lastUpdated nullable:true
+        lastUpdated nullable: true
+        pinned nullable: true
     }
 
     static mapping = {
-        id generator:'uuid'
-        description type:'text'
+        id generator: 'uuid'
+        description type: 'text'
     }
 
     Date dateCreated
     Date lastUpdated
 
-    def getSold () {
+    def getSold() {
         def sold = 0D
-        operations.each{operation ->
+        operations.each { operation ->
             sold += operation.amount
         }
         return sold
     }
 
-    def getMonthOperations (int month){
+    def getMonthOperations() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date firstDay = calendar.getTime()
 
-        
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+
+        Date lastDay = calendar.getTime()
+
+        return Operation.createCriteria().list(order: 'asc', sort: 'dateApplication') {
+            category { eq("id", this.id) }
+            owner { eq("id", this.owner.id) }
+            between("dateApplication", firstDay, lastDay)
+        }
+
     }
-    
-    public String toString (){
+
+    def getCurrentMonthOperationsSum() {
+        def operations = getMonthOperations()
+
+        Double sum = 0D
+        if (operations) {
+            operations.each { oneOp ->
+                sum += oneOp.amount
+            }
+        }
+
+        return sum
+    }
+
+    public String toString() {
         return name
     }
 }
