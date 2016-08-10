@@ -140,7 +140,6 @@
         </div>
     </div>
     </g:if>
-    <br/>
 
     <g:if test="${pinnedCat}">
     <hr/>
@@ -183,7 +182,9 @@
 
 </div>
 
+<g:if test="${lates || today || future}">
 <div class="col-lg-4 col-md-6 col-sm-12">
+
 
     <div class="around-border">
         <div class="alert alert-info">Les échéances</div>
@@ -219,8 +220,11 @@
     </div>
 
 </div>
+</g:if>
 
 <div class="col-lg-4 col-md-12 col-sm-12">
+
+    <g:if test="${graphData || depense || revenu}">
     <div class="around-border">
         <div class="alert alert-info">Statistiques du mois</div>
 
@@ -266,6 +270,7 @@
              style="width: 100%; height: 450px; margin: auto;display: block;background: transparent;"></div>
 
     </div>
+    </g:if>
 </div>
 
 </body>
