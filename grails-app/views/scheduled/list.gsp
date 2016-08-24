@@ -38,7 +38,7 @@
                     <li>En mode automatique, l'échéance est appliquée toute seule à la date indiquée: vous n'avez rien à faire.</li>
                     <li>En mode manuel, l'échéance est affichée sur la page d'accueil : un bouton permet de l'activer, un autre de l'ignorer pour le mois
                     en cours.</li>
-                </ul>
+                </ul><br/>
                 Une échéance peut également être active ou inactive: une échéance inactive est considérée comme supprimée et est simplement ignorée par le
                 système.
             </div>
@@ -79,6 +79,27 @@
                     </div>
 
                 </div>
+<div class="clear">&nbsp;</div>
+                <div class="row">
+
+                    <div class="counter-shower col-xs-12 col-sm-12">
+
+                        <div class="number">
+                            <span class="label label-default">
+                                <g:formatNumber number="${seuil}"
+                                                format="0.##"/> €
+                            </span>
+                        </div>
+
+                        <div class="lbl">
+                            Seuil optimal de dépenses / mois<br/>
+                            (dépenses + sommes des budgets actifs)
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>

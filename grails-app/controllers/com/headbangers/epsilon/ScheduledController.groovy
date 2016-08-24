@@ -52,7 +52,12 @@ class ScheduledController {
             }
         }
 
-        [scheduledInstanceList: scheduleds, scheduledInstanceTotal: scheduleds.totalCount, depense: depense, revenus:revenus]
+        def seuil = depense
+        Budget.findAllByOwnerAndStartDateAndEndDateAndActive(person, null, null, true).each { budget ->
+            seuil += budget.amount
+        }
+
+        [scheduledInstanceList: scheduleds, scheduledInstanceTotal: scheduleds.totalCount, depense: depense, revenus:revenus, seuil:seuil]
     }
 
     def create = {
