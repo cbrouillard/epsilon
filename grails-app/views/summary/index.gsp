@@ -35,7 +35,8 @@
 
 <div class="col-lg-4 col-md-6 col-sm-12">
     <div class="around-border">
-        <div class="alert alert-info">Comptes</div>
+        <div class="alert alert-info">Comptes <span class="pull-right"><g:link controller="account" class="list" action="list"><img
+                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span> </div>
         <g:if test="${accounts}">
             <table class="table table-striped">
                 <tbody>
@@ -89,7 +90,8 @@
     <g:if test="${budgets}">
     <hr/>
     <div class="around-border">
-        <div class="alert alert-info">Les budgets</div>
+        <div class="alert alert-info">Les budgets <span class="pull-right"><g:link controller="budget" class="list" action="list"><img
+                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
         <div class="budgets list">
             <table class="table table-striped">
                 <tbody>
@@ -144,7 +146,8 @@
     <g:if test="${pinnedCat}">
     <hr/>
     <div class="around-border">
-        <div class="alert alert-info">Catégories surveillées</div>
+        <div class="alert alert-info">Catégories surveillées <span class="pull-right"><g:link controller="category" class="list" action="list"><img
+                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
         <div class="budgets list">
             <table class="table table-striped">
                 <tbody>
@@ -187,7 +190,8 @@
 
 
     <div class="around-border">
-        <div class="alert alert-info">Les échéances</div>
+        <div class="alert alert-info">Les échéances <span class="pull-right"><g:link controller="scheduled" class="list" action="list"><img
+                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span> </div>
 
         <g:if test="${lates}">
             <h6><small>En retard</small></h6>

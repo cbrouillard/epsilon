@@ -79,7 +79,7 @@
                     </div>
 
                 </div>
-<div class="clear">&nbsp;</div>
+                <div class="clearfix">&nbsp;</div>
                 <div class="row">
 
                     <div class="counter-shower col-xs-12 col-sm-12">
@@ -102,6 +102,7 @@
 
             </div>
         </div>
+
     </div>
 
     <hr/>

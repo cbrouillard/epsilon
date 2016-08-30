@@ -11,6 +11,8 @@
 
 package com.headbangers.epsilon
 
+import org.quartz.CronExpression
+
 
 class ScheduledJob {
     def timeout = 30000l // execute job once in 5 seconds
