@@ -192,6 +192,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'cronExpression', 'errors')}">
+
+                        <label for="cronExpressionChoice" class="col-sm-3 control-label"><g:message
+                                code="scheduled.cron.label"/></label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-cog"></span></span>
+                                <g:select id="cronExpressionSelector" name="cronExpressionChoice"
+                                          from="${com.headbangers.epsilon.Scheduled.PreBuiltCronExpression.values()}"
+                                          value="${scheduledInstance?.cronExpressionAsPrebuilt}"
+                                          class="form-control" valueMessagePrefix="prebuiltcronexpression"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

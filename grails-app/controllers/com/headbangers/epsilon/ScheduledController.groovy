@@ -83,6 +83,11 @@ class ScheduledController {
             scheduledInstance.tiers = tiersService.findOrCreateTiers(person, params["tiers.name"])
         }
 
+        if (scheduledInstance.automatic){
+            Scheduled.PreBuiltCronExpression prebuilt = params.cronExpressionChoice
+            scheduledInstance.cronExpression = prebuilt.expression
+        }
+
         if (scheduledInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), scheduledInstance.id])}"
             return true
@@ -169,6 +174,12 @@ class ScheduledController {
                 def tiers = tiersService.findOrCreateTiers(person, params["tiersname"])
                 scheduledInstance.tiers = tiers
                 params.remove("tiersname")
+            }
+
+            if (params.automatic){
+                scheduledInstance.cronExpression = ((Scheduled.PreBuiltCronExpression)params.cronExpressionChoice).expression
+            } else {
+                scheduledInstance.cronExpression = null
             }
 
             scheduledInstance.properties = params

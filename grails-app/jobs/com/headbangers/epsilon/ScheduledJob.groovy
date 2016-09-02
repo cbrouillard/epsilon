@@ -21,7 +21,7 @@ class ScheduledJob {
     def dateUtil
     def notificationService
     
-    //cron name:'dev2mn', cronExpression: "0 0/2 * * * ?"
+    //cron name:'dev5mn', cronExpression: "0 0/5 * * * ?"
     //cron name: 'touslesjoursa3h', cronExpression: "0 0 3 * * ?"
     static triggers = {
         cron name: 'touslesjoursa3h', cronExpression: "0 0 3 * * ?"
@@ -47,7 +47,13 @@ class ScheduledJob {
                 scheduledService.buildOperationFromScheduled(zeScheduled)
 
                 // let's go for the next month
-                zeScheduled.dateApplication = dateUtil.getTodayPlusOneMonth()
+                if (!zeScheduled.cronExpression) {
+                    zeScheduled.dateApplication = dateUtil.getTodayPlusOneMonth()
+                } else {
+                    CronExpression expression = new CronExpression(zeScheduled.cronExpression)
+                    Date expressedDate = expression.getNextValidTimeAfter(new Date())
+                    zeScheduled.dateApplication = expressedDate
+                }
                     
                 if (zeScheduled.dateLastApplication && zeScheduled.dateApplication >= zeScheduled.dateLastApplication){
                     log.debug ("This scheduled is no more active : ${zeScheduled.name}")

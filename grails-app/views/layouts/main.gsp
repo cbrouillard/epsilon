@@ -26,7 +26,6 @@
     </style>
 
     <script src="${resource(dir: '/js', file: 'password.js')}"></script>
-
     <ofchart:resources/>
     <r:require module="bootstrap"/>
     <r:require module="jquery-ui"/>
@@ -182,6 +181,14 @@
 
     function goToTiers(tiersId) {
         window.location.href = '${createLink(controller:'tiers', action:'operations')}/' + tiersId
+    }
+
+    var showOrHide = function (showIt, divId){
+        if (showIt){
+            $('#'+divId).removeClass('hide');;
+        } else {
+            $('#'+divId).addClass('hide');
+        }
     }
 
 </script>

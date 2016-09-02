@@ -35,6 +35,38 @@ class Scheduled{
 
     Person owner
 
+    String cronExpression
+    enum PreBuiltCronExpression {
+
+        SAME_DAY_NEXT_MONTH (null),
+        LAST_FRIDAY_OF_MONTH ("0 0 2 ? * 6L *")
+
+        private PreBuiltCronExpression (String expression){
+            this.expression = expression;
+        }
+        private String expression;
+
+        String getExpression() {
+            return expression
+        }
+
+        public static PreBuiltCronExpression getByExpression (String expression){
+            PreBuiltCronExpression toReturn = SAME_DAY_NEXT_MONTH
+            if (expression != null) {
+                PreBuiltCronExpression.values().each { prebuilt ->
+                    if (expression.equalsIgnoreCase(prebuilt.expression)) {
+                        toReturn = prebuilt
+                    }
+                }
+            }
+            return toReturn
+        }
+    }
+
+    PreBuiltCronExpression getCronExpressionAsPrebuilt (){
+        return PreBuiltCronExpression.getByExpression (this.cronExpression)
+    }
+
     boolean deleted = false
 
     static constraints = {
@@ -53,6 +85,7 @@ class Scheduled{
 
         lastUpdated nullable:true
         deleted nullable:true, default: false
+        cronExpression nullable:true, blank: true
     }
 
     static mapping = {

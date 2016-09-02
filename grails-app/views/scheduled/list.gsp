@@ -82,7 +82,7 @@
                 <div class="clearfix">&nbsp;</div>
                 <div class="row">
 
-                    <div class="counter-shower col-xs-12 col-sm-12">
+                    <div class="counter-shower col-xs-12 col-sm-6">
 
                         <div class="number">
                             <span class="label label-default">
@@ -93,7 +93,23 @@
 
                         <div class="lbl">
                             Seuil optimal de dépenses / mois<br/>
-                            (dépenses + sommes des budgets actifs)
+                            <small>(dépenses + budgets actifs)</small>
+                        </div>
+
+                    </div>
+
+                    <div class="counter-shower col-xs-12 col-sm-6">
+
+                        <div class="number">
+                            <g:set var="potentielEpargne" value="${revenus - seuil}"/>
+                            <span class="label label-${potentielEpargne <= 0 ? 'warning' : 'default'}">
+                                <g:formatNumber number="${potentielEpargne}"
+                                                format="0.##"/> €
+                            </span>
+                        </div>
+
+                        <div class="lbl">
+                            Potentiel épargne
                         </div>
 
                     </div>
@@ -131,13 +147,12 @@
                     <th><g:message code="scheduled.account.label" default="Account"/></th>
                     <th><g:message code="scheduled.tiers.label" default="Tiers"/></th>
 
-                    <g:sortableColumn property="dateApplication"
-                                      title="${message(code: 'scheduled.dateApplication.label', default: 'Date Application')}"/>
-
                     <g:sortableColumn property="type"
                                       title="${message(code: 'scheduled.type.label', default: 'Type')}"/>
                     <g:sortableColumn property="automatic"
                                       title="${message(code: 'scheduled.automatic.label', default: 'Automatic')}"/>
+                    <g:sortableColumn property="dateApplication"
+                                      title="${message(code: 'scheduled.dateApplication.label', default: 'Date Application')}"/>
                     <g:sortableColumn property="amount" class="text-right"
                                       title="${message(code: 'scheduled.amount.label', default: 'Amount')}"/>
                     <th class="text-center">Active ?</th>
@@ -150,10 +165,15 @@
                         <td>${fieldValue(bean: scheduledInstance, field: "name")}</td>
                         <td>${fieldValue(bean: scheduledInstance, field: "accountFrom.name")}</td>
                         <td>${fieldValue(bean: scheduledInstance, field: "tiers.name")}</td>
-                        <td><g:formatDate date="${scheduledInstance.dateApplication}"/></td>
+
 
                         <td>${fieldValue(bean: scheduledInstance, field: "type")}</td>
-                        <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/></td>
+                        <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/>
+                        <g:if test="${scheduledInstance?.automatic}">
+                            <small>(<g:message code="prebuiltcronexpression.${scheduledInstance?.cronExpressionAsPrebuilt}" />)</small>
+                        </g:if>
+                        </td>
+                        <td><g:formatDate date="${scheduledInstance.dateApplication}"/></td>
                         <td class="tdright"><b><g:formatNumber number="${scheduledInstance?.amount}"
                                                                format="0.##"/> €</b></td>
                         <td class="tdcenter">

@@ -206,6 +206,24 @@
                 </div>
             </div>
 
+            <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'cronExpression', 'errors')}" id="cronExpressionSelector">
+
+                <label for="accountFrom" class="col-sm-2 control-label mandatory"><g:message
+                        code="scheduled.cron.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group " id="cronExpressionSelector">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-cog"></span></span>
+                        <g:select name="cronExpressionChoice" from="${com.headbangers.epsilon.Scheduled.PreBuiltCronExpression.values()}"
+                                  value="${scheduledInstance?.cronExpressionAsPrebuilt}"
+                                  class="form-control" valueMessagePrefix="prebuiltcronexpression"/>
+                    </div>
+                    <div class="help-block with-errors"></div>
+                    <div class="alert alert-info">Attention : la date de prochaine application n'est pas mise à jour avec un changement de périodicité !</div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <g:actionSubmit class="save btn btn-primary" action="update"
