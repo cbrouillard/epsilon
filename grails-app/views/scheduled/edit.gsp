@@ -11,7 +11,7 @@
  */
 -->
 
-<%@ page import="com.headbangers.epsilon.Account; com.headbangers.epsilon.Scheduled" %>
+<%@ page import="com.headbangers.epsilon.CronExpression; com.headbangers.epsilon.Account; com.headbangers.epsilon.Scheduled" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -206,6 +206,8 @@
                 </div>
             </div>
 
+        <g:set var="crons" value="${CronExpression.list()}"/>
+        <g:if test="${crons}">
             <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'cronExpression', 'errors')}" id="cronExpressionSelector">
 
                 <label for="accountFrom" class="col-sm-2 control-label mandatory"><g:message
@@ -215,14 +217,17 @@
                     <div class="input-group " id="cronExpressionSelector">
                         <span class="input-group-addon"><span
                                 class="glyphicon glyphicon-cog"></span></span>
-                        <g:select name="cronExpressionChoice" from="${com.headbangers.epsilon.Scheduled.PreBuiltCronExpression.values()}"
-                                  value="${scheduledInstance?.cronExpressionAsPrebuilt}"
-                                  class="form-control" valueMessagePrefix="prebuiltcronexpression"/>
+                        <g:select id="cronExpressionChoice" name="cronExpressionChoice"
+                                  from="${crons}"
+                                  value="${CronExpression.findByName(scheduledInstance?.cronName)?.id}"
+                                  class="form-control" optionKey="id" optionValue="name"
+                                  noSelection="${['':"${message(code:'prebuiltcronexpression.SAME_DAY_NEXT_MONTH')}"]}"/>
                     </div>
                     <div class="help-block with-errors"></div>
                     <div class="alert alert-info">Attention : la date de prochaine application n'est pas mise à jour avec un changement de périodicité !</div>
                 </div>
             </div>
+            </g:if>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

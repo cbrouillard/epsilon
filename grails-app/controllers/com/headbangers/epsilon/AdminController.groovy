@@ -10,6 +10,7 @@
  */
 
 package com.headbangers.epsilon
+
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN'])
@@ -18,33 +19,81 @@ class AdminController {
     def springSecurityService
 
     def index = {
+        redirect(action: "users")
+    }
+
+    def users = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [persons:Person.list(params), total:Person.count()]
+        render(view: "index", model: [persons: Person.list(params), total: Person.count()])
+    }
+
+    def crons = {
+        render(view: 'crons', model: [newExpression: null])
+    }
+
+    def validatecron = {
+        def cron = new CronExpression()
+        cron.expression = params.expression
+        render(view: 'crons', model: [newExpression: cron])
+    }
+
+    def editcron = {
+        def cron = CronExpression.get(params.id)
+        render(view: 'crons', model: [newExpression: cron])
+    }
+
+    def deletecron = {
+        def cron = CronExpression.get(params.id)
+        cron.delete(flush: true)
+        redirect(action: "crons")
+    }
+
+    def savecron = {
+        def cron = null
+        if (params.id) {
+            cron = CronExpression.get(params.id)
+        }
+        if (!cron) {
+            cron = new CronExpression()
+        }
+        cron.expression = params.expression
+        cron.name = params.name
+        if (!cron.name) {
+            cron.name = "CRON: " + cron.expression
+        }
+
+        if (!cron.validateProperly()) {
+            render(view: 'crons', model: [newExpression: cron])
+            return
+        } else {
+            cron.save(flush: true)
+            redirect(action: "crons")
+        }
     }
 
     def showuser = {
         def person = Person.get(params.id)
-        if (person){
+        if (person) {
 
-            [person:person]
+            [person: person]
 
         } else {
             flash.message = "Utilisateur introuvable"
-            redirect(action:'index')
+            redirect(action: 'index')
         }
     }
 
     def createuser = {
-        def person = new Person ()
+        def person = new Person()
         person.properties = params
-        [person : person]
+        [person: person]
     }
 
     def saveuser = {
         def person = new Person(params)
 
         // encode passwd
-        if (params.pass){
+        if (params.pass) {
             //person.passwd = springSecurityService.passwordEncoder(person.pass)
             person.password = params.pass
         }
@@ -52,41 +101,40 @@ class AdminController {
         if (person.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), person.username])}"
 
-            def role = Role.findByAuthority ("ROLE_USER")
+            def role = Role.findByAuthority("ROLE_USER")
             if (!role) {
                 // Should not happen
                 role = new Role(authority: "ROLE_USER").save(flush: true)
             }
             PersonRole.create(person, role, true)
             redirect(action: "index")
-        }
-        else {
+        } else {
             render(view: "createuser", model: [person: person])
         }
     }
 
     def setadminuser = {
         def person = Person.get(params.id)
-        def role = Role.findByAuthority ("ROLE_ADMIN")
+        def role = Role.findByAuthority("ROLE_ADMIN")
 
-        if (params.role == 'true'){
+        if (params.role == 'true') {
             PersonRole.create(person, role, true)
-        }else {
+        } else {
             PersonRole.remove(person, role, true)
         }
 
-        render(template:'setadminactions', model:[person:person])
+        render(template: 'setadminactions', model: [person: person])
     }
 
     def edituser = {
         def person = Person.get(params.id)
-        if (person){
+        if (person) {
 
-            [person:person]
+            [person: person]
 
         } else {
             flash.message = "Personne introuvable"
-            redirect(action:'index')
+            redirect(action: 'index')
         }
     }
 
@@ -103,19 +151,17 @@ class AdminController {
                 }
             }
             person.properties = params
-            if (params.pass){
+            if (params.pass) {
                 //person.password = springSecurityService.passwordEncoder(person.pass)
                 person.password = params.pass
             }
             if (!person.hasErrors() && person.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Bank'), person.username])}"
                 redirect(action: "index")
-            }
-            else {
+            } else {
                 render(view: "edituser", model: [person: person])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'bank.label', default: 'Bank'), params.id])}"
             redirect(action: "list")
         }
@@ -123,34 +169,34 @@ class AdminController {
 
     def deleteuser = {
         def person = Person.get(params.id)
-        if (person){
+        if (person) {
             person.accountLocked = true
             person.enabled = false
-            person.save(flush:true)
+            person.save(flush: true)
             flash.message = "Personne ${person.username} effacée"
 
         } else {
             flash.message = "Personne introuvable"
         }
 
-        redirect(action:'index')
+        redirect(action: 'index')
     }
 
     def enableuser = {
         def person = Person.get(params.id)
-        if (person){
+        if (person) {
             person.enabled = true
-            person.save(flush:true)
+            person.save(flush: true)
         }
-        render(template:'enableactions', model:[person:person])
+        render(template: 'enableactions', model: [person: person])
     }
 
     def disableuser = {
         def person = Person.get(params.id)
-        if (person){
+        if (person) {
             person.enabled = false
-            person.save(flush:true)
+            person.save(flush: true)
         }
-        render(template:'enableactions', model:[person:person])
+        render(template: 'enableactions', model: [person: person])
     }
 }

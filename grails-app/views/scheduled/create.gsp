@@ -11,7 +11,7 @@
  */
 -->
 
-<%@ page import="com.headbangers.epsilon.Scheduled" %>
+<%@ page import="com.headbangers.epsilon.CronExpression; com.headbangers.epsilon.Scheduled" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -37,6 +37,8 @@
             <g:renderErrors bean="${scheduledInstance}" as="list"/>
         </div>
     </g:hasErrors>
+
+    <g:set var="crons" value="${CronExpression.list()}"/>
 
     <div class="tabbable"><!-- Only required for left/right tabs -->
         <ul class="nav nav-tabs">

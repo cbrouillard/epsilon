@@ -170,7 +170,7 @@
                         <td>${fieldValue(bean: scheduledInstance, field: "type")}</td>
                         <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/>
                         <g:if test="${scheduledInstance?.automatic}">
-                            <small>(<g:message code="prebuiltcronexpression.${scheduledInstance?.cronExpressionAsPrebuilt}" />)</small>
+                            <small>(${scheduledInstance?.cronExpression ? scheduledInstance.cronName : message(code:'prebuiltcronexpression.SAME_DAY_NEXT_MONTH')})</small>
                         </g:if>
                         </td>
                         <td><g:formatDate date="${scheduledInstance.dateApplication}"/></td>

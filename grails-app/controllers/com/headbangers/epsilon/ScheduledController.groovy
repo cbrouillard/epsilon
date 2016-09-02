@@ -83,9 +83,10 @@ class ScheduledController {
             scheduledInstance.tiers = tiersService.findOrCreateTiers(person, params["tiers.name"])
         }
 
-        if (scheduledInstance.automatic){
-            Scheduled.PreBuiltCronExpression prebuilt = params.cronExpressionChoice
-            scheduledInstance.cronExpression = prebuilt.expression
+        if (scheduledInstance.automatic && params.cronExpressionChoice){
+            CronExpression cron = CronExpression.get(params.cronExpressionChoice)
+            scheduledInstance.cronExpression = cron.expression
+            scheduledInstance.cronName = cron.name
         }
 
         if (scheduledInstance.save(flush: true)) {
@@ -176,10 +177,13 @@ class ScheduledController {
                 params.remove("tiersname")
             }
 
-            if (params.automatic){
-                scheduledInstance.cronExpression = ((Scheduled.PreBuiltCronExpression)params.cronExpressionChoice).expression
+            if (params.automatic && params.cronExpressionChoice){
+                CronExpression cron = CronExpression.get(params.cronExpressionChoice)
+                scheduledInstance.cronExpression = cron.expression
+                scheduledInstance.cronName = cron.name
             } else {
                 scheduledInstance.cronExpression = null
+                scheduledInstance.cronName = null
             }
 
             scheduledInstance.properties = params

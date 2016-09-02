@@ -1,4 +1,5 @@
-<!-- 
+<%@ page import="com.headbangers.epsilon.CronExpression" %>
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -152,7 +153,7 @@
                 <span class="input-group-addon"><span
                         class="glyphicon glyphicon-euro"></span></span>
                 <g:textField pattern="^([0-9.,])*" id="amount${type}" name="amount"
-                             value="${formatNumber(number:scheduledInstance?.amount, format:'0.##')}"
+                             value="${formatNumber(number: scheduledInstance?.amount, format: '0.##')}"
                              required="true"
                              class="form-control"/>
             </div>
@@ -196,24 +197,28 @@
         </div>
     </div>
 
-    <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'cronExpression', 'errors')}">
 
-        <label for="cronExpressionChoice" class="col-sm-3 control-label"><g:message
-                code="scheduled.cron.label"/></label>
+    <g:if test="${crons}">
+        <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'cronExpression', 'errors')}">
 
-        <div class="col-sm-9">
-            <div class="input-group">
-                <span class="input-group-addon"><span
-                        class="glyphicon glyphicon-cog"></span></span>
-                <g:select id="cronExpressionSelector" name="cronExpressionChoice"
-                          from="${com.headbangers.epsilon.Scheduled.PreBuiltCronExpression.values()}"
-                          value="${scheduledInstance?.cronExpressionAsPrebuilt}"
-                          class="form-control" valueMessagePrefix="prebuiltcronexpression"/>
+            <label for="cronExpressionChoice" class="col-sm-3 control-label"><g:message
+                    code="scheduled.cron.label"/></label>
+
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <span class="input-group-addon"><span
+                            class="glyphicon glyphicon-cog"></span></span>
+                    <g:select id="cronExpressionChoice" name="cronExpressionChoice"
+                              from="${crons}"
+                              value="${CronExpression.findByName(scheduledInstance?.cronName)?.id}"
+                              class="form-control" optionKey="id" optionValue="name"
+                              noSelection="${['':"${message(code:'prebuiltcronexpression.SAME_DAY_NEXT_MONTH')}"]}"/>
+                </div>
+
+                <div class="help-block with-errors"></div>
             </div>
-
-            <div class="help-block with-errors"></div>
         </div>
-    </div>
+    </g:if>
 </div>
 </div>
 </fieldset>
