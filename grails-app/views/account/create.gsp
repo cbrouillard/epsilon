@@ -138,7 +138,7 @@
                                     <span class="input-group-addon"><span
                                             class="glyphicon glyphicon-euro"></span></span>
                                     <g:textField name="amount" required="true"
-                                             value="${accountInstance?.amount}"
+                                             value="${formatNumber(number:accountInstance?.amount, format:'0.##')}"
                                              class="form-control" pattern="^([0-9.,])*"/>
                                 </div>
 

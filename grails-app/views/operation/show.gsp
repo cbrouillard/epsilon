@@ -48,7 +48,7 @@
         <dd><g:formatDate date="${operationInstance?.dateApplication}"/></dd>
 
         <dt><g:message code="operation.amount.label" default="Amount"/></dt>
-        <dd><g:formatNumber number="${operationInstance?.amount}" format="0.##"/> €</dd>
+        <dd><g:formatNumber number="${operationInstance?.amount}" format="###,###.##"/> €</dd>
 
         <dt><g:message code="operation.note.label" default="Note"/></dt>
         <dd>${fieldValue(bean: operationInstance, field: "note")}&nbsp;</dd>

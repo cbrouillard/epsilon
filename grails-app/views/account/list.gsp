@@ -79,7 +79,7 @@
 
                             <td>${accountInstance.description}</td>
                             <td class="text-right"><b><g:formatNumber number="${accountInstance?.sold}"
-                                                                      format="0.##"/> €</b></td>
+                                                                      format="###,###.##"/> €</b></td>
 
                             <td class="text-right">
                                 <g:link title="Afficher les détails" action="show" id="${accountInstance.id}"

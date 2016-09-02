@@ -90,7 +90,7 @@
                     <g:else>
                         <td class="budget tdright">
                     </g:else>
-                    <g:formatNumber number="${currentSold}" format="0.##" /> €</span></td>
+                    <g:formatNumber number="${currentSold}" format="###,###.##" /> €</span></td>
                     <td>
                         <g:if test="${budgetInstance.startDate || budgetInstance.endDate}">
                             <g:if test="${budgetInstance.startDate}">

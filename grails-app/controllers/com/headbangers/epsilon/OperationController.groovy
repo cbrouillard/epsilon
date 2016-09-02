@@ -113,6 +113,8 @@ class OperationController {
             createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
             createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
             lte("dateApplication", lastDayOfMonth)
+            eq("active", true)
+            eq("deleted", false)
             gt("dateApplication", new Date())
             or {
                 eq("accountTo.id", selectedAccount.id)
@@ -128,6 +130,8 @@ class OperationController {
                 createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
                 lte("dateApplication", lastDayOfMonth)
                 gt("dateApplication", new Date())
+                eq("active", true)
+                eq("deleted", false)
                 or {
                     eq("accountTo.id", selectedAccount.id)
                     eq("accountFrom.id", selectedAccount.id)

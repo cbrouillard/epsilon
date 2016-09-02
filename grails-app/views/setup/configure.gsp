@@ -15,7 +15,6 @@
   <head>
     <meta name='layout' content='login' />
     <title>Configurer Epsilon sur votre serveur</title>
-    </style>
   </head>
 
   <body>

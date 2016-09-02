@@ -75,7 +75,7 @@
                         <td><g:formatDate date="${tiersInstance.dateCreated}"/></td>
 
                         <td><g:formatDate date="${tiersInstance.lastUpdated}"/></td>
-                        <td class="tdright"><b><g:formatNumber number="${tiersInstance.sold}" format="0.##"/> €</b></td>
+                        <td class="tdright"><b><g:formatNumber number="${tiersInstance.sold}" format="###,###.##"/> €</b></td>
                         <td class="text-right">
                             <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
                                     action="show" id="${tiersInstance.id}"><img

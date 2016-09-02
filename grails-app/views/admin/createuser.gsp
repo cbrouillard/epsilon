@@ -32,74 +32,106 @@
     })
 </script>
 
-<div class="container">
-    <div class="row">
-        <div class="span12">
-            <div>
-                <h1>Créer un nouvel utilisateur <small>Attention ! Administration.</small></h1>
-                <hr/>
+<div class="col-sm-12">
+    <h1>Créer un nouvel utilisateur <small>Attention ! Administration.</small></h1>
+    <hr/>
+</div>
+
+<div class="col-sm-12">
+    <div class="around-border">
+
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
+
+        <g:hasErrors bean="${person}">
+            <div class="alert alert-error">
+                <g:renderErrors bean="${person}" as="list"/>
             </div>
-        </div>
-    </div>
+        </g:hasErrors>
 
-    <div class="row">
-        <div class="span12">
-            <div class="around-border">
+        <g:form action="saveuser" method="post" class="form-horizontal">
 
-                <g:if test="${flash.message}">
-                    <div class="alert alert-info">${flash.message}</div>
-                </g:if>
+            <div class="form-group ${hasErrors(bean: person, field: 'username', 'has-error')}">
 
-                <g:hasErrors bean="${person}">
-                    <div class="alert alert-error">
-                        <g:renderErrors bean="${person}" as="list"/>
-                    </div>
-                </g:hasErrors>
+                <label for="username" class="col-sm-2 control-label mandatory"><g:message
+                        code="person.username.label"/></label>
 
-                <g:form action="saveuser" method="post" class="form-horizontal">
-                    <div class="control-group">
-                        <label for="username" class="control-label mandatory"><g:message code="person.username.label" default="Username"/></label>
-
-                        <div class="controls ${hasErrors(bean: person, field: 'username', 'errors')}">
-                            <g:textField name="username" id="username" value="${person?.username}" class="input-block-level" required="true"/>
-                        </div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-font"></span></span>
+                        <g:textField name="username" id="username" required="true" value="${person?.username}"
+                                     class="form-control" autofocus=""/>
                     </div>
 
-                    <div class="control-group">
-                        <label for="userRealName" class="control-label mandatory"><g:message code="person.userRealName.label" default="UserRealName"/></label>
-
-                        <div class="controls ${hasErrors(bean: person, field: 'userRealName', 'errors')}">
-                            <g:textField name="userRealName" value="${person?.userRealName}" class="input-block-level" required="true"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="password" class="control-label mandatory"><g:message code="person.pass.label" default="Pass"/></label>
-
-                        <div class="controls ${hasErrors(bean: person, field: 'passwd', 'errors')}">
-                            <g:textField id="password" name="pass" value="${person?.password}" class="password input-block-level" required="true"/>
-                            <div style="color:green" id='result'></div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="email" class="control-label mandatory"><g:message code="person.email.label" default="Email"/></label>
-
-                        <div class="controls ${hasErrors(bean: person, field: 'email', 'errors')}">
-                            <g:textField name="email" value="${person?.email}" class="input-block-level" required="true"/>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <div class="controls">
-                            <g:submitButton name="create" class="save btn btn-primary"
-                                            value="${message(code: 'default.button.create.label', default: 'Create')}"/>
-                        </div>
-                    </div>
-                </g:form>
+                    <div class="help-block with-errors"></div>
+                </div>
             </div>
-        </div>
+
+            <div class="form-group ${hasErrors(bean: person, field: 'userRealName', 'has-error')}">
+
+                <label for="userRealName" class="col-sm-2 control-label mandatory"><g:message
+                        code="person.userRealName.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-font"></span></span>
+                        <g:textField name="userRealName" id="userRealName" required="true" value="${person?.userRealName}"
+                                     class="form-control" />
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+
+            <div class="form-group ${hasErrors(bean: person, field: 'passwd', 'has-error')}">
+
+                <label for="password" class="col-sm-2 control-label mandatory"><g:message
+                        code="person.pass.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-cog"></span></span>
+                        <g:textField name="password" id="password" required="true" value="${person?.password}"
+                                     class="form-control" />
+                    </div>
+
+                    <div style="color:green;font-weight: bold;" id='result'></div>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+
+            <div class="form-group ${hasErrors(bean: person, field: 'email', 'has-error')}">
+
+                <label for="userRealName" class="col-sm-2 control-label mandatory"><g:message
+                        code="person.email.label"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span></span>
+                        <g:textField name="email" id="email" required="true" value="${person?.email}"
+                                     class="form-control" />
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-save"></span> ${message(code: 'default.button.create.label', default: 'Save')}
+                    </button>
+                </div>
+            </div>
+        </g:form>
     </div>
+</div>
 </div>
 </body>
 </html>

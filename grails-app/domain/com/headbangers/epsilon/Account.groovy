@@ -102,7 +102,7 @@ class Account {
     }
 
     def getFormattedSold() {
-        return new DecimalFormat("#.00").format(getSold())
+        return new DecimalFormat("###,###.##").format(getSold())
     }
 
     def getLastOperations() {

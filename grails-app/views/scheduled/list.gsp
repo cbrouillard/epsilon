@@ -53,7 +53,7 @@
                         <div class="number">
                             <span class="label label-${depense > revenus ? 'danger' : 'default'}">
                                 <g:formatNumber number="${depense}"
-                                                format="0.##"/> €
+                                                format="###,###.##"/> €
                             </span>
                         </div>
 
@@ -68,7 +68,7 @@
                         <div class="number">
                             <span class="label label-default">
                                 <g:formatNumber number="${revenus}"
-                                                format="0.##"/> €
+                                                format="###,###.##"/> €
                             </span>
                         </div>
 
@@ -87,7 +87,7 @@
                         <div class="number">
                             <span class="label label-default">
                                 <g:formatNumber number="${seuil}"
-                                                format="0.##"/> €
+                                                format="###,###.##"/> €
                             </span>
                         </div>
 
@@ -102,9 +102,9 @@
 
                         <div class="number">
                             <g:set var="potentielEpargne" value="${revenus - seuil}"/>
-                            <span class="label label-${potentielEpargne <= 0 ? 'warning' : 'default'}">
+                            <span class="label label-${potentielEpargne <= 0 ? 'warning' : 'success'}">
                                 <g:formatNumber number="${potentielEpargne}"
-                                                format="0.##"/> €
+                                                format="###,###.##"/> €
                             </span>
                         </div>
 
@@ -175,7 +175,7 @@
                         </td>
                         <td><g:formatDate date="${scheduledInstance.dateApplication}"/></td>
                         <td class="tdright"><b><g:formatNumber number="${scheduledInstance?.amount}"
-                                                               format="0.##"/> €</b></td>
+                                                               format="###,###.##"/> €</b></td>
                         <td class="tdcenter">
                             <div id="scheduled${scheduledInstance.id}-activation">
                                 <g:render template="activateactions" model="[scheduled: scheduledInstance]"/>

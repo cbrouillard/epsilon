@@ -37,6 +37,7 @@
                 <g:link controller="account" class="create" action="create"><img
                         src="${resource(dir: 'img', file: 'account.png')}"/> Nouveau compte</g:link>
             </li>
+            <li class="divider"></li>
         </ul>
     </li>
 
@@ -66,6 +67,7 @@
                         src="${resource(dir: 'img', file: 'coins.png')}"/> Nouveau budget</g:link>
             </li>
             <li class="divider"></li>
+            %{--
             <li class="dropdown-header">Futurs achats</li>
             <li>
                 <g:link controller="wish" class="list" action="list"><img
@@ -85,6 +87,7 @@
                 <g:link controller="loan" class="create" action="create"><img
                         src="${resource(dir: 'img', file: 'loan.png')}"/> Nouveau prêt</g:link>
             </li>
+            --}%
         </ul>
     </li>
 
@@ -101,6 +104,7 @@
                 <g:link controller="tiers" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> Liste des tiers</g:link>
             </li>
+            <li class="divider"></li>
         </ul>
     </li>
 
@@ -116,6 +120,7 @@
                     <g:link controller="operation" params="[account: account.id]" action="list"><img src="${resource(dir: 'img', file: 'operation.png')}"/> ${account.nameAndSold}</g:link>
                 </li>
             </g:each>
+            <li class="divider"></li>
         </ul>
     </li>
 

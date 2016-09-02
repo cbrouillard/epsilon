@@ -58,7 +58,7 @@
                     <div class="number">
                         <span class="label label-default">
                             <g:formatNumber number="${depense}"
-                                            format="0.##"/> €
+                                            format="###,###.##"/> €
                         </span>
                     </div>
 
@@ -73,7 +73,7 @@
                     <div class="number">
                         <span class="label label-default">
                             <g:formatNumber number="${revenu}"
-                                            format="0.##"/> €
+                                            format="###,###.##"/> €
                         </span>
                     </div>
 

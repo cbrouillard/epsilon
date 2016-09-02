@@ -48,7 +48,7 @@
         <dd><g:formatDate date="${accountInstance?.dateOpened}"/></dd>
 
         <dt><g:message code="account.calculatedAmount.label" default="Amount"/></dt>
-        <dd><g:formatNumber number="${accountInstance?.sold}" format="0.##"/></dd>
+        <dd><g:formatNumber number="${accountInstance?.sold}" format="###,###.##"/></dd>
 
         <dt><g:message code="account.description.label" default="Description"/></dt>
         <dd>${fieldValue(bean: accountInstance, field: "description")}</dd>

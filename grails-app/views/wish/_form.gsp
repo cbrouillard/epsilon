@@ -60,7 +60,7 @@
         <div class="input-group">
             <span class="input-group-addon"><span
                     class="glyphicon glyphicon-euro"></span></span>
-            <g:textField pattern="^([0-9.,])*" name="price" value="${fieldValue(bean: wishInstance, field: 'price')}" required="true" class="form-control"/>
+            <g:textField pattern="^([0-9.,])*" name="price" value="${formatNumber(number:wishInstance?.price, format:'0.##')}" required="true" class="form-control"/>
         </div>
 
         <div class="help-block with-errors"></div>

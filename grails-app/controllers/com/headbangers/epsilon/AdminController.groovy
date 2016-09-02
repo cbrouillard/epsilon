@@ -65,6 +65,19 @@ class AdminController {
         }
     }
 
+    def setadminuser = {
+        def person = Person.get(params.id)
+        def role = Role.findByAuthority ("ROLE_ADMIN")
+
+        if (params.role == 'true'){
+            PersonRole.create(person, role, true)
+        }else {
+            PersonRole.remove(person, role, true)
+        }
+
+        render(template:'setadminactions', model:[person:person])
+    }
+
     def edituser = {
         def person = Person.get(params.id)
         if (person){
@@ -111,8 +124,9 @@ class AdminController {
     def deleteuser = {
         def person = Person.get(params.id)
         if (person){
-
-            person.delete(flush:true)
+            person.accountLocked = true
+            person.enabled = false
+            person.save(flush:true)
             flash.message = "Personne ${person.username} effacée"
 
         } else {

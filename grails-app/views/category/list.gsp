@@ -81,7 +81,7 @@
                         <td><g:formatDate date="${categoryInstance.dateCreated}"/></td>
 
                         <td><g:formatDate date="${categoryInstance.lastUpdated}"/></td>
-                        <td class="tdright"><b><g:formatNumber number="${categoryInstance?.sold}" format="0.##"/> €</b>
+                        <td class="tdright"><b><g:formatNumber number="${categoryInstance?.sold}" format="###,###.##"/> €</b>
                         </td>
                         <td class="text-center">
                             <div id="category${categoryInstance.id}-pinned">

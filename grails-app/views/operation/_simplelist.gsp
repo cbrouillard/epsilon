@@ -29,17 +29,17 @@
                 <td>${operation.category.name} - ${operation.tiers.name}</td>
                 <td class="tdright">
                     <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.RETRAIT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
-                        <b><g:formatNumber number="${operation?.amount}" format="0.##"/> €</b>
+                        <b><g:formatNumber number="${operation?.amount}" format="###,###.##"/> €</b>
                         <g:set var="total" value="${total - operation?.amount}"/>
                     </g:if>
                 </td>
                 <td class="tdright">
                     <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.DEPOT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_PLUS}">
-                        <b><g:formatNumber number="${operation?.amount}" format="0.##"/> €</b>
+                        <b><g:formatNumber number="${operation?.amount}" format="###,###.##"/> €</b>
                         <g:set var="total" value="${total + operation?.amount}"/>
                     </g:if>
                 </td>
-                <td class="tdright"><g:formatNumber number="${total}" format="0.##"/> €</td>
+                <td class="tdright"><g:formatNumber number="${total}" format="###,###.##"/> €</td>
             </tr>
         </g:each>
         </tbody>

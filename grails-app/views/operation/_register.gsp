@@ -61,19 +61,19 @@
 
                 <td class="tdright">
                     <g:if test="${operationInstance?.type == com.headbangers.epsilon.OperationType.RETRAIT || operationInstance?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
-                        <b><g:formatNumber number="${operationInstance?.amount}" format="0.##"/> €</b>
+                        <b><g:formatNumber number="${operationInstance?.amount}" format="###,###.##"/> €</b>
                         <g:set var="accountAmount" value="${accountAmount - operationInstance?.amount}"/>
                     </g:if>
                 </td>
                 <td class="tdright">
                     <g:if test="${operationInstance?.type == com.headbangers.epsilon.OperationType.DEPOT || operationInstance?.type == com.headbangers.epsilon.OperationType.VIREMENT_PLUS}">
-                        <b><g:formatNumber number="${operationInstance?.amount}" format="0.##"/> €</b>
+                        <b><g:formatNumber number="${operationInstance?.amount}" format="###,###.##"/> €</b>
                         <g:set var="accountAmount" value="${accountAmount + operationInstance?.amount}"/>
                     </g:if>
                 </td>
 
                 <td class="tdright">
-                    <g:formatNumber number="${accountAmount}" format="0.##"/> €
+                    <g:formatNumber number="${accountAmount}" format="###,###.##"/> €
                     <g:set var="finalAmount" value="${accountAmount}"/>
                 </td>
 
@@ -92,10 +92,10 @@
             <td colspan="6">&nbsp;</td>
             <td class="tdright important">
                 <g:if test="${operations}">
-                = <g:formatNumber number="${finalAmount}" format="0.##"/> €
+                = <g:formatNumber number="${finalAmount}" format="###,###.##"/> €
                 </g:if>
                 <g:else>
-                    = <g:formatNumber number="${accountAmount}" format="0.##"/> €
+                    = <g:formatNumber number="${accountAmount}" format="###,###.##"/> €
                 </g:else>
             </td>
             <td>&nbsp;</td>

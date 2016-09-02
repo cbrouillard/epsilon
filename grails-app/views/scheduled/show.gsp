@@ -53,7 +53,7 @@
         <dd><g:formatDate date="${scheduledInstance?.dateApplication}"/></dd>
 
         <dt><g:message code="scheduled.amount.label" default="Amount"/></dt>
-        <dd><g:formatNumber number="${scheduledInstance?.amount}" format="0.##"/> €</dd>
+        <dd><g:formatNumber number="${scheduledInstance?.amount}" format="###,###.##"/> €</dd>
 
         <dt><g:message code="scheduled.note.label" default="Note"/></dt>
         <dd>${fieldValue(bean: scheduledInstance, field: "note") ?: " "}</dd>

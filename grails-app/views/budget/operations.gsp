@@ -65,11 +65,11 @@
                     <td><g:formatDate date="${operation.dateApplication}"/></td>
                     <td>${operation.tiers.name}</td>
                     <td>${operation.category.name}</td>
-                    <td class="tdright"><b><g:formatNumber number="${operation?.amount}" format="0.##"/> €</b>
+                    <td class="tdright"><b><g:formatNumber number="${operation?.amount}" format="###,###.##"/> €</b>
                         <g:set var="total" value="${total + operation?.amount}"/>
                     </td>
 
-                    <td class="tdright"><g:formatNumber number="${total}" format="0.##"/> €</td>
+                    <td class="tdright"><g:formatNumber number="${total}" format="###,###.##"/> €</td>
                 </tr>
             </g:each>
             </tbody>

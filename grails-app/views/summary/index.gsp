@@ -45,7 +45,7 @@
                     <tr>
                         <td class="principal">${account.name}</td>
                         <td class="tdright fixedsize"><g:formatNumber number="${account.sold}"
-                                                                      format="0.##"/> €</td>
+                                                                      format="###,###.##"/> €</td>
                         <td class="tdright fixedsize">
                             <g:link controller="operation" action="list" params="[account: account.id]"
                                     title="Afficher le registre">
@@ -60,7 +60,7 @@
                     <tr class="important">
                         <td class="principal">&nbsp;</td>
                         <td class="tdright fixedsize">= <g:formatNumber number="${accountAmount}"
-                                                                        format="0.##"/> €</td>
+                                                                        format="###,###.##"/> €</td>
                         <td class="tdright fixedsize">&nbsp;</td>
                     </tr>
                 </g:if>
@@ -119,7 +119,7 @@
                         <g:else>
                             <td class="tdright budget"><span>
                         </g:else>
-                        <g:formatNumber number="${currentSold}" format="0.##" /> / <g:formatNumber number="${budget.amount}" format="0.##" /> €</span></td>
+                        <g:formatNumber number="${currentSold}" format="###,###.##" /> / <g:formatNumber number="${budget.amount}" format="###,###.##" /> €</span></td>
                         <td class="tdright fixedsize">
                             <g:link title="Afficher le registre" controller="budget" action="operations"
                                     params="[budget: budget.id]"><img
@@ -132,9 +132,9 @@
                 <tr class="important">
                     <td class="principal">&nbsp;</td>
                     <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}"
-                                                          format="0.##"/> / <g:formatNumber
+                                                          format="###,###.##"/> / <g:formatNumber
                             number="${budgetAmount}"
-                            format="0.##"/> €</td>
+                            format="###,###.##"/> €</td>
                     <td class="tdright fixedsize">&nbsp;</td>
                 </tr>
                 </tbody>
@@ -160,7 +160,7 @@
                         <td class="principal">${cat.name}</td>
                         <td class="tdright">
                             <span class="label label-default">
-                                <g:formatNumber number="${currentSold}" format="0.##"/> €
+                                <g:formatNumber number="${currentSold}" format="###,###.##"/> €
                             </span>
                         </td>
                         <td class="tdright fixedsize">
@@ -174,7 +174,7 @@
                 <tr class="important">
                     <td class="principal">&nbsp;</td>
                     <td class="tdright">= <g:formatNumber number="${pinnedAmount}"
-                                                          format="0.##"/> €</td>
+                                                          format="###,###.##"/> €</td>
                     <td class="tdright fixedsize">&nbsp;</td>
                 </tr>
                 </tbody>
@@ -239,7 +239,7 @@
                 <div class="number">
                     <span class="label label-default">
                         <g:formatNumber number="${depense}"
-                                        format="0.##"/> €
+                                        format="###,###.##"/> €
                     </span>
                 </div>
                 <div class="lbl">
@@ -253,7 +253,7 @@
                 <div class="number">
                     <span class="label label-default">
                         <g:formatNumber number="${revenu}"
-                                        format="0.##"/> €
+                                        format="###,###.##"/> €
                     </span>
                 </div>
                 <div class="lbl">

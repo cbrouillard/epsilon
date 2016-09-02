@@ -29,7 +29,7 @@
         <g:if test="${actualMonth != prev}">
             <tr class="important">
                 <td colspan="2">Reste en dépense</td>
-                <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="0.##"/> €</td>
+                <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="###,###.##"/> €</td>
                 <td class="tdright fixedsize">&nbsp;</td>
 
                 <g:set var="amount" value="${0}"/>
@@ -52,7 +52,7 @@
 
                 ${scheduled.name}</td>
             <td><g:formatDate date="${scheduled.dateApplication}"/></td>
-            <td class="tdright fixedsize"><g:formatNumber number="${scheduled.amount}" format="0.##"/> €</td>
+            <td class="tdright fixedsize"><g:formatNumber number="${scheduled.amount}" format="###,###.##"/> €</td>
             <td class="tdright fixedsize">
                 <g:if test="${scheduled.automatic}">
                     <img src="${resource(dir: 'img', file: 'time.png')}" alt="Automatique"/>
@@ -77,7 +77,7 @@
     <g:if test="${scheduleds}">
         <tr class="important">
             <td colspan="2">Reste en dépense</td>
-            <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="0.##"/> €</td>
+            <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="###,###.##"/> €</td>
             <td class="tdright fixedsize">&nbsp;</td>
             <g:set var="amount" value="${0}"/>
         </tr>

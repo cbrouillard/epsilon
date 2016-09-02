@@ -25,7 +25,7 @@
                             <span class="input-group-addon"><span
                                     class="glyphicon glyphicon-piggy-bank"></span></span>
                             <g:select optionValue="${{
-                                it.name + ' = ' + formatNumber('number': it.getSold(), 'format': '0.##') + '€'
+                                it.name + ' = ' + formatNumber('number': it.getSold(), 'format': '###,###.##') + '€'
                             }}" name="account.to"
                                       from="${accounts}" optionKey="id" class="form-control" required="true"/>
                         </div>
@@ -85,7 +85,7 @@
                             <span class="input-group-addon"><span
                                     class="glyphicon glyphicon-euro"></span></span>
                             <g:textField pattern="^([0-9.,])*" id="amount" name="amount"
-                                     value="${fieldValue(bean: operationInstance, field: 'amount')}"
+                                     value="${formatNumber(number:operationInstance?.amount, format:'0.##')}"
                                      required="true"
                                      class="form-control"/>
                         </div>

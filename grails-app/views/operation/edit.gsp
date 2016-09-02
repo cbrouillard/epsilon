@@ -123,7 +123,7 @@
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-euro"></span></span>
                                 <g:textField pattern="^([0-9.,])*" id="amount" name="amount"
-                                         value="${fieldValue(bean: operationInstance, field: 'amount')}"
+                                         value="${formatNumber(number:operationInstance?.amount, format:'###,###.##')}"
                                          required="true"
                                          class="form-control"/>
                             </div>
