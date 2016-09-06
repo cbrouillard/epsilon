@@ -36,6 +36,9 @@ class NotificationService {
         }catch (MailSendException e){
             log.fatal ("Impossible d'envoyer le mail",e)
             return false
+        } catch (Exception e){
+            log.fatal ("Impossible d'envoyer le mail",e)
+            return false
         }
     }
 }

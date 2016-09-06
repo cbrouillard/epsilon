@@ -11,16 +11,13 @@
 
 package com.headbangers.epsilon
 
-import org.quartz.CronExpression
-
-
 class ScheduledJob {
     def timeout = 30000l // execute job once in 5 seconds
 
     def scheduledService
     def dateUtil
     def notificationService
-    
+
     //cron name:'dev5mn', cronExpression: "0 0/5 * * * ?"
     //cron name: 'touslesjoursa3h', cronExpression: "0 0 3 * * ?"
     static triggers = {
@@ -38,48 +35,48 @@ class ScheduledJob {
             def scheduleds = Scheduled.createCriteria().list {
                 eq("automatic", true)
                 eq("active", true)
-                owner{eq("id", person.id)}
-                between("dateApplication", dateUtil.getTodayMorning(), dateUtil.getTodayEvening())                
+                owner { eq("id", person.id) }
+                between("dateApplication", dateUtil.getTodayMorning(), dateUtil.getTodayEvening())
             }
 
-            scheduleds.each { zeScheduled->
-                log.debug ("Treating this scheduled : ${zeScheduled.name}")
+            scheduleds.each { zeScheduled ->
+                log.debug("Treating this scheduled : ${zeScheduled.name}")
                 scheduledService.buildOperationFromScheduled(zeScheduled)
 
                 // let's go for the next month
                 if (!zeScheduled.cronExpression) {
                     zeScheduled.dateApplication = dateUtil.getTodayPlusOneMonth()
                 } else {
-                    CronExpression expression = new CronExpression(zeScheduled.cronExpression)
-                    Date expressedDate = expression.getNextValidTimeAfter(new Date())
+                    CronExpression expression = new CronExpression(expression:zeScheduled.cronExpression)
+                    Date expressedDate = expression.getNextDate()
                     zeScheduled.dateApplication = expressedDate
                 }
-                    
-                if (zeScheduled.dateLastApplication && zeScheduled.dateApplication >= zeScheduled.dateLastApplication){
-                    log.debug ("This scheduled is no more active : ${zeScheduled.name}")
+
+                if (zeScheduled.dateLastApplication && zeScheduled.dateApplication >= zeScheduled.dateLastApplication) {
+                    log.debug("This scheduled is no more active : ${zeScheduled.name}")
                     zeScheduled.active = false
                 }
-                    
-                zeScheduled.save(flush:true)
-                
+
+                zeScheduled.save(flush: true)
+
                 // if scheduled is part of loan, then update the loan
                 def loan = Loan.createCriteria().get {
-                    scheduled{eq ("id", zeScheduled.id)}
+                    scheduled { eq("id", zeScheduled.id) }
                 }
-                
-                if (loan){
-                    log.debug ("This scheduled is part of a loan. We have to update it too.")
+
+                if (loan) {
+                    log.debug("This scheduled is part of a loan. We have to update it too.")
                     loan.currentCalculatedAmountValue -= loan.refundValue
                     loan.nbPayedMonth += 1
-                    loan.save(flush:true)
+                    loan.save(flush: true)
                 }
             }
 
-            if (scheduleds){
-                notificationService.sendScheduledDoneMail (person, scheduleds)
+            if (scheduleds) {
+                notificationService.sendScheduledDoneMail(person, scheduleds)
             }
 
-        }        
-        
+        }
+
     }
 }
