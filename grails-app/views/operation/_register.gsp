@@ -47,8 +47,20 @@
             <g:set var="accountAmount" value="${selected?.lastSnapshot?.amount ?: selected.amount}"/>
         </g:else>
 
-
+        <g:set var="currentDay" value="${null}"/>
+        <g:set var="previousDay" value="${null}"/>
         <g:each in="${operations}" status="i" var="operationInstance">
+
+            <g:set var="currentDay" value="${operationInstance.applicationDayInMonth}"/>
+            <g:if test="${currentDay != previousDay}">
+                <g:set var="previousDay" value="${currentDay}"/>
+
+                <tr>
+                    <td colspan="7" class="text-right"><small><g:formatDate date="${operationInstance.dateApplication}" format="d MMMM"/></small></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </g:if>
+
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td>${i + 1}</td>
                 <td><g:formatDate date="${operationInstance.dateApplication}"/></td>
@@ -92,7 +104,7 @@
             <td colspan="6">&nbsp;</td>
             <td class="tdright important">
                 <g:if test="${operations}">
-                = <g:formatNumber number="${finalAmount}" format="###,###.##"/> €
+                    = <g:formatNumber number="${finalAmount}" format="###,###.##"/> €
                 </g:if>
                 <g:else>
                     = <g:formatNumber number="${accountAmount}" format="###,###.##"/> €
