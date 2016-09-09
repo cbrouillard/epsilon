@@ -26,7 +26,6 @@
     </style>
 
     <script src="${resource(dir: '/js', file: 'password.js')}"></script>
-    <ofchart:resources/>
     <r:require module="bootstrap"/>
     <r:require module="jquery-ui"/>
     <g:layoutHead/>
@@ -60,9 +59,7 @@
     </div>
 </nav>
 
-<div class="container-fluid"">
-<g:layoutBody/>
-</div>
+<div class="container-fluid""><g:layoutBody/></div>
 
 <footer>
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
