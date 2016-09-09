@@ -56,8 +56,9 @@
                 <g:set var="previousDay" value="${currentDay}"/>
 
                 <tr>
-                    <td colspan="7" class="text-right"><small><g:formatDate date="${operationInstance.dateApplication}" format="d MMMM"/></small></td>
-                    <td>&nbsp;</td>
+                    <td colspan="3"></td>
+                    <td><small><g:formatDate date="${operationInstance.dateApplication}" format="d MMMM"/></small></td>
+                    <td colspan="4">&nbsp;</td>
                 </tr>
             </g:if>
 
