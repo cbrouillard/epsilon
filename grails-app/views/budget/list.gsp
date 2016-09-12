@@ -42,9 +42,12 @@
 <div class="col-sm-12">
     <div class="around-border">
 
-        <div class="text-right">
+        <div class="text-right pull-right">
             <g:render template="/generic/search"/>
         </div>
+
+        <g:render template="/generic/listsize"/>
+        <div class="clearfix"></div>
 
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
@@ -54,9 +57,11 @@
             <thead>
             <tr>
                 <g:sortableColumn property="name" title="${message(code: 'budget.name.label', default: 'Name')}"/>
-                <th class="text-right">Montant utilisé</th>
-                <th>Dates</th>
+
                 <g:sortableColumn property="amount" title="${message(code: 'budget.amount.label', default: 'Amount')}" class="text-right"/>
+                <th>Dates</th>
+                <th class="text-right">Montant utilisé</th>
+
                 <th><g:message code="budget.categories.label" default="Categories"/></th>
                 <g:sortableColumn property="note" title="${message(code: 'budget.note.label', default: 'Note')}"/>
                 <g:sortableColumn property="lastUpdated"
@@ -73,6 +78,23 @@
                     <td>${fieldValue(bean: budgetInstance, field: "name")}</td>
 
                     <g:set var="currentSold" value="${budgetInstance.currentMonthOperationsSum}"/>
+
+                    <td class="tdright"><b>${fieldValue(bean: budgetInstance, field: "amount")} €</b></td>
+                    <td>
+                        <g:if test="${budgetInstance.startDate || budgetInstance.endDate}">
+                            <g:if test="${budgetInstance.startDate}">
+                                du <g:formatDate date="${budgetInstance.startDate}"/> au
+                            </g:if><g:else>
+                                du premier jour du mois au
+                            </g:else>
+                            <g:if test="${budgetInstance.endDate}">
+                                <g:formatDate date="${budgetInstance.endDate}"/>
+                            </g:if>
+                            <g:else>
+                                dernier jour du mois
+                            </g:else>
+                        </g:if><g:else>chaque mois</g:else>
+                    </td>
 
                     <g:if test="${currentSold < budgetInstance.amount}">
                         <td class="tdright">
@@ -91,23 +113,7 @@
                         <td class="budget tdright">
                     </g:else>
                     <g:formatNumber number="${currentSold}" format="###,###.##" /> €</span></td>
-                    <td>
-                        <g:if test="${budgetInstance.startDate || budgetInstance.endDate}">
-                            <g:if test="${budgetInstance.startDate}">
-                                du <g:formatDate date="${budgetInstance.startDate}"/> au
-                            </g:if><g:else>
-                                du premier jour du mois au
-                            </g:else>
-                            <g:if test="${budgetInstance.endDate}">
-                                <g:formatDate date="${budgetInstance.endDate}"/>
-                            </g:if>
-                            <g:else>
-                                dernier jour du mois
-                            </g:else>
-                        </g:if><g:else>chaque mois</g:else>
-                    </td>
 
-                    <td class="tdright"><b>${fieldValue(bean: budgetInstance, field: "amount")} €</b></td>
                     <td>
                         <ul>
                             <g:each in="${budgetInstance.attachedCategories}" status="c" var="category">

@@ -37,9 +37,12 @@
 <div class="col-sm-12">
     <div class="around-border">
 
-        <div class="text-right">
+        <div class="text-right pull-right">
             <g:render template="/generic/search"/>
         </div>
+
+        <g:render template="/generic/listsize"/>
+        <div class="clearfix"></div>
 
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>

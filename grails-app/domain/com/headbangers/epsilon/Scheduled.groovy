@@ -88,4 +88,15 @@ class Scheduled {
         cal.setTime(this.dateApplication)
         return cal.get(Calendar.DAY_OF_MONTH)
     }
+
+    def getNextDates (){
+        CronExpression expression
+        if (!cronExpression) {
+            expression = new CronExpression(expression:"E m 1")
+        } else {
+            expression = new CronExpression(expression:cronExpression)
+        }
+
+        return expression.getNextDates(3, this.dateApplication);
+    }
 }

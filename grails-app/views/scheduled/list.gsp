@@ -79,7 +79,9 @@
                     </div>
 
                 </div>
+
                 <div class="clearfix">&nbsp;</div>
+
                 <div class="row">
 
                     <div class="counter-shower col-xs-12 col-sm-6">
@@ -109,7 +111,8 @@
                         </div>
 
                         <div class="lbl">
-                            Potentiel épargne
+                            Potentiel épargne<br/>
+                            <small>(ce qui peut être mis de côté)</small>
                         </div>
 
                     </div>
@@ -128,9 +131,12 @@
 <div class="col-sm-12">
     <div class="around-border">
 
-        <div class="text-right">
+        <div class="text-right pull-right">
             <g:render template="/generic/search"/>
         </div>
+
+        <g:render template="/generic/listsize"/>
+        <div class="clearfix"></div>
 
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
@@ -169,11 +175,20 @@
 
                         <td>${fieldValue(bean: scheduledInstance, field: "type")}</td>
                         <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/>
-                        <g:if test="${scheduledInstance?.automatic}">
-                            <small>(${scheduledInstance?.cronExpression ? scheduledInstance.cronName : message(code:'prebuiltcronexpression.SAME_DAY_NEXT_MONTH')})</small>
-                        </g:if>
+                            <g:if test="${scheduledInstance?.automatic}">
+                                <small>(${scheduledInstance?.cronExpression ? scheduledInstance.cronName : message(code: 'prebuiltcronexpression.SAME_DAY_NEXT_MONTH')})</small>
+                            </g:if>
                         </td>
-                        <td><g:formatDate date="${scheduledInstance.dateApplication}"/></td>
+                        <td>
+                            <g:if test="${scheduledInstance.automatic}">
+                            <span data-toggle="tooltip" data-placement="bottom" title="puis ${scheduledInstance.nextDates*.format("dd-MM-yy")}, etc ...">
+                                <g:formatDate date="${scheduledInstance.dateApplication}"/>
+                            </span>
+                            </g:if>
+                            <g:else>
+                                <g:formatDate date="${scheduledInstance.dateApplication}"/>
+                            </g:else>
+                        </td>
                         <td class="tdright"><b><g:formatNumber number="${scheduledInstance?.amount}"
                                                                format="###,###.##"/> €</b></td>
                         <td class="tdcenter">

@@ -71,6 +71,10 @@ class CronExpression {
     }
 
     List<Date> getNextDates (int nb){
+        return getNextDates(nb, new Date())
+    }
+
+    List<Date> getNextDates (int nb, Date startingDate){
         List<Date> dates = new ArrayList<>()
         if (this.expression && this.expression.startsWith("E")){
             def split = this.expression.split(" ")
@@ -78,6 +82,7 @@ class CronExpression {
             def value = new Integer(split[2])
 
             Calendar cal = Calendar.getInstance()
+            cal.setTime(startingDate)
             for (int i = 0; i < nb; i++) {
                 if (selector.equals("d")){
                     cal.add(Calendar.DAY_OF_YEAR, value)
@@ -90,7 +95,7 @@ class CronExpression {
         } else {
             org.quartz.CronExpression runExpr = new org.quartz.CronExpression(this.expression)
 
-            Date running = new Date()
+            Date running = startingDate
             for (int i = 0; i < nb; i++) {
                 dates.add(runExpr.getNextValidTimeAfter(running))
                 running = runExpr.getNextValidTimeAfter(running)

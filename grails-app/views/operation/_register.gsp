@@ -54,7 +54,7 @@
             <g:set var="currentDay" value="${operationInstance.applicationDayInMonth}"/>
             <g:if test="${currentDay != previousDay}">
                 <g:set var="previousDay" value="${currentDay}"/>
-                
+
                 <tr>
                     <td colspan="3"></td>
                     <td class="text-center"><small><g:formatDate date="${operationInstance.dateApplication}" format="d MMMM"/></small></td>
