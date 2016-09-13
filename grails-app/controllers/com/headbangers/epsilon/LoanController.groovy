@@ -58,10 +58,10 @@ class LoanController {
         def scheduled = new Scheduled(params)
         scheduled.automatic = true
         scheduled.amount = loanInstance.refundValue
-        scheduled.type = loanInstance.type.equals (LoanType.ME_TO_US) ? OperationType.RETRAIT : OperationType.DEPOT
+        scheduled.type = loanInstance.type.equals (LoanType.ME_TO_US) ? OperationType.FACTURE : OperationType.DEPOT
         scheduled.name = "Prêt - ${loanInstance.name}"
         scheduled.tiers = loanInstance.tiers
-        scheduled.category = categoryService.findOrCreateCategory (person, message (code:"loan.label"), scheduled.type.equals(OperationType.RETRAIT)?CategoryType.DEPENSE:CategoryType.REVENU)
+        scheduled.category = categoryService.findOrCreateCategory (person, message (code:"loan.label"), scheduled.type.equals(OperationType.FACTURE)?CategoryType.DEPENSE:CategoryType.REVENU)
         scheduled.owner = person
         scheduled.accountFrom = Account.get(params["accountFrom.id"])
         
@@ -128,6 +128,7 @@ class LoanController {
             loanInstance.scheduled.tiers = loanInstance.tiers
             loanInstance.scheduled.accountFrom = Account.get(params["accountFrom.id"])
             loanInstance.scheduled.amount = loanInstance.refundValue
+            loanInstance.scheduled.name = "Prêt - ${loanInstance.name}"
             
             if (loanInstance.scheduled.dateApplication && loanInstance.amount && loanInstance.refundValue){
                 loanInstance.calculatedEndDate = caculateLoanEndDate (loanInstance.currentCalculatedAmountValue, loanInstance.scheduled.dateApplication, loanInstance.refundValue)

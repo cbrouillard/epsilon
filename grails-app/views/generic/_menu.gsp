@@ -78,7 +78,7 @@
                 <g:link controller="wish" class="create" action="create"><img
                         src="${resource(dir: 'img', file: 'gift.png')}"/> Nouveau souhait d'achat</g:link>
             </li>
-            <li class="divider"></li>
+            <li class="divider"></li>--}%
             <li class="dropdown-header">Prêts</li>
             <li>
                 <g:link controller="loan" class="list" action="list"><img
@@ -88,7 +88,7 @@
                 <g:link controller="loan" class="create" action="create"><img
                         src="${resource(dir: 'img', file: 'loan.png')}"/> Nouveau prêt</g:link>
             </li>
-            --}%
+
         </ul>
     </li>
 

@@ -47,6 +47,24 @@
             <fieldset class="form">
                 <div id="formContainer">
 
+                    <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'name', 'has-error')}">
+
+                        <label for="name" class="col-sm-2 control-label mandatory"><g:message
+                                code="scheduled.name.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-font"></span></span>
+                                <g:textField name="name" id="name" required="true"
+                                             value="${scheduledInstance?.name}"
+                                             class="form-control" autofocus=""/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
                     <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'tiers', 'errors')}">
 
                         <label for="tiers" class="col-sm-2 control-label mandatory"><g:message

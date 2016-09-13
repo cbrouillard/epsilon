@@ -110,9 +110,29 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-euro"></span></span>
+
                                 <g:textField pattern="^([0-9.,])*" name="refundValue" id="refundValue${type}" required="true"
-                                         value="${loanInstance?.refundValue}"
+                                         value="${formatNumber(number:loanInstance?.refundValue, format:'0.##')}"
                                          class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ${hasErrors(bean: loanInstance, field: 'currentCalculatedAmountValue', 'has-error')}">
+
+                        <label for="currentCalculatedAmountValue" class="col-sm-2 control-label mandatory"><g:message
+                                code="loan.currentCalculatedAmountValue.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-euro"></span></span>
+
+                                <g:textField pattern="^([0-9.,])*" name="currentCalculatedAmountValue" id="currentCalculatedAmountValue" required="true"
+                                             value="${formatNumber(number:loanInstance?.currentCalculatedAmountValue, format:'0.##')}"
+                                             class="form-control"/>
                             </div>
 
                             <div class="help-block with-errors"></div>
@@ -129,7 +149,7 @@
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-calendar"></span></span>
                                 <input type="text"
-                                       value="${formatDate(format: 'dd/MM/yyyy', date: scheduled?.dateApplication)}"
+                                       value="${formatDate(format: 'dd/MM/yyyy', date: loanInstance?.scheduled?.dateApplication)}"
                                        name="dateApplication"
                                        id="dateApplication${type}" required="true" class="datePicker form-control"/>
                             </div>
