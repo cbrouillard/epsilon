@@ -1,5 +1,9 @@
 package com.headbangers.epsilon
 
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -19,7 +23,7 @@ class WishController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 
         def person = springSecurityService.getCurrentUser()
-        def wishes = genericService.loadUserObjects (person, Wish.class, params)
+        def wishes = genericService.loadUserObjects(person, Wish.class, params)
 
         [wishInstanceList: wishes, wishInstanceTotal: wishes.totalCount]
     }
@@ -49,10 +53,39 @@ class WishController {
         redirect(action: "list")
     }
 
+    def bulksave() {
+        def person = springSecurityService.getCurrentUser()
+
+        String data = params.bulkData
+        params.remove("bulkData")
+        if (data) {
+
+            String[] links = data.split("\n")
+            links.each { link ->
+                try {
+                    Wish wish = new Wish(params)
+                    wish.owner = person
+                    wish.webShopUrl = link
+
+                    Document doc = Jsoup.connect(link).userAgent("Mozilla").get()
+                    wish.name = doc.title()
+
+                    tryToGuessPrice(wish, link, doc)
+
+                    wish.save(flush: true)
+                } catch (Exception e) {
+                    // next
+                }
+            }
+            redirect(action: "list")
+            return
+        }
+        redirect(action: "create")
+    }
+
     def create_operation() {
         def person = springSecurityService.getCurrentUser()
         def wishInstance = Wish.findByIdAndOwner(params.id, person)
-
 
         if (!wishInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
@@ -63,6 +96,7 @@ class WishController {
         params.remove("id")
         def operationInstance = new Operation()
         operationInstance.amount = wishInstance.price
+        operationInstance.dateApplication = new Date()
         bindData(operationInstance, params)
 
         [wishInstance: wishInstance, operationInstance: operationInstance]
@@ -154,5 +188,64 @@ class WishController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+
+    def guess() {
+        def wishInstance = new Wish(params)
+        def person = springSecurityService.getCurrentUser()
+        def accounts = Account.findAllByOwner(person)
+        if (params.url) {
+            wishInstance.webShopUrl = params.url
+
+            try {
+                Document doc = Jsoup.connect(params.url).userAgent("Mozilla").get()
+                wishInstance.name = doc.title()
+
+                tryToGuessPrice(wishInstance, params.url, doc)
+            } catch (MalformedURLException e) {
+                // de la merde
+                flash.message = "Lien non valide"
+            } catch (Exception e) {
+                flash.message = "Lien non valide"
+            }
+
+        }
+
+        render view: 'create', model: [wishInstance: wishInstance, accounts: accounts]
+    }
+
+    private void tryToGuessPrice(def wishInstance, String url, Document doc) {
+        if (url.contains("amazon")) {
+            Element price = doc.getElementById("priceblock_ourprice")
+            if (price) {
+                wishInstance.priceFromWebsite = price.text()
+                try {
+                    wishInstance.price = new Double(price.text().substring(4).replace(",", ".").replace("€", " ").trim())
+                } catch (Exception e) {
+                    // ok pas grave.
+                }
+            }
+
+            return
+        }
+
+        Elements elements = doc.select("[itemprop=\"price\"]")
+        if (!elements) {
+            elements = doc.select("[class=\"currentPrice\"")
+        }
+
+        if (elements) {
+            String price = elements.get(0).text()
+            wishInstance.priceFromWebsite = price
+            try {
+                wishInstance.price = new Double(price.replace(",", ".").replace("€", " ").trim().reverse().replaceFirst(" ", ".").reverse())
+            } catch (Exception e) {
+                // ok pas grave.
+            }
+
+            return
+        }
+
+        wishInstance.price = 0D;
     }
 }

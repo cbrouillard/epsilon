@@ -39,64 +39,73 @@
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
-
-        <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-
-                    <g:sortableColumn property="name" title="${message(code: 'wish.name.label', default: 'Name')}"/>
-
-                    <g:sortableColumn property="description"
-                                      title="${message(code: 'wish.description.label', default: 'Description')}"/>
-
-                    <g:sortableColumn property="webShopUrl"
-                                      title="${message(code: 'wish.webShopUrl.label', default: 'Web Shop Url')}"/>
-
-                    <g:sortableColumn property="price" title="${message(code: 'wish.price.label', default: 'Price')}"
-                                      class="text-right"/>
-
-                    <g:sortableColumn property="previsionBuy"
-                                      title="${message(code: 'wish.previsionBuy.label', default: 'Prevision Buy')}"/>
-
-                    <g:sortableColumn property="boughtDate"
-                                      title="${message(code: 'wish.boughtDate.label', default: 'Bought Date')}"/>
-                    <th class="text-right">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <g:each in="${wishInstanceList}" status="i" var="wishInstance">
-                    <tr>
-
-                        <td>${fieldValue(bean: wishInstance, field: "name")}</td>
-
-                        <td>${fieldValue(bean: wishInstance, field: "description")}</td>
-                        <td>
-                            <g:if test="${wishInstance.webShopUrl}">
-                                <a href="${wishInstance.webShopUrl}" target="_blank">${wishInstance.webShopUrl}</a>
+        <div class="row">
+            <g:each in="${wishInstanceList}" status="i" var="wishInstance">
+                <div class="col-lg-3 col-md-5 col-sm-5">
+                    <div class="thumbnail panel-default">
+                        <div style="height: 200px;" class="wish-img">
+                            <g:if test="${wishInstance.thumbnailUrl}">
+                                <a href="${wishInstance.webShopUrl}" target="_blank">
+                                    <img style="max-height: 200px;max-width: 200px;vertical-align: middle;"
+                                         src="${wishInstance.thumbnailUrl}"/>
+                                </a>
                             </g:if>
-                        </td>
+                            <g:else>
+                                <g:link title="Editer" action="edit" id="${wishInstance.id}">
+                                    <img style="max-height: 200px;max-width: 200px;"
+                                         src="${resource(dir: 'img', file: 'no-image.png')}"/>
+                                </g:link>
+                            </g:else>
+                        </div>
 
-                        <td class="text-right">${fieldValue(bean: wishInstance, field: "price")} €</td>
-
-                        <td><g:formatDate date="${wishInstance.previsionBuy}"/></td>
-
-                        <td><g:formatDate date="${wishInstance.boughtDate}"/></td>
-                        <td class="text-right">
-                            <g:link title="Afficher les détails" action="show" id="${wishInstance.id}"
-                                    data-toggle="modal" data-target="#modalWindow_show"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"
-                                    alt="Détails"/></g:link>
-                            <g:link title="Editer" action="edit" id="${wishInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}" alt="Editer"/></g:link>
-                            <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'buy.png')}" alt="Acheter!"/></g:link>
-                        </td>
-
-                    </tr>
-                </g:each>
-                </tbody>
-            </table>
+                        <div class="caption text-center">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success"
+                                    style=" word-wrap: break-word;height: 95px;">
+                                    <strong>${fieldValue(bean: wishInstance, field: "name")}</strong>
+                                </li>
+                                <li class="list-group-item">
+                                    ${fieldValue(bean: wishInstance, field: "price")} €
+                                </li>
+                                <g:if test="${wishInstance.webShopUrl}">
+                                    <li class="list-group-item">
+                                        <a href="${wishInstance.webShopUrl}" target="_blank">Lien boutique</a>
+                                    </li>
+                                </g:if>
+                                <g:if test="${wishInstance.previsionBuy}">
+                                    <li class="list-group-item">
+                                        Date prévue pour l'achat : <g:formatDate date="${wishInstance.previsionBuy}"/>
+                                    </li>
+                                </g:if>
+                                <g:if test="${wishInstance.boughtDate}">
+                                    <li class="list-group-item">
+                                        Date d'achat : <g:formatDate date="${wishInstance.boughtDate}"/>
+                                    </li>
+                                </g:if>
+                                <g:if test="${wishInstance.description}">
+                                    <li class="list-group-item">
+                                        ${fieldValue(bean: wishInstance, field: "description")}
+                                    </li>
+                                </g:if>
+                                <li class="list-group-item">
+                                    <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                                        <g:link title="Afficher les détails" action="show" id="${wishInstance.id}"
+                                                data-toggle="modal" data-target="#modalWindow_show" class="btn"><img
+                                                src="${resource(dir: 'img', file: 'details.png')}"
+                                                alt="Détails"/></g:link>
+                                        <g:link title="Editer" action="edit" id="${wishInstance.id}" class="btn"><img
+                                                src="${resource(dir: 'img', file: 'edit.png')}" alt="Editer"/></g:link>
+                                        <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"
+                                                class="btn"><img
+                                                src="${resource(dir: 'img', file: 'buy.png')}" alt="Acheter!"/></g:link>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </g:each>
+            <div class="clearfix"></div>
         </div>
 
         <div class="pagination pull-right">

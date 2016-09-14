@@ -8,7 +8,9 @@ class Wish {
     String name
     String description
     Double price
+    String priceFromWebsite
     String webShopUrl
+    String thumbnailUrl
     
     boolean bought = false
     Date boughtDate
@@ -17,12 +19,15 @@ class Wish {
     
     Person owner
     Account account
-    
+
+    static transients = ['priceFromWebsite']
+
     static constraints = {
         name nullable:false, blank:false
         description nullable:true
         price nullable:false
         webShopUrl nullable:true
+        thumbnailUrl nullable:true
         boughtDate nullable:true
         previsionBuy nullable:true
     }
@@ -30,6 +35,8 @@ class Wish {
     static mapping = {
         id generator:'uuid'
         description type:'text'
+        webShopUrl type:'text'
+        thumbnailUrl type:'text'
     }
 
     Date dateCreated

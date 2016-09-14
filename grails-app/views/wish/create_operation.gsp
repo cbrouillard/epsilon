@@ -11,7 +11,7 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>J'achète !</h1>
+    <h1>J'achète ! <small>${wishInstance?.name}</small></h1>
     <hr/>
 </div>
 
@@ -132,21 +132,6 @@
                             </div>
 
                             <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="pointed${type}"><g:message
-                                code="operation.pointed.label"/></label>
-
-                        <div class="col-sm-10">
-                            <div class="checkbox">
-                                <label>
-                                    <g:checkBox id="pointed${type}" name="pointed"
-                                                value="${operationInstance?.pointed}" class="checkbox"/>
-                                </label>
-                            </div>
-
                         </div>
                     </div>
 

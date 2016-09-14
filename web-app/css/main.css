@@ -354,4 +354,8 @@ input.password,
  
 .passwordStrengthBar div.useless { 
     background-color: red; 
-} 
+}
+
+.wish-img img{
+    vertical-align: middle;
+}
