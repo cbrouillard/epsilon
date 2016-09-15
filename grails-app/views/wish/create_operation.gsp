@@ -25,7 +25,7 @@
         <g:set var="type" value="facture"/>
 
         <g:form action="save_operation" method="post" class="form-horizontal">
-            <g:hiddenField name="whish.id" value="${wishInstance.id}"/>
+            <g:hiddenField name="wishId" value="${wishInstance.id}"/>
             <fieldset class="form">
                 <div id="formContainer">
 
@@ -43,7 +43,7 @@
                                              value="${operationInstance?.tiers?.name}"
                                              class="form-control typeahead-tiers"
                                              required="true"
-                                             autocomplete="off"/>
+                                             autocomplete="off" autofocus="true"/>
                                 <g:if test="${parameterBayesianFilter.equals("true")}">
                                     <jq:jquery>
                                         jQuery('#tiers${type}').focusout (function(){tryToGuessCategoryWithTiersId(jQuery('#tiers${type}').val(), 'category${type}');});
@@ -107,7 +107,7 @@
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-euro"></span></span>
                                 <g:textField pattern="^([0-9.,])*" id="amount${type}" name="amount"
-                                         value="${wishInstance?.price}"
+                                             value="${formatNumber(number:wishInstance?.price, format:'0.##')}"
                                          required="true"
                                          class="form-control"/>
                             </div>

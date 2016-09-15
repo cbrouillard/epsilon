@@ -25,9 +25,38 @@
                 src="${resource(dir: 'img', file: 'gift.png')}"
                 alt=">"/> Créer un nouveau souhait</g:link></h1>
 
-    <div class="alert alert-info">
-        Voici la liste de vos futurs achats. Saisissez vos projets : Epsilon se charge de vous dire si toutes vos
-        envies rentrent dans votre budget !
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="alert alert-info">
+                Voici la liste de vos futurs achats. Saisissez vos projets : Epsilon se charge de vous dire si toutes vos
+                envies rentrent dans votre budget !
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="around-border">
+                <div class="row">
+
+                    <div class="counter-shower col-xs-12 col-sm-12">
+
+                        <div class="number">
+                            <span class="label label-default">
+                                <g:formatNumber number="${wishInstanceList*.price.sum()}"
+                                                format="###,###.##"/> €
+                            </span>
+                        </div>
+
+                        <div class="lbl">
+                            Total des achats prévus
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <hr/>
@@ -36,73 +65,16 @@
 <div class="col-sm-12">
     <div class="around-border">
 
+        <g:render template="/generic/listsize"/>
+        <div class="clearfix">&nbsp;</div>
+
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
         <div class="row">
             <g:each in="${wishInstanceList}" status="i" var="wishInstance">
-                <div class="col-lg-3 col-md-5 col-sm-5">
-                    <div class="thumbnail panel-default">
-                        <div style="height: 200px;" class="wish-img">
-                            <g:if test="${wishInstance.thumbnailUrl}">
-                                <a href="${wishInstance.webShopUrl}" target="_blank">
-                                    <img style="max-height: 200px;max-width: 200px;vertical-align: middle;"
-                                         src="${wishInstance.thumbnailUrl}"/>
-                                </a>
-                            </g:if>
-                            <g:else>
-                                <g:link title="Editer" action="edit" id="${wishInstance.id}">
-                                    <img style="max-height: 200px;max-width: 200px;"
-                                         src="${resource(dir: 'img', file: 'no-image.png')}"/>
-                                </g:link>
-                            </g:else>
-                        </div>
-
-                        <div class="caption text-center">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success"
-                                    style=" word-wrap: break-word;height: 95px;">
-                                    <strong>${fieldValue(bean: wishInstance, field: "name")}</strong>
-                                </li>
-                                <li class="list-group-item">
-                                    ${fieldValue(bean: wishInstance, field: "price")} €
-                                </li>
-                                <g:if test="${wishInstance.webShopUrl}">
-                                    <li class="list-group-item">
-                                        <a href="${wishInstance.webShopUrl}" target="_blank">Lien boutique</a>
-                                    </li>
-                                </g:if>
-                                <g:if test="${wishInstance.previsionBuy}">
-                                    <li class="list-group-item">
-                                        Date prévue pour l'achat : <g:formatDate date="${wishInstance.previsionBuy}"/>
-                                    </li>
-                                </g:if>
-                                <g:if test="${wishInstance.boughtDate}">
-                                    <li class="list-group-item">
-                                        Date d'achat : <g:formatDate date="${wishInstance.boughtDate}"/>
-                                    </li>
-                                </g:if>
-                                <g:if test="${wishInstance.description}">
-                                    <li class="list-group-item">
-                                        ${fieldValue(bean: wishInstance, field: "description")}
-                                    </li>
-                                </g:if>
-                                <li class="list-group-item">
-                                    <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                                        <g:link title="Afficher les détails" action="show" id="${wishInstance.id}"
-                                                data-toggle="modal" data-target="#modalWindow_show" class="btn"><img
-                                                src="${resource(dir: 'img', file: 'details.png')}"
-                                                alt="Détails"/></g:link>
-                                        <g:link title="Editer" action="edit" id="${wishInstance.id}" class="btn"><img
-                                                src="${resource(dir: 'img', file: 'edit.png')}" alt="Editer"/></g:link>
-                                        <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"
-                                                class="btn"><img
-                                                src="${resource(dir: 'img', file: 'buy.png')}" alt="Acheter!"/></g:link>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="col-lg-3 col-md-5 col-sm-5" id="refreshWish${wishInstance.id}">
+                    <g:render template="onewish" model="[wishInstance: wishInstance]"/>
                 </div>
             </g:each>
             <div class="clearfix"></div>
