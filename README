@@ -3,4 +3,4 @@ J'insiste bien sur "mini" puisqu'il s'agit surtout d'un outil permettant de suiv
 
 Epsilon est fourni sous la forme d'un war, déployable sur un tomcat par exemple. Il requiert l'utilisation d'une base de données (Postgresql, MySql, HSQLDB, autres ...)
 
-Epsilon est basé sur Grails.
+Epsilon s'appuie sur Grails.
