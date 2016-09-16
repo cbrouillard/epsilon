@@ -57,10 +57,6 @@
                         <a href="#" class="btn"><small>&#10003;</small></a>
                     </g:else>
 
-                    <g:link title="Afficher les détails" action="show" id="${wishInstance.id}"
-                            data-toggle="modal" data-target="#modalWindow_show" class="btn"><img
-                            src="${resource(dir: 'img', file: 'details.png')}"
-                            alt="Détails"/></g:link>
                     <g:link title="Editer" action="edit" id="${wishInstance.id}" class="btn"><img
                             src="${resource(dir: 'img', file: 'edit.png')}" alt="Editer"/></g:link>
                     <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"
