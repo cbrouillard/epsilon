@@ -41,7 +41,7 @@
 
                         <div class="number">
                             <span class="label label-default">
-                                <g:formatNumber number="${wishInstanceList*.price.sum()}"
+                                <g:formatNumber number="${totalPrice}"
                                                 format="###,###.##"/> €
                             </span>
                         </div>
@@ -56,7 +56,6 @@
             </div>
         </div>
 
-
     </div>
 
     <hr/>
@@ -65,23 +64,54 @@
 <div class="col-sm-12">
     <div class="around-border">
 
-        <g:render template="/generic/listsize"/>
-        <div class="clearfix">&nbsp;</div>
+        <div class="col-lg-2">
 
-        <g:if test="${flash.message}">
-            <div class="alert alert-info">${flash.message}</div>
-        </g:if>
-        <div class="row">
-            <g:each in="${wishInstanceList}" status="i" var="wishInstance">
-                <div class="col-lg-3 col-md-5 col-sm-5" id="refreshWish${wishInstance.id}">
-                    <g:render template="onewish" model="[wishInstance: wishInstance]"/>
-                </div>
-            </g:each>
-            <div class="clearfix"></div>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success">
+                    <strong>Filtres</strong>
+                </li>
+                <g:link action="list" params="${params + [b: false]}" class="list-group-item ${!params.b || params.b.equals('false') ? 'list-group-item-success active': ''}">
+                    Non achetés
+                </g:link>
+                <g:link action="list" params="${params + [b: true]}" class="list-group-item ${params.b && params.b.equals('true') ? 'list-group-item-success  active': ''}">
+                    Déjà achetés
+                </g:link>
+                <li class="list-group-item list-group-item-success">
+                    <strong>Catégories</strong>
+                </li>
+                <g:link action="list" params="${params + [c: null]}" class="list-group-item ${!params.c ? 'list-group-item-success active': ''}">
+                    Toutes confondues
+                </g:link>
+                <g:each in="${categories}" var="cat">
+                    <g:link action="list" params="${params + [c: cat.id]}" class="list-group-item ${params.c && params.c.equals(cat.id) ? 'list-group-item-success active': ''}">
+                        ${cat?.name}
+                    </g:link>
+                </g:each>
+            </ul>
+
         </div>
 
-        <div class="pagination pull-right">
-            <g:paginate total="${wishInstanceTotal}"/>
+        <div class="col-lg-10">
+
+            <g:render template="/generic/listsize"/>
+            <div class="clearfix">&nbsp;</div>
+
+            <g:if test="${flash.message}">
+                <div class="alert alert-info">${flash.message}</div>
+            </g:if>
+            <div class="row">
+                <g:each in="${wishInstanceList}" status="i" var="wishInstance">
+                    <div class="col-lg-3 col-md-5 col-sm-5" id="refreshWish${wishInstance.id}">
+                        <g:render template="onewish" model="[wishInstance: wishInstance]"/>
+                    </div>
+                </g:each>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="pagination pull-right">
+                <g:paginate total="${wishInstanceTotal}"/>
+            </div>
+
         </div>
 
         <div class="clearfix">&nbsp;</div>

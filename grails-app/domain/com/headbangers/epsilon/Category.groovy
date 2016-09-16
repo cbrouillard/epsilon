@@ -94,4 +94,12 @@ class Category {
     public String toString() {
         return name
     }
+
+    public static Comparator<Category> nameComparator = new Comparator<Category>() {
+        @Override
+        int compare(Category o1, Category o2) {
+            // println "Comparing ${o1.name} with ${o2.name} return ${o1.name.compareTo(o2.name)}"
+            return o1.name.compareTo(o2.name)
+        }
+    }
 }

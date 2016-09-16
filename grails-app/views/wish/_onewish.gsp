@@ -1,9 +1,8 @@
-<div class="thumbnail panel-default">
+<div  class="thumbnail">
     <div style="height: 200px;" class="wish-img">
         <g:if test="${wishInstance.thumbnailUrl}">
             <a href="${wishInstance.webShopUrl}" target="_blank">
-                <img style="max-height: 200px;max-width: 200px;vertical-align: middle;"
-                     src="${wishInstance.thumbnailUrl}"/>
+                <img style="max-height: 200px;" src="${wishInstance.thumbnailUrl}"/>
             </a>
         </g:if>
         <g:else>

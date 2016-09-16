@@ -24,15 +24,33 @@ class WishController {
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 20, 100)
 
+        boolean alreadyBought = params.b ? params.b.equals("true") : false
+        String catId = params.c ?: null
+
         def person = springSecurityService.getCurrentUser()
         def wishes = Wish.createCriteria().list(params, {
-            eq("bought", false)
+            owner{eq ("id", person.id)}
+            eq("bought", alreadyBought)
+            if (catId){
+                category { eq ("id", catId) }
+            }
             order("price", "desc")
+
         });
 
-        genericService.loadUserObjects(person, Wish.class, params)
+        def totalPrice = Wish.createCriteria().get {
+            owner{eq ("id", person.id)}
+            eq("bought", false)
+            projections {
+                sum('price')
+            }
+        }
 
-        [wishInstanceList: wishes, wishInstanceTotal: wishes.totalCount]
+        def allWishes = genericService.loadUserObjects(person, Wish.class)
+        List<Category> categories = ((allWishes*.category) - null).toSet()
+                .sort(Category.nameComparator)
+
+        [wishInstanceList: wishes, wishInstanceTotal: wishes.totalCount, categories:categories, totalPrice:totalPrice]
     }
 
     def create() {
@@ -49,6 +67,11 @@ class WishController {
         def wishInstance = new Wish(params)
 
         wishInstance.owner = person
+
+        if (params["category.name"]) {
+            // we search for the category, if we don't find it then auto-create
+            wishInstance.category = categoryService.findOrCreateCategory(person, params["category.name"], CategoryType.DEPENSE)
+        }
 
         if (!wishInstance.save(flush: true)) {
             def accounts = Account.findAllByOwner(person)
@@ -104,6 +127,7 @@ class WishController {
         operationInstance.amount = wishInstance.price
         operationInstance.dateApplication = new Date()
         operationInstance.note = wishInstance.description
+        operationInstance.category = wishInstance.category
         bindData(operationInstance, params)
 
         [wishInstance: wishInstance, operationInstance: operationInstance]
@@ -213,6 +237,11 @@ class WishController {
             }
         }
 
+        if (params["category.name"]) {
+            // we search for the category, if we don't find it then auto-create
+            wishInstance.category = categoryService.findOrCreateCategory(person, params["category.name"], CategoryType.DEPENSE)
+            params.remove("category.name")
+        }
         wishInstance.properties = params
 
         if (!wishInstance.save(flush: true)) {

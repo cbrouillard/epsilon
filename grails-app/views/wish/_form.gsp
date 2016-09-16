@@ -93,6 +93,27 @@
     </div>
 </div>
 
+<div class="form-group ${hasErrors(bean: wishInstance, field: 'category', 'errors')}">
+
+    <label for="category" class="col-sm-2 control-label"><g:message
+            code="operation.category.label"/></label>
+
+    <div class="col-sm-10">
+        <div class="input-group">
+            <span class="input-group-addon"><span
+                    class="glyphicon glyphicon-tag"></span></span>
+
+            <g:textField id="category" name="category.name"
+                         value="${wishInstance?.category?.name}"
+                         class="form-control typeahead-categories-facture"
+                         autocomplete="off"/>
+
+        </div>
+
+        <div class="help-block with-errors"></div>
+    </div>
+</div>
+
 
 <div class="form-group ${hasErrors(bean: wishInstance, field: 'previsionBuy', 'has-error')}">
 

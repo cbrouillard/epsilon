@@ -19,6 +19,7 @@ class Wish {
     
     Person owner
     Account account
+    Category category
 
     static transients = ['priceFromWebsite']
 
@@ -30,6 +31,7 @@ class Wish {
         thumbnailUrl nullable:true
         boughtDate nullable:true
         previsionBuy nullable:true
+        category nullable:true
     }
     
     static mapping = {
