@@ -2,13 +2,13 @@
     <div style="height: 200px;" class="wish-img">
         <g:if test="${wishInstance.thumbnailUrl}">
             <a href="${wishInstance.webShopUrl}" target="_blank">
-                <img style="max-height: 200px;" src="${wishInstance.thumbnailUrl}"/>
+                <img style="max-height: 200px;" src="${wishInstance.thumbnailUrl}" class="img-rounded"/>
             </a>
         </g:if>
         <g:else>
             <g:link title="Editer" action="edit" id="${wishInstance.id}">
                 <img style="max-height: 200px;max-width: 200px;"
-                     src="${resource(dir: 'img', file: 'no-image.png')}"/>
+                     src="${resource(dir: 'img', file: 'no-image.png')}" />
             </g:link>
         </g:else>
     </div>

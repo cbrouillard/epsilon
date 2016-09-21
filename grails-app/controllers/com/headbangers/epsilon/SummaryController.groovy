@@ -32,21 +32,28 @@ class SummaryController {
         def futuresScheduled = scheduledService.findFutures(person)
 
         def depense = operationService.calculateDepenseForThisMonth(person)
-        def revenu = operationService.calculateRevenuForThisMonth(person)
+        // def revenu = operationService.calculateRevenuForThisMonth(person)
 
         def budgets = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
         budgets = budgets.findAll  {b -> b.active == true}
 
-        def pinnedCategories = genericService.loadUserObjects(person, Category.class, [order:'asc', sort:'name'])
-        pinnedCategories= pinnedCategories.findAll({c -> c.pinned == true})
+        def pinnedCategories = Category.createCriteria().list([order:'asc', sort:'name'], {
+            owner {eq("id", person.id)}
+            eq("pinned", true)
+        })
+        def pinnedTiers = Tiers.createCriteria().list([order:'asc', sort:'name'], {
+            owner {eq("id", person.id)}
+            eq("pinned", true)
+        })
+        def allPinned = (pinnedTiers + pinnedCategories)
 
         def graphData = Operation.executeQuery(
                 'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.owner p where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? and p.id = ? group by c.name',
                 [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.RETRAIT, CategoryType.DEPENSE, person.id]).asList()
 
         [accounts: accounts, lates: lateScheduled, today: todayScheduled,
-         future  : futuresScheduled, depense: depense, revenu: revenu, person: person, budgets: budgets, graphData: graphData,
-                pinnedCat:pinnedCategories
+         future  : futuresScheduled, depense: depense, person: person, budgets: budgets, graphData: graphData,
+                pinned:allPinned
         ]
     }
 }

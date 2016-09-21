@@ -63,7 +63,7 @@
                                       title="${message(code: 'tiers.lastUpdated.label', default: 'Last Updated')}"/>
 
                     <th class="text-right">Solde</th>
-
+                    <th class="text-center">Surveillance</th>
                     <th class="text-right">Actions</th>
                 </tr>
                 </thead>
@@ -79,6 +79,11 @@
 
                         <td><g:formatDate date="${tiersInstance.lastUpdated}"/></td>
                         <td class="tdright"><b><g:formatNumber number="${tiersInstance.sold}" format="###,###.##"/> €</b></td>
+                        <td class="text-center">
+                            <div id="tiers${tiersInstance.id}-pinned">
+                                <g:render template="pinnedactions" model="[tiers: tiersInstance]"/>
+                            </div>
+                        </td>
                         <td class="text-right">
                             <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
                                     action="show" id="${tiersInstance.id}"><img

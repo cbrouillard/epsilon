@@ -31,72 +31,47 @@
         <div class="alert alert-info">${flash.message}</div>
     </div>
 </g:if>
-
-<div class="col-sm-6">
-    <div class="around-border">
-
-        <div class="alert alert-info">
-            Paramètrage de l'application
-        </div>
-
-        <g:form action="parameterize" method="post" class="form-horizontal">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Valeur</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr>
-                    <td><g:message code="parameter.bayesian.label"/></td>
-                    <td><g:message code="parameter.bayesian.description"/></td>
-                    <td class="tdright"><g:checkBox name="bayesian_filter"
-                                                    value="${new Boolean(parameters.bayesian_filter)}"/></td>
-                </tr>
-
-                </tbody>
-            </table>
-
-
-            <div class="control-group">
-                <div class="controls text-right">
-
-                    <span class="button"><g:submitButton name="parameterize" class="save btn btn-primary"
-                                                         value="${message(code: 'default.button.update.label', default: 'Update')}"/></span>
-                </div>
-            </div>
-        </g:form>
-
-    </div>
-</div>
-
-<div class="col-sm-6">
+<div class="col-sm-12">
     <div class="around-border">
 
         <div class="alert alert-info">
             Vos informations personnelles
         </div>
 
-        <dl class="dl-horizontal">
-            <dt><g:message code="person.email.label" default="Email"/></dt>
-            <dd>${fieldValue(bean: person, field: "email")}</dd>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><g:message code="person.email.label" default="Email"/></label>
 
-            <dt><g:message code="person.username.label" default="Username"/></dt>
-            <dd>${fieldValue(bean: person, field: "username")}</dd>
-
-            <dt><g:message code="person.userRealName.label" default="UserRealName"/></dt>
-            <dd>${fieldValue(bean: person, field: "userRealName")}</dd>
-        </dl>
-
-
-        <div class="control-group">
-            <div class="controls  text-right">
-                <g:link action="edit" class="btn btn-primary">${message(code: 'default.button.edit.label', default: 'Edit')}</g:link>
+                <div class="col-sm-10">
+                    <p class="form-control-static">${fieldValue(bean: person, field: "email")}</p>
+                </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><g:message code="person.username.label" default="Username"/></label>
+
+                <div class="col-sm-10">
+                    <p class="form-control-static">${fieldValue(bean: person, field: "username")}</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><g:message code="person.userRealName.label" default="UserRealName"/></label>
+
+                <div class="col-sm-10">
+                    <p class="form-control-static">${fieldValue(bean: person, field: "userRealName")}</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <g:link action="edit"
+                            class="btn btn-primary">${message(code: 'default.button.edit.label', default: 'Edit')}</g:link>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+
 
     </div>
 </div>

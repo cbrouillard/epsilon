@@ -29,7 +29,7 @@
                 alt=">"/> Créer une nouvelle échéance</g:link></h1>
 
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-7">
             <div class="alert alert-info">
                 Les échéances sont des opérations récurrentes qui sont exécutées une seule fois par mois. Il peut s'agir par exemple du dépôt de salaire
                 ou encore du paiement d'un crédit.<br/><br/>
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             <div class="around-border">
                 <div class="row">
 

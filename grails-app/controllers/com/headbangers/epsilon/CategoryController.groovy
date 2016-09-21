@@ -31,6 +31,8 @@ class CategoryController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        params.sort = params.sort ?: "name"
+        params.order = params.order ?: "asc"
 
         def person = springSecurityService.getCurrentUser()
         def categories = genericService.loadUserObjects (person, Category.class, params)

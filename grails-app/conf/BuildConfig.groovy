@@ -47,11 +47,10 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:3.6.10.4"
         runtime ":jquery:1.11.1"
         runtime ":resources:1.2.RC2"
-	runtime "org.grails.plugins:cors:1.1.8"
+	    runtime "org.grails.plugins:cors:1.1.8"
         build ":tomcat:7.0.47"
 
         compile ":quartz:1.0.2"
-        //        compile ":bayes:0.4"
         compile ":multi-select:0.2"
         compile ":mail:1.0.7"
 

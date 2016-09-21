@@ -143,29 +143,30 @@
     </div>
     </g:if>
 
-    <g:if test="${pinnedCat}">
+    <g:if test="${pinned}">
     <hr/>
     <div class="around-border">
-        <div class="alert alert-info">Catégories surveillées <span class="pull-right"><g:link controller="category" class="list" action="list"><img
-                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
+        <div class="alert alert-info">Catégories/tiers surveillés</div>
         <div class="budgets list">
             <table class="table table-striped">
                 <tbody>
                 <g:set var="pinnedAmount" value="${0D}"/>
-                <g:each in="${pinnedCat}" var="cat" status="c">
+                <g:each in="${pinned}" var="onepine" status="c">
 
-                    <g:set var="currentSold" value="${cat.currentMonthOperationsSum}"/>
+                    <g:set var="currentSold" value="${onepine.currentMonthOperationsSum}"/>
 
                     <tr>
-                        <td class="principal">${cat.name}</td>
+                        <td class="principal">${onepine.name}</td>
                         <td class="tdright">
                             <span class="label label-default">
                                 <g:formatNumber number="${currentSold}" format="###,###.##"/> €
                             </span>
                         </td>
                         <td class="tdright fixedsize">
-                            <g:link title="Afficher le registre" controller="category" action="operations"
-                                    params="[id: cat.id]"><img
+                            <g:link title="Afficher le registre"
+                                    controller="${onepine.class.canonicalName.contains("Tiers") ? "tiers" :"category"}"
+                                    action="operations"
+                                    params="[id: onepine.id]"><img
                                     src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
                         </td>
                     </tr>
@@ -234,7 +235,7 @@
 
         <div class="row">
 
-            <div class="counter-shower col-xs-12 col-sm-6">
+            <div class="counter-shower col-xs-12 col-sm-12">
 
                 <div class="number">
                     <span class="label label-default">
@@ -244,20 +245,6 @@
                 </div>
                 <div class="lbl">
                     Dépenses réelles du mois
-                </div>
-
-            </div>
-
-            <div class="counter-shower col-xs-12 col-sm-6">
-
-                <div class="number">
-                    <span class="label label-default">
-                        <g:formatNumber number="${revenu}"
-                                        format="###,###.##"/> €
-                    </span>
-                </div>
-                <div class="lbl">
-                    Revenus du mois
                 </div>
 
             </div>

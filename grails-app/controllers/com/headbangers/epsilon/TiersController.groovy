@@ -30,6 +30,8 @@ class TiersController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        params.sort = params.sort ?: "name"
+        params.order = params.order ?: "asc"
 
         def person = springSecurityService.getCurrentUser()
         def tiers = genericService.loadUserObjects(person, Tiers.class, params)
@@ -163,5 +165,34 @@ class TiersController {
 
         render(view: 'list', model: [tiersInstanceList: tiers, tiersInstanceTotal: tiers.size(), query:params.query])
 
+    }
+
+    def pinne = {
+        def person = springSecurityService.getCurrentUser()
+        def tiers = genericService.loadUserObject (person, Tiers.class, params.id)
+
+        if (tiers){
+            tiers.pinned = true
+            tiers.save(flush:true)
+
+            render (template:'pinnedactions', model:[tiers: tiers])
+        } else{
+            redirect(action: "list")
+        }
+
+    }
+
+    def unpinne = {
+        def person = springSecurityService.getCurrentUser()
+        def tiers = genericService.loadUserObject (person, Tiers.class, params.id)
+
+        if (tiers){
+            tiers.pinned = false
+            tiers.save(flush:true)
+
+            render (template:'pinnedactions', model:[tiers: tiers])
+        } else{
+            redirect(action: "list")
+        }
     }
 }
