@@ -22,7 +22,7 @@
 <body>
 <div class="col-sm-12">
     <g:render template="/generic/statsfilter"
-              model="[id: category.id, action: 'operations', controller: 'category', css:'margin-top: 25px;']"/>
+              model="[id: category.id, action: 'operations', controller: 'category', css: 'margin-top: 25px;']"/>
     <h1>Liste des opérations <small>${category.name}</small></h1>
 
     <hr class="clearfix"/>
@@ -36,6 +36,21 @@
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
 
+        <div class="pull-right">
+            <span><small>Actions : </small></span>
+            <span>
+                <g:link title="Editer" action="edit" id="${category.id}"><img
+                        src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+            </span>
+
+            <span id="category${category.id}-pinned">
+                <g:render template="pinnedactions" model="[category: category]"/>
+            </span>
+        </div>
+
+        <div class="clearfix">&nbsp;</div>
+        <hr/>
+
         <g:render template="/operation/simplelist" model="[operations: operations, highlightMonth: currentMonth]"/>
 
     </div>
@@ -47,7 +62,7 @@
 
         <div class="alert alert-info">Statistiques</div>
 
-        <g:render template="/chart/operationsByMonth" model="[operations:operations, category:category]"/>
+        <g:render template="/chart/operationsByMonth" model="[operations: operations, category: category]"/>
 
     </div>
 </div>

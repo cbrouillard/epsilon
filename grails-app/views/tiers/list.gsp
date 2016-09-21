@@ -71,7 +71,7 @@
                 <g:each in="${tiersInstanceList}" status="i" var="tiersInstance">
                     <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-                        <td>${fieldValue(bean: tiersInstance, field: "name")}</td>
+                        <td><span class="label" style="background-color: ${tiersInstance.color};">&nbsp;</span> ${fieldValue(bean: tiersInstance, field: "name")}</td>
 
                         <td>${fieldValue(bean: tiersInstance, field: "description")}</td>
 

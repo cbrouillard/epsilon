@@ -156,7 +156,7 @@
                     <g:set var="currentSold" value="${onepine.currentMonthOperationsSum}"/>
 
                     <tr>
-                        <td class="principal">${onepine.name}</td>
+                        <td class="principal"><span class="label" style="background-color: ${onepine.color};">&nbsp;</span> ${onepine.name}</td>
                         <td class="tdright">
                             <span class="label label-default">
                                 <g:formatNumber number="${currentSold}" format="###,###.##"/> €

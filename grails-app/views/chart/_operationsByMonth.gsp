@@ -1,7 +1,7 @@
 <%@ page import="com.headbangers.epsilon.CategoryType; com.headbangers.epsilon.Scheduled; com.headbangers.epsilon.Operation; com.headbangers.epsilon.OperationType; java.text.SimpleDateFormat" %>
 <%
     def color = [category.color]
-    def columns = [['string', 'Month'], ['number', 'Montant']];
+    def columns = [['string', 'Month'], ['number', 'Montant (€)']];
     def data = new ArrayList();
 
     if (operations) {

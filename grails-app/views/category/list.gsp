@@ -76,7 +76,7 @@
                 <g:each in="${categoryInstanceList}" status="i" var="categoryInstance">
                     <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-                        <td>${fieldValue(bean: categoryInstance, field: "name")}</td>
+                        <td><span class="label" style="background-color: ${categoryInstance.color};">&nbsp;</span> ${fieldValue(bean: categoryInstance, field: "name")}</td>
 
                         <td>${fieldValue(bean: categoryInstance, field: "type")}</td>
 

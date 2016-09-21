@@ -34,6 +34,21 @@
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
 
+        <div class="pull-right">
+            <span><small>Actions : </small></span>
+            <span>
+                <g:link title="Editer" action="edit" id="${tiers.id}"><img
+                        src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+            </span>
+
+            <span id="tiers${tiers.id}-pinned">
+                <g:render template="pinnedactions" model="[tiers: tiers]"/>
+            </span>
+        </div>
+
+        <div class="clearfix">&nbsp;</div>
+        <hr/>
+
         <g:render template="/operation/simplelist" model="[operations: operations]"/>
 
     </div>
