@@ -1,6 +1,6 @@
 <%@ page import="com.headbangers.epsilon.Scheduled; com.headbangers.epsilon.Operation; com.headbangers.epsilon.OperationType; java.text.SimpleDateFormat" %>
 <%
-    def columns = [['string', 'Day'], ['number', 'Situation']];
+    def columns = [['string', 'Day'], ['number', 'Situation']] //, ['number', 'Seuil']];
     def depenseCourbe = new ArrayList();
 
     def allOperations = account?.lastOperationsByMonth(byMonth ? byMonth : 0);
@@ -37,7 +37,7 @@
 
         actualDay = cal.get(Calendar.DAY_OF_MONTH)
         if (actualDay != prevDay || (currentMonth != cal.get(Calendar.MONTH) && actualDay == prevDay)) {
-            depenseCourbe.add(["$prevDay ${sdf.format(previousDate)}", bufferAmount])
+            depenseCourbe.add(["$prevDay ${sdf.format(previousDate)}", bufferAmount]) //, 2000])
             prevDay = actualDay;
         }
 
@@ -53,7 +53,7 @@
         previousDate = operation.dateApplication
     }
 
-    depenseCourbe.add(["$prevDay ${sdf.format(previousDate)}", bufferAmount])
+    depenseCourbe.add(["$prevDay ${sdf.format(previousDate)}", bufferAmount])//, 2000])
     if (!operationsSortedByDaysIncludingFutures) {
         if (byMonth != null){
             cal.set(Calendar.MONTH, byMonth +1)
@@ -61,12 +61,14 @@
         } else {
             cal.setTime(new Date())
         }
-        depenseCourbe.add(["${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", bufferAmount])
+        depenseCourbe.add(["${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", bufferAmount])//, 2000])
     }
     //series="${[0:[color:'red', pointSize:10], 1:[color:'black', pointSize:0]]}"
 %>
-<gvisualization:areaCoreChart elementId="lineChart${idChart}"
-                              columns="${columns}" data="${depenseCourbe}"
-                              legend="[position: 'bottom']"
-                              width="100%" colors="['92e07f']"/>
+<gvisualization:comboCoreChart elementId="lineChart${idChart}"
+                               columns="${columns}" data="${depenseCourbe}"
+                               legend="[position: 'bottom']"
+                               width="100%" colors="['92e07f', 'red']"
+                               seriesType="line" lineWidth="${0.5}"
+                               series="${[0: [type: 'area', lineWidth: 2, pointsVisible: false]]}"/>
 <div id="lineChart${idChart}"></div>

@@ -48,11 +48,14 @@ class SummaryController {
         def allPinned = (pinnedTiers + pinnedCategories)
 
         def graphData = Operation.executeQuery(
-                'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.owner p where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? and p.id = ? group by c.name',
+                'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.owner p where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? and p.id = ?  group by c.name order by c.name',
+                [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.RETRAIT, CategoryType.DEPENSE, person.id]).asList()
+        def colors = Operation.executeQuery(
+                'select c.color from Operation o inner join o.category c inner join o.owner p where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? and p.id = ? group by c.color, c.name order by c.name',
                 [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.RETRAIT, CategoryType.DEPENSE, person.id]).asList()
 
         [accounts: accounts, lates: lateScheduled, today: todayScheduled,
-         future  : futuresScheduled, depense: depense, person: person, budgets: budgets, graphData: graphData,
+         future  : futuresScheduled, depense: depense, person: person, budgets: budgets, graphData: graphData, colors:colors,
                 pinned:allPinned
         ]
     }

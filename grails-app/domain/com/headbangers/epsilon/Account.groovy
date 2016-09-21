@@ -16,7 +16,7 @@ import java.text.DecimalFormat
 class Account {
     String id
     static belongsTo = [Bank, Person]
-    static hasMany = [operations: Operation, snapshots: Snapshot]
+    static hasMany = [operations: Operation, snapshots: Snapshot, thresholds: Threshold]
     static transients = ['tmpAmount']
 
     static Double tmpAmount
@@ -67,7 +67,7 @@ class Account {
         return null;
     }
 
-    def getSnapshot (int byMonth){
+    def getSnapshot(int byMonth) {
         // reste dans la meme année ex: 0, mois actuel 5
         Calendar cal = Calendar.getInstance()
         def currentMonth = cal.get(Calendar.MONTH)
@@ -89,8 +89,8 @@ class Account {
         def realAmount = lastSnapshot ? lastSnapshot.amount : this.amount
         // iterating through last operations
         def operations = getLastOperations()
-        operations.each {operation ->
-            if (       operation.type.equals(OperationType.RETRAIT)
+        operations.each { operation ->
+            if (operation.type.equals(OperationType.RETRAIT)
                     || operation.type.equals(OperationType.VIREMENT_MOINS)) {
                 realAmount -= operation.amount
             } else if (operation.type.equals(OperationType.DEPOT)
@@ -110,8 +110,8 @@ class Account {
         def snapshot = getLastSnapshot()
         // now getting all operations on this account with dateApplication >= snapshot.dateCreated
         return Operation.createCriteria().list(order: 'asc', sort: 'dateApplication') {
-            account {eq("id", this.id)}
-            owner {eq("id", this.owner.id)}
+            account { eq("id", this.id) }
+            owner { eq("id", this.owner.id) }
             if (snapshot) {
                 ge("dateApplication", snapshot.dateCreated)
             }
@@ -120,8 +120,8 @@ class Account {
 
     def getLastNOperations(n) {
         return Operation.createCriteria().list() {
-            account {eq("id", this.id)}
-            owner {eq("id", this.owner.id)}
+            account { eq("id", this.id) }
+            owner { eq("id", this.owner.id) }
             maxResults(n)
             order("dateApplication", "desc")
         }
@@ -146,8 +146,8 @@ class Account {
         Date lastDay = calendar.getTime()
 
         return Operation.createCriteria().list(order: 'asc', sort: 'dateApplication') {
-            account {eq("id", this.id)}
-            owner {eq("id", this.owner.id)}
+            account { eq("id", this.id) }
+            owner { eq("id", this.owner.id) }
             between("dateApplication", firstDay, lastDay)
         }
     }

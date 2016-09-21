@@ -253,10 +253,12 @@
 
         <%
             def dataCol = [['string', 'category'], ['number', 'amount']]
+
         %>
         <gvisualization:pieCoreChart elementId="piechart"
                                      columns="${dataCol}" data="${graphData}"
-                                     pieHole="${0.4}" legend="${[position: 'bottom', alignment: 'center']}"/>
+                                     pieHole="${0.4}" legend="${[position: 'bottom', alignment: 'center']}"
+                                     colors="${colors}"/>
         <div id="piechart"
              style="width: 100%; height: 450px; margin: auto;display: block;background: transparent;"></div>
 
