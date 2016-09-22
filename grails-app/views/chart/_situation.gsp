@@ -2,9 +2,9 @@
 <%
     def thresholds = account?.thresholds?.findAll({it.active})
     def depenseCourbe = new ArrayList();
-    def columns = [['string', 'Day'], ['number', 'Situation']]
+    def columns = [ ['string', 'Day'], ['number', 'Situation']]
     def colors = ['92e07f']
-
+    def hAxis = [titleTextStyle:[italic:false, bold:true], fontSize:8]
     thresholds.each {th ->
         columns = columns + [['number', th.name]]
         colors = colors + [th.color]
@@ -19,11 +19,13 @@
     }
 
     def sdf = new SimpleDateFormat("MMMM")
+    def sdf2 = new SimpleDateFormat("dd/MM")
     def cal = Calendar.getInstance()
     if (byMonth != null) {
         cal.set(Calendar.MONTH, byMonth)
     }
     def currentMonth = cal.get(Calendar.MONTH)
+    hAxis.title = sdf.format(cal.getTime())
 
     def operationsSortedByDaysIncludingFutures = allOperations;
     if (byMonth == null || byMonth == currentMonth) {
@@ -45,7 +47,7 @@
 
         actualDay = cal.get(Calendar.DAY_OF_MONTH)
         if (actualDay != prevDay || (currentMonth != cal.get(Calendar.MONTH) && actualDay == prevDay)) {
-            buffer = ["$prevDay ${sdf.format(previousDate)}", bufferAmount]
+            buffer = ["${sdf2.format(previousDate)}", bufferAmount]
             thresholds.each { th ->
                 buffer = buffer + [th.value]
             }
@@ -65,7 +67,7 @@
         previousDate = operation.dateApplication
     }
 
-    buffer = ["$prevDay ${sdf.format(previousDate)}", bufferAmount]
+    buffer = ["${sdf2.format(cal.getTime())}", bufferAmount]
     thresholds.each { th ->
         buffer = buffer + [th.value]
     }
@@ -77,7 +79,7 @@
         } else {
             cal.setTime(new Date())
         }
-        buffer = ["${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", bufferAmount]
+        buffer = ["${sdf2.format(cal.getTime())}", bufferAmount]
         thresholds.each { th ->
             buffer = buffer + [th.value]
         }
@@ -89,5 +91,6 @@
                                legend="[position: 'top']"
                                width="100%" colors="${colors}"
                                seriesType="line"
-                               series="${[0: [type: 'area']]}"/>
+                               series="${[0: [type: 'area']]}"
+                               hAxis="${hAxis}" vAxis="${[format:'#,###.##€']}"/>
 <div id="lineChart${idChart}"></div>
