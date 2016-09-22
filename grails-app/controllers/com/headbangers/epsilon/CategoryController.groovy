@@ -35,7 +35,7 @@ class CategoryController {
         params.order = params.order ?: "asc"
 
         def person = springSecurityService.getCurrentUser()
-        def categories = genericService.loadUserObjects (person, Category.class, params)
+        def categories = genericService.loadUserObjects(person, Category.class, params)
 
         [categoryInstanceList: categories, categoryInstanceTotal: categories.totalCount]
     }
@@ -51,15 +51,14 @@ class CategoryController {
 
         categoryInstance.owner = springSecurityService.getCurrentUser()
 
-        if (categoryInstance.name){
-            categoryInstance.color = genericService.buildColor (categoryInstance.name)
+        if (categoryInstance.name) {
+            categoryInstance.color = genericService.buildColor(categoryInstance.name)
         }
 
         if (categoryInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.name])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             render(view: "create", model: [categoryInstance: categoryInstance])
         }
     }
@@ -69,8 +68,7 @@ class CategoryController {
         if (!categoryInstance || !categoryInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'category.label', default: 'Category'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             [categoryInstance: categoryInstance]
         }
     }
@@ -80,8 +78,7 @@ class CategoryController {
         if (!categoryInstance || !categoryInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'category.label', default: 'Category'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             return [categoryInstance: categoryInstance]
         }
     }
@@ -102,12 +99,10 @@ class CategoryController {
             if (!categoryInstance.hasErrors() && categoryInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.name])}"
                 redirect(action: "list")
-            }
-            else {
+            } else {
                 render(view: "edit", model: [categoryInstance: categoryInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'category.label', default: 'Category'), params.id])}"
             redirect(action: "list")
         }
@@ -125,23 +120,22 @@ class CategoryController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.name])}"
                 redirect(action: "show", id: params.id)
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'category.label', default: 'Category'), params.id])}"
             redirect(action: "list")
         }
     }
 
-    def simpleautocomplete(){
+    def simpleautocomplete() {
         def categoryType = null
-        if (params.type){
-            categoryType= CategoryType.guess(params.type)
+        if (params.type) {
+            categoryType = CategoryType.guess(params.type)
         }
         def person = springSecurityService.getCurrentUser()
-        def categories = Category.createCriteria ().list {
-            owner{eq("id", person.id)}
+        def categories = Category.createCriteria().list {
+            owner { eq("id", person.id) }
             if (categoryType && categoryType != CategoryType.VIREMENT) eq("type", categoryType)
-            ilike ("name", "${params.query}%")
+            ilike("name", "${params.query}%")
         }
 
         render categories*.name as JSON
@@ -155,21 +149,30 @@ class CategoryController {
         if (category) {
 
             def currentYear = dateUtil.currentYear
-            def oldestYear = dateUtil.getYear(category.operations? category.operations.first().dateApplication : new Date())
+            def oldestYear = dateUtil.getYear(category.operations ? category.operations.first().dateApplication : new Date())
             def yearRange = oldestYear..currentYear
 
-            def selectedFrom = (params.fromYear?:oldestYear) as Integer
-            def selectedTo = (params.toYear?:currentYear) as Integer
+            def selectedFrom = (params.fromYear ?: oldestYear) as Integer
+            def selectedTo = (params.toYear ?: currentYear) as Integer
 
-            def fromDate = dateUtil.firstDayOfYear ( selectedFrom )
-            def toDate = dateUtil.lastDayOfYear( selectedTo )
+            def fromDate = dateUtil.firstDayOfYear(selectedFrom)
+            def toDate = dateUtil.lastDayOfYear(selectedTo)
 
-            def operations = Operation.createCriteria().list(params){
+            def operations = Operation.createCriteria().list(params) {
                 between("dateApplication", fromDate, toDate)
                 eq("category", category)
             }
 
-            [category: category, yearRange: yearRange, fromYear:selectedFrom, toYear:selectedTo, operations:operations, currentMonth:currentMonth]
+            [category: category, yearRange: yearRange, fromYear: selectedFrom, toYear: selectedTo, operations: operations, currentMonth: currentMonth]
+        } else {
+            redirect(action: "list")
+        }
+    }
+
+    def byname = {
+        def category = Category.findByOwnerAndName(springSecurityService.getCurrentUser(), params.name)
+        if (category) {
+            redirect(action: 'operations', id: category.id)
         } else {
             redirect(action: "list")
         }
@@ -180,23 +183,23 @@ class CategoryController {
 
         def categories = Category.createCriteria().list(params) {
             ilike("name", "%${params.query}%")
-            owner {eq("id", person.id)}
+            owner { eq("id", person.id) }
         }
 
-        render(view: 'list', model: [categoryInstanceList: categories, categoryInstanceTotal: categories.size(), query:params.query])
+        render(view: 'list', model: [categoryInstanceList: categories, categoryInstanceTotal: categories.size(), query: params.query])
 
     }
 
     def pinne = {
         def person = springSecurityService.getCurrentUser()
-        def cat = genericService.loadUserObject (person, Category.class, params.id)
+        def cat = genericService.loadUserObject(person, Category.class, params.id)
 
-        if (cat){
+        if (cat) {
             cat.pinned = true
-            cat.save(flush:true)
+            cat.save(flush: true)
 
-            render (template:'pinnedactions', model:[category: cat])
-        } else{
+            render(template: 'pinnedactions', model: [category: cat])
+        } else {
             redirect(action: "list")
         }
 
@@ -204,14 +207,14 @@ class CategoryController {
 
     def unpinne = {
         def person = springSecurityService.getCurrentUser()
-        def cat = genericService.loadUserObject (person, Category.class, params.id)
+        def cat = genericService.loadUserObject(person, Category.class, params.id)
 
-        if (cat){
+        if (cat) {
             cat.pinned = false
-            cat.save(flush:true)
+            cat.save(flush: true)
 
-            render (template:'pinnedactions', model:[category: cat])
-        } else{
+            render(template: 'pinnedactions', model: [category: cat])
+        } else {
             redirect(action: "list")
         }
     }

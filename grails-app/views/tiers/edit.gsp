@@ -62,6 +62,22 @@
                         </div>
                     </div>
 
+                    <div class="form-group ${hasErrors(bean: tiersInstance, field: 'color', 'has-error')}">
+
+                        <label for="color" class="col-sm-2 control-label mandatory">Couleur</label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-tint"></span></span>
+                                <g:textField name="color" required="true" value="${tiersInstance?.color}"
+                                             class="form-control jscolor {hash:true}"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
                     <div class="form-group ${hasErrors(bean: tiersInstance, field: 'description', 'has-error')}">
 
                         <label for="description" class="col-sm-2 control-label mandatory"><g:message

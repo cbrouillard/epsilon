@@ -26,6 +26,7 @@
     </style>
 
     <script src="${resource(dir: '/js', file: 'password.js')}"></script>
+    <script src="${resource(dir: '/js', file: 'jscolor.min.js')}"></script>
     <r:require module="bootstrap"/>
     <r:require module="jquery-ui"/>
     <g:layoutHead/>

@@ -47,9 +47,25 @@
     <g:if test="${selected}">
         <div class="around-border">
 
+            <g:render template="/chart/situation"
+                      model="[account: selected, idChart: 'situation', byMonth: byMonth, futures: futures]"/>
 
-
-            <g:render template="/chart/situation" model="[account: selected, idChart: 'situation', byMonth: byMonth, futures:futures]"/>
+            <hr/>
+            <div class="text-center">
+                <div class="btn-group btn-group" role="group">
+                    <g:link controller="threshold" action="create" class="btn btn-success" id="${selected?.id}">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter seuil
+                    </g:link>
+                    <g:each in="${selected?.thresholds}" var="thr">
+                        <g:link controller="threshold" action="edit" class="btn btn-default" id="${thr.id}">
+                            <span class="label" style="background-color: ${thr.active ? thr.color : 'white;border: 1px solid '+thr.color};">&nbsp;</span>
+                            %{--<span><img src="${resource(dir:'img', file:thr.active ? 'online.png' : 'offline.png')}" alt="P"/></span>--}%
+                            ${thr.name}
+                        </g:link>
+                    </g:each>
+                </div>
+            </div>
+            <hr/>
 
             <div class="row">
 

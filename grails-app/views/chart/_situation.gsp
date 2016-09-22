@@ -1,25 +1,32 @@
 <%@ page import="com.headbangers.epsilon.Scheduled; com.headbangers.epsilon.Operation; com.headbangers.epsilon.OperationType; java.text.SimpleDateFormat" %>
 <%
-    def columns = [['string', 'Day'], ['number', 'Situation']] //, ['number', 'Seuil']];
+    def thresholds = account?.thresholds?.findAll({it.active})
     def depenseCourbe = new ArrayList();
+    def columns = [['string', 'Day'], ['number', 'Situation']]
+    def colors = ['92e07f']
+
+    thresholds.each {th ->
+        columns = columns + [['number', th.name]]
+        colors = colors + [th.color]
+    }
 
     def allOperations = account?.lastOperationsByMonth(byMonth ? byMonth : 0);
     def accountAmount = 0
-    if (byMonth != null){
+    if (byMonth != null) {
         accountAmount = account?.getSnapshot(byMonth)?.amount ?: account.amount;
-    }else {
+    } else {
         accountAmount = account?.lastSnapshot?.amount ?: account.amount;
     }
 
     def sdf = new SimpleDateFormat("MMMM")
     def cal = Calendar.getInstance()
-    if (byMonth != null){
+    if (byMonth != null) {
         cal.set(Calendar.MONTH, byMonth)
     }
     def currentMonth = cal.get(Calendar.MONTH)
 
     def operationsSortedByDaysIncludingFutures = allOperations;
-    if (byMonth == null || byMonth == currentMonth){
+    if (byMonth == null || byMonth == currentMonth) {
         operationsSortedByDaysIncludingFutures += futures
     }
     operationsSortedByDaysIncludingFutures = operationsSortedByDaysIncludingFutures.sort {
@@ -28,6 +35,7 @@
 
     def actualDay = 1;
     def prevDay = actualDay;
+    def buffer
     Date previousDate = cal.getTime()
     def bufferAmount = accountAmount;
 
@@ -37,7 +45,11 @@
 
         actualDay = cal.get(Calendar.DAY_OF_MONTH)
         if (actualDay != prevDay || (currentMonth != cal.get(Calendar.MONTH) && actualDay == prevDay)) {
-            depenseCourbe.add(["$prevDay ${sdf.format(previousDate)}", bufferAmount]) //, 2000])
+            buffer = ["$prevDay ${sdf.format(previousDate)}", bufferAmount]
+            thresholds.each { th ->
+                buffer = buffer + [th.value]
+            }
+            depenseCourbe.add(buffer)
             prevDay = actualDay;
         }
 
@@ -53,22 +65,29 @@
         previousDate = operation.dateApplication
     }
 
-    depenseCourbe.add(["$prevDay ${sdf.format(previousDate)}", bufferAmount])//, 2000])
+    buffer = ["$prevDay ${sdf.format(previousDate)}", bufferAmount]
+    thresholds.each { th ->
+        buffer = buffer + [th.value]
+    }
+    depenseCourbe.add(buffer)
     if (!operationsSortedByDaysIncludingFutures) {
-        if (byMonth != null){
-            cal.set(Calendar.MONTH, byMonth +1)
+        if (byMonth != null) {
+            cal.set(Calendar.MONTH, byMonth + 1)
             cal.set(Calendar.DAY_OF_MONTH, 0)
         } else {
             cal.setTime(new Date())
         }
-        depenseCourbe.add(["${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", bufferAmount])//, 2000])
+        buffer = ["${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", bufferAmount]
+        thresholds.each { th ->
+            buffer = buffer + [th.value]
+        }
+        depenseCourbe.add(buffer)
     }
-    //series="${[0:[color:'red', pointSize:10], 1:[color:'black', pointSize:0]]}"
 %>
 <gvisualization:comboCoreChart elementId="lineChart${idChart}"
                                columns="${columns}" data="${depenseCourbe}"
-                               legend="[position: 'bottom']"
-                               width="100%" colors="['92e07f', 'red']"
-                               seriesType="line" lineWidth="${0.5}"
-                               series="${[0: [type: 'area', lineWidth: 2, pointsVisible: false]]}"/>
+                               legend="[position: 'top']"
+                               width="100%" colors="${colors}"
+                               seriesType="line"
+                               series="${[0: [type: 'area']]}"/>
 <div id="lineChart${idChart}"></div>

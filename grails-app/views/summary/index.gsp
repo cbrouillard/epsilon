@@ -167,7 +167,7 @@
                                     controller="${onepine.class.canonicalName.contains("Tiers") ? "tiers" :"category"}"
                                     action="operations"
                                     params="[id: onepine.id]"><img
-                                    src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
                         </td>
                     </tr>
                     <g:set var="pinnedAmount" value="${pinnedAmount + currentSold}"/>
@@ -258,9 +258,18 @@
         <gvisualization:pieCoreChart elementId="piechart"
                                      columns="${dataCol}" data="${graphData}"
                                      pieHole="${0.4}" legend="${[position: 'bottom', alignment: 'center']}"
-                                     colors="${colors}"/>
+                                     colors="${colors}" select="goCategory"/>
         <div id="piechart"
              style="width: 100%; height: 450px; margin: auto;display: block;background: transparent;"></div>
+
+        <script type="text/javascript">
+            function goCategory(e) {
+                var item = visualization.getSelection()[0];
+                var categoryName = visualization_data.getFormattedValue (item.row, 0);
+
+                window.location.href = "${createLink(controller: 'category', action: "byname")}" + "?name="+categoryName
+            }
+        </script>
 
     </div>
     </g:if>
