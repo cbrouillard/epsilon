@@ -26,7 +26,7 @@
     def currentMonth = cal.get(Calendar.MONTH)
 
     def operationsSortedByDaysIncludingFutures = allOperations;
-    if (byMonth == null || byMonth == currentMonth) {
+    if (byMonth == null || byMonth == Calendar.getInstance().get(Calendar.MONTH)) {
         operationsSortedByDaysIncludingFutures += futures
     }
     operationsSortedByDaysIncludingFutures = operationsSortedByDaysIncludingFutures.sort {
