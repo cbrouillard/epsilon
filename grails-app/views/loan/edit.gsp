@@ -22,7 +22,7 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Edition d'un prêt <small>${loanInstance.name}</small></h1>
+    <h1><g:message code="loan.edit"/> <small>${loanInstance.name}</small></h1>
     <hr/>
 </div>
 

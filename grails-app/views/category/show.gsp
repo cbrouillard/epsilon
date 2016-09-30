@@ -22,7 +22,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Détails d'une catégorie</h4>
+    <h4 class="modal-title"><g:message code="category.details"/></h4>
 </div>
 
 <div class="modal-body">
@@ -57,7 +57,7 @@
         <g:hiddenField name="id" value="${categoryInstance?.id}"/>
         <g:link action="operations" id="${categoryInstance?.id}" class="btn btn-default">
             <img src="${resource(dir: 'img', file: 'operation.png')}"
-                 alt="€"/> Voir les opérations de cette catégorie
+                 alt="€"/> <g:message code="category.operations"/>
         </g:link>
 
         <g:actionSubmit class="edit btn btn-primary" action="edit"

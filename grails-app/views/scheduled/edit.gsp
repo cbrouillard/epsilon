@@ -23,7 +23,7 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Editer une échéance <small>${scheduledInstance.name}</small></h1>
+    <h1><g:message code="scheduled.edit"/> <small>${scheduledInstance.name}</small></h1>
     <hr/>
 </div>
 
@@ -164,7 +164,7 @@
                                   from="${Account.findAllByOwner(scheduledInstance.owner)}"
                                   optionKey="id"
                                   value="${scheduledInstance?.accountFrom?.id}"
-                                  required="true"
+                                  required="required"
                                   class="form-control"/>
                     </div>
 
@@ -242,7 +242,9 @@
                                   noSelection="${['':"${message(code:'prebuiltcronexpression.SAME_DAY_NEXT_MONTH')}"]}"/>
                     </div>
                     <div class="help-block with-errors"></div>
-                    <div class="alert alert-info">Attention : la date de prochaine application n'est pas mise à jour avec un changement de périodicité !</div>
+                    <div class="alert alert-info">
+                        <g:message code="scheduled.cron.edit.help"/>
+                    </div>
                 </div>
             </div>
             </g:if>

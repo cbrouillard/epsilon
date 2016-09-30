@@ -22,25 +22,16 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Liste des échéances <small>Opérations mensuelles et récurrentes.</small> <g:link controller="scheduled"
+    <h1><g:message code="scheduled.list"/> <small><g:message code="scheduled.list.explanation"/></small> <g:link controller="scheduled"
                                                                                          action="create"
                                                                                          class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'echeancy.png')}"
-                alt=">"/> Créer une nouvelle échéance</g:link></h1>
+                alt=">"/> <g:message code="scheduled.create"/></g:link></h1>
 
     <div class="row">
         <div class="col-sm-7">
             <div class="alert alert-info">
-                Les échéances sont des opérations récurrentes qui sont exécutées une seule fois par mois. Il peut s'agir par exemple du dépôt de salaire
-                ou encore du paiement d'un crédit.<br/><br/>
-                Une échéance peut être automatique ou manuelle.
-                <ul>
-                    <li>En mode automatique, l'échéance est appliquée toute seule à la date indiquée: vous n'avez rien à faire.</li>
-                    <li>En mode manuel, l'échéance est affichée sur la page d'accueil : un bouton permet de l'activer, un autre de l'ignorer pour le mois
-                    en cours.</li>
-                </ul><br/>
-                Une échéance peut également être active ou inactive: une échéance inactive est considérée comme supprimée et est simplement ignorée par le
-                système.
+                <g:message code="scheduled.super.explanation"/>
             </div>
         </div>
 
@@ -58,7 +49,7 @@
                         </div>
 
                         <div class="lbl">
-                            Dépenses prévues
+                            <g:message code="scheduled.stats.previsions.spent"/>
                         </div>
 
                     </div>
@@ -73,7 +64,7 @@
                         </div>
 
                         <div class="lbl">
-                            Revenus prévus
+                            <g:message code="scheduled.stats.previsions.revenues"/>
                         </div>
 
                     </div>
@@ -94,8 +85,7 @@
                         </div>
 
                         <div class="lbl">
-                            Seuil optimal de dépenses / mois<br/>
-                            <small>(dépenses + budgets actifs)</small>
+                            <g:message code="scheduled.stats.total.spent"/>
                         </div>
 
                     </div>
@@ -111,8 +101,7 @@
                         </div>
 
                         <div class="lbl">
-                            Potentiel épargne<br/>
-                            <small>(ce qui peut être mis de côté)</small>
+                            <g:message code="scheduled.stats.total.saving"/>
                         </div>
 
                     </div>
@@ -161,8 +150,8 @@
                                       title="${message(code: 'scheduled.dateApplication.label', default: 'Date Application')}"/>
                     <g:sortableColumn property="amount" class="text-right"
                                       title="${message(code: 'scheduled.amount.label', default: 'Amount')}"/>
-                    <th class="text-center">Active ?</th>
-                    <th class="text-right">Actions</th>
+                    <th class="text-center"><g:message code="active"/> ?</th>
+                    <th class="text-right"><g:message code="actions"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -171,7 +160,6 @@
                         <td>${fieldValue(bean: scheduledInstance, field: "name")}</td>
                         <td>${fieldValue(bean: scheduledInstance, field: "accountFrom.name")}</td>
                         <td>${fieldValue(bean: scheduledInstance, field: "tiers.name")}</td>
-
 
                         <td>${fieldValue(bean: scheduledInstance, field: "type")}</td>
                         <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/>

@@ -33,7 +33,7 @@
 </script>
 
 <div class="col-sm-12">
-    <h1>Créer un nouvel utilisateur <small>Attention ! Administration.</small></h1>
+    <h1><g:message code="admin.create.user"/> <small><g:message code="admin.create.user.explanation"/></small></h1>
     <hr/>
 </div>
 

@@ -16,7 +16,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: 'person.label', default: 'Person')}"/>
-    <title>Edition de vos infos personnelles</title>
+    <title><g:message code="person.edit.cool"/></title>
 </head>
 
 <body>
@@ -33,10 +33,10 @@
 </script>
 
 <div class="col-sm-12">
-    <h1>Utilisateur <small>${person.userRealName}</small></h1>
+    <h1><g:message code="person.label"/> <small>${person.userRealName}</small></h1>
 
     <div class="alert alert-info">
-        Si vous ne souhaitez pas changer votre mot de passe, laissez le champ correspondant vide.
+        <g:message code="person.edit.explanation"/>
     </div>
 
     <hr/>

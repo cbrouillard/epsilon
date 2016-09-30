@@ -3,4 +3,4 @@ target
 stacktrace.log
 .idea/
 *.iml
-
+*.jar

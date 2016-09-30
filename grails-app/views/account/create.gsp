@@ -22,7 +22,7 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Créer un nouveau compte</h1>
+    <h1><g:message code="account.create"/></h1>
     <hr/>
 </div>
 
@@ -30,12 +30,11 @@
     <div class="around-border">
 
         <g:if test="${!banks}">
-            <div class="alert alert-danger">Il n'y aucun établissement enregistré !</div>
+            <div class="alert alert-danger"><g:message code="no.banks.title"/></div>
 
-            <div class="alert alert-warning">Vous ne pourrez pas créer un compte sans avoir
-            préalablement ajouté un établissement. <g:link controller="bank" action="create" class="btn"><img
+            <div class="alert alert-warning"><g:message code="no.banks.warn"/> <g:link controller="bank" action="create" class="btn"><img
                     src="${resource(dir: 'img',
-                            file: 'bank.png')}"/> Créer un nouvel établissement</g:link>
+                            file: 'bank.png')}"/> <g:message code="bank.create"/> </g:link>
 
             </div>
         </g:if>
@@ -84,7 +83,7 @@
                                             class="glyphicon glyphicon-piggy-bank"></span></span>
                                     <g:select optionValue="name" name="bank.id" from="${banks}" optionKey="id"
                                               value="${accountInstance?.bank?.id}"
-                                              required="true" class="form-control"/>
+                                              required="required" class="form-control"/>
                                 </div>
 
                                 <div class="help-block with-errors"></div>
@@ -101,7 +100,7 @@
                                     <span class="input-group-addon"><span
                                             class="glyphicon glyphicon-asterisk"></span></span>
                                     <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}"
-                                              value="${accountInstance?.type}" required="true"
+                                              value="${accountInstance?.type}" required="required"
                                               class="form-control"/>
                                 </div>
 

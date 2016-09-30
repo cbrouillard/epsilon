@@ -21,7 +21,7 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Edition d'une opération <small>${operationInstance.id}</small></h1>
+    <h1><g:message code="operation.edit"/> <small>${operationInstance.id}</small></h1>
     <hr/>
 </div>
 
@@ -60,12 +60,6 @@
                                              class="form-control typeahead-tiers"
                                              required="true"
                                              autocomplete="off"/>
-                                <g:if test="${parameterBayesianFilter.equals("true")}">
-                                    <jq:jquery>
-                                        jQuery('#tiers').focusout (function(){tryToGuessCategoryWithTiersId(jQuery('#tiers').val(), 'category');});
-                                    </jq:jquery>
-                                </g:if>
-
                             </div>
 
                             <div class="help-block with-errors"></div>

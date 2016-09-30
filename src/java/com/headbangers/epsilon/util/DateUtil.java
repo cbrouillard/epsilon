@@ -44,8 +44,9 @@ public class DateUtil {
         return calendar.getTime();
     }
 
-    public Date getTodayMorning() {
+    public Date getDateAtMorning (Date date){
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -53,12 +54,21 @@ public class DateUtil {
         return calendar.getTime();
     }
 
-    public Date getTodayEvening() {
+    public Date getTodayMorning() {
+        return getDateAtMorning(new Date());
+    }
+
+    public Date getDateAtEvening(Date date){
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         return calendar.getTime();
+    }
+
+    public Date getTodayEvening() {
+        return getDateAtEvening(new Date());
     }
 
     public Date getTodayPlusOneMonth() {

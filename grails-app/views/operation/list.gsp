@@ -21,11 +21,11 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Opérations <span class="label label-primary">${selected?.getNameAndSold()}</span>
+    <h1><g:message code="operations"/> <span class="label label-primary">${selected?.getNameAndSold()}</span>
         <g:if test="${selected?.bank?.url}">
             <a class="bank btn btn-default" href="${selected?.bank?.url}"><img
                     src="${resource(dir: 'img', file: 'bank.png')}"
-                    alt=">"/> Site de la banque</a>
+                    alt=">"/> <g:message code="bank.website"/></a>
         </g:if>
 
     </h1>
@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="lbl">
-                        Opérations à débit
+                        <g:message code="operation.debit"/>
                     </div>
 
                 </div>
@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="lbl">
-                        Opérations à crédit
+                        <g:message code="operation.credit"/>
                     </div>
 
                 </div>
@@ -113,14 +113,14 @@
     </g:if>
     <g:else>
         <div class="around-border">
-            <h1 class="red">Aucun compte enregistré.</h1>
+            <h1 class="red"><g:message code="account.no.account"/></h1>
             <ul>
                 <li><g:link controller="bank" action="create"><img src="${resource(dir: 'img', file: 'bank.png')}"
-                                                                   alt=">"/> Créer un nouvel établissement</g:link>
+                                                                   alt=">"/> <g:message code="bank.create"/></g:link>
                 </li>
                 <li><g:link controller="account" action="create"><img
                         src="${resource(dir: 'img', file: 'account.png')}"
-                        alt=">"/> Créer un nouveau compte</g:link>
+                        alt=">"/> <g:message code="account.create"/></g:link>
                 </li>
             </ul>
         </div>
@@ -143,7 +143,7 @@
 
     <div class="around-border">
         <%
-            def dataCol = [['string', 'category'], ['number', 'Montant']]
+            def dataCol = [['string', "${message(code:'category')}"], ['number', "${message(code:'operations.by.month.col.amount')}"]]
         %>
         <gvisualization:barCoreChart elementId="byMonthChart"
                                      columns="${dataCol}" data="${graphData}"

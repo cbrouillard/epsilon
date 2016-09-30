@@ -1,13 +1,25 @@
+<!--
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+-->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Liste des expressions cron</title>
+    <title><g:message code="admin.crons.list.title"/> </title>
 </head>
 
 <body>
 <div class="col-sm-12">
-    <h1>Liste des expressions cron <small>Elles sont pas bêtes ces expressions.</small>
+    <h1><g:message code="admin.crons.list.title"/> <small><g:message code="admin.crons.list.title.explanation"/> </small>
     </h1>
     <hr/>
 </div>
@@ -20,7 +32,7 @@
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active">
-                <a href="#newForm" data-toggle="tab">Documentation</a>
+                <a href="#newForm" data-toggle="tab"><g:message code="admin.crons.documentation.title"/></a>
             </li>
         </ul>
 
@@ -29,22 +41,18 @@
                 <div class="around-border-within-tab">
 
                     <div class="alert alert-info">
-                        Les expressions sont écrites selon deux formats:
-                        <ul>
-                            <li>le format cron standard</li>
-                            <li>le format epsilon</li>
-                        </ul>
+                        <g:message code="admin.crons.documentation.body"/>
                     </div>
 
-                    <h3>Format cron :</h3><hr/>
+                    <h3><g:message code="cron.format"/></h3><hr/>
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th align="left">Nom du champ</th>
+                            <th align="left"><g:message code="cron.fieldname"/></th>
                             <th align="left">&nbsp;</th>
-                            <th align="left">Valeurs autorisées</th>
+                            <th align="left"><g:message code="cron.authorizedvalues"/></th>
                             <th align="left">&nbsp;</th>
-                            <th align="left">Caractères spéciaux</th>
+                            <th align="left"><g:message code="cron.specialcars"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -101,7 +109,7 @@
                             <td class="text-left" colspan="6">
                                 <a href="http://www.quartz-scheduler.org/api/2.2.1/org/quartz/CronExpression.html"
                                    target="_blank">
-                                    Documentation complète
+                                    <g:message code="cron.complete.documentation"/>
                                 </a>
                             </td>
                         </tr>
@@ -109,19 +117,19 @@
                     </table>
 
                     <div class="pull-right">
-                        <span class="label label-success">Exemple cron :</span>
+                        <span class="label label-success"><g:message code="cron.example"/></span>
                         <blockquote>
-                            <b>"0 0 2 ? * 6L *"</b><br/>Le dernier vendredi du mois, à 2h du matin
+                            <b>"0 0 2 ? * 6L *"</b><br/><g:message code="cron.example.lastfriday"/>
                         </blockquote>
                     </div><div class="clearfix"></div>
 
-                    <h3>Format epsilon :</h3><hr/>
+                    <h3><g:message code="epsilon.format"/></h3><hr/>
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th align="left">Nom du champ</th>
+                            <th align="left"><g:message code="cron.fieldname"/></th>
                             <th align="left">&nbsp;</th>
-                            <th align="left">Valeurs autorisées</th>
+                            <th align="left"><g:message code="cron.authorizedvalues"/></th>
                             <th align="left">&nbsp;</th>
                         </tr>
                         </thead>
@@ -151,9 +159,9 @@
                     </table>
 
                     <div class="pull-right">
-                        <span class="label label-success">Exemple epsilon :</span>
+                        <span class="label label-success"><g:message code="epsilon.example"/></span>
                         <blockquote>
-                            <b>"E d 14"</b><br/>Roulement sur 14 jours
+                            <b>"E d 14"</b><br/><g:message code="epsilon.example.fourteendaysroll"/>
                         </blockquote>
                     </div><div class="clearfix"></div>
 
@@ -169,10 +177,10 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>Nom</th>
-                <th>Expression</th>
-                <th>Prochaine date</th>
-                <th class="text-right">Actions</th>
+                <th><g:message code="cron.name.label"/></th>
+                <th><g:message code="cron.expression.label"/></th>
+                <th><g:message code="cron.nextdate.label"/></th>
+                <th class="text-right"><g:message code="actions"/></th>
             </tr>
             </thead>
             <tbody>
@@ -203,7 +211,7 @@
             <g:hiddenField name="id" value="${newExpression?.id}"/>
             <div class="form-group">
 
-                <label for="expression" class="col-sm-2 control-label mandatory">Expression</label>
+                <label for="expression" class="col-sm-2 control-label mandatory"><g:message code="cron.expression.label"/></label>
 
                 <div class="col-sm-10">
                     <div class="input-group">
@@ -217,7 +225,7 @@
                     <div class="help-block with-errors">
                         ${validationExpression}
                         <g:if test="${goodExpression}">
-                            - Prochaines dates valides :
+                            - <g:message code="cron.next.valid.dates"/>
                             <ul>
                                 <g:each in="${newExpression.getNextDates(5)}" var="validDate">
                                     <li><g:formatDate date="${validDate}"/></li>
@@ -238,7 +246,7 @@
             <g:if test="${goodExpression}">
                 <div class="form-group">
 
-                    <label for="name" class="col-sm-2 control-label mandatory">Nom de l'expression</label>
+                    <label for="name" class="col-sm-2 control-label mandatory"><g:message code="cron.name.more.label"/></label>
 
                     <div class="col-sm-10">
                         <div class="input-group">
@@ -257,7 +265,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <g:actionSubmit class="save btn btn-success" action="savecron"
-                                        value="Enregistrer"/>
+                                        value="${message(code:'default.button.save.label')}"/>
                     </div>
                 </div>
             </g:if>

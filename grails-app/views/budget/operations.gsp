@@ -22,20 +22,21 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Opérations sur un budget <small>${budget.name}
+    <h1><g:message code="budget.operations"/> <small>${budget.name}
     <g:if test="${budget.startDate || budget.endDate}">
         <g:if test="${budget.startDate}">
-            du <g:formatDate date="${budget.startDate}"/> au
-        </g:if><g:else>
-        du premier jour du mois au
-    </g:else>
+            <g:message code="budget.from.to" args="${[formatDate(date: budget.startDate)]}"/>
+        </g:if>
+        <g:else>
+            <g:message code="budget.from.firstday"/>
+        </g:else>
         <g:if test="${budget.endDate}">
             <g:formatDate date="${budget.endDate}"/>
         </g:if>
         <g:else>
-            dernier jour du mois
+            <g:message code="budget.to.lastday"/>
         </g:else>
-    </g:if>
+    </g:if><g:else><g:message code="budget.everymonth"/></g:else>
     </small></h1>
     <hr/>
 </div>
@@ -51,11 +52,11 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>Date</th>
-                <th>Tiers</th>
-                <th>Catégorie</th>
-                <th class="text-right">Paiement</th>
-                <th class="text-right">Total</th>
+                <th><g:message code="date"/></th>
+                <th><g:message code="tiers"/></th>
+                <th><g:message code="category"/></th>
+                <th class="text-right"><g:message code="payment"/></th>
+                <th class="text-right"><g:message code="total"/></th>
             </tr>
             </thead>
             <tbody>

@@ -10,30 +10,19 @@
  * GNU General Public License for more details.
  */
 -->
-%{--<export:formats action="export" params="[account: selected?.id, month: byMonth ? byMonth : currentMonth]"/>--}%
-
-%{--<div class="pull-left">--}%
-%{--<g:if test="${selected}">--}%
-%{--<g:form action="list" method="get" class="form-inline">--}%
-%{--<g:select optionValue="${{it.name + ' = ' + formatNumber('number': it.getSold(), 'format': '0.##') + '€'}}" name="account"--}%
-%{--from="${accounts}"--}%
-%{--optionKey="id" value="${selected?.id}" onChange="this.form.submit();"/>--}%
-%{--</g:form>--}%
-%{--</g:if>--}%
-%{--</div>--}%
 <g:render template="monthpagination"/>
 <div class="table-responsive">
     <table class="table table-striped table-hover table-condensed">
         <thead>
         <tr>
-            <th>N°</th>
+            <th><g:message code="operation.number"/></th>
             <th>${message(code: 'operation.dateApplication.label', default: 'Date Application')}</th>
-            <th>Détails</th>
-            <th class="text-center">Pointée</th>
-            <th class="text-right">Paiement</th>
-            <th class="text-right">Dépôt</th>
-            <th class="text-right">Solde</th>
-            <th class="text-right">Actions</th>
+            <th><g:message code="details"/></th>
+            <th class="text-center"><g:message code="operation.pointed.label"/></th>
+            <th class="text-right"><g:message code="operation.type.payment"/></th>
+            <th class="text-right"><g:message code="operation.type.receipt"/></th>
+            <th class="text-right"><g:message code="operation.total"/></th>
+            <th class="text-right"><g:message code="actions"/></th>
         </tr>
         </thead>
         <tbody>

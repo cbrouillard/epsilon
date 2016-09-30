@@ -1,7 +1,19 @@
+<!--
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+-->
 <%@ page import="com.headbangers.epsilon.CategoryType; com.headbangers.epsilon.Scheduled; com.headbangers.epsilon.Operation; com.headbangers.epsilon.OperationType; java.text.SimpleDateFormat" %>
 <%
     def color = [category.color]
-    def columns = [['string', 'Month'], ['number', 'Montant (€)']];
+    def columns = [['string', "${message(code:'operations.by.month.col.month')}"], ['number', "${message(code:'operations.by.month.col.amount')}"]];
     def data = new ArrayList();
 
     if (operations) {
@@ -10,7 +22,7 @@
 
     Calendar cal = Calendar.getInstance()
     Date previousDate = new Date()
-    def sdf = new SimpleDateFormat("MMMM YYYY")
+    def sdf = new SimpleDateFormat("${message(code: 'operations.by.month.dateformat')}")
 
     def actualMonth = 0
     def bufferAmount = 0
@@ -41,6 +53,6 @@
 %>
 <gvisualization:columnCoreChart elementId="operationsByMonth"
                               columns="${columns}" data="${data}"
-                              legend="[position: 'bottom']"
+                              legend="[position: 'top']"
                               width="100%" colors="${color}" height="500"/>
 <div id="operationsByMonth"></div>

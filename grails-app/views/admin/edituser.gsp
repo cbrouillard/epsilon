@@ -33,7 +33,7 @@
 </script>
 
 <div class="col-sm-12">
-    <h1>Editer un utilisateur <small>${person.userRealName}</small></h1>
+    <h1><g:message code="person.edit"/> <small>${person.userRealName}</small></h1>
     <hr/>
 </div>
 

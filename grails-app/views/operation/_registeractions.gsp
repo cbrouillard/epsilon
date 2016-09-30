@@ -1,13 +1,13 @@
 <div class="tabbable">
     <ul class="nav nav-tabs">
         <li class="${tabToDisplay == 'depot' ? 'active' : ''}">
-            <a href="#depot" data-toggle="tab">Dépôt</a>
+            <a href="#depot" data-toggle="tab"><g:message code="operation.type.receipt"/></a>
         </li>
         <li class="${tabToDisplay == 'virement' ? 'active' : ''}">
-            <a href="#virement" data-toggle="tab">Virement</a>
+            <a href="#virement" data-toggle="tab"><g:message code="operation.type.accountmove"/></a>
         </li>
         <li class="${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}">
-            <a href="#facture" data-toggle="tab">Facture</a>
+            <a href="#facture" data-toggle="tab"><g:message code="operation.type.payment"/></a>
         </li>
     </ul>
 

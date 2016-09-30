@@ -34,6 +34,10 @@ class ScheduledController {
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 20, 100)
 
+        Date today = dateUtil.todayMorning
+        Date roll = dateUtil.getDatePlusOneMonth(today)
+        roll = dateUtil.getDateAtEvening(roll)
+
         def person = springSecurityService.getCurrentUser()
         def scheduleds = Scheduled.createCriteria().list (params) {
             eq 'deleted', false
@@ -43,11 +47,14 @@ class ScheduledController {
         def depense = 0
         def revenus = 0
         Scheduled.findAllByOwner(person).each { scheduled ->
-            if (scheduled.active) {
-                if (scheduled.type == OperationType.DEPOT) {
-                    revenus += scheduled.amount
-                } else if (scheduled.type == OperationType.FACTURE) {
-                    depense += scheduled.amount
+            if (scheduled.active && !scheduled.deleted) {
+                if (scheduled.dateApplication.after(today) && scheduled.dateApplication.before(roll)) {
+                    if (scheduled.type == OperationType.DEPOT) {
+                        revenus += scheduled.amount
+                    } else if (scheduled.type == OperationType.FACTURE) {
+                        depense += scheduled.amount
+                    }
+
                 }
             }
         }

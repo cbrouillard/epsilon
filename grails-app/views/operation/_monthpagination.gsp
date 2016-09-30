@@ -10,7 +10,7 @@
     <g:if test="${byMonth}">
         <li><g:link controller="operation" action="list"
                     params="[account: selected?.id, byMonth: byMonth != null ? byMonth - 1 : currentMonth ? -1 : 0]"
-                    title="Mois précédent"><< Mois précédent</g:link>
+                    title="Mois précédent"><g:message code="previous.month"/></g:link>
         </li>
     </g:if>
     <li class="disabled">
@@ -22,14 +22,14 @@
         <li>
             <g:link controller="operation" action="list"
                     params="[account: selected.id, byMonth: byMonth != null ? byMonth + 1 : currentMonth ? +1 : 0]"
-                    title="Mois suivant">Mois suivant >></g:link>
+                    title="Mois suivant"><g:message code="next.month"/></g:link>
         </li>
     </g:if>
     <g:if test="${byMonth != currentMonth}">
         <li>
             <g:link controller="operation" action="list"
                     params="[account: selected.id]"
-                    title="Reset">Reset</g:link>
+                    title="Reset"><g:message code="reset"/></g:link>
         </li>
     </g:if>
 </ul>

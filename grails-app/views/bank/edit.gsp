@@ -24,7 +24,7 @@
 
 <div class="row-fluid">
     <div class="col-sm-12">
-        <h1>Editer un établissement <small>${bankInstance.name}</small></h1>
+        <h1><g:message code="bank.edit"/> <small>${bankInstance.name}</small></h1>
         <hr/>
     </div>
 </div>

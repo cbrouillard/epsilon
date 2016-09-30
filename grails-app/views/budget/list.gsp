@@ -22,19 +22,13 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Liste des budgets <small>Maitrise des dépenses.</small> <g:link controller="budget" action="create"
+    <h1><g:message code="budget.list"/> <small><g:message code="budget.list.explanation"/></small> <g:link controller="budget" action="create"
                                                                         class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'coins.png')}"
-                alt=">"/> Créer un nouveau budget</g:link></h1>
+                alt=">"/> <g:message code="budget.create"/></g:link></h1>
 
     <div class="alert alert-info">
-        Les budgets permettent de gérer des plafonds de dépenses sur certaines catégories.<br/><br/>
-        Chaque "budget" est "branché" sur une ou plusieurs catégories de dépenses. Lorsqu'un retrait
-        est enregistré avec l'une des catégories affectée à un budget, ce dernier voit son "montant
-        utilisé" augmenter.<br/><br/>
-        Tant que le budget est respecté, la valeur du "montant utilisé" s'affichera en <span class="label label-success">VERT</span><br/>
-        Si vous flirtez avec la valeur maximale, alors l'affichage se notera en <span class="label label-warning">ORANGE</span><br/>
-        Enfin, en cas de non respect de votre budget, l'affichage sera sévèrement colorié en <span class="label label-danger">ROUGE</span>
+        <g:message code="budget.super.explanation"/>
     </div>
     <hr/>
 </div>
@@ -59,8 +53,8 @@
                 <g:sortableColumn property="name" title="${message(code: 'budget.name.label', default: 'Name')}"/>
 
                 <g:sortableColumn property="amount" title="${message(code: 'budget.amount.label', default: 'Amount')}" class="text-right"/>
-                <th>Dates</th>
-                <th class="text-right">Montant utilisé</th>
+                <th><g:message code="budget.dates"/></th>
+                <th class="text-right"><g:message code="budget.used.amount"/></th>
 
                 <th><g:message code="budget.categories.label" default="Categories"/></th>
                 <g:sortableColumn property="note" title="${message(code: 'budget.note.label', default: 'Note')}"/>
@@ -68,7 +62,7 @@
                                   title="${message(code: 'budget.lastUpdated.label', default: 'Last Updated')}"/>
 
                 <g:sortableColumn property="active" title="${message(code: 'budget.active.label', default: 'Active')}" class="text-center"/>
-                <th class="text-right">Actions</th>
+                <th class="text-right"><g:message code="actions"/></th>
             </tr>
             </thead>
             <tbody>
@@ -83,17 +77,17 @@
                     <td>
                         <g:if test="${budgetInstance.startDate || budgetInstance.endDate}">
                             <g:if test="${budgetInstance.startDate}">
-                                du <g:formatDate date="${budgetInstance.startDate}"/> au
+                                <g:message code="budget.from.to" args="${[formatDate(date:budgetInstance.startDate)]}"/>
                             </g:if><g:else>
-                                du premier jour du mois au
+                                <g:message code="budget.from.firstday"/>
                             </g:else>
                             <g:if test="${budgetInstance.endDate}">
                                 <g:formatDate date="${budgetInstance.endDate}"/>
                             </g:if>
                             <g:else>
-                                dernier jour du mois
+                                <g:message code="budget.to.lastday"/>
                             </g:else>
-                        </g:if><g:else>chaque mois</g:else>
+                        </g:if><g:else><g:message code="budget.everymonth"/></g:else>
                     </td>
 
                     <g:if test="${currentSold < budgetInstance.amount}">

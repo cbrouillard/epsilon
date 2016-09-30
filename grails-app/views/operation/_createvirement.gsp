@@ -18,7 +18,7 @@
                 <div class="form-group ${hasErrors(bean: scheduledInstance, field: 'accountTo', 'errors')}">
 
                     <label for="account.to"
-                           class="col-sm-12 control-label mandatory">Virement depuis "${selected.name}" vers</label>
+                           class="col-sm-12 control-label mandatory"><g:message code="operation.accountmove" args="[selected.name]"/></label>
 
                     <div class="col-sm-12">
                         <div class="input-group">

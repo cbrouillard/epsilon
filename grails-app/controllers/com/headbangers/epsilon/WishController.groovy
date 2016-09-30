@@ -79,7 +79,7 @@ class WishController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'wish.label', default: 'Wish'), wishInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'wish.label', default: 'wish'), wishInstance.id])
         redirect(action: "list")
     }
 
@@ -117,7 +117,7 @@ class WishController {
         def wishInstance = Wish.findByIdAndOwner(params.id, person)
 
         if (!wishInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
             redirect(action: "list")
             return
         }
@@ -137,7 +137,7 @@ class WishController {
         def person = springSecurityService.getCurrentUser()
         def wishInstance = Wish.findByIdAndOwner(params.wishId, person)
         if (!wishInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.wishId])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'wish'), params.wishId])
             redirect(action: "list")
             return
         }
@@ -171,7 +171,7 @@ class WishController {
         def person = springSecurityService.getCurrentUser()
 
         if (!wishInstance || !wishInstance.owner.equals(person)) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
             redirect(action: "list")
             return
         }
@@ -185,7 +185,7 @@ class WishController {
         def wishInstance = Wish.findByIdAndOwner(params.id, person)
 
         if (!wishInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
             redirect(action: "list")
             return
         }
@@ -221,7 +221,7 @@ class WishController {
         def wishInstance = Wish.findByIdAndOwner(params.id, person)
 
         if (!wishInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
             redirect(action: "list")
             return
         }
@@ -230,7 +230,7 @@ class WishController {
             def version = params.version.toLong()
             if (wishInstance.version > version) {
                 wishInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'wish.label', default: 'Wish')] as Object[],
+                        [message(code: 'wish.label', default: 'wish')] as Object[],
                         "Another user has updated this Wish while you were editing")
                 render(view: "edit", model: [wishInstance: wishInstance])
                 return
@@ -249,7 +249,7 @@ class WishController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'wish.label', default: 'Wish'), wishInstance.id])
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'wish.label', default: 'wish'), wishInstance.id])
         redirect(action: "list")
     }
 
@@ -258,18 +258,18 @@ class WishController {
         def wishInstance = Wish.findByIdAndOwner(params.id, person)
 
         if (!wishInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             wishInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'wish.label', default: 'Wish'), params.id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
             redirect(action: "show", id: params.id)
         }
     }

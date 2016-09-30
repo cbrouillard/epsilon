@@ -16,19 +16,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: 'loan.label', default: 'Loan')}"/>
-    <title>Liste des prêts</title>
+    <title><g:message code="loan.list"/></title>
 </head>
 
 <body>
 <div class="col-sm-12">
-    <h1>Liste des prêts <small>Prêts et emprunts</small> <g:link controller="loan" action="create"
+    <h1><g:message code="loan.list"/> <small><g:message code="loan.list.explanation"/></small> <g:link controller="loan" action="create"
                                                                  class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'loan.png')}"
-                alt=">"/> Créer un nouveau prêt</g:link></h1>
+                alt=">"/> <g:message code="loan.create"/></g:link></h1>
 
     <div class="alert alert-info">
-        Voici la liste des prêts que vous avez contracté.
-        Chaque prêt est automatiquement associé à une échéance qui est traitée mensuellement et de façon automatique.<br/>
+        <g:message code="loan.list.super.explanation"/>
     </div>
     <hr/>
 </div>
@@ -63,7 +62,7 @@
                     <g:sortableColumn property="calculatedEndDate"
                                       title="${message(code: 'loan.calculatedEndDate.label', default: 'End date')}"/>
 
-                    <th class="text-right">Actions</th>
+                    <th class="text-right"><g:message code="actions"/></th>
 
                 </tr>
                 </thead>
@@ -78,8 +77,8 @@
                         <td>${fieldValue(bean: loanInstance, field: "tiers.name")}</td>
 
                         <td class="tdright"><b>${fieldValue(bean: loanInstance, field: "amount")} €</b></td>
-                        <td class="tdright">${loanInstance.interest ? formatNumber(number: loanInstance.interest, format: "0.##") + " €" : "Aucun/inconnu"}</td>
-                        <td class="tdright"><b>${fieldValue(bean: loanInstance, field: "refundValue")} € / mois</b></td>
+                        <td class="tdright">${loanInstance.interest ? formatNumber(number: loanInstance.interest, format: "0.##") + " €" : message(code:'unknown')}</td>
+                        <td class="tdright"><b>${fieldValue(bean: loanInstance, field: "refundValue")} € <g:message code="bymonth.light"/></b></td>
                         <td class="tdright">${fieldValue(bean: loanInstance, field: "currentCalculatedAmountValue")} €</td>
 
                         <td><g:formatDate date="${loanInstance.calculatedEndDate}"/></td>

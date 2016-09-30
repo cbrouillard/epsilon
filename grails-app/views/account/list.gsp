@@ -21,10 +21,10 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Liste des comptes <small>Tous vos comptes sont ici.</small> <g:link controller="account" action="create"
+    <h1><g:message code="account.list"/> <small><g:message code="account.list.explanation"/></small> <g:link controller="account" action="create"
                                                                             class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'account.png')}"
-                alt=">"/> Créer un nouveau compte</g:link></h1>
+                alt=">"/> <g:message code="account.create"/></g:link></h1>
     <hr/>
 </div>
 
@@ -32,8 +32,7 @@
     <div class="around-border">
 
         <g:if test="${!accountInstanceList}">
-            <div class="alert alert-danger">Aucun compte enregistré.
-            </div>
+            <div class="alert alert-danger"><g:message code="no.accounts.title"/></div>
         </g:if>
         <g:else>
             <g:if test="${flash.message}">
@@ -56,13 +55,13 @@
                         <g:sortableColumn property="dateOpened"
                                           title="${message(code: 'account.dateOpened.label', default: 'Date Opened')}"/>
 
-                        <th>Détails</th>
+                        <th><g:message code="details"/></th>
                         <g:sortableColumn property="amount"
                                           title="${message(code: 'account.calculatedAmount.label', default: 'Amount')}"
                                           class="text-right"/>
 
 
-                        <th class="text-right">Actions</th>
+                        <th class="text-right"><g:message code="actions"/></th>
                     </tr>
                     </thead>
                     <tbody>

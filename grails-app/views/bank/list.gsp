@@ -21,10 +21,10 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Liste des établissements <small>Banques, assurances, ...</small> <g:link controller="bank" action="create"
+    <h1><g:message code="bank.list"/> <small><g:message code="bank.list.explanation"/></small> <g:link controller="bank" action="create"
                                                                                  class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'bank.png')}"
-                alt=">"/> Créer un nouvel établissement</g:link></h1>
+                alt=">"/> <g:message code="bank.create"/></g:link></h1>
     <hr/>
 </div>
 
@@ -32,9 +32,7 @@
     <div class="around-border">
 
         <g:if test="${!bankInstanceList}">
-            <div class="alert alert-danger">Aucun établissement enregistré !
-
-            </div>
+            <div class="alert alert-danger"><g:message code="no.banks.title"/></div>
         </g:if>
         <g:else>
             <g:if test="${flash.message}">

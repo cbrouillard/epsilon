@@ -24,7 +24,7 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Créer un nouveau budget</h1>
+    <h1><g:message code="budget.create"/></h1>
     <hr/>
 </div>
 
@@ -115,7 +115,7 @@
                         </div>
 
                         <div class="help-block col-sm-10 col-sm-offset-2">
-                            Les dates ne sont pas obligatoires : renseignées, elles serviront à borner une période pour le budget. Non renseignées, le budget s'appliquera pour le mois en cours et se reinitialisera tout seul, mois après mois.
+                            <g:message code="budget.date.helper"/>
                         </div>
 
                     </div>

@@ -22,17 +22,12 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Détails d'une échéance</h4>
 </div>
 
 <div class="modal-body">
     <g:if test="${flash.message}">
         <div class="alert alert-info">${flash.message}</div>
     </g:if>
-
-%{--<div class="alert alert-info">--}%
-%{--Solde passé pour cette échéance : <g:formatNumber number="${scheduledInstance?.pastSold}" format="0.##"/> €--}%
-%{--</div>--}%
 
     <dl class="dl-horizontal">
         <dt><g:message code="scheduled.id.label" default="ID"/></dt>

@@ -22,7 +22,7 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Editer un compte <small>${accountInstance.name}</small></h1>
+    <h1><g:message code="account.edit"/> <small>${accountInstance.name}</small></h1>
     <hr/>
 </div>
 
@@ -73,7 +73,7 @@
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-asterisk"></span></span>
                                 <g:select name="type" from="${com.headbangers.epsilon.AccountType?.values()}"
-                                          value="${accountInstance?.type}" required="true"
+                                          value="${accountInstance?.type}" required="required"
                                           class="form-control"/>
                             </div>
 

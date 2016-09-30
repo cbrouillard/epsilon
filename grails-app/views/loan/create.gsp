@@ -10,7 +10,6 @@
  * GNU General Public License for more details.
  */
 -->
-
 <%@ page import="com.headbangers.epsilon.Loan" %>
 <html>
 <head>
@@ -24,15 +23,10 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Créer un nouveau prêt</h1>
+    <h1><g:message code="loan.create"/></h1>
 
     <div class="alert alert-info">
-        Saisissez les détails de votre prêt.
-        Epsilon sait gérer deux sens:
-        <ul>
-            <li>vous êtes l'emprunteur : sélectionnez l'onglet "Je doit de l'argent"</li>
-            <li>vous êtes le prêteur : sélectionnez l'onglet "On me doit de l'argent"</li>
-        </ul>
+        <g:message code="loan.super.explanation"/>
     </div>
     <hr/>
 </div>
@@ -52,10 +46,10 @@
     <div class="tabbable"><!-- Only required for left/right tabs -->
         <ul class="nav nav-tabs">
             <li class="${!tabToDisplay || tabToDisplay == 'metous' ? 'active' : ''}">
-                <a href="#metous" data-toggle="tab">Je doit de l'argent</a>
+                <a href="#metous" data-toggle="tab"><g:message code="loan.metous"/> </a>
             </li>
             <li class="${tabToDisplay == 'ustome' ? 'active' : ''}">
-                <a href="#ustome" data-toggle="tab">On me doit de l'argent</a>
+                <a href="#ustome" data-toggle="tab"><g:message code="loan.ustome"/> </a>
             </li>
         </ul>
 

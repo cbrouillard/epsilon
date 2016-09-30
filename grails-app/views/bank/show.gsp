@@ -23,7 +23,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                 aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Détails d'un établissement</h4>
+        <h4 class="modal-title"><g:message code="bank.details"/></h4>
     </div>
 
     <div class="modal-body">
@@ -34,7 +34,7 @@
 
 
         <dl class="dl-horizontal">
-            <dt><g:message code="ID" default="ID"/></dt>
+            <dt><g:message code="bank.id.label" default="ID"/></dt>
             <dd>${fieldValue(bean: bankInstance, field: "id")}</dd>
 
             <dt><g:message code="bank.name.label" default="Name"/></dt>

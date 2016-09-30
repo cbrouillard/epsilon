@@ -21,7 +21,7 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Editer une catégorie <small>${categoryInstance.name}</small></h1>
+    <h1><g:message code="category.edit"/> <small>${categoryInstance.name}</small></h1>
     <hr/>
 </div>
 
@@ -62,7 +62,7 @@
 
                     <div class="form-group ${hasErrors(bean: categoryInstance, field: 'color', 'has-error')}">
 
-                        <label for="color" class="col-sm-2 control-label mandatory">Couleur</label>
+                        <label for="color" class="col-sm-2 control-label mandatory"><g:message code="category.color.label"/></label>
 
                         <div class="col-sm-10">
                             <div class="input-group">

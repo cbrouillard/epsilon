@@ -1,8 +1,20 @@
+<!--
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+-->
 <%@ page import="com.headbangers.epsilon.Scheduled; com.headbangers.epsilon.Operation; com.headbangers.epsilon.OperationType; java.text.SimpleDateFormat" %>
 <%
     def thresholds = account?.thresholds?.findAll({it.active})
     def depenseCourbe = new ArrayList();
-    def columns = [['string', 'Day'], ['number', 'Situation']]
+    def columns = [['string', "${message(code:'situation.col.day')}"], ['number', "${message(code:'situation.col.situationamount')}"]]
     def colors = ['92e07f']
 
     thresholds.each {th ->

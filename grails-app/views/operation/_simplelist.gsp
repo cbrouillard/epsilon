@@ -14,11 +14,11 @@
     <table class="table table-striped table-hover table-condensed table-fixed">
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Catégorie</th>
-            <th class="text-right">Paiement</th>
-            <th class="text-right">Dépôt</th>
-            <th class="text-right">Total</th>
+            <th><g:message code="date"/></th>
+            <th><g:message code="category"/></th>
+            <th class="text-right"><g:message code="operation.type.payment"/></th>
+            <th class="text-right"><g:message code="operation.type.receipt"/></th>
+            <th class="text-right"><g:message code="total"/></th>
         </tr>
         </thead>
         <tbody>

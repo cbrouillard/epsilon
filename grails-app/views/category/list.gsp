@@ -21,16 +21,13 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Liste des catégories <small>Types de dépenses ou dépôts</small> <g:link controller="category" action="create"
+    <h1><g:message code="category.list"/> <small><g:message code="category.list.explanation"/></small> <g:link controller="category" action="create"
                                                                                 class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'category.png')}"
-                alt=">"/> Créer une nouvelle catégorie</g:link></h1>
+                alt=">"/> <g:message code="category.create"/></g:link></h1>
 
     <div class="alert alert-info">
-        Chaque opération est rangée dans une catégorie.<br/>
-        Voici la liste de toutes les catégories connues du système.
-        Notez qu'il est inutile de créer toutes vos catégories au cas par cas : elles seront automatiquement
-        ajoutées au fur et à mesure de vos dépenses/dépôts/virements.
+        <g:message code="category.super.explanation"/>
     </div>
     <hr/>
 </div>
@@ -66,10 +63,10 @@
                     <g:sortableColumn property="lastUpdated"
                                       title="${message(code: 'category.lastUpdated.label', default: 'Last Updated')}"/>
 
-                    <th class="text-right">Solde</th>
+                    <th class="text-right"><g:message code="total"/></th>
 
-                    <th class="text-center">Surveillance</th>
-                    <th class="text-right">Actions</th>
+                    <th class="text-center"><g:message code="watching"/></th>
+                    <th class="text-right"><g:message code="actions"/></th>
                 </tr>
                 </thead>
                 <tbody>

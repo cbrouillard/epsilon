@@ -36,7 +36,7 @@
   </head>
 
   <body>
-    <h1>Grails Runtime Exception</h1>
+    <h1>Runtime Exception</h1>
     <h2>Error Details</h2>
 
   	<div class="message">

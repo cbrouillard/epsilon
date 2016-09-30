@@ -12,11 +12,11 @@
 -->
 <g:if test="${category?.pinned}">
     <g:remoteLink  controller="category" action="unpinne" update="category${category?.id}-pinned" id="${category?.id}">
-        <img src="${resource(dir:'img', file:'unpinne.png')}" alt="P" title="Stopper la surveillance"/>
+        <img src="${resource(dir:'img', file:'unpinne.png')}" alt="P" title=""/>
     </g:remoteLink>
 </g:if>
 <g:else>
     <g:remoteLink  controller="category" action="pinne" update="category${category?.id}-pinned" id="${category?.id}">
-        <img src="${resource(dir:'img', file:'pinne.png')}" alt="_" title="Surveiller cette catégorie"/>
+        <img src="${resource(dir:'img', file:'pinne.png')}" alt="_" title="${message(code:'category.watch')}"/>
     </g:remoteLink>
 </g:else>

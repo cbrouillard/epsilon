@@ -23,7 +23,7 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Créer une nouvelle échéance</h1>
+    <h1><g:message code="scheduled.create"/></h1>
     <hr/>
 </div>
 
@@ -43,13 +43,13 @@
     <div class="tabbable"><!-- Only required for left/right tabs -->
         <ul class="nav nav-tabs">
             <li class="${tabToDisplay == 'depot' ? 'active' : ''}">
-                <a href="#depot" data-toggle="tab">Dépôt</a>
+                <a href="#depot" data-toggle="tab"><g:message code="operation.type.receipt"/></a>
             </li>
             <li class="${tabToDisplay == 'virement' ? 'active' : ''}">
-                <a href="#virement" data-toggle="tab">Virement</a>
+                <a href="#virement" data-toggle="tab"><g:message code="operation.type.accountmove"/></a>
             </li>
             <li class="${!tabToDisplay || tabToDisplay == 'facture' ? 'active' : ''}">
-                <a href="#facture" data-toggle="tab">Facture</a>
+                <a href="#facture" data-toggle="tab"><g:message code="operation.type.payment"/></a>
             </li>
         </ul>
 

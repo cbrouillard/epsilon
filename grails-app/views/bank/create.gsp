@@ -23,7 +23,7 @@
 <body>
 
 <div class="col-sm-12">
-    <h1>Créer un nouvel établissement</h1>
+    <h1><g:message code="bank.create"/></h1>
     <hr/>
 </div>
 

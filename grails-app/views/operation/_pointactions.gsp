@@ -12,11 +12,11 @@
 -->
 <g:if test="${operation?.pointed}">
   <g:remoteLink  controller="operation" action="unpoint" update="operation${operation?.id}-point" id="${operation?.id}">
-    <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="Enlever le pointage sur cette opération"/>
+    <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="${message(code:'operation.unpoint')}"/>
   </g:remoteLink>
 </g:if>
 <g:else>
   <g:remoteLink  controller="operation" action="point" update="operation${operation?.id}-point" id="${operation?.id}">
-    <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="Pointer cette opération"/>
+    <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="${message(code:'operation.point')}"/>
   </g:remoteLink>
 </g:else>

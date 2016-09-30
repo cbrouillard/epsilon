@@ -21,10 +21,10 @@
 
 <body>
 <div class="col-sm-12">
-    <h1>Liste des utilisateurs Epsilon <small>Attention ! Administration.</small>
+    <h1><g:message code="person.list"/> <small><g:message code="person.list.explanation"/></small>
         <g:link class="create btn btn-success" action="createuser">
             <img src="${resource(dir: 'img', file: 'personal-information.png')}" alt=">"/>
-            Nouvel utilisateur</g:link>
+            <g:message code="person.create"/> </g:link>
     </h1>
     <hr/>
 </div>
@@ -38,11 +38,11 @@
                                   title="${message(code: 'person.username.label', default: 'Username')}"/>
                 <g:sortableColumn property="userRealName"
                                   title="${message(code: 'person.userRealName.label', default: 'userRealName')}"/>
-                <th class="text-center">Admin</th>
-                <th class="text-center">Activé</th>
+                <th class="text-center"><g:message code="admin"/></th>
+                <th class="text-center"><g:message code="active"/></th>
                 <g:sortableColumn property="email"
                                   title="${message(code: 'person.email.label', default: 'Email')}"/>
-                <th class="text-right">Actions</th>
+                <th class="text-right"><g:message code="actions"/></th>
 
             </tr>
             </thead>

@@ -28,7 +28,7 @@
 
         <g:if test="${actualMonth != prev}">
             <tr class="important">
-                <td colspan="2">Reste en dépense</td>
+                <td colspan="2"><g:message code="scheduled.topay.this.month"/></td>
                 <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="###,###.##"/> €</td>
                 <td class="tdright fixedsize">&nbsp;</td>
 
@@ -44,13 +44,8 @@
 
         <tr>
             <td class="principal">
-                <g:if test="${scheduled.type.sign.equals("-")}">
-                </g:if>
-                <g:else>
-
-                </g:else>
-
-                ${scheduled.name}</td>
+                ${scheduled.name}
+            </td>
             <td><g:formatDate date="${scheduled.dateApplication}"/></td>
             <td class="tdright fixedsize"><g:formatNumber number="${scheduled.amount}" format="###,###.##"/> €</td>
             <td class="tdright fixedsize">
@@ -59,10 +54,10 @@
                 </g:if>
 
                 <g:if test="${(!filterAutomatic && !scheduled.automatic) || (forceActionDisplay)}">
-                    <g:link controller="scheduled" action="apply" id="${scheduled.id}" title="Appliquer l'échéance">
+                    <g:link controller="scheduled" action="apply" id="${scheduled.id}" title="${message(code:"scheduled.apply")}">
                         <img src="${resource(dir: 'img', file: 'enter.png')}"/>
                     </g:link>
-                    <g:link controller="scheduled" action="jump" id="${scheduled.id}" title="Sauter l'échéance">
+                    <g:link controller="scheduled" action="jump" id="${scheduled.id}" title="${message(code:"scheduled.ignore")}">
                         <img src="${resource(dir: 'img', file: 'jump.png')}"/>
                     </g:link>
                 </g:if>
@@ -76,7 +71,7 @@
     </g:each>
     <g:if test="${scheduleds}">
         <tr class="important">
-            <td colspan="2">Reste en dépense</td>
+            <td colspan="2"><g:message code="scheduled.topay.this.month"/></td>
             <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="###,###.##"/> €</td>
             <td class="tdright fixedsize">&nbsp;</td>
             <g:set var="amount" value="${0}"/>

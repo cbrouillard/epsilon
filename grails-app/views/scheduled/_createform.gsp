@@ -1,4 +1,3 @@
-<%@ page import="com.headbangers.epsilon.CronExpression" %>
 <!--
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -11,6 +10,7 @@
  * GNU General Public License for more details.
  */
 -->
+<%@ page import="com.headbangers.epsilon.CronExpression" %>
 <div class="around-border-within-tab">
 <div class="clearfix">&nbsp;</div>
 <g:form method="post" action="save${type}" class="form-horizontal">

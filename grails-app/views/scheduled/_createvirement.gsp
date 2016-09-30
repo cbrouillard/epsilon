@@ -1,16 +1,16 @@
-<%@ page import="com.headbangers.epsilon.CronExpression" %>
 <!--
 /*
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 3 of the License.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- */
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; version 3 of the License.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*/
 -->
+<%@ page import="com.headbangers.epsilon.CronExpression" %>
 <div class="around-border-within-tab">
 <div class="clearfix">&nbsp;</div>
 <g:form method="post" action="savevirement" class="form-horizontal">
@@ -172,7 +172,7 @@
                 <g:select optionValue="name" name="accountTo.id"
                           from="${accounts}"
                           optionKey="id"
-                          value="${scheduledInstance?.accountTo?.id}" required="true"
+                          value="${scheduledInstance?.accountTo?.id}" required="required"
                           class="form-control"/>
             </div>
 
