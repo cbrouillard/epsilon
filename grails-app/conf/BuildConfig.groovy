@@ -41,21 +41,28 @@ grails.project.dependency.resolution = {
         //runtime 'mysql:mysql-connector-java:5.1.5'
         runtime 'postgresql:postgresql:9.1-901.jdbc4'
         compile 'org.jsoup:jsoup:1.9.2'
+        //runtime 'org.springframework:spring-aop:4.0.5.RELEASE'
+        //runtime 'org.springframework:spring-expression:4.0.5.RELEASE'
     }
 
     plugins {
-        runtime ":hibernate:3.6.10.4"
-        runtime ":jquery:1.11.1"
-        runtime ":resources:1.2.RC2"
-	    runtime "org.grails.plugins:cors:1.1.8"
-        build ":tomcat:7.0.47"
+
+        runtime ":hibernate:3.6.10.17"
+        build ":tomcat:7.0.54"
+
+        runtime ":resources:1.2.8"
+        //compile ':asset-pipeline:1.8.11'
+        //compile ':cache:1.1.7'
+
+        compile ":spring-security-core:2.0.0"
 
         compile ":quartz:1.0.2"
-        compile ":multi-select:0.2"
         compile ":mail:1.0.7"
 
+        compile ":multi-select:0.2"
+        runtime "org.grails.plugins:cors:1.1.8"
         compile ":jquery-ui:1.10.4"
-        compile ":spring-security-core:2.0.0"
+        runtime ":jquery:1.11.1"
         runtime ":webxml:1.4.1"
         compile ":twitter-bootstrap:3.3.2.1"
         compile ":google-visualization:1.0.2"
