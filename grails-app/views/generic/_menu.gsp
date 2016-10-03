@@ -49,9 +49,18 @@
         </ul>
     </li>
 
+    %{--<%
+        def counter = com.headbangers.epsilon.Account.createCriteria().get {
+            owner{ eq ("id", sec.loggedInUserInfo (field:"id"))}
+            projections {count("id")}
+        }
+    %>
+
+    <g:if test="${counter > 0}">--}%
     <li class="${controllerName == 'scheduled' || controllerName == 'budget' || controllerName == 'wish' || controllerName == 'loan' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'coins.png')}"/> <g:message code="menu.money"/> <b class="caret"></b>
+            <img src="${resource(dir: 'img', file: 'coins.png')}"/> <g:message code="menu.money"/> <b
+                class="caret"></b>
         </g:link>
         <ul class="dropdown-menu">
             <li class="dropdown-header"><g:message code="scheduleds"/></li>
@@ -115,6 +124,7 @@
 
         </ul>
     </li>
+    %{--</g:if>--}%
 
     <li class="${controllerName == 'category' || controllerName == 'tiers' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
@@ -192,7 +202,8 @@
                 <g:link class="personal"
                         controller="person"
                         action="infos"><img
-                        src="${resource(dir: 'img', file: 'details.png')}"/> <g:message code="person.informations"/> </g:link>
+                        src="${resource(dir: 'img', file: 'details.png')}"/> <g:message
+                        code="person.informations"/></g:link>
             </li>
             <li class="divider"></li>
             <li>

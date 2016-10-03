@@ -76,10 +76,7 @@
                 <ol>
                     <li><g:link controller="bank" action="create"><img
                             src="${resource(dir: 'img', file: 'bank.png')}"
-                            alt=">"/> Créer un nouvel établissement</g:link></li>
-                    <li><g:link controller="account" action="create"><img
-                            src="${resource(dir: 'img', file: 'account.png')}"
-                            alt=">"/> Créer un nouveau compte</g:link></li>
+                            alt=">"/> <g:message code="bank.create"/> </g:link></li>
                 </ol>
 
             </div>

@@ -1,12 +1,18 @@
 
 def ENV_NAME = "EPSILON_CONF"
 def props = new Properties()
+String home = System.getProperty("user.home");
+String confFilePath = home+ "/.epsilon.properties"
 if(System.getenv(ENV_NAME)) {
-    InputStream is = new BufferedInputStream(new FileInputStream(System.getenv(ENV_NAME)))
+    confFilePath = System.getenv(ENV_NAME);
+}
+
+try {
+    InputStream is = new BufferedInputStream(new FileInputStream(confFilePath))
     props.load(is)
-    is.close()    
-}else {
-  println "### !!! Impossible d'ouvrir le fichier de conf !!! ###"
+    is.close()
+} catch (Exception e){
+    println "FATAL ERROR : epsilon.properties does not exist or EPSILON_CONF env has not been defined."
 }
 
 dataSource {

@@ -44,7 +44,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="grails-2.3.5" level="application" />
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (epsilon)">
         <CLASSES>
@@ -82,6 +81,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="epsilon-grailsPlugins" />
+    <orderEntry type="library" name="grails-2.3.9" level="application" />
   </component>
 </module>
 

@@ -12,10 +12,18 @@
 
 def ENV_NAME = "EPSILON_CONF"
 def props = new Properties()
+String home = System.getProperty("user.home");
+String confFilePath = home+ "/.epsilon.properties"
 if(System.getenv(ENV_NAME)) {
-    InputStream is = new BufferedInputStream(new FileInputStream(System.getenv(ENV_NAME)))
+    confFilePath = System.getenv(ENV_NAME);
+}
+
+try {
+    InputStream is = new BufferedInputStream(new FileInputStream(confFilePath))
     props.load(is)
-    is.close()    
+    is.close()
+} catch (Exception e){
+    println "FATAL ERROR : epsilon.properties does not exist or EPSILON_CONF env has not been defined."
 }
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
@@ -75,7 +83,6 @@ environments {
     production {
         grails.logging.jul.usebridge = false
         grails.serverURL = props.get("epsilon.grails.server.url")
-	    //"http://tacticalwarreport.com/epsilon"
     }
 }
 
