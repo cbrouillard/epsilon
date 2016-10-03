@@ -45,7 +45,6 @@ class SummaryController {
             owner {eq("id", person.id)}
             eq("pinned", true)
         })
-        def allPinned = (pinnedTiers + pinnedCategories)
 
         def graphData = Operation.executeQuery(
                 'select c.name, sum(o.amount) from Operation o inner join o.category c inner join o.owner p where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? and p.id = ?  group by c.name order by c.name',
@@ -56,7 +55,7 @@ class SummaryController {
 
         [accounts: accounts, lates: lateScheduled, today: todayScheduled,
          future  : futuresScheduled, depense: depense, person: person, budgets: budgets, graphData: graphData, colors:colors,
-                pinned:allPinned
+         pinnedCategories:pinnedCategories,pinnedTiers:pinnedTiers
         ]
     }
 }

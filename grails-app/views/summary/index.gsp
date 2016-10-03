@@ -140,44 +140,29 @@
     </div>
     </g:if>
 
-    <g:if test="${pinned}">
-    <hr/>
-    <div class="around-border">
-        <div class="alert alert-info">Catégories/tiers surveillés</div>
-        <div class="budgets list">
-            <table class="table table-striped">
-                <tbody>
-                <g:set var="pinnedAmount" value="${0D}"/>
-                <g:each in="${pinned}" var="onepine" status="c">
+    <g:if test="${pinnedCategories || pinnedTiers}">
+        <hr/>
 
-                    <g:set var="currentSold" value="${onepine.currentMonthOperationsSum}"/>
+        <div class="around-border">
+            <div class="alert alert-info">Catégories/tiers surveillés</div>
 
-                    <tr>
-                        <td class="principal"><span class="label" style="background-color: ${onepine.color};">&nbsp;</span> ${onepine.name}</td>
-                        <td class="tdright">
-                            <span class="label label-default">
-                                <g:formatNumber number="${currentSold}" format="###,###.##"/> €
-                            </span>
-                        </td>
-                        <td class="tdright fixedsize">
-                            <g:link title="Afficher le registre"
-                                    controller="${onepine.class.canonicalName.contains("Tiers") ? "tiers" :"category"}"
-                                    action="operations"
-                                    params="[id: onepine.id]"><img
-                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
-                        </td>
-                    </tr>
-                    <g:set var="pinnedAmount" value="${pinnedAmount + currentSold}"/>
-                </g:each>
-                <tr class="important">
-                    <td class="principal">&nbsp;</td>
-                    <td class="tdright">= <g:formatNumber number="${pinnedAmount}"
-                                                          format="###,###.##"/> €</td>
-                    <td class="tdright fixedsize">&nbsp;</td>
-                </tr>
-                </tbody>
-                </table>
+            <g:if test="${pinnedCategories}">
+                <small>Catégories</small>
+
+                <div class="budgets list">
+                    <g:render template="pinnedtable" model="[pinned:pinnedCategories]"/>
                 </div>
+            </g:if>
+
+            <g:if test="${pinnedTiers}">
+                <small>Tiers</small>
+
+                <div class="budgets list">
+                    <g:render template="pinnedtable" model="[pinned:pinnedTiers]"/>
+                </div>
+            </g:if>
+
+
         </div>
     </g:if>
 
@@ -192,7 +177,7 @@
                 src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span> </div>
 
         <g:if test="${lates}">
-            <h6><small>En retard</small></h6>
+            <small>En retard</small>
 
             <div class="scheduled list">
                 <g:render template="scheduledtable"
