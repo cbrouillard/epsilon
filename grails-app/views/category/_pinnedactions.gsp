@@ -11,12 +11,14 @@
  */
 -->
 <g:if test="${category?.pinned}">
-    <g:remoteLink  controller="category" action="unpinne" update="category${category?.id}-pinned" id="${category?.id}">
-        <img src="${resource(dir:'img', file:'unpinne.png')}" alt="P" title=""/>
-    </g:remoteLink>
+    <a href="#" title="Désactiver"
+       onclick="ajaxPostLink('${createLink(controller:'category', action:'unpinne', id:category?.id)}', 'category${category?.id}-pinned');">
+        <img src="${resource(dir:'img', file:'unpinne.png')}" alt="P" title="${message(code:'category.unwatch')}"/>
+    </a>
 </g:if>
 <g:else>
-    <g:remoteLink  controller="category" action="pinne" update="category${category?.id}-pinned" id="${category?.id}">
+    <a href="#" title="Désactiver"
+       onclick="ajaxPostLink('${createLink(controller:'category', action:'pinne', id:category?.id)}', 'category${category?.id}-pinned');">
         <img src="${resource(dir:'img', file:'pinne.png')}" alt="_" title="${message(code:'category.watch')}"/>
-    </g:remoteLink>
+    </a>
 </g:else>

@@ -11,12 +11,14 @@
  */
 -->
 <g:if test="${operation?.pointed}">
-  <g:remoteLink  controller="operation" action="unpoint" update="operation${operation?.id}-point" id="${operation?.id}">
-    <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="${message(code:'operation.unpoint')}"/>
-  </g:remoteLink>
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'operation', action:'unpoint', id:operation?.id)}', 'operation${operation?.id}-point');">
+        <img src="${resource(dir: 'img', file: 'online.png')}" alt="P" title="${message(code: 'operation.unpoint')}"/>
+    </a>
 </g:if>
 <g:else>
-  <g:remoteLink  controller="operation" action="point" update="operation${operation?.id}-point" id="${operation?.id}">
-    <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="${message(code:'operation.point')}"/>
-  </g:remoteLink>
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'operation', action:'point', id:operation?.id)}', 'operation${operation?.id}-point');">
+        <img src="${resource(dir: 'img', file: 'offline.png')}" alt="_" title="${message(code: 'operation.point')}"/>
+    </a>
 </g:else>

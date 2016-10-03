@@ -193,5 +193,23 @@
         }
     }
 
+    var ajaxPostLink = function (url, updateId) {
+
+        jQuery.ajax(
+                {   type:'POST',
+                    url:url,
+                    success:
+                            function(data,textStatus){
+                                jQuery('#'+updateId).html(data);
+                            },
+                    error:
+                            function(XMLHttpRequest,textStatus,errorThrown){
+
+                            }
+                });
+
+        return false;
+    }
+
 </script>
 </html>

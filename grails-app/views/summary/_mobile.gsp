@@ -11,12 +11,14 @@
  */
 -->
 <g:if test="${person.mobileToken}">
-    <g:remoteLink controller="person" action="deactivateMobile" update="mobile-activation" class="btn btn-default">
+    <a href="#" class="btn btn-default"
+       onclick="ajaxPostLink('${createLink(controller:'person', action:'deactivateMobile', id:person?.id)}', 'mobile-activation');">
         <img src="${resource(dir: 'img', file: 'phone_on.png')}" alt="[]"/>
-    </g:remoteLink>
+    </a>
 </g:if>
 <g:else>
-    <g:remoteLink controller="person" action="activateMobile" update="mobile-activation" class="btn btn-default">
+    <a href="#" class="btn btn-default"
+       onclick="ajaxPostLink('${createLink(controller:'person', action:'activateMobile', id:person?.id)}', 'mobile-activation');">
         <img src="${resource(dir: 'img', file: 'phone_off.png')}" alt="[X]"/>
-    </g:remoteLink>
+    </a>
 </g:else>

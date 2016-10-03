@@ -11,12 +11,14 @@
  */
 -->
 <g:if test="${budget?.active}">
-  <g:remoteLink  controller="budget" action="deactivate" update="budget${budget?.id}-activation" id="${budget?.id}">
-    <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="${message(code:'budget.deactivate')}"/>
-  </g:remoteLink>
+    <a href="#" title="Désactiver"
+       onclick="ajaxPostLink('${createLink(controller:'budget', action:'deactivate', id:budget?.id)}', 'budget${budget?.id}-activation');">
+        <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="${message(code:'budget.deactivate')}"/>
+    </a>
 </g:if>
 <g:else>
-  <g:remoteLink  controller="budget" action="activate" update="budget${budget?.id}-activation" id="${budget?.id}">
-    <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="${message(code:'budget.activate')}"/>
-  </g:remoteLink>
+    <a href="#" title="Activer"
+       onclick="ajaxPostLink('${createLink(controller:'budget', action:'activate', id:budget?.id)}', 'budget${budget?.id}-activation');">
+        <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="${message(code:'budget.activate')}"/>
+    </a>
 </g:else>

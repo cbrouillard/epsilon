@@ -11,12 +11,14 @@
  */
 -->
 <g:if test="${scheduled?.active}">
-  <g:remoteLink  controller="scheduled" action="deactivate" update="scheduled${scheduled?.id}-activation" id="${scheduled?.id}">
-    <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="${message(code:'scheduled.deactivate')}"/>
-  </g:remoteLink>
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'scheduled', action:'deactivate', id:scheduled?.id)}', 'scheduled${scheduled?.id}-activation');">
+        <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="${message(code:'scheduled.deactivate')}"/>
+    </a>
 </g:if>
 <g:else>
-  <g:remoteLink  controller="scheduled" action="activate" update="scheduled${scheduled?.id}-activation" id="${scheduled?.id}">
-    <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="${message(code:'scheduled.activate')}"/>
-  </g:remoteLink>
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'scheduled', action:'activate', id:scheduled?.id)}', 'scheduled${scheduled?.id}-activation');">
+        <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="${message(code:'scheduled.activate')}"/>
+    </a>
 </g:else>

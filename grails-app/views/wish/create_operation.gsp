@@ -44,12 +44,6 @@
                                              class="form-control typeahead-tiers"
                                              required="true"
                                              autocomplete="off" autofocus="true"/>
-                                <g:if test="${parameterBayesianFilter.equals("true")}">
-                                    <jq:jquery>
-                                        jQuery('#tiers${type}').focusout (function(){tryToGuessCategoryWithTiersId(jQuery('#tiers${type}').val(), 'category${type}');});
-                                    </jq:jquery>
-                                </g:if>
-
                             </div>
 
                             <div class="help-block with-errors"></div>

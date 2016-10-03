@@ -46,11 +46,11 @@
                 <div class="btn-group btn-group-xs" role="group" aria-label="...">
 
                     <g:if test="${!refreshed}">
-                        <g:remoteLink action="refresh" update="refreshWish${wishInstance?.id}" id="${wishInstance?.id}"
-                                      class="btn">
+                        <a href="#" class="btn"
+                           onclick="ajaxPostLink('${createLink(controller:'wish', action:'refresh', id:wishInstance?.id)}', 'refreshWish${wishInstance?.id}');">
                             <img src="${resource(dir: 'img', file: 'refresh.png')}" alt="_"
                                  title="Rafraichir les données"/>
-                        </g:remoteLink>
+                        </a>
                     </g:if>
                     <g:else>
                         <a href="#" class="btn"><small>&#10003;</small></a>

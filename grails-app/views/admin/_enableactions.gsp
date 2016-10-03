@@ -11,12 +11,14 @@
  */
 -->
 <g:if test="${person?.enabled}">
-  <g:remoteLink title="Désactiver" controller="admin" action="disableuser" update="person${person?.id}-enable" id="${person?.id}">
-    <img src="${resource(dir:'img', file:'online.png')}" alt="D"/>
-  </g:remoteLink>
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'admin', action:'disableuser', id:person?.id)}', 'person${person?.id}-enable');">
+        <img src="${resource(dir: 'img', file: 'online.png')}" alt="D"/>
+    </a>
 </g:if>
 <g:else>
-  <g:remoteLink title="Activer" controller="admin" action="enableuser" update="person${person?.id}-enable" id="${person?.id}">
-    <img src="${resource(dir:'img', file:'offline.png')}" alt="E"/>
-  </g:remoteLink>
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'admin', action:'enableuser', id:person?.id)}', 'person${person?.id}-enable');">
+        <img src="${resource(dir: 'img', file: 'offline.png')}" alt="E"/>
+    </a>
 </g:else>

@@ -13,15 +13,15 @@
 <g:set var="username" value="${sec.username().toString()}"/>
 <g:if test="${!person?.username.equalsIgnoreCase(username)}">
     <g:if test="${person?.authorities*.authority.contains("ROLE_ADMIN")}">
-        <g:remoteLink title="Désactiver" controller="admin" action="setadminuser" update="person${person?.id}-admin"
-                      params="[id: person?.id, role: false]" id="${person?.id}">
+        <a href="#" title="Désactiver"
+           onclick="ajaxPostLink('${createLink(controller:'admin', action:'setadminuser', id:person?.id, params:[id: person?.id, role: false])}', 'person${person?.id}-admin');">
             <img src="${resource(dir: 'img', file: 'online.png')}" alt="D"/>
-        </g:remoteLink>
+        </a>
     </g:if>
     <g:else>
-        <g:remoteLink title="Désactiver" controller="admin" action="setadminuser" update="person${person?.id}-admin"
-                      params="[id: person?.id, role: true]" id="${person?.id}">
+        <a href="#" title="Activer"
+           onclick="ajaxPostLink('${createLink(controller:'admin', action:'setadminuser', id:person?.id, params:[id: person?.id, role: true])}', 'person${person?.id}-admin');">
             <img src="${resource(dir: 'img', file: 'offline.png')}" alt="E"/>
-        </g:remoteLink>
+        </a>
     </g:else>
 </g:if>

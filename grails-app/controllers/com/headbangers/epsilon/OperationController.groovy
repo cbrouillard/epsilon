@@ -140,7 +140,7 @@ class OperationController {
         }
 
         [accounts    : accounts, selected: selectedAccount, byMonth: month,
-         currentMonth: currentMonth, parameterBayesianFilter: parameterService.getBayesianFilterParameter(person), graphData: graphData,
+         currentMonth: currentMonth, graphData: graphData,
          depense     : depense, revenu: revenu, futures: programmedScheduleds]
     }
 

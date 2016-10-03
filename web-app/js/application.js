@@ -17,19 +17,3 @@ if (Ajax && (Ajax != null)) {
         }
     });
 }
-
-var tryToGuessCategoryWithTiersId = function (tiersId, inputToUpdate) {
- 
-    jQuery.ajax(
-    {
-        type:'GET',
-        url:'/epsilon/operation/guessCategory/'+tiersId,
-        success: function(data,textStatus){
-            //alert (data + textStatus);
-            jQuery('#'+inputToUpdate).val(data);
-        },
-        error:function(XMLHttpRequest,textStatus,errorThrown){}});
-        
-    return false;
- 
-}

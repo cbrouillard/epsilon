@@ -11,12 +11,14 @@
  */
 -->
 <g:if test="${tiers?.pinned}">
-    <g:remoteLink  controller="tiers" action="unpinne" update="tiers${tiers?.id}-pinned" id="${tiers?.id}">
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'tiers', action:'unpinne', id:tiers?.id)}', 'tiers${tiers?.id}-pinned');">
         <img src="${resource(dir:'img', file:'unpinne.png')}" alt="P" title="Stopper la surveillance"/>
-    </g:remoteLink>
+    </a>
 </g:if>
 <g:else>
-    <g:remoteLink  controller="tiers" action="pinne" update="tiers${tiers?.id}-pinned" id="${tiers?.id}">
+    <a href="#"
+       onclick="ajaxPostLink('${createLink(controller:'tiers', action:'pinne', id:tiers?.id)}', 'tiers${tiers?.id}-pinned');">
         <img src="${resource(dir:'img', file:'pinne.png')}" alt="_" title="Surveiller ce tiers"/>
-    </g:remoteLink>
+    </a>
 </g:else>

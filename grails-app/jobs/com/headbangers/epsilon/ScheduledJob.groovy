@@ -21,7 +21,7 @@ class ScheduledJob {
     //cron name:'dev5mn', cronExpression: "0 0/5 * * * ?"
     //cron name: 'touslesjoursa3h', cronExpression: "0 0 3 * * ?"
     static triggers = {
-        cron name: 'touslesjoursa3h', cronExpression: "0 0 3 * * ?"
+        cron name: 'touslesjoursa6h', cronExpression: "0 0 6 * * ?"
     }
 
     def execute() {
