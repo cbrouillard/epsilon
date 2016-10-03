@@ -147,9 +147,18 @@
         %>
         <gvisualization:barCoreChart elementId="byMonthChart"
                                      columns="${dataCol}" data="${graphData}"
-                                     legend="${[position: 'none', alignment: 'center']}" colors="['92e07f']"/>
+                                     legend="${[position: 'none', alignment: 'center']}" colors="['92e07f']" select="goCategory"/>
         <div id="byMonthChart"
              style="width: 100%; margin: auto;display: block;background: transparent;"></div>
+
+        <script type="text/javascript">
+            function goCategory(e) {
+                var item = visualization.getSelection()[0];
+                var categoryName = visualization_data.getFormattedValue (item.row, 0);
+
+                window.location.href = "${createLink(controller: 'category', action: "byname")}" + "?name="+categoryName
+            }
+        </script>
 
     </div>
 </div>

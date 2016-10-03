@@ -209,53 +209,54 @@
 </div>
 </g:if>
 
-<div class="col-lg-4 col-md-12 col-sm-12">
+<g:if test="${graphData || depense || revenu}">
+    <div class="col-lg-4 col-md-12 col-sm-12">
 
-    <g:if test="${graphData || depense || revenu}">
-    <div class="around-border">
-        <div class="alert alert-info">Statistiques du mois</div>
+        <div class="around-border">
+            <div class="alert alert-info">Statistiques du mois</div>
 
-        <div class="row">
+            <div class="row">
 
-            <div class="counter-shower col-xs-12 col-sm-12">
+                <div class="counter-shower col-xs-12 col-sm-12">
 
-                <div class="number">
-                    <span class="label label-default">
-                        <g:formatNumber number="${depense}"
-                                        format="###,###.##"/> €
-                    </span>
-                </div>
-                <div class="lbl">
-                    Dépenses réelles du mois
+                    <div class="number">
+                        <span class="label label-default">
+                            <g:formatNumber number="${depense}"
+                                            format="###,###.##"/> €
+                        </span>
+                    </div>
+
+                    <div class="lbl">
+                        Dépenses réelles du mois
+                    </div>
+
                 </div>
 
             </div>
 
+            <%
+                def dataCol = [['string', 'category'], ['number', 'amount']]
+
+            %>
+            <gvisualization:pieCoreChart elementId="piechart"
+                                         columns="${dataCol}" data="${graphData}"
+                                         pieHole="${0.4}" legend="${[position: 'bottom', alignment: 'center']}"
+                                         colors="${colors}" select="goCategory"/>
+            <div id="piechart"
+                 style="width: 100%; height: 450px; margin: auto;display: block;background: transparent;"></div>
+
+            <script type="text/javascript">
+                function goCategory(e) {
+                    var item = visualization.getSelection()[0];
+                    var categoryName = visualization_data.getFormattedValue(item.row, 0);
+
+                    window.location.href = "${createLink(controller: 'category', action: "byname")}" + "?name=" + categoryName
+                }
+            </script>
+
         </div>
-
-        <%
-            def dataCol = [['string', 'category'], ['number', 'amount']]
-
-        %>
-        <gvisualization:pieCoreChart elementId="piechart"
-                                     columns="${dataCol}" data="${graphData}"
-                                     pieHole="${0.4}" legend="${[position: 'bottom', alignment: 'center']}"
-                                     colors="${colors}" select="goCategory"/>
-        <div id="piechart"
-             style="width: 100%; height: 450px; margin: auto;display: block;background: transparent;"></div>
-
-        <script type="text/javascript">
-            function goCategory(e) {
-                var item = visualization.getSelection()[0];
-                var categoryName = visualization_data.getFormattedValue (item.row, 0);
-
-                window.location.href = "${createLink(controller: 'category', action: "byname")}" + "?name="+categoryName
-            }
-        </script>
-
     </div>
-    </g:if>
-</div>
+</g:if>
 
 </body>
 </html>
