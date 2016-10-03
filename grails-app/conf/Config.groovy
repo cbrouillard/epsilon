@@ -19,8 +19,15 @@ if(System.getenv(ENV_NAME)) {
 }
 
 try {
-    InputStream is = new BufferedInputStream(new FileInputStream(confFilePath))
-    props.load(is)
+    InputStream is
+    File confFile = new File (confFilePath)
+    if (!confFile.exists()){
+        is = getClass().getClassLoader().getResourceAsStream("classpath:epsilon.properties")
+    } else{
+        is = new FileInputStream(confFilePath)
+    }
+
+    props.load(new BufferedInputStream(is))
     is.close()
 } catch (Exception e){
     println "FATAL ERROR : epsilon.properties does not exist or EPSILON_CONF env has not been defined."

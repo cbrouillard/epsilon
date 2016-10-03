@@ -14,7 +14,7 @@
                     <g:formatNumber number="${currentSold}" format="###,###.##"/> €
                 </span>
             </td>
-            <td class="tdright">
+            <td class="tdright fixedsize">
                 <g:link title="Afficher le registre"
                         controller="${onepine.class.canonicalName.contains("Tiers") ? "tiers" :"category"}"
                         action="operations"
@@ -28,7 +28,7 @@
         <td class="principal">&nbsp;</td>
         <td class="tdright">= <g:formatNumber number="${pinnedAmount}"
                                               format="###,###.##"/> €</td>
-        <td class="tdright">&nbsp;</td>
+        <td class="tdright fixedsize">&nbsp;</td>
     </tr>
     </tbody>
 </table>
