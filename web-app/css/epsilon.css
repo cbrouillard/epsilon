@@ -530,3 +530,7 @@ div.counter-shower .lbl , div.counter-shower-no-line .lbl{
     display: none !important;
     visibility: hidden !important;
 }
+
+.ajax-link {
+    cursor: pointer;
+}

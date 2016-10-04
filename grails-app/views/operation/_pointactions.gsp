@@ -11,13 +11,13 @@
  */
 -->
 <g:if test="${operation?.pointed}">
-    <a href="#"
+    <a class="ajax-link"
        onclick="ajaxPostLink('${createLink(controller:'operation', action:'unpoint', id:operation?.id)}', 'operation${operation?.id}-point');">
         <img src="${resource(dir: 'img', file: 'online.png')}" alt="P" title="${message(code: 'operation.unpoint')}"/>
     </a>
 </g:if>
 <g:else>
-    <a href="#"
+    <a class="ajax-link"
        onclick="ajaxPostLink('${createLink(controller:'operation', action:'point', id:operation?.id)}', 'operation${operation?.id}-point');">
         <img src="${resource(dir: 'img', file: 'offline.png')}" alt="_" title="${message(code: 'operation.point')}"/>
     </a>
