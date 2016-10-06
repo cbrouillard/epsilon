@@ -218,7 +218,7 @@ class MobileController {
         List<MobileOperation> result = new ArrayList<MobileOperation>();
         if (person && params.account){
             def account = Account.findByIdAndOwner (params.account, person)
-            def operations = account.getLastOperations()
+            def operations = account.getLastOperationsDesc()
             operations.each{operation ->
                 result.add (new MobileOperation (operation))
             }

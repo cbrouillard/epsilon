@@ -118,6 +118,19 @@ class Account {
         }
     }
 
+    def getLastOperationsDesc() {
+        // getting last snapshot
+        def snapshot = getLastSnapshot()
+        // now getting all operations on this account with dateApplication >= snapshot.dateCreated
+        return Operation.createCriteria().list(order: 'desc', sort: 'dateApplication') {
+            account { eq("id", this.id) }
+            owner { eq("id", this.owner.id) }
+            if (snapshot) {
+                ge("dateApplication", snapshot.dateCreated)
+            }
+        }
+    }
+
     def getLastNOperations(n) {
         return Operation.createCriteria().list() {
             account { eq("id", this.id) }
