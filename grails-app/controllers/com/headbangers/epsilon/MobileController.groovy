@@ -16,6 +16,7 @@ import grails.converters.*
 
 class MobileController {
 
+    def genericService
     def personService
     def tiersService
     def categoryService
@@ -39,7 +40,9 @@ class MobileController {
         def person = checkUser(params.token)
         List<com.headbangers.epsilon.mobile.MobileBudget> budgets = new ArrayList<com.headbangers.epsilon.mobile.MobileBudget>()
         if (person){
-            def db = Budget.findAllByOwner(person)
+            List<Budget> db = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
+            db = db.findAll  {b -> b.active == true}
+
             db.each {budget ->
                 budgets.add(new com.headbangers.epsilon.mobile.MobileBudget(budget))
             }
@@ -204,6 +207,27 @@ class MobileController {
             operation.amount = Double.parseDouble (params.amount.replaceAll(",", "\\."))
             operation.owner = person
             operation.pointed = false
+
+            if (operation.save(flush: true)){
+                result.setCode ("ok")
+            }
+        }
+
+        render result as JSON
+    }
+
+    def editOperation = {
+        MobileSimpleResult result = new MobileSimpleResult("ko")
+        def person = checkUser (params.token)
+        def operation = Operation.findByOwnerAndId(person, params.oId)
+
+        if (person && operation && params.category && params.tiers && params.amount){
+            def categoryName = params.category
+            def tiersName = params.tiers
+
+            operation.tiers = tiersService.findOrCreateTiers (person, tiersName)
+            operation.category = categoryService.findOrCreateCategory (person, categoryName, operation.category.type)
+            operation.amount = Double.parseDouble (params.amount.replaceAll(",", "\\."))
 
             if (operation.save(flush: true)){
                 result.setCode ("ok")
