@@ -76,6 +76,10 @@ class UrlMappings {
             controller = 'wsData'
             action = 'chartByCategoryData'
         }
+        "/api/data/soldstats" {
+            controller = 'wsData'
+            action = 'soldStats'
+        }
         "/api/auth"(resources: 'wsAuth')
 
 

@@ -1,9 +1,11 @@
 package com.headbangers.epsilon.api
 
+import com.headbangers.epsilon.Budget
 import com.headbangers.epsilon.CategoryType
 import com.headbangers.epsilon.Operation
 import com.headbangers.epsilon.OperationType
 import com.headbangers.epsilon.Person
+import com.headbangers.epsilon.Scheduled
 import com.headbangers.epsilon.mobile.MobileChartData
 import grails.converters.JSON
 
@@ -23,7 +25,7 @@ class WsDataController {
         return null
     }
 
-    def chartByCategoryData () {
+    def chartByCategoryData() {
         def person = checkUser(request)
         MobileChartData data = new MobileChartData()
         if (person) {
@@ -40,5 +42,48 @@ class WsDataController {
 
         render data as JSON
 
+    }
+
+    def chartAccountFuture() {
+
+    }
+
+    def soldStats() {
+        def person = checkUser(request)
+        Map<String, Double> stats = new HashMap<>();
+
+        if (person) {
+            Date today = dateUtil.todayMorning
+            Date roll = dateUtil.getDatePlusOneMonth(today)
+            roll = dateUtil.getDateAtEvening(roll)
+
+            def depense = 0
+            def revenus = 0
+            Scheduled.findAllByOwner(person).each { scheduled ->
+                if (scheduled.active && !scheduled.deleted) {
+                    if (scheduled.dateApplication.after(today) && scheduled.dateApplication.before(roll)) {
+                        if (scheduled.type == OperationType.DEPOT) {
+                            revenus += scheduled.amount
+                        } else if (scheduled.type == OperationType.FACTURE) {
+                            depense += scheduled.amount
+                        }
+
+                    }
+                }
+            }
+
+            def seuil = depense
+            Budget.findAllByOwnerAndStartDateAndEndDateAndActive(person, null, null, true).each { budget ->
+                seuil += budget.amount
+            }
+
+            stats.put("spent", depense)
+            stats.put("revenue", revenus)
+            stats.put("threshold", seuil)
+            stats.put("saving", revenus - seuil)
+
+        }
+
+        render stats as JSON
     }
 }
