@@ -37,6 +37,7 @@ class ScheduledService {
             owner{eq("id", person.id)}
             gt("dateApplication", dateUtil.getTodayEvening())
             eq("active", true)
+            eq("deleted", false)
         }
     }
 

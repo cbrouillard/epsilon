@@ -38,6 +38,45 @@ class UrlMappings {
             }
         }
 
+        "/api/accounts"(resources: 'wsAccount') {
+            "/operations"(controller: 'wsAccount', action: 'operations')
+        }
+        "/api/budgets"(resources: 'wsBudget')
+        "/api/categories"(resources: 'wsCategory') {
+            "/operations"(controller: 'wsCategory', action: 'operations')
+        }
+        "/api/categories/names" {
+            controller = 'wsCategory'
+            action = 'names'
+        }
+        "/api/tiers"(resources: 'wsTiers'){
+            "/operations"(controller: 'wsTiers', action: 'operations')
+        }
+        "/api/tiers/names" {
+            controller = 'wsTiers'
+            action = 'names'
+        }
+        "/api/operations" (resources:'wsOperation')
+        "/api/accounts/$account/operations/spent" {
+            controller = 'wsOperation'
+            action = 'addDepense'
+        }
+        "/api/accounts/$account/operations/revenue" {
+            controller = 'wsOperation'
+            action = 'addRevenue'
+        }
+        "/api/accounts/$accountFrom/operations/transfer/$accountTo" {
+            controller = 'wsOperation'
+            action = 'addVirement'
+        }
+        "/api/scheduleds" (resources:'wsScheduled')
+        "/api/data/categorychart" {
+            controller = 'wsData'
+            action = 'chartByCategoryData'
+        }
+        "/api/auth" (resources:'wsAuth')
+
+
         "/index.gsp" {
             controller = "summary"
         }
