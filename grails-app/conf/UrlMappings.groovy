@@ -49,14 +49,16 @@ class UrlMappings {
             controller = 'wsCategory'
             action = 'names'
         }
-        "/api/tiers"(resources: 'wsTiers'){
+        "/api/tiers"(resources: 'wsTiers') {
             "/operations"(controller: 'wsTiers', action: 'operations')
         }
         "/api/tiers/names" {
             controller = 'wsTiers'
             action = 'names'
         }
-        "/api/operations" (resources:'wsOperation')
+        "/api/operations"(resources: 'wsOperation') {
+            "/e"(controller: "wsOperation", action: "editOperation")
+        }
         "/api/accounts/$account/operations/spent" {
             controller = 'wsOperation'
             action = 'addDepense'
@@ -69,12 +71,12 @@ class UrlMappings {
             controller = 'wsOperation'
             action = 'addVirement'
         }
-        "/api/scheduleds" (resources:'wsScheduled')
+        "/api/scheduleds"(resources: 'wsScheduled')
         "/api/data/categorychart" {
             controller = 'wsData'
             action = 'chartByCategoryData'
         }
-        "/api/auth" (resources:'wsAuth')
+        "/api/auth"(resources: 'wsAuth')
 
 
         "/index.gsp" {

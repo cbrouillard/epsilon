@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest
 
 class WsOperationController {
 
-    static allowedMethods = [addDepense: "POST", addRevenue: "POST", addVirement: "POST"]
+    static allowedMethods = [addDepense: "POST", addRevenue: "POST", addVirement: "POST", editOperation: "POST"]
 
     def personService
     def tiersService
@@ -120,10 +120,10 @@ class WsOperationController {
         render result as JSON
     }
 
-    def update() {
+    def editOperation() {
         MobileSimpleResult result = new MobileSimpleResult("ko")
         def person = checkUser(request)
-        def operation = Operation.findByOwnerAndId(person, params.id)
+        def operation = Operation.findByOwnerAndId(person, params.wsOperationId)
 
         def category = params.category
         def tiers = params.tiers
