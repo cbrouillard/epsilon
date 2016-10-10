@@ -22,7 +22,11 @@
 <body>
 
 <div class="col-sm-12">
-    <h1><g:message code="person.label"/> <small>${person.userRealName}</small></h1>
+    <h1><g:message code="person.label"/> <small>${person.userRealName}
+    <g:if test="${person.mobileToken}">
+        / ${person.mobileToken}
+    </g:if>
+    </small></h1>
     <hr/>
 </div>
 
