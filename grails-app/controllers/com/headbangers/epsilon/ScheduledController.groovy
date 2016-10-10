@@ -34,37 +34,16 @@ class ScheduledController {
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 20, 100)
 
-        Date today = dateUtil.todayMorning
-        Date roll = dateUtil.getDatePlusOneMonth(today)
-        roll = dateUtil.getDateAtEvening(roll)
 
         def person = springSecurityService.getCurrentUser()
-        def scheduleds = Scheduled.createCriteria().list (params) {
+        def scheduleds = Scheduled.createCriteria().list(params) {
             eq 'deleted', false
-            owner {eq ("id", person.id)}
+            owner { eq("id", person.id) }
         }
 
-        def depense = 0
-        def revenus = 0
-        Scheduled.findAllByOwner(person).each { scheduled ->
-            if (scheduled.active && !scheduled.deleted) {
-                if (scheduled.dateApplication.after(today) && scheduled.dateApplication.before(roll)) {
-                    if (scheduled.type == OperationType.DEPOT) {
-                        revenus += scheduled.amount
-                    } else if (scheduled.type == OperationType.FACTURE) {
-                        depense += scheduled.amount
-                    }
+        Map<String, Double> stats = scheduledService.buildFutureStats(person)
 
-                }
-            }
-        }
-
-        def seuil = depense
-        Budget.findAllByOwnerAndStartDateAndEndDateAndActive(person, null, null, true).each { budget ->
-            seuil += budget.amount
-        }
-
-        [scheduledInstanceList: scheduleds, scheduledInstanceTotal: scheduleds.totalCount, depense: depense, revenus:revenus, seuil:seuil]
+        [scheduledInstanceList: scheduleds, scheduledInstanceTotal: scheduleds.totalCount, depense: stats.spent, revenus: stats.revenue, seuil: stats.threshold]
     }
 
     def create = {
@@ -90,7 +69,7 @@ class ScheduledController {
             scheduledInstance.tiers = tiersService.findOrCreateTiers(person, params["tiers.name"])
         }
 
-        if (scheduledInstance.automatic && params.cronExpressionChoice){
+        if (scheduledInstance.automatic && params.cronExpressionChoice) {
             CronExpression cron = CronExpression.get(params.cronExpressionChoice)
             scheduledInstance.cronExpression = cron.expression
             scheduledInstance.cronName = cron.name
@@ -184,7 +163,7 @@ class ScheduledController {
                 params.remove("tiersname")
             }
 
-            if (params.automatic && params.cronExpressionChoice){
+            if (params.automatic && params.cronExpressionChoice) {
                 CronExpression cron = CronExpression.get(params.cronExpressionChoice)
                 scheduledInstance.cronExpression = cron.expression
                 scheduledInstance.cronName = cron.name

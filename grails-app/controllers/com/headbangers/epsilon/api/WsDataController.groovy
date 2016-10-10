@@ -15,6 +15,7 @@ class WsDataController {
 
     def personService
     def dateUtil
+    def scheduledService
 
     private Person checkUser(HttpServletRequest request) {
         String token = request.getHeader("WWW-Authenticate")
@@ -53,34 +54,7 @@ class WsDataController {
         Map<String, Double> stats = new HashMap<>();
 
         if (person) {
-            Date today = dateUtil.todayMorning
-            Date roll = dateUtil.getDatePlusOneMonth(today)
-            roll = dateUtil.getDateAtEvening(roll)
-
-            def depense = 0
-            def revenus = 0
-            Scheduled.findAllByOwner(person).each { scheduled ->
-                if (scheduled.active && !scheduled.deleted) {
-                    if (scheduled.dateApplication.after(today) && scheduled.dateApplication.before(roll)) {
-                        if (scheduled.type == OperationType.DEPOT) {
-                            revenus += scheduled.amount
-                        } else if (scheduled.type == OperationType.FACTURE) {
-                            depense += scheduled.amount
-                        }
-
-                    }
-                }
-            }
-
-            def seuil = depense
-            Budget.findAllByOwnerAndStartDateAndEndDateAndActive(person, null, null, true).each { budget ->
-                seuil += budget.amount
-            }
-
-            stats.put("spent", depense)
-            stats.put("revenue", revenus)
-            stats.put("threshold", seuil)
-            stats.put("saving", revenus - seuil)
+            stats = scheduledService.buildFutureStats(person)
 
         }
 

@@ -64,6 +64,41 @@ class ScheduledService {
         scheduled.save(flush:true)
         
     }
+
+    Map<String, Double> buildFutureStats (Person person){
+        Map<String, Double> stats = new HashMap<>();
+
+        Date today = dateUtil.todayMorning
+        Date roll = dateUtil.getDatePlusOneMonth(today)
+        roll = dateUtil.getDateAtEvening(roll)
+
+        def depense = 0
+        def revenus = 0
+        Scheduled.findAllByOwner(person).each { scheduled ->
+            if (scheduled.active && !scheduled.deleted) {
+                if (scheduled.dateApplication.after(today) && scheduled.dateApplication.before(roll)) {
+                    if (scheduled.type == OperationType.DEPOT) {
+                        revenus += scheduled.amount
+                    } else if (scheduled.type == OperationType.FACTURE) {
+                        depense += scheduled.amount
+                    }
+
+                }
+            }
+        }
+
+        def seuil = depense
+        Budget.findAllByOwnerAndStartDateAndEndDateAndActive(person, null, null, true).each { budget ->
+            seuil += budget.amount
+        }
+
+        stats.put("spent", depense)
+        stats.put("revenue", revenus)
+        stats.put("threshold", seuil)
+        stats.put("saving", revenus - seuil)
+
+        return stats
+    }
     
 
     private Operation insertOperation (account, scheduled, type){
