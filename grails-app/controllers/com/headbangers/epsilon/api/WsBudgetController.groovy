@@ -2,6 +2,7 @@ package com.headbangers.epsilon.api
 
 import com.headbangers.epsilon.Budget
 import com.headbangers.epsilon.Person
+import com.headbangers.epsilon.mobile.MobileBudget
 import grails.converters.JSON
 
 import javax.servlet.http.HttpServletRequest
@@ -23,7 +24,7 @@ class WsBudgetController {
     // "/api/budgets"
     def index() {
         def person = checkUser(request)
-        List<com.headbangers.epsilon.mobile.MobileBudget> budgets = new ArrayList<com.headbangers.epsilon.mobile.MobileBudget>()
+        List<MobileBudget> budgets = new ArrayList<MobileBudget>()
         if (person) {
             List<Budget> db = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
             db = db.findAll { b -> b.active == true }
@@ -39,11 +40,11 @@ class WsBudgetController {
     // "/api/budgets/$id
     def show() {
         def person = checkUser(request)
-        com.headbangers.epsilon.mobile.MobileBudget result = new com.headbangers.epsilon.mobile.MobileBudget()
+        MobileBudget result = new MobileBudget()
         if (person) {
             def budget = Budget.findByIdAndOwner(params.id, person)
             if (budget) {
-                result = new com.headbangers.epsilon.mobile.MobileBudget(budget)
+                result = new MobileBudget(budget)
             }
         }
 

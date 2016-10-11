@@ -2,6 +2,7 @@ package com.headbangers.epsilon.api
 
 import com.headbangers.epsilon.Account
 import com.headbangers.epsilon.Person
+import com.headbangers.epsilon.mobile.MobileAccount
 import com.headbangers.epsilon.mobile.MobileOperation
 import grails.converters.JSON
 
@@ -23,11 +24,11 @@ class WsAccountController {
     // "/api/accounts"
     def index() {
         def person = checkUser(request)
-        List<com.headbangers.epsilon.mobile.MobileAccount> accounts = new ArrayList<com.headbangers.epsilon.mobile.MobileAccount>()
+        List<MobileAccount> accounts = new ArrayList<MobileAccount>()
         if (person) {
             def db = Account.findAllByOwner(person, [sort: 'name', order: 'asc'])
             db.each { account ->
-                accounts.add(new com.headbangers.epsilon.mobile.MobileAccount(account))
+                accounts.add(new MobileAccount(account))
             }
         }
 
@@ -37,11 +38,11 @@ class WsAccountController {
     // "/api/accounts/$id"
     def show() {
         def person = checkUser(request)
-        com.headbangers.epsilon.mobile.MobileAccount result = new com.headbangers.epsilon.mobile.MobileAccount()
+        MobileAccount result = new MobileAccount()
         if (person) {
             def account = Account.findByIdAndOwner(params.id, person)
             if (account) {
-                result = new com.headbangers.epsilon.mobile.MobileAccount(account)
+                result = new MobileAccount(account)
             }
         }
 
