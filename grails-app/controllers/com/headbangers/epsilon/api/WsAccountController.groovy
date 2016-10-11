@@ -4,6 +4,7 @@ import com.headbangers.epsilon.Account
 import com.headbangers.epsilon.Person
 import com.headbangers.epsilon.mobile.MobileAccount
 import com.headbangers.epsilon.mobile.MobileOperation
+import com.headbangers.epsilon.mobile.MobileSimpleResult
 import grails.converters.JSON
 
 import javax.servlet.http.HttpServletRequest
@@ -49,7 +50,7 @@ class WsAccountController {
         render result as JSON
     }
 
-    def operations (){
+    def operations() {
         def person = checkUser(request)
         List<MobileOperation> result = new ArrayList<MobileOperation>();
         if (person && params.wsAccountId) {
@@ -57,6 +58,23 @@ class WsAccountController {
             def operations = account.getLastOperationsDesc()
             operations.each { operation ->
                 result.add(new MobileOperation(operation))
+            }
+        }
+
+        render result as JSON
+    }
+
+    def setDefault() {
+        def person = checkUser(request)
+        MobileSimpleResult result = new MobileSimpleResult("ko")
+        if (person) {
+            def account = Account.findByIdAndOwner(params.wsAccountId, person)
+            if (account) {
+                Account.executeUpdate("update Account set mobileDefault = false where owner = ?", [person])
+                account.setMobileDefault(new Boolean(params.isDefault))
+                if (account.save(flush: true)){
+                    result.setCode("ok")
+                }
             }
         }
 

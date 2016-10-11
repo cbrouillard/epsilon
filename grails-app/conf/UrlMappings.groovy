@@ -41,6 +41,10 @@ class UrlMappings {
         "/api/accounts"(resources: 'wsAccount') {
             "/operations"(controller: 'wsAccount', action: 'operations')
         }
+        "/api/accounts/$wsAccountId/default/$isDefault" {
+            controller = 'wsAccount'
+            action = "setDefault"
+        }
         "/api/budgets"(resources: 'wsBudget')
         "/api/categories"(resources: 'wsCategory') {
             "/operations"(controller: 'wsCategory', action: 'operations')
