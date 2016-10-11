@@ -5,8 +5,11 @@ class MobileChartData {
     def graphData
     def colors
 
-    void setGraphData(graphData) {
+    MobileChartData (){
         this.graphData = new ArrayList<GraphData>()
+    }
+
+    void setGraphData(graphData) {
         graphData.each { d ->
             this.graphData.add (new GraphData(key:d[0], value:d[1]))
         }

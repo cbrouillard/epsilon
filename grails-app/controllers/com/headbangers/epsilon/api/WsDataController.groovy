@@ -1,15 +1,19 @@
 package com.headbangers.epsilon.api
 
+import com.headbangers.epsilon.Account
 import com.headbangers.epsilon.Budget
 import com.headbangers.epsilon.CategoryType
 import com.headbangers.epsilon.Operation
 import com.headbangers.epsilon.OperationType
 import com.headbangers.epsilon.Person
 import com.headbangers.epsilon.Scheduled
+import com.headbangers.epsilon.mobile.GraphData
 import com.headbangers.epsilon.mobile.MobileChartData
 import grails.converters.JSON
+import org.hibernate.Criteria
 
 import javax.servlet.http.HttpServletRequest
+import java.text.SimpleDateFormat
 
 class WsDataController {
 
@@ -46,6 +50,93 @@ class WsDataController {
     }
 
     def chartAccountFuture() {
+        def person = checkUser(request)
+        MobileChartData chartData = new MobileChartData(colors: ['92e07f'])
+        if (person) {
+            Account account = Account.findByOwnerAndId(person, params.wsAccountId)
+            if (account) {
+
+                def lastDayOfMonth = dateUtil.getLastDayOfTheMonth(new Date())
+                def programmedScheduleds = Scheduled.createCriteria().list {
+                    createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+                    createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
+                    lte("dateApplication", lastDayOfMonth)
+                    eq("active", true)
+                    eq("deleted", false)
+                    gt("dateApplication", new Date())
+                    or {
+                        eq("accountTo.id", account.id)
+                        eq("accountFrom.id", account.id)
+                    }
+                }
+
+                if (!programmedScheduleds) {
+                    Date todayPlusOneMonth = dateUtil.getDatePlusOneMonth(new Date())
+                    lastDayOfMonth = dateUtil.getLastDayOfTheMonth(todayPlusOneMonth)
+                    programmedScheduleds = Scheduled.createCriteria().list {
+                        createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+                        createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
+                        lte("dateApplication", lastDayOfMonth)
+                        gt("dateApplication", new Date())
+                        eq("active", true)
+                        eq("deleted", false)
+                        or {
+                            eq("accountTo.id", account.id)
+                            eq("accountFrom.id", account.id)
+                        }
+                    }
+                }
+
+                def futures = programmedScheduleds
+
+                def allOperations = account?.lastOperations;
+                def accountAmount = account?.lastSnapshot?.amount ?: account.amount;
+
+                def sdf = new SimpleDateFormat("MMMM")
+                def cal = Calendar.getInstance()
+                def currentMonth = cal.get(Calendar.MONTH)
+
+                def operationsSortedByDaysIncludingFutures = allOperations + futures;
+                operationsSortedByDaysIncludingFutures = operationsSortedByDaysIncludingFutures.sort {
+                    it.dateApplication
+                }
+
+                def actualDay = 1;
+                def prevDay = actualDay;
+                Date previousDate = cal.getTime()
+                def bufferAmount = accountAmount;
+
+                operationsSortedByDaysIncludingFutures.each { operation ->
+
+                    cal.setTime(operation.dateApplication)
+
+                    actualDay = cal.get(Calendar.DAY_OF_MONTH)
+                    if (actualDay != prevDay || (currentMonth != cal.get(Calendar.MONTH) && actualDay == prevDay)) {
+                        chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount))
+                        prevDay = actualDay;
+                    }
+
+                    if (operation.type.equals(OperationType.DEPOT) || operation.type.equals(OperationType.VIREMENT_PLUS)) {
+                        bufferAmount += operation.amount
+                    } else {
+                        if (operation instanceof Scheduled && operation.accountTo && operation.accountTo.id.equals(account.id)) {
+                            bufferAmount += operation.amount
+                        } else {
+                            bufferAmount -= operation.amount
+                        }
+                    }
+                    previousDate = operation.dateApplication
+                }
+
+                chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount))
+                if (!operationsSortedByDaysIncludingFutures) {
+                    cal.setTime(new Date())
+                    chartData.graphData.add(new GraphData(key:"${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", value: bufferAmount))
+                }
+            }
+        }
+
+        render chartData as JSON
 
     }
 

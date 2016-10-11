@@ -161,6 +161,11 @@ public class DateUtil {
         return calendar.get(Calendar.YEAR);
     }
 
+    public Integer getCurrentMonth() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.MONTH);
+    }
+
     public Integer getSixMonthAgo(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date != null ? date : getTodayMorning());
