@@ -51,7 +51,7 @@ class WsDataController {
 
     def chartAccountFuture() {
         def person = checkUser(request)
-        MobileChartData chartData = new MobileChartData(colors: ['92e07f'])
+        MobileChartData chartData = new MobileChartData(colors: ['#92e07f'])
         if (person) {
             Account account = Account.findByOwnerAndId(person, params.wsAccountId)
             if (account) {
@@ -106,14 +106,17 @@ class WsDataController {
                 Date previousDate = cal.getTime()
                 def bufferAmount = accountAmount;
 
+                int i = 0;
+
                 operationsSortedByDaysIncludingFutures.each { operation ->
 
                     cal.setTime(operation.dateApplication)
 
                     actualDay = cal.get(Calendar.DAY_OF_MONTH)
                     if (actualDay != prevDay || (currentMonth != cal.get(Calendar.MONTH) && actualDay == prevDay)) {
-                        chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount))
+                        chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount, index: i))
                         prevDay = actualDay;
+                        i += 1;
                     }
 
                     if (operation.type.equals(OperationType.DEPOT) || operation.type.equals(OperationType.VIREMENT_PLUS)) {
@@ -126,12 +129,13 @@ class WsDataController {
                         }
                     }
                     previousDate = operation.dateApplication
+
                 }
 
-                chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount))
+                chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount, index: i))
                 if (!operationsSortedByDaysIncludingFutures) {
                     cal.setTime(new Date())
-                    chartData.graphData.add(new GraphData(key:"${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", value: bufferAmount))
+                    chartData.graphData.add(new GraphData(key:"${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", value: bufferAmount, index: 0))
                 }
             }
         }
