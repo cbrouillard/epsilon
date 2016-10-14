@@ -246,6 +246,16 @@ class OperationController {
         }
     }
 
+    def location (){
+        def operationInstance = Operation.get(params.id)
+        if (!operationInstance || !operationInstance.owner.equals(springSecurityService.getCurrentUser())) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'operation.label', default: 'Operation'), params.id])}"
+            redirect(action: "list")
+        } else {
+            [operationInstance: operationInstance]
+        }
+    }
+
     def edit = {
         def operationInstance = Operation.get(params.id)
         if (!operationInstance || !operationInstance.owner.equals(springSecurityService.getCurrentUser())) {

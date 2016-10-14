@@ -19,6 +19,7 @@
             <th class="text-right"><g:message code="operation.type.payment"/></th>
             <th class="text-right"><g:message code="operation.type.receipt"/></th>
             <th class="text-right"><g:message code="total"/></th>
+            <th class="text-right"><g:message code="actions"/></th>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +41,18 @@
                     </g:if>
                 </td>
                 <td class="tdright"><g:formatNumber number="${total}" format="###,###.##"/> €</td>
+
+                <td class="text-right">
+                    <g:if test="${operation.latitude && operation.longitude}">
+                        <g:link controller="operation" title="Localiser" action="location" id="${operation.id}"><img
+                                src="${resource(dir: 'img', file: 'location.png')}"
+                                alt="GPS"/></g:link>
+                    </g:if>
+
+                    <g:link controller="operation" title="Editer" action="edit" id="${operation.id}"><img
+                            src="${resource(dir: 'img', file: 'edit.png')}"
+                            alt="Editer"/></g:link>
+                </td>
             </tr>
         </g:each>
         </tbody>

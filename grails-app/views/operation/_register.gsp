@@ -80,6 +80,11 @@
                 </td>
 
                 <td class="text-right">
+                    <g:if test="${operationInstance.latitude && operationInstance.longitude}">
+                        <g:link controller="operation" title="Localiser" action="location" id="${operationInstance.id}"><img
+                                src="${resource(dir: 'img', file: 'location.png')}"
+                                alt="GPS"/></g:link>
+                    </g:if>
                     <g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal"
                             data-target="#modalWindow_show"><img
                             src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
