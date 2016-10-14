@@ -11,8 +11,6 @@
 
 package com.headbangers.epsilon.mobile
 
-import com.headbangers.epsilon.*
-
 class MobileAccount {
 
     String id

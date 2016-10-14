@@ -27,6 +27,9 @@ class MobileOperation {
 
     boolean pointed
 
+    String latitude
+    String longitude
+
     public MobileOperation (){
         
     }
@@ -41,6 +44,8 @@ class MobileOperation {
         this.amount = dOperation.amount
         this.pointed = dOperation.pointed
         this.sign = dOperation.type.sign
+        this.latitude = dOperation.latitude
+        this.longitude = dOperation.longitude
     }
 
     public void  initScheduled (dScheduled){

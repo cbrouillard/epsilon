@@ -46,6 +46,8 @@ class WsOperationController {
             operation.amount = Double.parseDouble(params.amount.replaceAll(",", "\\."))
             operation.owner = person
             operation.pointed = false
+            operation.latitude = params.latitude
+            operation.longitude = params.longitude
 
             if (operation.save(flush: true)) {
                 result.setCode("ok")

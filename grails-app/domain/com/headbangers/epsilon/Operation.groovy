@@ -31,6 +31,9 @@ class Operation implements Comparable {
 
     Person owner
 
+    String latitude
+    String longitude
+
     static constraints = {
 
         type nullable: false, blank: false
@@ -44,6 +47,9 @@ class Operation implements Comparable {
         note nullable: true, widget: 'textarea'
 
         lastUpdated nullable: true
+
+        latitude nullable:true
+        longitude nullable:true
     }
 
     static mapping = {

@@ -135,7 +135,9 @@ class WsDataController {
                 chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount, index: i))
                 if (!operationsSortedByDaysIncludingFutures) {
                     cal.setTime(new Date())
-                    chartData.graphData.add(new GraphData(key:"${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", value: bufferAmount, index: 0))
+                    cal.add(Calendar.MONTH,1)
+                    cal.set(Calendar.DAY_OF_MONTH, 0)
+                    chartData.graphData.add(new GraphData(key:"${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", value: bufferAmount, index: 1))
                 }
             }
         }
