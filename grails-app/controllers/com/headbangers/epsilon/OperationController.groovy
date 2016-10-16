@@ -19,6 +19,8 @@ class OperationController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def grailsApplication
+
     def springSecurityService
     def genericService
     def accountService
@@ -247,12 +249,14 @@ class OperationController {
     }
 
     def location (){
+        String mapsApiKey = grailsApplication.config.epsilon.maps.api.key
+
         def operationInstance = Operation.get(params.id)
         if (!operationInstance || !operationInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'operation.label', default: 'Operation'), params.id])}"
             redirect(action: "list")
         } else {
-            [operationInstance: operationInstance]
+            [operationInstance: operationInstance, apiKey:mapsApiKey]
         }
     }
 

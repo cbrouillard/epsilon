@@ -4,22 +4,23 @@
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: 'operation.label', default: 'Operation')}"/>
 
-
 </head>
 
 <body>
 <div class="col-sm-12">
-    <h1>${operationInstance.id}</h1>
+    <h1>Localisation d'une opération <small>${operationInstance?.category.name} - ${operationInstance?.tiers.name} - <g:formatNumber
+            number="${operationInstance.amount}" format="###,###.##"/>€</small></h1>
+    <hr/>
 </div>
 
 <div class="col-sm-12">
     <div class="around-border">
-        <div id="map"></div>
+        <div id="map" style="width:100%; height:70%;"></div>
         <script>
             function initMap() {
                 var opLocation = {lat: ${operationInstance.latitude.replace(",", ".")}, lng: ${operationInstance.longitude.replace(",", ".")}};
                 var map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 4,
+                    zoom: 16,
                     center: opLocation
                 });
                 var marker = new google.maps.Marker({
@@ -28,7 +29,7 @@
                 });
             }
         </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap"></script>
     </div>
 </div>
 

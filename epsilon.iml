@@ -77,6 +77,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.tomcat.embed/tomcat-embed-jasper/jars/tomcat-embed-jasper-7.0.53.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.tomcat/tomcat-catalina-ant/jars/tomcat-catalina-ant-7.0.53.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.tomcat.embed/tomcat-embed-core/jars/tomcat-embed-core-7.0.53.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.javassist/javassist/bundles/javassist-3.17.1-GA.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/junit/junit-dep/jars/junit-dep-4.10.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -84,6 +86,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="epsilon-grailsPlugins" />
+    <orderEntry type="library" name="grails-2.3.9" level="application" />
     <orderEntry type="library" name="grails-2.3.9" level="application" />
     <orderEntry type="library" name="grails-2.3.9" level="application" />
   </component>
