@@ -38,6 +38,7 @@ class UrlMappings {
             }
         }
 
+        "/api/wishes"(resources: 'wsWish')
         "/api/accounts"(resources: 'wsAccount') {
             "/operations"(controller: 'wsAccount', action: 'operations')
         }

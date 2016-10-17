@@ -44,7 +44,7 @@ class MobileBudget {
             categories.add (new MobileCategory(category))
         }
         
-        dBudget.operations.each { operation ->
+        dBudget.operations.sort({o1, o2 -> o2.dateApplication <=> o1.dateApplication}).each { operation ->
             operations.add(new MobileOperation(operation))
         }
     }
