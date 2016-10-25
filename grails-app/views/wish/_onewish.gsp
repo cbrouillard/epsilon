@@ -1,4 +1,4 @@
-<div  class="thumbnail">
+<div class="thumbnail">
     <div style="height: 200px;" class="wish-img">
         <g:if test="${wishInstance.thumbnailUrl}">
             <a href="${wishInstance.webShopUrl}" target="_blank">
@@ -8,7 +8,7 @@
         <g:else>
             <g:link title="Editer" action="edit" id="${wishInstance.id}">
                 <img style="max-height: 200px;max-width: 200px;"
-                     src="${resource(dir: 'img', file: 'no-image.png')}" />
+                     src="${resource(dir: 'img', file: 'no-image.png')}"/>
             </g:link>
         </g:else>
     </div>
@@ -27,11 +27,14 @@
                     <a href="${wishInstance.webShopUrl}" target="_blank">Lien boutique</a>
                 </li>
             </g:if>
-            <g:if test="${wishInstance.previsionBuy}">
-                <li class="list-group-item">
+            <li class="list-group-item">
+                <g:if test="${wishInstance.previsionBuy}">
                     Date prévue pour l'achat : <g:formatDate date="${wishInstance.previsionBuy}"/>
-                </li>
-            </g:if>
+                </g:if>
+                <g:else>
+                    Pas de date prévue pour l'achat
+                </g:else>
+            </li>
             <g:if test="${wishInstance.boughtDate}">
                 <li class="list-group-item">
                     Date d'achat : <g:formatDate date="${wishInstance.boughtDate}"/>
