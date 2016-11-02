@@ -23,7 +23,7 @@
     }
 
     def allOperations = account?.lastOperationsByMonth(byMonth ? byMonth : 0);
-    def accountAmount = 0
+    def accountAmount
     if (byMonth != null) {
         accountAmount = account?.getSnapshot(byMonth)?.amount ?: account.amount;
     } else {
@@ -82,7 +82,7 @@
         buffer = buffer + [th.value]
     }
     depenseCourbe.add(buffer)
-    if (!operationsSortedByDaysIncludingFutures) {
+    if (!operationsSortedByDaysIncludingFutures || operationsSortedByDaysIncludingFutures.size() == 1) {
         if (byMonth != null) {
             cal.set(Calendar.MONTH, byMonth + 1)
             cal.set(Calendar.DAY_OF_MONTH, 0)
