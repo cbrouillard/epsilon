@@ -23,8 +23,32 @@
         </tr>
         </thead>
         <tbody>
+
         <g:set var="total" value="${0D}"/>
+        <g:set var="actualMonth" value="${operations ? operations.get(0).dateApplication.getMonth() + 1 : 0}"/>
+        <g:set var="prev" value="${actualMonth}"/>
+
+        <g:if test="${operations}">
+            <tr id="month${formatDate(format: 'MMMM_yyyy', date:operations.get(0).dateApplication)}">
+                <td colspan="6" class="centered" >
+                    <g:message code="month.real.${actualMonth}"/> <g:formatDate format="yyyy" date="${operations.get(0).dateApplication}"/>
+                </td>
+            </tr>
+        </g:if>
+
         <g:each in="${operations}" status="i" var="operation">
+
+            <g:set var="actualMonth" value="${operation.dateApplication.getMonth() + 1}"/>
+
+            <g:if test="${actualMonth != prev}">
+                <tr id="month${formatDate(format: 'MMMM_yyyy', date:operation.dateApplication)}">
+                    <td colspan="6" class="centered" >
+                        <g:message code="month.real.${actualMonth}"/> <g:formatDate format="yyyy" date="${operation.dateApplication}"/>
+                    </td>
+                </tr>
+                <g:set var="prev" value="${actualMonth}"/>
+            </g:if>
+
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td><g:formatDate date="${operation.dateApplication}"/></td>
                 <td>${operation.category.name} - ${operation.tiers.name}</td>

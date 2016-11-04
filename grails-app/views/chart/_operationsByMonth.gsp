@@ -54,5 +54,13 @@
 <gvisualization:columnCoreChart elementId="operationsByMonth"
                               columns="${columns}" data="${data}"
                               legend="[position: 'top']"
-                              width="100%" colors="${color}" height="500"/>
+                              width="100%" colors="${color}" height="500" select="goMonth"/>
 <div id="operationsByMonth"></div>
+<script type="text/javascript">
+    function goMonth(e) {
+        var item = visualization.getSelection()[0];
+        var monthId = visualization_data.getFormattedValue (item.row, 0).replace (/ /g,"_");
+
+        window.location.href = "#month"+monthId
+    }
+</script>
