@@ -23,7 +23,7 @@
     <div class="col-sm-12">
         <h1>Vos comptes <small>Résumé de la situation</small>
         <g:if test="${accounts}">
-            <span id="mobile-activation" data-toggle="tooltip" data-placement="bottom" title="${person.mobileToken ? "Désactivation" : "Activation"} du client mobile">
+            <span id="mobile-activation" class="pull-right">
                 <g:render template="mobile" model="[person: person]"/>
             </span>
         </g:if>
