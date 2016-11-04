@@ -18,7 +18,7 @@
     def colors = ['92e07f']
 
     thresholds.each {th ->
-        columns = columns + [['number', th.name]]
+        columns = columns + [['number', th.name.replaceAll (/'/, "\\\\'")]]
         colors = colors + [th.color]
     }
 
