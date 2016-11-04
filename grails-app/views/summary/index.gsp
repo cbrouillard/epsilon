@@ -217,7 +217,22 @@
 
             <div class="row">
 
-                <div class="counter-shower col-xs-12 col-sm-12">
+                <div class="counter-shower col-xs-12 col-sm-6">
+
+                    <div class="number">
+                        <span class="label label-default">
+                            <g:formatNumber number="${revenues}"
+                                            format="###,###.##"/> €
+                        </span>
+                    </div>
+
+                    <div class="lbl">
+                        Revenus acquis du mois
+                    </div>
+
+                </div>
+
+                <div class="counter-shower col-xs-12 col-sm-6">
 
                     <div class="number">
                         <span class="label label-default">

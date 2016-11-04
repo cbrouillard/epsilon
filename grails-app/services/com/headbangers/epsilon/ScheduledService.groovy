@@ -85,7 +85,26 @@ class ScheduledService {
             }
         }
 
-        def revenus = 0
+        def revenus = this.calculateOneMonthRevenues(authPerson)
+
+        def seuil = depense
+        Budget.findAllByOwnerAndStartDateAndEndDateAndActive(authPerson, null, null, true).each { budget ->
+            seuil += budget.amount
+        }
+
+        stats.put("spent", depense)
+        stats.put("revenue", revenus)
+        stats.put("threshold", seuil)
+        stats.put("saving", revenus - seuil)
+
+        return stats
+    }
+
+    Double calculateOneMonthRevenues (Person authPerson){
+        Date today = dateUtil.todayMorning
+        Date roll2 = dateUtil.getDateMinusOneMonth(today)
+        roll2 = dateUtil.getDateAtMorning(roll2)
+
         def allDepotsOperations = Operation.createCriteria().list({
             owner {
                 eq("id", authPerson.id)
@@ -101,21 +120,9 @@ class ScheduledService {
         allDepotsOperations.each { operation ->
             withoutDoubles.add(new LightOperation(operation))
         }
-        revenus = withoutDoubles*.amount.sum(0D);
 
-        def seuil = depense
-        Budget.findAllByOwnerAndStartDateAndEndDateAndActive(authPerson, null, null, true).each { budget ->
-            seuil += budget.amount
-        }
-
-        stats.put("spent", depense)
-        stats.put("revenue", revenus)
-        stats.put("threshold", seuil)
-        stats.put("saving", revenus - seuil)
-
-        return stats
+        return withoutDoubles*.amount.sum(0D);
     }
-
 
     class LightOperation {
         String category

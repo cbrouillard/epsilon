@@ -55,7 +55,7 @@ class SummaryController {
 
         [accounts: accounts, lates: lateScheduled, today: todayScheduled,
          future  : futuresScheduled, depense: depense, person: person, budgets: budgets, graphData: graphData, colors:colors,
-         pinnedCategories:pinnedCategories,pinnedTiers:pinnedTiers
+         pinnedCategories:pinnedCategories,pinnedTiers:pinnedTiers, revenues:scheduledService.calculateOneMonthRevenues(person)
         ]
     }
 }
