@@ -11,15 +11,19 @@
 
 package com.headbangers.epsilon.mobile
 
+import com.headbangers.epsilon.Tiers
+
 class MobileTiers {
     String id
     String name
     String description
+    String color
 
-    public MobileTiers (dTiers){
+    public MobileTiers (Tiers dTiers){
         this.id = dTiers.id
         this.name = dTiers.name
         this.description = dTiers.description
+        this.color = dTiers.color
     }
 }
 
