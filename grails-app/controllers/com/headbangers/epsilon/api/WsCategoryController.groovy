@@ -34,6 +34,25 @@ class WsCategoryController {
         render result as JSON
     }
 
+    def show() {
+        MobileCategory result = new MobileCategory()
+        def person = checkUser(request)
+        if (person) {
+            com.headbangers.epsilon.Category category = com.headbangers.epsilon.Category.findByOwnerAndId(person, params.id)
+
+            if (category) {
+                result = new MobileCategory(category)
+                def operations = category.getMonthOperations()
+                result.operations = new ArrayList<>()
+                operations.each { op ->
+                    result.operations.add(new MobileOperation(op))
+                }
+            }
+        }
+
+        render result as JSON
+    }
+
     def names() {
         List<com.headbangers.epsilon.Category> categories = new ArrayList<com.headbangers.epsilon.Category>()
         def person = checkUser(request)
@@ -44,6 +63,7 @@ class WsCategoryController {
         render categories*.name as JSON
     }
 
+    // all operations !!
     def operations() {
         def person = checkUser(request)
         List<MobileOperation> result = new ArrayList<MobileOperation>();

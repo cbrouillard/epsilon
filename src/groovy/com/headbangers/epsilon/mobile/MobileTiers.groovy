@@ -18,12 +18,15 @@ class MobileTiers {
     String name
     String description
     String color
+    List<MobileOperation> operations
 
     public MobileTiers (Tiers dTiers){
-        this.id = dTiers.id
-        this.name = dTiers.name
-        this.description = dTiers.description
-        this.color = dTiers.color
+        if (dTiers) {
+            this.id = dTiers.id
+            this.name = dTiers.name
+            this.description = dTiers.description
+            this.color = dTiers.color
+        }
     }
 }
 
