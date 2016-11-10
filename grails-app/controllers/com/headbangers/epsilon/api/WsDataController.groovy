@@ -7,6 +7,7 @@ import com.headbangers.epsilon.Operation
 import com.headbangers.epsilon.OperationType
 import com.headbangers.epsilon.Person
 import com.headbangers.epsilon.Scheduled
+import com.headbangers.epsilon.Tiers
 import com.headbangers.epsilon.mobile.GraphData
 import com.headbangers.epsilon.mobile.MobileChartData
 import grails.converters.JSON
@@ -41,7 +42,7 @@ class WsDataController {
                     'select c.color from Operation o inner join o.category c inner join o.owner p where o.dateApplication >= ? and o.dateApplication <= ? and o.type = ? and c.type = ? and p.id = ? group by c.color, c.name order by c.name',
                     [dateUtil.getFirstDayOfTheMonth(), dateUtil.getLastDayOfTheMonth(), OperationType.RETRAIT, CategoryType.DEPENSE, person.id]).asList()
 
-            data.setGraphData(graphData)
+            data.specialSetGraphData(graphData)
             data.setColors(colors)
         }
 
@@ -135,9 +136,9 @@ class WsDataController {
                 chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount, index: i))
                 if (!operationsSortedByDaysIncludingFutures || operationsSortedByDaysIncludingFutures.size() == 1) {
                     cal.setTime(new Date())
-                    cal.add(Calendar.MONTH,1)
+                    cal.add(Calendar.MONTH, 1)
                     cal.set(Calendar.DAY_OF_MONTH, 0)
-                    chartData.graphData.add(new GraphData(key:"${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", value: bufferAmount, index: 1))
+                    chartData.graphData.add(new GraphData(key: "${cal.get(Calendar.DAY_OF_MONTH)} ${sdf.format(cal.getTime())}", value: bufferAmount, index: 1))
                 }
             }
         }
@@ -157,4 +158,77 @@ class WsDataController {
 
         render stats as JSON
     }
+
+    def chartCategoryOperations() {
+
+        MobileChartData chartData = new MobileChartData(colors: ['#92e07f'])
+        def person = checkUser(request)
+
+        if (person) {
+            def category = com.headbangers.epsilon.Category.findByOwnerAndId(person, params.wsCategoryId)
+            if (category) {
+                chartData = new MobileChartData(colors: [category.color])
+
+                def operations = Operation.findAllByCategory(category, [order: 'asc', sort: 'dateApplication'])
+                chartData.graphData = buildChartOperations(operations);
+            }
+        }
+
+        render chartData as JSON
+    }
+
+    def chartTiersOperations() {
+        MobileChartData chartData = new MobileChartData(colors: ['#92e07f'])
+        def person = checkUser(request)
+
+        if (person) {
+            def tiers = Tiers.findByOwnerAndId(person, params.wsTiersId)
+            if (tiers) {
+                chartData = new MobileChartData(colors: [tiers.color])
+
+                def operations = Operation.findAllByTiers(tiers, [order: 'asc', sort: 'dateApplication'])
+                chartData.graphData = buildChartOperations(operations);
+            }
+        }
+
+        render chartData as JSON
+    }
+
+    private List<GraphData> buildChartOperations(operations) {
+        List<GraphData> datas = new ArrayList<>()
+
+        Calendar cal = Calendar.getInstance()
+        Date previousDate = new Date()
+        def sdf = new SimpleDateFormat("MMMM YYYY")
+
+        def actualMonth = 0
+        def bufferAmount = 0
+        if (operations) {
+            cal.setTime(operations.get(0).dateApplication)
+            actualMonth = cal.get(Calendar.MONTH)
+        }
+        def prevMonth = actualMonth
+
+        int i = 0
+        operations.each { operation ->
+            cal.setTime(operation.dateApplication)
+
+            actualMonth = cal.get(Calendar.MONTH)
+            if (actualMonth != prevMonth) {
+                // changement de mois
+                datas.add(new GraphData(key: sdf.format(previousDate), value: bufferAmount, index:i))
+                prevMonth = actualMonth;
+
+                bufferAmount = 0
+                i += 1
+            }
+
+            bufferAmount += operation.amount
+            previousDate = operation.dateApplication
+        }
+
+        datas.add(new GraphData(key: sdf.format(previousDate), value: bufferAmount, index:i))
+        return datas
+    }
+
 }
