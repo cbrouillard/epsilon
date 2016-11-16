@@ -34,6 +34,8 @@ class Operation implements Comparable {
     String latitude
     String longitude
 
+    Boolean isFromScheduled = false
+
     static constraints = {
 
         type nullable: false, blank: false
@@ -50,6 +52,8 @@ class Operation implements Comparable {
 
         latitude nullable:true
         longitude nullable:true
+
+        isFromScheduled nullable: false
     }
 
     static mapping = {

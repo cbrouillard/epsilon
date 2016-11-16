@@ -165,7 +165,8 @@ class ScheduledService {
                 note: "Operation créée sur échéance",
                 dateApplication: scheduled.dateApplication,
                 amount: scheduled.amount,
-                owner: scheduled.owner
+                owner: scheduled.owner,
+                isFromScheduled: true
         ).save(flush: true)
     }
 

@@ -167,9 +167,10 @@ class WsDataController {
         if (person) {
             def category = com.headbangers.epsilon.Category.findByOwnerAndId(person, params.wsCategoryId)
             if (category) {
+                Date date = dateUtil.firstDayOfYear(dateUtil.getYear(new Date()))
                 chartData = new MobileChartData(colors: [category.color])
 
-                def operations = Operation.findAllByCategory(category, [order: 'asc', sort: 'dateApplication'])
+                def operations = Operation.findAllByCategoryAndDateApplicationGreaterThanEquals(category, date, [order: 'asc', sort: 'dateApplication'])
                 chartData.graphData = buildChartOperations(operations);
             }
         }
@@ -184,9 +185,10 @@ class WsDataController {
         if (person) {
             def tiers = Tiers.findByOwnerAndId(person, params.wsTiersId)
             if (tiers) {
+                Date date = dateUtil.firstDayOfYear(dateUtil.getYear(new Date()))
                 chartData = new MobileChartData(colors: [tiers.color])
 
-                def operations = Operation.findAllByTiers(tiers, [order: 'asc', sort: 'dateApplication'])
+                def operations = Operation.findAllByTiersAndDateApplicationGreaterThanEquals(tiers, date, [order: 'asc', sort: 'dateApplication'])
                 chartData.graphData = buildChartOperations(operations);
             }
         }

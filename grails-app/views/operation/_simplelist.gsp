@@ -15,6 +15,7 @@
         <thead>
         <tr>
             <th><g:message code="date"/></th>
+            <th>&nbsp;</th>
             <th><g:message code="category"/></th>
             <th class="text-right"><g:message code="operation.type.payment"/></th>
             <th class="text-right"><g:message code="operation.type.receipt"/></th>
@@ -30,7 +31,7 @@
 
         <g:if test="${operations}">
             <tr id="month${formatDate(format: 'MMMM_yyyy', date:operations.get(0).dateApplication)}">
-                <td colspan="6" class="centered" >
+                <td colspan="7" class="centered" >
                     <g:message code="month.real.${actualMonth}"/> <g:formatDate format="yyyy" date="${operations.get(0).dateApplication}"/>
                 </td>
             </tr>
@@ -42,7 +43,7 @@
 
             <g:if test="${actualMonth != prev}">
                 <tr id="month${formatDate(format: 'MMMM_yyyy', date:operation.dateApplication)}">
-                    <td colspan="6" class="centered" >
+                    <td colspan="7" class="centered" >
                         <g:message code="month.real.${actualMonth}"/> <g:formatDate format="yyyy" date="${operation.dateApplication}"/>
                     </td>
                 </tr>
@@ -51,6 +52,14 @@
 
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td><g:formatDate date="${operation.dateApplication}"/></td>
+                <td>
+                    <g:if test="${operation.isFromScheduled}">
+                        <img src="${resource(dir:"img", file:"time.png")}" title="${operation.note}"/>
+                    </g:if>
+                    <g:else>
+                        &nbsp;
+                    </g:else>
+                </td>
                 <td>${operation.category.name} - ${operation.tiers.name}</td>
                 <td class="tdright">
                     <g:if test="${operation?.type == com.headbangers.epsilon.OperationType.RETRAIT || operation?.type == com.headbangers.epsilon.OperationType.VIREMENT_MOINS}">
