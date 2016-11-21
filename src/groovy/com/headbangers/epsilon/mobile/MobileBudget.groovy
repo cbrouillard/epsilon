@@ -48,5 +48,11 @@ class MobileBudget {
             operations.add(new MobileOperation(operation))
         }
     }
+
+    void bindOperations (dOperations){
+        dOperations.sort({o1, o2 -> o2.dateApplication <=> o1.dateApplication}).each { operation ->
+            operations.add(new MobileOperation(operation))
+        }
+    }
 }
 

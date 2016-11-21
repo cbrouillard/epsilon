@@ -134,6 +134,21 @@
                             format="###,###.##"/> €</td>
                     <td class="tdright fixedsize">&nbsp;</td>
                 </tr>
+
+                <tr>
+                    <td class="principal">Hors budgets et échéances</td>
+
+                    <td class="tdright">
+                        <span class="label label-default">
+                            <g:formatNumber number="${outOfBudget}" format="###,###.##"/> €
+                        </span>
+                    </td>
+                    <td class="tdright fixedsize">
+                        <g:link title="Afficher le registre" controller="budget" action="out"><img
+                                src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
         </div>

@@ -11,6 +11,7 @@ class WsBudgetController {
 
     def personService
     def genericService
+    def budgetService
 
     private Person checkUser(HttpServletRequest request) {
         String token = request.getHeader("WWW-Authenticate")
@@ -29,8 +30,18 @@ class WsBudgetController {
             List<Budget> db = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
             db = db.findAll { b -> b.active == true }
 
-            db.each { budget ->
-                budgets.add(new com.headbangers.epsilon.mobile.MobileBudget(budget))
+            if (db) {
+                MobileBudget outBudget = new MobileBudget()
+                outBudget.id = "out"
+                outBudget.name = "Hors budget et échéances"
+                outBudget.note = "Créé automatiquement par Epsilon"
+                outBudget.maxAmount = 0D
+                outBudget.usedAmount = budgetService.calculateOutOfBudgetAmount(db, person)
+                budgets.add(outBudget)
+
+                db.each { budget ->
+                    budgets.add(new MobileBudget(budget))
+                }
             }
         }
 
@@ -42,9 +53,22 @@ class WsBudgetController {
         def person = checkUser(request)
         MobileBudget result = new MobileBudget()
         if (person) {
-            def budget = Budget.findByIdAndOwner(params.id, person)
-            if (budget) {
-                result = new MobileBudget(budget)
+
+            if (params.id != "out") {
+                def budget = Budget.findByIdAndOwner(params.id, person)
+                if (budget) {
+                    result = new MobileBudget(budget)
+                }
+            } else {
+                def budgets = Budget.findAllByOwnerAndActive(person, true)
+                result = new MobileBudget()
+                result.id = "out"
+                result.name = "Hors budget et échéances"
+                result.note = "Créé automatiquement par Epsilon"
+                result.maxAmount = 0D
+                result.bindOperations(
+                        budgetService.retrieveOutOfBudgetOperations(budgets, person))
+                result.usedAmount = budgetService.calculateOutOfBudgetAmount(budgets, person)
             }
         }
 

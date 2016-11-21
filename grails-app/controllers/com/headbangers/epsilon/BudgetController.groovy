@@ -22,75 +22,83 @@ class BudgetController {
     def springSecurityService
     def genericService
     def categoryService
-    
+    def budgetService
+
     def index = {
         redirect(action: "list", params: params)
     }
 
     def operations = {
         def person = springSecurityService.getCurrentUser()
-        
-        def budget = Budget.findByIdAndOwner (params.budget, person)
-        [budget:budget]
+
+        def budget = Budget.findByIdAndOwner(params.budget, person)
+        [budget: budget]
     }
-    
+
+    def out = {
+        def person = springSecurityService.getCurrentUser()
+
+        def operations = budgetService.retrieveOutOfBudgetOperations(Budget.findAllByOwnerAndActive(person, true), person)
+
+        [operations: operations]
+    }
+
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        
+
         def person = springSecurityService.getCurrentUser()
-        def budgets = genericService.loadUserObjects (person, Budget.class, params)
-        
+        def budgets = genericService.loadUserObjects(person, Budget.class, params)
+
         [budgetInstanceList: budgets, budgetInstanceTotal: budgets.totalCount]
     }
 
-    def findAvailableCategories (){
+    def findAvailableCategories() {
         def person = springSecurityService.getCurrentUser()
-        def categories = Category.createCriteria ().list (order:'asc', sort:'name') {
-            owner{eq("id", person.id)}
+        def categories = Category.createCriteria().list(order: 'asc', sort: 'name') {
+            owner { eq("id", person.id) }
             eq("type", CategoryType.DEPENSE)
         }
-        
+
         return categories
     }
-    
-    def fillBudgetWithSelectedCategories (person, budget, selectedCategories){
-        if (selectedCategories instanceof String){
-            def oneCat = categoryService.findOrCreateCategory (person, selectedCategories, CategoryType.DEPENSE)
-            if (oneCat){
-                budget.addToAttachedCategories (oneCat)
+
+    def fillBudgetWithSelectedCategories(person, budget, selectedCategories) {
+        if (selectedCategories instanceof String) {
+            def oneCat = categoryService.findOrCreateCategory(person, selectedCategories, CategoryType.DEPENSE)
+            if (oneCat) {
+                budget.addToAttachedCategories(oneCat)
             }
         } else {
             selectedCategories.each { category ->
                 //log.error("branchement de: "+category)
-                def oneCat = categoryService.findOrCreateCategory (person, category, CategoryType.DEPENSE)
-                if (oneCat){
-                    budget.addToAttachedCategories (oneCat)
+                def oneCat = categoryService.findOrCreateCategory(person, category, CategoryType.DEPENSE)
+                if (oneCat) {
+                    budget.addToAttachedCategories(oneCat)
                 }
             }
         }
-        
+
         return budget
     }
-    
+
     def create = {
         def budgetInstance = new Budget()
         budgetInstance.properties = params
-        return [budgetInstance: budgetInstance, availableCategories:findAvailableCategories()]
+        return [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()]
     }
 
     def save = {
         def person = springSecurityService.getCurrentUser()
         def budgetInstance = new Budget(params)
         budgetInstance.owner = person
-        
-        budgetInstance = fillBudgetWithSelectedCategories (person, budgetInstance, params.selectedCategories)
-        
+
+        budgetInstance = fillBudgetWithSelectedCategories(person, budgetInstance, params.selectedCategories)
+
         if (budgetInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'budget.label', default: 'Budget'), budgetInstance.id])}"
             redirect(action: "list")
-        }
-        else {
-            render(view: "create", model: [budgetInstance: budgetInstance, availableCategories:findAvailableCategories()])
+        } else {
+            render(view: "create", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()])
         }
     }
 
@@ -99,8 +107,7 @@ class BudgetController {
         if (!budgetInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'budget.label', default: 'Budget'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             [budgetInstance: budgetInstance]
         }
     }
@@ -110,9 +117,8 @@ class BudgetController {
         if (!budgetInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'budget.label', default: 'Budget'), params.id])}"
             redirect(action: "list")
-        }
-        else {
-            return [budgetInstance: budgetInstance,  availableCategories:findAvailableCategories()]
+        } else {
+            return [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()]
         }
     }
 
@@ -120,16 +126,16 @@ class BudgetController {
         def person = springSecurityService.getCurrentUser()
         def budgetInstance = Budget.get(params.id)
         if (budgetInstance && budgetInstance.owner.equals(person)) {
-            
+
             budgetInstance.attachedCategories.clear()
-            budgetInstance = fillBudgetWithSelectedCategories (person, budgetInstance, params.selectedCategories)
-            
+            budgetInstance = fillBudgetWithSelectedCategories(person, budgetInstance, params.selectedCategories)
+
             if (params.version) {
                 def version = params.version.toLong()
                 if (budgetInstance.version > version) {
-                    
+
                     budgetInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'budget.label', default: 'Budget')] as Object[], "Another user has updated this Budget while you were editing")
-                    render(view: "edit", model: [budgetInstance: budgetInstance, availableCategories:findAvailableCategories()])
+                    render(view: "edit", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()])
                     return
                 }
             }
@@ -139,12 +145,10 @@ class BudgetController {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'budget.label', default: 'Budget'), budgetInstance.id])}"
                 redirect(action: "list")
 
+            } else {
+                render(view: "edit", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()])
             }
-            else {
-                render(view: "edit", model: [budgetInstance: budgetInstance,  availableCategories:findAvailableCategories()])
-            }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'budget.label', default: 'Budget'), params.id])}"
             redirect(action: "list")
         }
@@ -163,23 +167,22 @@ class BudgetController {
                 redirect(action: "list")
 
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'budget.label', default: 'Budget'), params.id])}"
             redirect(action: "list")
         }
     }
-    
+
     def deactivate = {
         def person = springSecurityService.getCurrentUser()
-        def budget = genericService.loadUserObject (person, Budget.class, params.id)
+        def budget = genericService.loadUserObject(person, Budget.class, params.id)
 
-        if (budget){
+        if (budget) {
             budget.active = false
-            budget.save(flush:true)
+            budget.save(flush: true)
 
-            render (template:'activateactions', model:[budget:budget])
-        } else{
+            render(template: 'activateactions', model: [budget: budget])
+        } else {
             redirect(action: "list")
         }
 
@@ -187,14 +190,14 @@ class BudgetController {
 
     def activate = {
         def person = springSecurityService.getCurrentUser()
-        def budget = genericService.loadUserObject (person, Budget.class, params.id)
+        def budget = genericService.loadUserObject(person, Budget.class, params.id)
 
-        if (budget){
+        if (budget) {
             budget.active = true
-            budget.save(flush:true)
+            budget.save(flush: true)
 
-            render (template:'activateactions', model:[budget:budget])
-        } else{
+            render(template: 'activateactions', model: [budget: budget])
+        } else {
             redirect(action: "list")
         }
     }
@@ -204,18 +207,18 @@ class BudgetController {
 
         def budgets = Budget.createCriteria().list(params) {
             ilike("name", "%${params.query}%")
-            owner {eq("id", person.id)}
+            owner { eq("id", person.id) }
         }
 
-        render(view: 'list', model: [budgetInstanceList:  budgets, budgetInstanceTotal: budgets.size(), query:params.query])
+        render(view: 'list', model: [budgetInstanceList: budgets, budgetInstanceTotal: budgets.size(), query: params.query])
 
     }
 
-    def simpleautocomplete(){
+    def simpleautocomplete() {
         def person = springSecurityService.getCurrentUser()
-        def budgets = Budget.createCriteria ().list {
-            owner{eq("id", person.id)}
-            ilike ("name", "${params.query}%")
+        def budgets = Budget.createCriteria().list {
+            owner { eq("id", person.id) }
+            ilike("name", "${params.query}%")
         }
 
         render budgets*.name as JSON
