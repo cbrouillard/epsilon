@@ -63,7 +63,7 @@ class WsBudgetController {
                 def budgets = Budget.findAllByOwnerAndActive(person, true)
                 result = new MobileBudget()
                 result.id = "out"
-                result.name = "Hors budget et échéances"
+                result.name = "Hors budgets et échéances"
                 result.note = "Créé automatiquement par Epsilon"
                 result.maxAmount = 0D
                 result.bindOperations(

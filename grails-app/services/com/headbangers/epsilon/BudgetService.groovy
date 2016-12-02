@@ -28,7 +28,7 @@ class BudgetService {
                 }
             }
 
-            return amount
+            return amount ?: 0D
         }
 
         return -1D

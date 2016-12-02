@@ -140,7 +140,7 @@
 
                     <td class="tdright">
                         <span class="label label-default">
-                            <g:formatNumber number="${outOfBudget}" format="###,###.##"/> €
+                            <g:formatNumber number="${outOfBudget ?: 0}" format="###,###.##"/> €
                         </span>
                     </td>
                     <td class="tdright fixedsize">
