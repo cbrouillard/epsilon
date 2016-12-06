@@ -139,7 +139,7 @@
                     <td class="principal">Hors budgets et échéances</td>
 
                     <td class="tdright">
-                        <span class="label label-default">
+                        <span class="label label-${outOfBudget ? 'danger' : 'default'}">
                             <g:formatNumber number="${outOfBudget ?: 0}" format="###,###.##"/> €
                         </span>
                     </td>

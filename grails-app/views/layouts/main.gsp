@@ -71,7 +71,7 @@
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <g:link controller="admin" action="users"><g:message code="menu.administration"/></g:link> -
                     </sec:ifAllGranted>
-                    <span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;" class="grand">&copy;</span> BROUILLARD Cyril - [2009-2016] - <g:message
+                    <span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;" class="grand">&copy;</span> BROUILLARD Cyril - [2009-2017] - <g:message
                             code="app.name"/> - <g:message code="app.purpose"/></p>
 
                 <div class="navbar-text pull-right">
