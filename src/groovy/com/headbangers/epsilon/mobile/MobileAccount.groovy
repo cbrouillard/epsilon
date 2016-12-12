@@ -11,10 +11,13 @@
 
 package com.headbangers.epsilon.mobile
 
+import com.headbangers.epsilon.Account
+
 class MobileAccount {
 
     String id
     String bank
+    String url
     String name
     String type
 
@@ -29,9 +32,10 @@ class MobileAccount {
     public MobileAccount (){
     }
 
-    public MobileAccount (dAccount){
+    public MobileAccount (Account dAccount){
         this.id = dAccount.id
         this.bank = dAccount.bank.name
+        this.url = dAccount.bank.url
         this.name = dAccount.name
         this.type = dAccount.type.name()
         this.dateOpened = dAccount.dateOpened
