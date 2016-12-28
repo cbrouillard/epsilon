@@ -48,8 +48,9 @@ class BudgetController {
 
         def person = springSecurityService.getCurrentUser()
         def budgets = genericService.loadUserObjects(person, Budget.class, params)
+        def outOfBudgets = budgetService.calculateOutOfBudgetAmount(budgets, person)
 
-        [budgetInstanceList: budgets, budgetInstanceTotal: budgets.totalCount]
+        [budgetInstanceList: budgets, budgetInstanceTotal: budgets.totalCount, outOfBudgets:outOfBudgets]
     }
 
     def findAvailableCategories() {
