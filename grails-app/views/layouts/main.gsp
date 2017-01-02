@@ -14,6 +14,7 @@
 <head>
     <title><g:layoutTitle default="Grails"/></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'epsilon.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'fileinput.css')}"/>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon"/>
 
     <r:require module="jquery"/>
@@ -33,6 +34,7 @@
     <r:layoutResources/>
 
     <gvisualization:apiImport/>
+    <script src="${resource(dir: '/js', file: 'fileinput.js')}"></script>
 </head>
 
 <body class="pig">

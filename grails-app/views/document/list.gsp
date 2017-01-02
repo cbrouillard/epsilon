@@ -1,0 +1,42 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="main"/>
+    <g:set var="entityName" value="${message(code: 'document.label', default: 'Document')}"/>
+    <title><g:message code="default.list.label" args="[entityName]"/></title>
+</head>
+
+<body>
+<div class="col-sm-12">
+    <h1><g:message code="document.${type.toString().toLowerCase()}.list"/> <small><g:message
+            code="document.${type.toString().toLowerCase()}.list.explanation"/></small>
+        <g:link controller="document" action="create" params="[type: type]" class="btn btn-success"><img
+                src="${resource(dir: 'img', file: 'invoice.png')}"
+                alt=">"/> <g:message code="document.${type.toString().toLowerCase()}.create"/></g:link></h1>
+    <hr/>
+</div>
+
+
+<div class="col-sm-12">
+    <div class="around-border">
+
+        <g:if test="${!documents}">
+            <div class="alert alert-warning"><g:message code="no.documents.title"/></div>
+        </g:if>
+        <g:else>
+            <g:each in="${documents}" var="document">
+                <div class="col-lg-3 col-md-5 col-sm-5">
+                    <g:render template="onedocument" model="[document: document]"/>
+                </div>
+            </g:each>
+
+            <div class="clearfix">&nbsp;</div>
+        </g:else>
+
+    </div>
+
+</div>
+
+</body>
+</html>

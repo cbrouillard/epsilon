@@ -78,6 +78,11 @@
                                         src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
                                 <g:link title="Editer" action="edit" id="${bankInstance.id}"><img
                                         src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                <g:if test="${bankInstance.url}" >
+                                    <a href="${bankInstance.url}" target="_blank">
+                                        <img src="${resource(dir:'img', file: 'external.png')}"
+                                             data-toggle="tooltip" data-placement="left" title="${message(code:'bank.website')}"/></a>
+                                </g:if>
                             </td>
                         </tr>
                     </g:each>

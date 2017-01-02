@@ -23,8 +23,8 @@
 <div class="col-sm-12">
     <h1><g:message code="operations"/> <span class="label label-primary">${selected?.getNameAndSold()}</span>
         <g:if test="${selected?.bank?.url}">
-            <a class="bank btn btn-default" href="${selected?.bank?.url}"><img
-                    src="${resource(dir: 'img', file: 'bank.png')}"
+            <a class="bank btn btn-default" href="${selected?.bank?.url}" target="_blank"><img
+                    src="${resource(dir: 'img', file: 'external.png')}"
                     alt=">"/> <g:message code="bank.website"/></a>
         </g:if>
 

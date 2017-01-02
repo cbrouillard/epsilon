@@ -22,6 +22,7 @@ class Operation implements Comparable {
     Tiers tiers
     Category category
     Account account
+    Document document
 
     String note
     Date dateApplication
@@ -42,6 +43,7 @@ class Operation implements Comparable {
         tiers nullable: false
         category nullable: false
         account nullable: false
+        document nullable:true
 
         dateApplication nullable: false
         amount nullable: false
