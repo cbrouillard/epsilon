@@ -87,6 +87,10 @@
 
                 <td class="text-right">
                     <g:if test="${!actions}">
+                        <g:if test="${operation.document}">
+                            <g:link controller="document" action="download" id="${operation.document.id}">
+                                <img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Download"/></g:link>
+                        </g:if>
                         <g:if test="${operation.latitude && operation.longitude}">
                             <g:link controller="operation" title="Localiser" action="location" id="${operation.id}"><img
                                     src="${resource(dir: 'img', file: 'location.png')}"
