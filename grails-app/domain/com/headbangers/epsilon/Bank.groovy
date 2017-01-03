@@ -21,6 +21,7 @@ class Bank {
     String url
 
     Person owner
+    Document document
 
     static constraints = {
         url nullable:true, blank:false
@@ -28,6 +29,7 @@ class Bank {
         description nullable:true, widget:'textarea'
         lastUpdated nullable:true
         owner nullable:false
+        document nullable:true
     }
 
     static mapping = {

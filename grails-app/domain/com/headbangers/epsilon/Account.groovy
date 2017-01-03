@@ -34,6 +34,7 @@ class Account {
     String description
 
     Person owner
+    Document document
 
     boolean mobileDefault = false
 
@@ -43,6 +44,7 @@ class Account {
         type nullable: false, blank: false
         dateOpened nullable: false
         amount nullable: false
+        document nullable:true
 
         description nullable: true, widget: 'textarea'
 

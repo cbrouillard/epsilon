@@ -286,7 +286,10 @@ class ScheduledController {
             owner { eq("id", person.id) }
         }
 
-        render(view: 'list', model: [scheduledInstanceList: scheduled, scheduledInstanceTotal: scheduled.size(), query: params.query])
+        Map<String, Double> stats = scheduledService.buildFutureStats(person)
+
+        render(view: 'list', model: [scheduledInstanceList: scheduled, scheduledInstanceTotal: scheduled.size(), query: params.query,
+                                     depense              : stats.spent, revenus: stats.revenue, seuil: stats.threshold])
 
     }
 

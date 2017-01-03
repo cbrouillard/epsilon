@@ -20,7 +20,7 @@
                    value="${query ?: ""}">
         </div>
         <g:if test="${params.query}">
-            <g:link class="btn btn-danger" action="list">&nbsp;<span
+            <g:link class="btn btn-danger" action="${action ?: 'list'}">&nbsp;<span
                     class="glyphicon glyphicon-remove"></span>&nbsp;</g:link>
         </g:if>
         <button type="submit" class="btn btn-default" style="display: none;"><g:message code="search"/></button>

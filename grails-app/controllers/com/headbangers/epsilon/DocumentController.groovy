@@ -1,5 +1,7 @@
 package com.headbangers.epsilon
 
+import com.headbangers.epsilon.command.SearchCommand
+import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 
@@ -10,23 +12,37 @@ class DocumentController {
     def genericService
 
     def invoices() {
-        params.max = Math.min(params.max ? params.int('max') : 20, 100)
+        params.max = Math.min(params.max ? params.int('max') : 20, 80)
 
         def person = springSecurityService.getCurrentUser()
-        def documents = Document.createCriteria().list {
-            owner { eq("id", person.id) }
-            eq("type", Document.Type.INVOICE)
-        }
+        def documents = fetchByType person, Document.Type.INVOICE
 
         render(view: 'list', model: [documents: documents, type: Document.Type.INVOICE])
     }
 
-    def banks (){
+    def banks() {
+        params.max = Math.min(params.max ? params.int('max') : 20, 80)
 
+        def person = springSecurityService.getCurrentUser()
+        def documents = fetchByType person, Document.Type.BANK
+
+        render(view: 'list', model: [documents: documents, type: Document.Type.BANK])
     }
 
-    def accounts (){
+    def accounts() {
+        params.max = Math.min(params.max ? params.int('max') : 20, 80)
 
+        def person = springSecurityService.getCurrentUser()
+        def documents = fetchByType person, Document.Type.ACCOUNT
+
+        render(view: 'list', model: [documents: documents, type: Document.Type.ACCOUNT])
+    }
+
+    private List<Document> fetchByType(Person person, Document.Type type) {
+        return Document.createCriteria().list {
+            owner { eq("id", person.id) }
+            eq("type", type)
+        }
     }
 
     def create() {
@@ -41,13 +57,13 @@ class DocumentController {
         return [document: document]
     }
 
-    def save (){
+    def save() {
         def person = springSecurityService.getCurrentUser()
         Document document = new Document(params)
         document.owner = person
 
         MultipartFile file = request.getFile("data")
-        if (file){
+        if (file) {
             if (!document.name) {
                 document.name = file.getOriginalFilename()
             }
@@ -55,7 +71,7 @@ class DocumentController {
             document.data = file.getBytes()
         }
 
-        if (document.validate() && document.save(flush:true)){
+        if (document.validate() && document.save(flush: true)) {
             flash.message = "Document créé"
             redirect(action: "${document.type.toString().toLowerCase()}s")
         } else {
@@ -63,16 +79,92 @@ class DocumentController {
         }
     }
 
-    def download (){
+    def download() {
         def person = springSecurityService.getCurrentUser()
         Document document = Document.findByIdAndOwner(params.id, person)
 
-        if (document){
+        if (document) {
             response.setContentType("application/pdf")
             response.setHeader("Content-disposition", "attachment;filename=\"${document.name}\"")
             response.setHeader("Content-Length", "${document.data.size()}")
             response.outputStream << document.data
-        }else {
+        } else {
+            redirect(action: 'invoices')
+        }
+    }
+
+    def search = {
+        params.max = Math.min(params.max ? params.int('max') : 20, 80)
+        def person = springSecurityService.getCurrentUser()
+
+        def documents = Document.createCriteria().list(params) {
+            ilike("name", "%${params.query}%")
+            owner { eq("id", person.id) }
+        }
+
+        render(view: 'list', model: [documents: documents, scheduledInstanceTotal: documents.size(), type: 'mixed', query: params.query])
+
+    }
+
+    def simpleautocomplete() {
+        def person = springSecurityService.getCurrentUser()
+        def documents = Document.createCriteria().list {
+            owner { eq("id", person.id) }
+            ilike("name", "%${params.query}%")
+        }
+
+        render documents*.name as JSON
+        return
+    }
+
+    def linkto() {
+        def person = springSecurityService.getCurrentUser()
+        Document document = Document.findByIdAndOwner(params.id, person)
+
+        if (document) {
+
+            List<Account> accounts = Account.findAllByOwner(person)
+            render view: document.type.linkView, model: [document: document, accounts: accounts]
+
+        } else {
+            redirect(action: 'invoices')
+        }
+    }
+
+    def searchoperation(SearchCommand search) {
+        def person = springSecurityService.getCurrentUser()
+        Document document = Document.findByIdAndOwner(search.id, person)
+
+        if (document) {
+
+            List<Account> accounts = Account.findAllByOwner(person)
+            def operations = new ArrayList()
+
+            if (search.couldApply()) {
+                operations = Operation.createCriteria().list ([order: 'desc', sort: 'dateApplication']) {
+                    if (search.tiers) {
+                        tiers { eq("name", search.tiers) }
+                    }
+                    if (search.category) {
+                        category { eq("name", search.category) }
+                    }
+                    if (search.beforeDate) {
+                        le("dateApplication", search.beforeDate)
+                    }
+                    if (search.afterDate) {
+                        ge("dateApplication", search.afterDate)
+                    }
+
+                    owner { eq("id", person.id) }
+                }
+            } else {
+                flash.message = "Recherche trop imprécise."
+            }
+
+            render view: document.type.linkView, model: [document: document, accounts: accounts,
+                                                         searched: search.couldApply(), searchedOperations: operations,
+                                                         search  : search]
+        } else {
             redirect(action: 'invoices')
         }
     }

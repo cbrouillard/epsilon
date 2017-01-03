@@ -11,15 +11,29 @@
 <div class="col-sm-12">
     <h1><g:message code="document.${type.toString().toLowerCase()}.list"/> <small><g:message
             code="document.${type.toString().toLowerCase()}.list.explanation"/></small>
-        <g:link controller="document" action="create" params="[type: type]" class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'invoice.png')}"
-                alt=">"/> <g:message code="document.${type.toString().toLowerCase()}.create"/></g:link></h1>
+        <g:if test="${type != 'mixed'}">
+            <g:link controller="document" action="create" params="[type: type]" class="btn btn-success"><img
+                    src="${resource(dir: 'img', file: 'invoice.png')}"
+                    alt=">"/> <g:message code="document.${type.toString().toLowerCase()}.create"/></g:link>
+        </g:if>
+    </h1>
     <hr/>
 </div>
 
-
 <div class="col-sm-12">
     <div class="around-border">
+
+        <div class="text-right pull-right">
+            <g:render template="/generic/search" model="[action: 'invoices']"/>
+        </div>
+
+        <g:render template="/generic/listsize" model="[wantedSizes: [8, 20, 40, 80], action: 'invoices']"/>
+        <div class="clearfix"></div>
+        <hr/>
+
+        <g:if test="${flash.message}">
+            <div class="alert alert-info">${flash.message}</div>
+        </g:if>
 
         <g:if test="${!documents}">
             <div class="alert alert-warning"><g:message code="no.documents.title"/></div>

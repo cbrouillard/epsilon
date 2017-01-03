@@ -74,46 +74,6 @@
                 </div>
             </div>
 
-
-        %{--<div class="form-group">
-
-            <label for="tiers" class="col-sm-2 control-label"><g:message
-                    code="operation.tiers.label"/></label>
-
-            <div class="col-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><span
-                            class="glyphicon glyphicon-user"></span></span>
-
-                    <g:textField id="tiers" name="tiers.name"
-                                 class="form-control typeahead-tiers"
-                                 autocomplete="off"/>
-
-                </div>
-
-                <div class="help-block with-errors"></div>
-            </div>
-        </div>
-
-        <div class="form-group">
-
-            <label for="category" class="col-sm-2 control-label"><g:message
-            code="operation.category.label"/></label>
-
-            <div class="col-sm-10">
-            <div class="input-group">
-                <span class="input-group-addon"><span
-                        class="glyphicon glyphicon-tag"></span></span>
-
-                <g:textField id="category" name="category.name"
-                             class="form-control typeahead-categories-facture"
-                             autocomplete="off"/>
-
-            </div>
-
-            <div class="help-block with-errors"></div>
-        </div>--}%
-
         </g:uploadForm>
     </div>
 

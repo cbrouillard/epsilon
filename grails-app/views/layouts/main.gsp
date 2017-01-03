@@ -143,6 +143,17 @@
             })
         });
 
+        $('.typeahead-document').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'document', action:'simpleautocomplete')}?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
+        });
+
         $('.typeahead-categories-facture, .typeahead-categories-retrait').typeahead(null, {
             source: new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
