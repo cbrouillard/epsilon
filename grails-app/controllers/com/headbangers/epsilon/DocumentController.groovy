@@ -1,3 +1,14 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
 package com.headbangers.epsilon
 
 import com.headbangers.epsilon.command.SearchCommand
@@ -68,10 +79,10 @@ class DocumentController {
             if (!document.name) {
                 document.name = originalName
             } else {
-                if (!document.name.contains(".")){
+                if (!document.name.contains(".")) {
                     try {
                         document.name = document.name + originalName.substring(originalName.indexOf("."))
-                    } catch(Exception e){
+                    } catch (Exception e) {
                         // bourrin mais tant pis. osef l'extension si y en a pas.
                     }
                 }
@@ -150,7 +161,7 @@ class DocumentController {
             def operations = new ArrayList()
 
             if (search.couldApply()) {
-                operations = Operation.createCriteria().list ([order: 'desc', sort: 'dateApplication']) {
+                operations = Operation.createCriteria().list([order: 'desc', sort: 'dateApplication']) {
                     if (search.tiers) {
                         tiers { eq("name", search.tiers) }
                     }

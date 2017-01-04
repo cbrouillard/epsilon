@@ -21,8 +21,9 @@
 
 <body>
 <div class="col-sm-12">
-    <h1><g:message code="account.list"/> <small><g:message code="account.list.explanation"/></small> <g:link controller="account" action="create"
-                                                                            class="btn btn-success"><img
+    <h1><g:message code="account.list"/> <small><g:message code="account.list.explanation"/></small> <g:link
+            controller="account" action="create"
+            class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'account.png')}"
                 alt=">"/> <g:message code="account.create"/></g:link></h1>
     <hr/>
@@ -81,11 +82,11 @@
                                                                       format="###,###.##"/> €</b></td>
 
                             <td class="text-right">
-                                <g:link title="Afficher les détails" action="show" id="${accountInstance.id}"
+                                %{--<g:link title="Afficher les détails" action="show" id="${accountInstance.id}"
                                         data-toggle="modal"
                                         data-target="#modalWindow_show"><img
-                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
-
+                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
+                                <g:link action="listdocuments" id="${accountInstance.id}"><img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Docs"/></g:link>
                                 <g:link title="Editer" action="edit" id="${accountInstance.id}"><img
                                         src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
                                 <g:link title="Afficher le registre" controller="operation" action="list"

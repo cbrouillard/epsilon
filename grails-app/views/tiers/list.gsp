@@ -86,9 +86,9 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
+                            %{--<g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
                                     action="show" id="${tiersInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${tiersInstance.id}"><img
                                     src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
                             <g:link title="Opérations pour ce tiers" action="operations" id="${tiersInstance.id}"><img

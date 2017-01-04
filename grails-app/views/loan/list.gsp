@@ -84,10 +84,10 @@
                         <td><g:formatDate date="${loanInstance.calculatedEndDate}"/></td>
 
                         <td class="text-right">
-                            <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
+                            %{--<g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
                                     action="show"
                                     id="${loanInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${loanInstance.id}"><img
                                     src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
                             <g:link title="Afficher l'échéance associée" class="popup" controller="scheduled"

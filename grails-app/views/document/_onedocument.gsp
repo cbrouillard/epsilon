@@ -1,3 +1,15 @@
+<!--
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+-->
 <%@ page import="com.headbangers.epsilon.Account; com.headbangers.epsilon.Bank; com.headbangers.epsilon.Operation" %>
 <div>
     <div class="caption text-center">
@@ -24,11 +36,11 @@
                     <g:set var="linked" value="${Bank.findByDocument(document)}"/>
                 </g:if>
                 <g:if test="${document.type == com.headbangers.epsilon.Document.Type.ACCOUNT}">
-                    <g:set var="linked" value="${accounts.find { it.documents.contains(document)}}"/>
+                    <g:set var="linked" value="${accounts.find { it.documents.contains(document) }}"/>
                 </g:if>
 
                 <g:if test="${linked}">
-                    <g:render template="linkdescriptor" model="[linked:linked]"/>
+                    <g:render template="/document/linkdescriptor" model="[linked: linked]"/>
                 </g:if>
                 <g:else>
                     <i><g:message code="document.${document.type.toString().toLowerCase()}.not.linked"/></i>
@@ -41,10 +53,10 @@
                     <g:link controller="document" action="download" id="${document.id}" class="btn btn-success">
                         <img src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message code="document.download"/>
                     </g:link>
-                    <g:link controller="document" id="${document.id}" action="linkto" class="btn btn-default">
-                        <img src="${resource(dir: 'img', file: 'link.png')}"
-                             data-toggle="tooltip" data-placement="bottom"
-                             title="${message(code: "document.${document.type.toString().toLowerCase()}.linkto")}"/> Lier
+                    <g:link controller="document" id="${document.id}" action="linkto" class="btn btn-default"
+                            data-toggle="tooltip" data-placement="bottom"
+                            title="${message(code: "document.${document.type.toString().toLowerCase()}.linkto")}">
+                        <img src="${resource(dir: 'img', file: 'link.png')}"/> Lier
                     </g:link>
                 </div>
             </li>

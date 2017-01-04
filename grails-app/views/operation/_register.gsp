@@ -98,9 +98,9 @@
                                 src="${resource(dir: 'img', file: 'location.png')}"
                                 alt="GPS"/></g:link>
                     </g:if>
-                    <g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal"
+                    %{--<g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal"
                             data-target="#modalWindow_show"><img
-                            src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
+                            src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>--}%
                     <g:link title="Editer" action="edit" id="${operationInstance.id}"><img
                             src="${resource(dir: 'img', file: 'edit.png')}"
                             alt="Editer"/></g:link>

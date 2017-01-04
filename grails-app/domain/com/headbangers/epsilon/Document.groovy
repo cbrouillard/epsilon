@@ -3,28 +3,22 @@ package com.headbangers.epsilon
 class Document {
 
     public enum Type {
-        INVOICE("operation", "operation.png", "linkto_operation", "[\"pdf\"]"),
-        BANK ("bank", "bank.png", "linkto_bank", "[\"pdf\"]"),
-        ACCOUNT("account", "account.png", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]");
+        INVOICE("operation", "linkto_operation", "[\"pdf\"]"),
+        BANK("bank", "linkto_bank", "[\"pdf\"]"),
+        ACCOUNT("account", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]");
 
         private String controllerName;
         private String linkView;
-        private String icon;
         private String allowed;
 
-        private Type (String cName, String i, String lV, String allowed){
+        private Type(String cName, String lV, String allowed) {
             this.controllerName = cName
-            this.icon = i
             this.linkView = lV
             this.allowed = allowed
         }
 
         String getControllerName() {
             return controllerName
-        }
-
-        String getIcon() {
-            return icon
         }
 
         String getLinkView() {

@@ -203,10 +203,10 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            <g:link title="Afficher les détails" action="show" id="${scheduledInstance.id}"
+                           %{-- <g:link title="Afficher les détails" action="show" id="${scheduledInstance.id}"
                                     data-toggle="modal"
                                     data-target="#modalWindow_show"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
+                                    src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${scheduledInstance.id}"><img
                                     src="${resource(dir: 'img', file: 'edit.png')}"
                                     alt="Editer"/></g:link>
