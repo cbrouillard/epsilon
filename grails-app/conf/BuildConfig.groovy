@@ -43,6 +43,7 @@ grails.project.dependency.resolution = {
         compile 'org.jsoup:jsoup:1.9.2'
         //runtime 'org.springframework:spring-aop:4.0.5.RELEASE'
         //runtime 'org.springframework:spring-expression:4.0.5.RELEASE'
+        test 'org.hamcrest:hamcrest-core:1.3'
     }
 
     plugins {

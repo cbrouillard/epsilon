@@ -95,6 +95,9 @@ environments {
         grails.logging.jul.usebridge = false
         grails.serverURL = props.get("epsilon.grails.server.url")
     }
+    test{
+        grails.serverURL = props.get("epsilon.grails.server.url")
+    }
 }
 
 // log4j configuration

@@ -27,8 +27,17 @@
             <g:message code="mail.scheduled.explanation"/>
             <ul>
                 <g:each var="scheduled" in="${mail}">
-                    <li><g:message code="mail.scheduled.description"
-                                   args="[scheduled.type, scheduled.amount, scheduled.tiers.name, scheduled.accountFrom.name]"/></li>
+                    <li>
+                        <g:message code="mail.scheduled.description"
+                                   args="[scheduled.type, scheduled.amount, scheduled.tiers.name]"/>
+                        - <g:message code="mail.scheduled.fromaccount"/>
+                        <g:link absolute="true" controller="operation" action="list"
+                                params="[account: scheduled.accountFrom.id]">
+                            (${scheduled.accountFrom.nameAndSold}
+                            <img src="${resource(absolute: true, dir: 'img', file: 'operation.png')}"
+                                 alt="Voir les opérations"/>)
+                        </g:link>
+                    </li>
                 </g:each>
             </ul>
             <br/>
