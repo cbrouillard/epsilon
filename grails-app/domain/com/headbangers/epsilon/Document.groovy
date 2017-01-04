@@ -3,18 +3,20 @@ package com.headbangers.epsilon
 class Document {
 
     public enum Type {
-        INVOICE("operation", "operation.png", "linkto_operation"),
-        BANK ("bank", "bank.png", "linkto_bank"),
-        ACCOUNT("account", "account.png", "linkto_account");
+        INVOICE("operation", "operation.png", "linkto_operation", "[\"pdf\"]"),
+        BANK ("bank", "bank.png", "linkto_bank", "[\"pdf\"]"),
+        ACCOUNT("account", "account.png", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]");
 
         private String controllerName;
         private String linkView;
         private String icon;
+        private String allowed;
 
-        private Type (String cName, String i, String lV){
+        private Type (String cName, String i, String lV, String allowed){
             this.controllerName = cName
             this.icon = i
             this.linkView = lV
+            this.allowed = allowed
         }
 
         String getControllerName() {
@@ -27,6 +29,10 @@ class Document {
 
         String getLinkView() {
             return linkView
+        }
+
+        String getAllowed() {
+            return allowed
         }
     }
     static belongsTo = [Operation, Bank, Account, Loan]

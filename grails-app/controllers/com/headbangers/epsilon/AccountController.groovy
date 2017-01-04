@@ -147,4 +147,26 @@ class AccountController {
         accountService.activateAccountForMobile (springSecurityService.getCurrentUser(), Account.get(params.id))
         redirect(action:'list')
     }
+
+    def linkdocument () {
+        def person = springSecurityService.getCurrentUser()
+        def account = Account.findByIdAndOwner (params.id, person)
+        def document = Document.findByIdAndOwner (params.docId, person)
+
+        if (document && account){
+            account.addToDocuments(document)
+            account.save(flush: true)
+
+            flash.message = "Le document est maintenant lié au compte"
+            redirect(controller: 'document', action: document.type.toString().toLowerCase() + 's')
+        } else {
+            flash.message = "Impossible de lier le compte demandé"
+            if (document) {
+                redirect(controller: 'document', action: 'linkto', id: document.id)
+            } else {
+                redirect(controller: 'summary')
+            }
+
+        }
+    }
 }

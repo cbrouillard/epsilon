@@ -40,10 +40,12 @@
                         <input id="data" type="file" class="file form-control" name="data" data-show-preview="false"
                                data-show-upload="false" data-show-caption="true"
                                data-initial-caption="${message(code: 'document.choose.file')}"
-                               data-allowed-file-extensions='["pdf"]'>
+                               data-allowed-file-extensions='${document.type.allowed}'>
                     </div>
 
-                    <div class="help-block with-errors"></div>
+                    <div class="help-block with-errors">
+                        ${document.type.allowed}
+                    </div>
                 </div>
             </div>
 

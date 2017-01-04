@@ -84,26 +84,6 @@
 
             <div class="form-group">
 
-                <label for="beforeDate" class="col-sm-2 control-label"><g:message
-                        code="before.date"/></label>
-
-                <div class="col-sm-10">
-                    <div class="input-group">
-                        <span class="input-group-addon"><span
-                                class="glyphicon glyphicon-calendar"></span></span>
-                        <input type="text"
-                               name="beforeDate"
-                               value="${formatDate(format: 'dd/MM/yyyy', date: search?.beforeDate)}"
-                               id="beforeDate" class="datePicker form-control"/>
-
-                    </div>
-
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-
                 <label for="afterDate" class="col-sm-2 control-label"><g:message
                         code="after.date"/></label>
 
@@ -115,6 +95,26 @@
                                name="afterDate"
                                value="${formatDate(format: 'dd/MM/yyyy', date: search?.afterDate)}"
                                id="afterDate" class="datePicker form-control"/>
+
+                    </div>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label for="beforeDate" class="col-sm-2 control-label"><g:message
+                        code="before.date"/></label>
+
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span
+                                class="glyphicon glyphicon-calendar"></span></span>
+                        <input type="text"
+                               name="beforeDate"
+                               value="${formatDate(format: 'dd/MM/yyyy', date: search?.beforeDate)}"
+                               id="beforeDate" class="datePicker form-control"/>
 
                     </div>
 

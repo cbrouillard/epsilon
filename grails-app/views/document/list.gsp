@@ -41,7 +41,7 @@
         <g:else>
             <g:each in="${documents}" var="document">
                 <div class="col-lg-3 col-md-5 col-sm-5">
-                    <g:render template="onedocument" model="[document: document]"/>
+                    <g:render template="onedocument" model="[document: document, accounts: accounts]"/>
                 </div>
             </g:each>
 

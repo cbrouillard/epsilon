@@ -22,7 +22,9 @@
             <th><g:message code="category"/></th>
             <th class="text-right"><g:message code="operation.type.payment"/></th>
             <th class="text-right"><g:message code="operation.type.receipt"/></th>
-            <th class="text-right"><g:message code="total"/></th>
+            <g:if test="${showTotal}">
+                <th class="text-right"><g:message code="total"/></th>
+            </g:if>
             <th class="text-right"><g:message code="actions"/></th>
         </tr>
         </thead>
@@ -83,7 +85,9 @@
                         <g:set var="total" value="${total + operation?.amount}"/>
                     </g:if>
                 </td>
-                <td class="tdright"><g:formatNumber number="${total}" format="###,###.##"/> €</td>
+                <g:if test="${showTotal}">
+                    <td class="tdright"><g:formatNumber number="${total}" format="###,###.##"/> €</td>
+                </g:if>
 
                 <td class="text-right">
                     <g:if test="${!actions}">

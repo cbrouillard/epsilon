@@ -40,7 +40,7 @@
                     </li>
                 </g:each>
             </ul>
-            <br/>
+            <br/><hr/>
             <g:link controller="summary" absolute="true">
                 <g:message code="epsilon.connect"/>
             </g:link>

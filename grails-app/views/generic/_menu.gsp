@@ -152,6 +152,12 @@
                         code="document.invoice.list"/></g:link>
             </li>
 
+            <li>
+                <g:link controller="document" class="list" action="accounts"><img
+                        src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
+                        code="document.account.list"/></g:link>
+            </li>
+
             <li class="divider"></li>
         </ul>
     </li>

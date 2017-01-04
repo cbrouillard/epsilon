@@ -35,7 +35,7 @@ class DocumentController {
         def person = springSecurityService.getCurrentUser()
         def documents = fetchByType person, Document.Type.ACCOUNT
 
-        render(view: 'list', model: [documents: documents, type: Document.Type.ACCOUNT])
+        render(view: 'list', model: [documents: documents, type: Document.Type.ACCOUNT, accounts: Account.findAllByOwner(person)])
     }
 
     private List<Document> fetchByType(Person person, Document.Type type) {
@@ -64,8 +64,17 @@ class DocumentController {
 
         MultipartFile file = request.getFile("data")
         if (file) {
+            String originalName = file.getOriginalFilename()
             if (!document.name) {
-                document.name = file.getOriginalFilename()
+                document.name = originalName
+            } else {
+                if (!document.name.contains(".")){
+                    try {
+                        document.name = document.name + originalName.substring(originalName.indexOf("."))
+                    } catch(Exception e){
+                        // bourrin mais tant pis. osef l'extension si y en a pas.
+                    }
+                }
             }
 
             document.data = file.getBytes()
