@@ -52,7 +52,7 @@ class ScheduledJob {
                     zeScheduled.dateApplication = expressedDate
                 }
 
-                if (zeScheduled.dateLastApplication && zeScheduled.dateApplication >= zeScheduled.dateLastApplication) {
+                if (zeScheduled.dateLastApplication && zeScheduled.dateApplication > zeScheduled.dateLastApplication) {
                     log.debug("This scheduled is no more active : ${zeScheduled.name}")
                     zeScheduled.active = false
                 }

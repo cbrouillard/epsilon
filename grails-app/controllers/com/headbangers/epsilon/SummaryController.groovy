@@ -20,6 +20,7 @@ class SummaryController {
     def genericService
     def scheduledService
     def operationService
+    def budgetService
     def dateUtil
 
     def index = {
@@ -36,6 +37,7 @@ class SummaryController {
 
         def budgets = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
         budgets = budgets.findAll  {b -> b.active == true}
+        def outOfBudgets = budgetService.calculateOutOfBudgetAmount(budgets, person)
 
         def pinnedCategories = Category.createCriteria().list([order:'asc', sort:'name'], {
             owner {eq("id", person.id)}
@@ -55,7 +57,8 @@ class SummaryController {
 
         [accounts: accounts, lates: lateScheduled, today: todayScheduled,
          future  : futuresScheduled, depense: depense, person: person, budgets: budgets, graphData: graphData, colors:colors,
-         pinnedCategories:pinnedCategories,pinnedTiers:pinnedTiers
+         pinnedCategories:pinnedCategories,pinnedTiers:pinnedTiers, revenues:scheduledService.calculateOneMonthRevenues(person),
+                outOfBudget:outOfBudgets
         ]
     }
 }

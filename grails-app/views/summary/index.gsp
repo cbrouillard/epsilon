@@ -22,11 +22,11 @@
 <div class="row-fluid">
     <div class="col-sm-12">
         <h1>Vos comptes <small>Résumé de la situation</small>
-        <g:if test="${accounts}">
-            <span id="mobile-activation" data-toggle="tooltip" data-placement="bottom" title="${person.mobileToken ? "Désactivation" : "Activation"} du client mobile">
-                <g:render template="mobile" model="[person: person]"/>
-            </span>
-        </g:if>
+            <g:if test="${accounts}">
+                <span id="mobile-activation" class="pull-right">
+                    <g:render template="mobile" model="[person: person]"/>
+                </span>
+            </g:if>
         </h1>
         <hr/>
     </div>
@@ -35,8 +35,9 @@
 
 <div class="col-lg-4 col-md-6 col-sm-12">
     <div class="around-border">
-        <div class="alert alert-info">Comptes <span class="pull-right"><g:link controller="account" class="list" action="list"><img
-                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span> </div>
+        <div class="alert alert-info">Comptes <span class="pull-right"><g:link controller="account" class="list"
+                                                                               action="list"><img
+                    src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
         <g:if test="${accounts}">
             <table class="table table-striped">
                 <tbody>
@@ -76,7 +77,7 @@
                 <ol>
                     <li><g:link controller="bank" action="create"><img
                             src="${resource(dir: 'img', file: 'bank.png')}"
-                            alt=">"/> <g:message code="bank.create"/> </g:link></li>
+                            alt=">"/> <g:message code="bank.create"/></g:link></li>
                 </ol>
 
             </div>
@@ -85,59 +86,80 @@
     </div>
 
     <g:if test="${budgets}">
-    <hr/>
-    <div class="around-border">
-        <div class="alert alert-info">Les budgets <span class="pull-right"><g:link controller="budget" class="list" action="list"><img
-                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
-        <div class="budgets list">
-            <table class="table table-striped">
-                <tbody>
-                <g:set var="budgetAmount" value="${0D}"/>
-                <g:set var="budgetUsedAmount" value="${0D}"/>
-                <g:each in="${budgets}" var="budget" status="b">
+        <hr/>
+
+        <div class="around-border">
+            <div class="alert alert-info">Les budgets <span class="pull-right"><g:link controller="budget" class="list"
+                                                                                       action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
+
+            <div class="budgets list">
+                <table class="table table-striped">
+                    <tbody>
+                    <g:set var="budgetAmount" value="${0D}"/>
+                    <g:set var="budgetUsedAmount" value="${0D}"/>
+                    <g:each in="${budgets}" var="budget" status="b">
+                        <tr>
+                            <td class="principal">${budget.name}</td>
+
+                            <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
+
+                            <g:if test="${currentSold < budget.amount}">
+                                <td class="tdright">
+                                <span class="label label-success">
+                            </g:if>
+                            <g:elseif
+                                    test="${currentSold >= budget.amount - 1 && currentSold <= budget.amount + 1}">
+                                <td class="tdright">
+                                <span class="label label-warning">
+                            </g:elseif>
+                            <g:elseif test="${currentSold > budget.amount}">
+                                <td class="tdright">
+                                <span class="label label-danger">
+                            </g:elseif>
+                            <g:else>
+                                <td class="tdright budget"><span>
+                            </g:else>
+                            <g:formatNumber number="${currentSold}" format="###,###.##" /> / <g:formatNumber number="${budget.amount}" format="###,###.##" /> €</span></td>
+                            <td class="tdright fixedsize">
+                                <g:link title="Afficher le registre" controller="budget" action="operations"
+                                        params="[budget: budget.id]"><img
+                                        src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                            </td>
+                            <g:set var="budgetAmount" value="${budgetAmount + budget.amount}"/>
+                            <g:set var="budgetUsedAmount" value="${budgetUsedAmount + currentSold}"/>
+                        </tr>
+                    </g:each>
+                    <tr class="important">
+                        <td class="principal">&nbsp;</td>
+                        <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}"
+                                                              format="###,###.##"/> / <g:formatNumber
+                                number="${budgetAmount}"
+                                format="###,###.##"/> €</td>
+                        <td class="tdright fixedsize">&nbsp;</td>
+                    </tr>
+
                     <tr>
-                        <td class="principal">${budget.name}</td>
+                        <td class="principal">
+                            <span data-toggle="tooltip" data-placement="bottom"
+                                  title="Somme des opérations non comptabilisées dans un budget ou une échéance.">
+                                Hors budgets et échéances</span></td>
 
-                        <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
-
-                        <g:if test="${currentSold < budget.amount}">
-                            <td class="tdright">
-                            <span class="label label-success">
-                        </g:if>
-                        <g:elseif
-                                test="${currentSold >= budget.amount - 1 && currentSold <= budget.amount + 1}">
-                            <td class="tdright">
-                            <span class="label label-warning">
-                        </g:elseif>
-                        <g:elseif test="${currentSold > budget.amount}">
-                            <td class="tdright">
-                            <span class="label label-danger">
-                        </g:elseif>
-                        <g:else>
-                            <td class="tdright budget"><span>
-                        </g:else>
-                        <g:formatNumber number="${currentSold}" format="###,###.##" /> / <g:formatNumber number="${budget.amount}" format="###,###.##" /> €</span></td>
+                        <td class="tdright">
+                            <span class="label label-${outOfBudget ? 'danger' : 'default'}">
+                                <g:formatNumber number="${outOfBudget ?: 0}" format="###,###.##"/> €
+                            </span>
+                        </td>
                         <td class="tdright fixedsize">
-                            <g:link title="Afficher le registre" controller="budget" action="operations"
-                                    params="[budget: budget.id]"><img
+                            <g:link title="Afficher le registre" controller="budget" action="out"><img
                                     src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
                         </td>
-                        <g:set var="budgetAmount" value="${budgetAmount + budget.amount}"/>
-                        <g:set var="budgetUsedAmount" value="${budgetUsedAmount + currentSold}"/>
                     </tr>
-                </g:each>
-                <tr class="important">
-                    <td class="principal">&nbsp;</td>
-                    <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}"
-                                                          format="###,###.##"/> / <g:formatNumber
-                            number="${budgetAmount}"
-                            format="###,###.##"/> €</td>
-                    <td class="tdright fixedsize">&nbsp;</td>
-                </tr>
-                </tbody>
-            </table>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </g:if>
 
     <g:if test="${pinnedCategories || pinnedTiers}">
@@ -150,7 +172,7 @@
                 <small>Catégories</small>
 
                 <div class="budgets list">
-                    <g:render template="pinnedtable" model="[pinned:pinnedCategories]"/>
+                    <g:render template="pinnedtable" model="[pinned: pinnedCategories]"/>
                 </div>
             </g:if>
 
@@ -158,10 +180,9 @@
                 <small>Tiers</small>
 
                 <div class="budgets list">
-                    <g:render template="pinnedtable" model="[pinned:pinnedTiers]"/>
+                    <g:render template="pinnedtable" model="[pinned: pinnedTiers]"/>
                 </div>
             </g:if>
-
 
         </div>
     </g:if>
@@ -169,44 +190,44 @@
 </div>
 
 <g:if test="${lates || today || future}">
-<div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
 
+        <div class="around-border">
+            <div class="alert alert-info">Les échéances <span class="pull-right"><g:link controller="scheduled"
+                                                                                         class="list" action="list"><img
+                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
 
-    <div class="around-border">
-        <div class="alert alert-info">Les échéances <span class="pull-right"><g:link controller="scheduled" class="list" action="list"><img
-                src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span> </div>
+            <g:if test="${lates}">
+                <small>En retard</small>
 
-        <g:if test="${lates}">
-            <small>En retard</small>
+                <div class="scheduled list">
+                    <g:render template="scheduledtable"
+                              model="[cssClass: 'red', scheduleds: lates, forceActionDisplay: true]"/>
+                </div>
+            </g:if>
 
-            <div class="scheduled list">
-                <g:render template="scheduledtable"
-                          model="[cssClass: 'red', scheduleds: lates, forceActionDisplay: true]"/>
-            </div>
-        </g:if>
+            <g:if test="${today}">
+                <small>Paiements du jour</small>
 
-        <g:if test="${today}">
-            <small>Paiements du jour</small>
+                <div class="scheduled list">
+                    <div class="alert alert-warning">Les paiements gérés automatiquement sont marqués d'une horloge et n'ont pas besoin
+                    d'être validés manuellement: le système s'en charge.</div>
+                    <g:render template="scheduledtable"
+                              model="[cssClass: 'green', scheduleds: today, filterAutomatic: false]"/>
+                </div>
+            </g:if>
 
-            <div class="scheduled list">
-                <div class="alert alert-warning">Les paiements gérés automatiquement sont marqués d'une horloge et n'ont pas besoin
-                d'être validés manuellement: le système s'en charge.</div>
-                <g:render template="scheduledtable"
-                          model="[cssClass: 'green', scheduleds: today, filterAutomatic: false]"/>
-            </div>
-        </g:if>
+            <g:if test="${future}">
+                <small>Paiements futurs</small>
 
-        <g:if test="${future}">
-            <small>Paiements futurs</small>
+                <div class="scheduled list">
+                    <g:render template="scheduledtable" model="[cssClass: 'blue', scheduleds: future]"/>
+                </div>
+            </g:if>
 
-            <div class="scheduled list">
-                <g:render template="scheduledtable" model="[cssClass: 'blue', scheduleds: future]"/>
-            </div>
-        </g:if>
+        </div>
 
     </div>
-
-</div>
 </g:if>
 
 <g:if test="${graphData || depense || revenu}">
@@ -217,7 +238,22 @@
 
             <div class="row">
 
-                <div class="counter-shower col-xs-12 col-sm-12">
+                <div class="counter-shower col-xs-12 col-sm-6">
+
+                    <div class="number">
+                        <span class="label label-default">
+                            <g:formatNumber number="${revenues}"
+                                            format="###,###.##"/> €
+                        </span>
+                    </div>
+
+                    <div class="lbl">
+                        Revenus acquis du mois
+                    </div>
+
+                </div>
+
+                <div class="counter-shower col-xs-12 col-sm-6">
 
                     <div class="number">
                         <span class="label label-default">

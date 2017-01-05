@@ -1,7 +1,5 @@
 package com.headbangers.epsilon.mobile
 
-import com.headbangers.epsilon.Account
-import com.headbangers.epsilon.Person
 import com.headbangers.epsilon.Wish
 
 class MobileWish {

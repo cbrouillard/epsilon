@@ -35,6 +35,24 @@ class WsTiersController {
         render result as JSON
     }
 
+    def show() {
+        MobileTiers result = new MobileTiers()
+        def person = checkUser(request)
+        if (person) {
+            Tiers tiers = Tiers.findByOwnerAndId(person, params.id)
+            if (tiers) {
+                result = new MobileTiers(tiers)
+                def operations = tiers.getMonthOperations()
+                result.operations = new ArrayList<>()
+                operations.each { op ->
+                    result.operations.add(new MobileOperation(op))
+                }
+            }
+        }
+
+        render result as JSON
+    }
+
     def names() {
         List<Tiers> tiers = new ArrayList<Tiers>()
         def person = checkUser(request)
@@ -45,6 +63,7 @@ class WsTiersController {
         render tiers*.name as JSON
     }
 
+    // all operations !
     def operations() {
         def person = checkUser(request)
         List<MobileOperation> result = new ArrayList<MobileOperation>();

@@ -42,6 +42,7 @@
 
         <g:render template="/generic/listsize"/>
         <div class="clearfix"></div>
+        <hr/>
 
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
@@ -90,9 +91,9 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
+                            %{--<g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
                                     action="show" id="${categoryInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${categoryInstance.id}"><img
                                     src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
                             <g:link title="Opérations pour cette catégorie" action="operations"

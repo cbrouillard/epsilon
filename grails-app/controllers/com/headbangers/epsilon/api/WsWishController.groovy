@@ -7,6 +7,8 @@ import com.headbangers.epsilon.Wish
 import com.headbangers.epsilon.mobile.MobileSimpleResult
 import com.headbangers.epsilon.mobile.MobileWish
 import grails.converters.JSON
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
 
 import javax.servlet.http.HttpServletRequest
 
@@ -14,6 +16,7 @@ class WsWishController {
 
     def personService
     def categoryService
+    def grailsApplication
 
     private Person checkUser(HttpServletRequest request) {
         String token = request.getHeader("WWW-Authenticate")
@@ -38,35 +41,45 @@ class WsWishController {
 
     }
 
-    def show () {
+    def show() {
         def person = checkUser(request)
-        MobileWish wish = new MobileWish( )
-        if (person && params.id){
-            def db = Wish.findByOwnerAndId (person, params.id)
-            if (db){
-                wish = new MobileWish (db)
+        MobileWish wish = new MobileWish()
+        if (person && params.id) {
+            def db = Wish.findByOwnerAndId(person, params.id)
+            if (db) {
+                wish = new MobileWish(db)
             }
         }
 
         render wish as JSON
     }
 
-    def save (){
+    def save() {
         MobileSimpleResult result = new MobileSimpleResult("ko")
         def person = checkUser(request)
 
-        if (person){
-            def account = Account.findByOwnerAndId (person, params.account)
+        if (person) {
+            def account = Account.findByOwnerAndId(person, params.account)
 
             if (account) {
                 Wish wish = new Wish()
+
+                if (request instanceof MultipartHttpServletRequest) {
+                    MultipartFile file = ((MultipartHttpServletRequest) request).getFile("photo")
+                    if (file && !file.isEmpty()){
+                        String thumbId = UUID.randomUUID().toString()
+                        file.transferTo(new File (grailsApplication.config.epsilon.upload.dir, thumbId))
+                        wish.thumbnailUrl = grailsApplication.config.epsilon.static.url + thumbId
+                    }
+                }
+
                 wish.owner = person
                 wish.name = params.name
                 wish.price = Double.parseDouble(params.price.replaceAll(",", "\\."))
                 wish.account = account
                 wish.category = categoryService.findOrCreateCategory(person, params.category, CategoryType.DEPENSE)
 
-                if (wish.save(flush:true)){
+                if (wish.save(flush: true)) {
                     result.setCode("ok")
                 }
             }

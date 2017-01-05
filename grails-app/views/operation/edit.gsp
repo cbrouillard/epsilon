@@ -55,7 +55,7 @@
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-user"></span></span>
 
-                                <g:textField id="tiers" name="tiers.name"
+                                <g:textField id="tiers" name="tiersname"
                                              value="${operationInstance?.tiers?.name}"
                                              class="form-control typeahead-tiers"
                                              required="true"
@@ -76,9 +76,9 @@
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-tag"></span></span>
 
-                                <g:textField id="category" name="category.name"
+                                <g:textField id="category" name="categoryname"
                                              value="${operationInstance?.category?.name}" required="true"
-                                             class="form-control typeahead-categories-"
+                                             class="form-control typeahead-category"
                                              autocomplete="off"/>
 
                             </div>

@@ -17,6 +17,7 @@
         <tr>
             <th><g:message code="operation.number"/></th>
             <th>${message(code: 'operation.dateApplication.label', default: 'Date Application')}</th>
+            <th>&nbsp;</th>
             <th><g:message code="details"/></th>
             <th class="text-center"><g:message code="operation.pointed.label"/></th>
             <th class="text-right"><g:message code="operation.type.payment"/></th>
@@ -45,7 +46,7 @@
                 <g:set var="previousDay" value="${currentDay}"/>
 
                 <tr>
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td class="text-center"><small><g:formatDate date="${operationInstance.dateApplication}" format="d MMMM"/></small></td>
                     <td colspan="4">&nbsp;</td>
                 </tr>
@@ -54,6 +55,14 @@
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <td>${i + 1}</td>
                 <td><g:formatDate date="${operationInstance.dateApplication}"/></td>
+                <td>
+                    <g:if test="${operationInstance.isFromScheduled}">
+                        <img src="${resource(dir:"img", file:"time.png")}" title="${operationInstance.note}"/>
+                    </g:if>
+                    <g:else>
+                        &nbsp;
+                    </g:else>
+                </td>
                 <td>${fieldValue(bean: operationInstance, field: "category.name")} - ${fieldValue(bean: operationInstance, field: "tiers.name")}</td>
                 <td class="tdcenter">
                     <div id="operation${operationInstance.id}-point">
@@ -80,14 +89,18 @@
                 </td>
 
                 <td class="text-right">
+                    <g:if test="${operationInstance.document}">
+                        <g:link controller="document" title="Télécharger" action="download" id="${operationInstance.document.id}">
+                            <img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Download"/></g:link>
+                    </g:if>
                     <g:if test="${operationInstance.latitude && operationInstance.longitude}">
                         <g:link controller="operation" title="Localiser" action="location" id="${operationInstance.id}"><img
                                 src="${resource(dir: 'img', file: 'location.png')}"
                                 alt="GPS"/></g:link>
                     </g:if>
-                    <g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal"
+                    %{--<g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal"
                             data-target="#modalWindow_show"><img
-                            src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
+                            src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>--}%
                     <g:link title="Editer" action="edit" id="${operationInstance.id}"><img
                             src="${resource(dir: 'img', file: 'edit.png')}"
                             alt="Editer"/></g:link>
@@ -96,7 +109,7 @@
             </tr>
         </g:each>
         <tr>
-            <td colspan="6">&nbsp;</td>
+            <td colspan="7">&nbsp;</td>
             <td class="tdright important">
                 <g:if test="${operations}">
                     = <g:formatNumber number="${finalAmount}" format="###,###.##"/> €

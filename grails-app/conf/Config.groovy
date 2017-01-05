@@ -34,6 +34,8 @@ try {
 }
 
 epsilon.maps.api.key = props.get("maps.api.key")
+epsilon.upload.dir = props.get ("epsilon.upload.dir")
+epsilon.static.url = props.get ("epsilon.static.res.url")
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
@@ -91,6 +93,9 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
+        grails.serverURL = props.get("epsilon.grails.server.url")
+    }
+    test{
         grails.serverURL = props.get("epsilon.grails.server.url")
     }
 }

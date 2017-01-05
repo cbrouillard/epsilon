@@ -14,7 +14,9 @@ class Wish {
     
     boolean bought = false
     Date boughtDate
-    
+
+    Boolean isPublic = false
+
     Date previsionBuy
     
     Person owner
@@ -32,6 +34,7 @@ class Wish {
         boughtDate nullable:true
         previsionBuy nullable:true
         category nullable:true
+        isPublic nullable:true
     }
     
     static mapping = {

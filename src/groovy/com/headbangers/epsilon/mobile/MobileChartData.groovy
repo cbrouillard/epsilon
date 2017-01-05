@@ -9,8 +9,8 @@ class MobileChartData {
         this.graphData = new ArrayList<GraphData>()
     }
 
-    void setGraphData(graphData) {
-        graphData.eachWithIndex { d, idx ->
+    void specialSetGraphData(datas) {
+        datas.eachWithIndex { d, idx ->
             this.graphData.add(new GraphData(key: d[0], value: d[1], index: idx))
         }
     }

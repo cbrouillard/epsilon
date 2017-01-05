@@ -26,6 +26,7 @@ class MobileOperation {
     String sign
 
     boolean pointed
+    boolean isFromScheduled
 
     String latitude
     String longitude
@@ -34,7 +35,7 @@ class MobileOperation {
         
     }
 
-    public MobileOperation (dOperation){
+    public MobileOperation (Operation dOperation){
         this.id = dOperation.id
         this.type = dOperation.type.name()
         this.tiers = dOperation.tiers.name
@@ -46,6 +47,7 @@ class MobileOperation {
         this.sign = dOperation.type.sign
         this.latitude = dOperation.latitude
         this.longitude = dOperation.longitude
+        this.isFromScheduled = dOperation.isFromScheduled
     }
 
     public void  initScheduled (dScheduled){
@@ -57,6 +59,7 @@ class MobileOperation {
         this.dateApplication = dScheduled.dateApplication
         this.amount = dScheduled.amount
         this.sign = dScheduled.type.sign
+        this.isFromScheduled = true
     }
 }
 

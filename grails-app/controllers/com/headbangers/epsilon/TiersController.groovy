@@ -156,6 +156,11 @@ class TiersController {
     }
 
     def search = {
+        if (!params.query) {
+            redirect(action: "list")
+            return
+        }
+
         def person = springSecurityService.getCurrentUser()
 
         def tiers = Tiers.createCriteria().list(params) {

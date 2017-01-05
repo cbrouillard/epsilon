@@ -72,12 +72,17 @@
                             <td><g:formatDate date="${bankInstance.lastUpdated}"/></td>
 
                             <td class="text-right">
-                                <g:link title="Afficher les détails" action="show" data-toggle="modal"
+                                %{--<g:link title="Afficher les détails" action="show" data-toggle="modal"
                                         data-target="#modalWindow_show"
                                         id="${bankInstance.id}"><img
-                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                                 <g:link title="Editer" action="edit" id="${bankInstance.id}"><img
                                         src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                <g:if test="${bankInstance.url}" >
+                                    <a href="${bankInstance.url}" target="_blank">
+                                        <img src="${resource(dir:'img', file: 'external.png')}"
+                                             data-toggle="tooltip" data-placement="left" title="${message(code:'bank.website')}"/></a>
+                                </g:if>
                             </td>
                         </tr>
                     </g:each>

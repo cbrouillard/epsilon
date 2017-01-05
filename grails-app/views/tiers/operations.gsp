@@ -49,7 +49,7 @@
         <div class="clearfix">&nbsp;</div>
         <hr/>
 
-        <g:render template="/operation/simplelist" model="[operations: operations]"/>
+        <g:render template="/operation/simplelist" model="[operations: operations, showTotal:true]"/>
 
     </div>
 </div>

@@ -10,6 +10,7 @@
  */
 
 package com.headbangers.epsilon
+
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -29,7 +30,7 @@ class AccountController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 
         def person = springSecurityService.getCurrentUser()
-        def accounts = genericService.loadUserObjects (person, Account.class, params)
+        def accounts = genericService.loadUserObjects(person, Account.class, params)
 
         [accountInstanceList: accounts, accountInstanceTotal: accounts.totalCount]
     }
@@ -40,9 +41,9 @@ class AccountController {
 
         // reference data
         def person = springSecurityService.getCurrentUser()
-        def banks = genericService.loadUserObjects (person, Bank.class)
+        def banks = genericService.loadUserObjects(person, Bank.class)
 
-        return [accountInstance: accountInstance, banks:banks]
+        return [accountInstance: accountInstance, banks: banks]
     }
 
     def save = {
@@ -52,18 +53,17 @@ class AccountController {
         accountInstance.owner = springSecurityService.getCurrentUser()
 
         // new snapshot
-        def snapshot = new Snapshot (account:accountInstance, amount:accountInstance.amount)
-        accountInstance.addToSnapshots (snapshot)
+        def snapshot = new Snapshot(account: accountInstance, amount: accountInstance.amount)
+        accountInstance.addToSnapshots(snapshot)
 
-        if (accountInstance.save(flush:true)) {
+        if (accountInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'account.label', default: 'Account'), accountInstance.name])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             // reference data
             def person = springSecurityService.getCurrentUser()
-            def banks = genericService.loadUserObjects (person, Bank.class)
-            render(view: "create", model: [accountInstance: accountInstance, banks:banks])
+            def banks = genericService.loadUserObjects(person, Bank.class)
+            render(view: "create", model: [accountInstance: accountInstance, banks: banks])
         }
     }
 
@@ -72,8 +72,7 @@ class AccountController {
         if (!accountInstance || !accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'account.label', default: 'Account'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             [accountInstance: accountInstance]
         }
     }
@@ -83,8 +82,7 @@ class AccountController {
         if (!accountInstance || !accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'account.label', default: 'Account'), params.id])}"
             redirect(action: "list")
-        }
-        else {
+        } else {
             return [accountInstance: accountInstance]
         }
     }
@@ -95,7 +93,7 @@ class AccountController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (accountInstance.version > version) {
-                    
+
                     accountInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'account.label', default: 'Account')] as Object[], "Another user has updated this Account while you were editing")
                     render(view: "edit", model: [accountInstance: accountInstance])
                     return
@@ -105,12 +103,10 @@ class AccountController {
             if (!accountInstance.hasErrors() && accountInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'account.label', default: 'Account'), accountInstance.name])}"
                 redirect(action: "list")
-            }
-            else {
+            } else {
                 render(view: "edit", model: [accountInstance: accountInstance])
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'account.label', default: 'Account'), params.id])}"
             redirect(action: "list")
         }
@@ -122,10 +118,10 @@ class AccountController {
             try {
                 accountInstance.snapshots.clear()
                 accountInstance.operations.clear()
-                Scheduled.findAllByAccountFromOrAccountTo (accountInstance, accountInstance).each {oneScheduled ->
+                Scheduled.findAllByAccountFromOrAccountTo(accountInstance, accountInstance).each { oneScheduled ->
                     oneScheduled.delete()
                 }
-                Wish.findAllByAccount(accountInstance).each {oneScheduled ->
+                Wish.findAllByAccount(accountInstance).each { oneScheduled ->
                     oneScheduled.delete()
                 }
                 accountInstance.delete(flush: true)
@@ -136,15 +132,49 @@ class AccountController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'account.label', default: 'Account'), accountInstance.name])}"
                 redirect(action: "list")
             }
-        }
-        else {
+        } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'account.label', default: 'Account'), params.id])}"
             redirect(action: "list")
         }
     }
 
     def activateAccountForMobile = {
-        accountService.activateAccountForMobile (springSecurityService.getCurrentUser(), Account.get(params.id))
-        redirect(action:'list')
+        accountService.activateAccountForMobile(springSecurityService.getCurrentUser(), Account.get(params.id))
+        redirect(action: 'list')
+    }
+
+    def linkdocument() {
+        def person = springSecurityService.getCurrentUser()
+        def account = Account.findByIdAndOwner(params.id, person)
+        def document = Document.findByIdAndOwner(params.docId, person)
+
+        if (document && account) {
+            account.addToDocuments(document)
+            account.save(flush: true)
+
+            flash.message = "Le document est maintenant lié au compte"
+            redirect(controller: 'document', action: document.type.toString().toLowerCase() + 's')
+        } else {
+            flash.message = "Impossible de lier le compte demandé"
+            if (document) {
+                redirect(controller: 'document', action: 'linkto', id: document.id)
+            } else {
+                redirect(controller: 'summary')
+            }
+
+        }
+    }
+
+    def listdocuments() {
+        def person = springSecurityService.getCurrentUser()
+        def account = Account.findByIdAndOwner(params.id, person)
+
+        if (account) {
+
+            render view: 'documents', model: [account: account]
+
+        } else {
+            redirect(action: "list")
+        }
     }
 }

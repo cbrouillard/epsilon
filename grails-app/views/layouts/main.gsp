@@ -14,6 +14,7 @@
 <head>
     <title><g:layoutTitle default="Grails"/></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'epsilon.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'fileinput.css')}"/>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon"/>
 
     <r:require module="jquery"/>
@@ -33,6 +34,7 @@
     <r:layoutResources/>
 
     <gvisualization:apiImport/>
+    <script src="${resource(dir: '/js', file: 'fileinput.js')}"></script>
 </head>
 
 <body class="pig">
@@ -71,7 +73,7 @@
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <g:link controller="admin" action="users"><g:message code="menu.administration"/></g:link> -
                     </sec:ifAllGranted>
-                    <span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;" class="grand">&copy;</span> BROUILLARD Cyril - [2009-2016] - <g:message
+                    <span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;" class="grand">&copy;</span> BROUILLARD Cyril - [2009-2017] - <g:message
                             code="app.name"/> - <g:message code="app.purpose"/></p>
 
                 <div class="navbar-text pull-right">
@@ -136,6 +138,17 @@
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 remote: {
                     url: '${createLink(controller: 'budget', action:'simpleautocomplete')}?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            })
+        });
+
+        $('.typeahead-document').typeahead(null, {
+            source: new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '${createLink(controller: 'document', action:'simpleautocomplete')}?query=%QUERY',
                     wildcard: '%QUERY'
                 }
             })

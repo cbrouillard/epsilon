@@ -22,9 +22,10 @@
 <body>
 
 <div class="col-sm-12">
-    <h1><g:message code="scheduled.list"/> <small><g:message code="scheduled.list.explanation"/></small> <g:link controller="scheduled"
-                                                                                         action="create"
-                                                                                         class="btn btn-success"><img
+    <h1><g:message code="scheduled.list"/> <small><g:message code="scheduled.list.explanation"/></small> <g:link
+            controller="scheduled"
+            action="create"
+            class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'echeancy.png')}"
                 alt=">"/> <g:message code="scheduled.create"/></g:link></h1>
 
@@ -127,11 +128,11 @@
         <g:render template="/generic/listsize"/>
         <div class="clearfix"></div>
 
+        <hr/>
+
         <g:if test="${flash.message}">
             <div class="alert alert-info">${flash.message}</div>
         </g:if>
-
-
 
         <div class="table-responsive">
             <table class="table table-striped table-hover">
@@ -140,6 +141,7 @@
                     <g:sortableColumn property="name"
                                       title="${message(code: 'scheduled.name.label', default: 'Name')}"/>
                     <th><g:message code="scheduled.account.label" default="Account"/></th>
+                    <th><g:message code="scheduled.category.label" default="Category"/></th>
                     <th><g:message code="scheduled.tiers.label" default="Tiers"/></th>
 
                     <g:sortableColumn property="type"
@@ -159,7 +161,22 @@
                     <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         <td>${fieldValue(bean: scheduledInstance, field: "name")}</td>
                         <td>${fieldValue(bean: scheduledInstance, field: "accountFrom.name")}</td>
-                        <td>${fieldValue(bean: scheduledInstance, field: "tiers.name")}</td>
+                        <td>
+                            <g:link title="Afficher le registre"
+                                    controller="category"
+                                    action="operations"
+                                    params="[id: scheduledInstance.category.id]"><img
+                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                            ${fieldValue(bean: scheduledInstance, field: "category.name")}
+                        </td>
+                        <td>
+                            <g:link title="Afficher le registre"
+                                    controller="tiers"
+                                    action="operations"
+                                    params="[id: scheduledInstance.tiers.id]"><img
+                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                            ${fieldValue(bean: scheduledInstance, field: "tiers.name")}
+                        </td>
 
                         <td>${fieldValue(bean: scheduledInstance, field: "type")}</td>
                         <td><g:formatBoolean boolean="${scheduledInstance?.automatic}"/>
@@ -169,9 +186,10 @@
                         </td>
                         <td>
                             <g:if test="${scheduledInstance.automatic}">
-                            <span data-toggle="tooltip" data-placement="bottom" title="puis ${scheduledInstance.nextDates*.format("dd-MM-yy")}, etc ...">
-                                <g:formatDate date="${scheduledInstance.dateApplication}"/>
-                            </span>
+                                <span data-toggle="tooltip" data-placement="bottom"
+                                      title="puis ${scheduledInstance.nextDates*.format("dd-MM-yy")}, etc ...">
+                                    <g:formatDate date="${scheduledInstance.dateApplication}"/>
+                                </span>
                             </g:if>
                             <g:else>
                                 <g:formatDate date="${scheduledInstance.dateApplication}"/>
@@ -185,10 +203,10 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            <g:link title="Afficher les détails" action="show" id="${scheduledInstance.id}"
+                           %{-- <g:link title="Afficher les détails" action="show" id="${scheduledInstance.id}"
                                     data-toggle="modal"
                                     data-target="#modalWindow_show"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>
+                                    src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${scheduledInstance.id}"><img
                                     src="${resource(dir: 'img', file: 'edit.png')}"
                                     alt="Editer"/></g:link>

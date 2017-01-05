@@ -63,11 +63,11 @@
                 class="caret"></b>
         </g:link>
         <ul class="dropdown-menu">
-            <li class="dropdown-header"><g:message code="scheduleds"/></li>
+            <li class="dropdown-header"><g:message code="foresight"/></li>
             <li>
                 <g:link controller="scheduled" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
-                        code="scheduled.list"/></g:link>
+                        code="scheduled.and.foresight.list"/></g:link>
             </li>
             <li>
                 <g:link controller="scheduled" class="create" action="create"><img
@@ -132,6 +132,7 @@
                 class="caret"></b>
         </g:link>
         <ul class="dropdown-menu">
+            <li class="dropdown-header"><g:message code="references.data"/></li>
             <li>
                 <g:link controller="category" class="list" action="list"><img
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
@@ -142,6 +143,21 @@
                         src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
                         code="tiers.list"/></g:link>
             </li>
+            <li class="divider"></li>
+            <li class="dropdown-header"><g:message code="documents"/></li>
+
+            <li>
+                <g:link controller="document" class="list" action="invoices"><img
+                        src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
+                        code="document.invoice.list"/></g:link>
+            </li>
+
+            <li>
+                <g:link controller="document" class="list" action="accounts"><img
+                        src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
+                        code="document.account.list"/></g:link>
+            </li>
+
             <li class="divider"></li>
         </ul>
     </li>
@@ -156,6 +172,7 @@
 
 
             <ul class="dropdown-menu">
+                <li class="dropdown-header"><g:message code="account.list"/></li>
                 <g:each in="${accounts}" var="account">
                     <li>
                         <g:link controller="operation" params="[account: account.id]" action="list"><img

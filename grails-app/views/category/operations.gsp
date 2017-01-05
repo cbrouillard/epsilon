@@ -51,7 +51,7 @@
         <div class="clearfix">&nbsp;</div>
         <hr/>
 
-        <g:render template="/operation/simplelist" model="[operations: operations, highlightMonth: currentMonth]"/>
+        <g:render template="/operation/simplelist" model="[operations: operations, highlightMonth: currentMonth, showTotal:true]"/>
 
     </div>
 </div>

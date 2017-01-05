@@ -16,13 +16,12 @@ import java.text.DecimalFormat
 class Account {
     String id
     static belongsTo = [Bank, Person]
-    static hasMany = [operations: Operation, snapshots: Snapshot, thresholds: Threshold]
+    static hasMany = [operations: Operation, snapshots: Snapshot, thresholds: Threshold, documents: Document]
     static transients = ['tmpAmount']
 
     static Double tmpAmount
 
     SortedSet snapshots
-    //    SortedSet operations
 
     Bank bank
     String name
@@ -34,7 +33,6 @@ class Account {
     String description
 
     Person owner
-
     boolean mobileDefault = false
 
     static constraints = {

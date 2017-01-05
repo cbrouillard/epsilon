@@ -248,7 +248,7 @@ class OperationController {
         }
     }
 
-    def location (){
+    def location() {
         String mapsApiKey = grailsApplication.config.epsilon.maps.api.key
 
         def operationInstance = Operation.get(params.id)
@@ -256,7 +256,7 @@ class OperationController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'operation.label', default: 'Operation'), params.id])}"
             redirect(action: "list")
         } else {
-            [operationInstance: operationInstance, apiKey:mapsApiKey]
+            [operationInstance: operationInstance, apiKey: mapsApiKey]
         }
     }
 
@@ -358,6 +358,30 @@ class OperationController {
 
         log.debug "Guessed = '${bayes}'"
         render bayes as String
+    }
+
+    def linkdocument() {
+
+        def person = springSecurityService.getCurrentUser()
+        def operation = Operation.findByIdAndOwner(params.id, person)
+        def document = Document.findByIdAndOwner(params.docId, person)
+
+        if (operation && document) {
+            operation.document = document
+            operation.save(flush: true)
+
+            flash.message = "Le document est maintenant lié à l'opération"
+            redirect(controller: 'document', action: document.type.toString().toLowerCase() + 's')
+        } else {
+            flash.message = "Impossible de lier l'opération demandée"
+            if (document) {
+                redirect(controller: 'document', action: 'linkto', id: document.id)
+            } else {
+                redirect(controller: 'summary')
+            }
+
+        }
+
     }
 
 }

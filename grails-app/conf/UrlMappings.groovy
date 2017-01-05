@@ -58,12 +58,20 @@ class UrlMappings {
             controller = 'wsCategory'
             action = 'names'
         }
+        "/api/categories/$wsCategoryId/chart/operations" {
+            controller = "wsData"
+            action = "chartCategoryOperations"
+        }
         "/api/tiers"(resources: 'wsTiers') {
             "/operations"(controller: 'wsTiers', action: 'operations')
         }
         "/api/tiers/names" {
             controller = 'wsTiers'
             action = 'names'
+        }
+        "/api/tiers/$wsTiersId/chart/operations" {
+            controller = "wsData"
+            action = "chartTiersOperations"
         }
         "/api/operations"(resources: 'wsOperation') {
             "/e"(controller: "wsOperation", action: "editOperation")

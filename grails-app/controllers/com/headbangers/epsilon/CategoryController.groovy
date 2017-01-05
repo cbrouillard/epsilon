@@ -179,6 +179,11 @@ class CategoryController {
     }
 
     def search = {
+        if (!params.query) {
+            redirect(action: "list")
+            return
+        }
+
         def person = springSecurityService.getCurrentUser()
 
         def categories = Category.createCriteria().list(params) {

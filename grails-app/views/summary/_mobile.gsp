@@ -11,14 +11,20 @@
  */
 -->
 <g:if test="${person.mobileToken}">
+    <g:link url="${resource(file:"epsilon-release.apk")}" class="btn btn-lg btn-success">
+        <span class="glyphicon glyphicon-download"></span>
+        Appli' mobile</g:link>
+
     <a href="#" class="btn btn-default"
-       onclick="ajaxPostLink('${createLink(controller:'person', action:'deactivateMobile', id:person?.id)}', 'mobile-activation');">
+       onclick="ajaxPostLink('${createLink(controller:'person', action:'deactivateMobile', id:person?.id)}', 'mobile-activation');"
+       data-toggle="tooltip" data-placement="bottom" title="Client mobile actif. Cliquez pour désactiver.">
         <img src="${resource(dir: 'img', file: 'phone_on.png')}" alt="[]"/>
     </a>
 </g:if>
 <g:else>
     <a href="#" class="btn btn-default"
-       onclick="ajaxPostLink('${createLink(controller:'person', action:'activateMobile', id:person?.id)}', 'mobile-activation');">
+       onclick="ajaxPostLink('${createLink(controller:'person', action:'activateMobile', id:person?.id)}', 'mobile-activation');"
+       data-toggle="tooltip" data-placement="bottom" title="Client mobile inactif. Cliquez pour activer.">
         <img src="${resource(dir: 'img', file: 'phone_off.png')}" alt="[X]"/>
     </a>
 </g:else>

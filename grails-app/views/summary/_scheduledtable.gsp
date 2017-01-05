@@ -16,11 +16,14 @@
     <g:set var="prev" value="${actualMonth}"/>
     <g:set var="amount" value="${0}"/>
 
-    <tr>
-        <td colspan="5" class="centered">
-            <g:message code="month.real.${actualMonth}"/>
-        </td>
-    </tr>
+    <g:if test="${scheduleds}">
+        <tr>
+            <td colspan="5" class="centered">
+                <g:message code="month.real.${actualMonth}"/> <g:formatDate format="yyyy"
+                                                                            date="${scheduleds.get(0).dateApplication}"/>
+            </td>
+        </tr>
+    </g:if>
 
     <g:each in="${scheduleds}" status="i" var="scheduled">
 
@@ -37,7 +40,8 @@
             </tr>
             <tr>
                 <td colspan="5" class="centered">
-                    <g:message code="month.real.${actualMonth}"/>
+                    <g:message code="month.real.${actualMonth}"/> <g:formatDate format="yyyy"
+                                                                                date="${scheduled.dateApplication}"/>
                 </td>
             </tr>
         </g:if>
@@ -54,10 +58,12 @@
                 </g:if>
 
                 <g:if test="${(!filterAutomatic && !scheduled.automatic) || (forceActionDisplay)}">
-                    <g:link controller="scheduled" action="apply" id="${scheduled.id}" title="${message(code:"scheduled.apply")}">
+                    <g:link controller="scheduled" action="apply" id="${scheduled.id}"
+                            title="${message(code: "scheduled.apply")}">
                         <img src="${resource(dir: 'img', file: 'enter.png')}"/>
                     </g:link>
-                    <g:link controller="scheduled" action="jump" id="${scheduled.id}" title="${message(code:"scheduled.ignore")}">
+                    <g:link controller="scheduled" action="jump" id="${scheduled.id}"
+                            title="${message(code: "scheduled.ignore")}">
                         <img src="${resource(dir: 'img', file: 'jump.png')}"/>
                     </g:link>
                 </g:if>

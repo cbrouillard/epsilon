@@ -22,6 +22,7 @@ class Operation implements Comparable {
     Tiers tiers
     Category category
     Account account
+    Document document
 
     String note
     Date dateApplication
@@ -34,12 +35,15 @@ class Operation implements Comparable {
     String latitude
     String longitude
 
+    Boolean isFromScheduled = false
+
     static constraints = {
 
         type nullable: false, blank: false
         tiers nullable: false
         category nullable: false
         account nullable: false
+        document nullable:true
 
         dateApplication nullable: false
         amount nullable: false
@@ -50,6 +54,8 @@ class Operation implements Comparable {
 
         latitude nullable:true
         longitude nullable:true
+
+        isFromScheduled nullable: false
     }
 
     static mapping = {
