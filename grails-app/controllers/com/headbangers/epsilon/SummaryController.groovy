@@ -36,7 +36,7 @@ class SummaryController {
         // def revenu = operationService.calculateRevenuForThisMonth(person)
 
         def budgets = genericService.loadUserObjects(person, Budget.class, [order: 'asc', sort: 'name'])
-        budgets = budgets.findAll  {b -> b.active == true}
+        budgets = budgets.findAll  {Budget b -> b.active == true}
         def outOfBudgets = budgetService.calculateOutOfBudgetAmount(budgets, person)
 
         def pinnedCategories = Category.createCriteria().list([order:'asc', sort:'name'], {
