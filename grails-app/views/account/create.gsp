@@ -32,7 +32,7 @@
         <g:if test="${!banks}">
             <div class="alert alert-danger"><g:message code="no.banks.title"/></div>
 
-            <div class="alert alert-warning"><g:message code="no.banks.warn"/> <g:link controller="bank" action="create" class="btn"><img
+            <div class="alert alert-warning"><g:message code="no.banks.warn"/> <g:link controller="bank" action="create" class="btn btn-default"><img
                     src="${resource(dir: 'img',
                             file: 'bank.png')}"/> <g:message code="bank.create"/> </g:link>
 

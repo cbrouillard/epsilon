@@ -211,7 +211,9 @@ class BudgetController {
             owner { eq("id", person.id) }
         }
 
-        render(view: 'list', model: [budgetInstanceList: budgets, budgetInstanceTotal: budgets.size(), query: params.query])
+        def outOfBudgets = budgetService.calculateOutOfBudgetAmount(budgets, person)
+
+        render(view: 'list', model: [budgetInstanceList: budgets, budgetInstanceTotal: budgets.size(), query: params.query, outOfBudgets:outOfBudgets])
 
     }
 

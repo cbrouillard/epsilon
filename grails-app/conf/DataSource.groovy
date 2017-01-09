@@ -41,6 +41,7 @@ environments {
             password = props.get("datasource.password")
             dbCreate = props.get("datasource.dbCreate")
             url = props.get("datasource.url")
+            //logSql = true
         }
     }
     test {

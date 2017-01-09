@@ -11,27 +11,32 @@ class BudgetService {
         Date firstDay = dateUtil.getDateAtMorning(dateUtil.getFirstDayOfTheMonth(new Date()))
 
         if (involvedCategories) {
-            try {
-                def amount = Operation.createCriteria().get {
-                    ge("dateApplication", firstDay)
-                    eq("type", OperationType.RETRAIT)
-                    eq("isFromScheduled", false)
-                    owner {
-                        eq("id", connected.id)
-                    }
-                    not {
-                        category {
-                            'in'("id", involvedCategories*.id.flatten())
+
+            def categoriesId = involvedCategories*.id.flatten()
+
+            if (categoriesId) {
+                try {
+                    def amount = Operation.createCriteria().get {
+                        ge("dateApplication", firstDay)
+                        eq("type", OperationType.RETRAIT)
+                        eq("isFromScheduled", false)
+                        owner {
+                            eq("id", connected.id)
+                        }
+                        not {
+                            category {
+                                'in'("id", categoriesId)
+                            }
+                        }
+
+                        projections {
+                            sum("amount")
                         }
                     }
-
-                    projections {
-                        sum("amount")
-                    }
+                    return amount ?: 0D
+                } catch (Exception e) {
+                    println e
                 }
-                return amount ?: 0D
-            } catch (Exception e) {
-                println e
             }
         }
 
@@ -65,4 +70,5 @@ class BudgetService {
 
         return new ArrayList<Operation>()
     }
+
 }

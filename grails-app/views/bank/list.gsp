@@ -21,8 +21,9 @@
 
 <body>
 <div class="col-sm-12">
-    <h1><g:message code="bank.list"/> <small><g:message code="bank.list.explanation"/></small> <g:link controller="bank" action="create"
-                                                                                 class="btn btn-success"><img
+    <h1><g:message code="bank.list"/> <small><g:message code="bank.list.explanation"/></small> <g:link controller="bank"
+                                                                                                       action="create"
+                                                                                                       class="btn btn-success"><img
                 src="${resource(dir: 'img', file: 'bank.png')}"
                 alt=">"/> <g:message code="bank.create"/></g:link></h1>
     <hr/>
@@ -76,13 +77,14 @@
                                         data-target="#modalWindow_show"
                                         id="${bankInstance.id}"><img
                                         src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
+                                <g:if test="${bankInstance.url}">
+                                    <a href="${bankInstance.url}" target="_blank">
+                                        <img src="${resource(dir: 'img', file: 'external.png')}"
+                                             data-toggle="tooltip" data-placement="left"
+                                             title="${message(code: 'bank.website')}"/></a>
+                                </g:if>
                                 <g:link title="Editer" action="edit" id="${bankInstance.id}"><img
                                         src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
-                                <g:if test="${bankInstance.url}" >
-                                    <a href="${bankInstance.url}" target="_blank">
-                                        <img src="${resource(dir:'img', file: 'external.png')}"
-                                             data-toggle="tooltip" data-placement="left" title="${message(code:'bank.website')}"/></a>
-                                </g:if>
                             </td>
                         </tr>
                     </g:each>
