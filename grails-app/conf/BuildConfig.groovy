@@ -41,8 +41,8 @@ grails.project.dependency.resolution = {
         //runtime 'mysql:mysql-connector-java:5.1.5'
         runtime 'postgresql:postgresql:9.1-901.jdbc4'
         compile 'org.jsoup:jsoup:1.9.2'
-        //runtime 'org.springframework:spring-aop:4.0.5.RELEASE'
-        //runtime 'org.springframework:spring-expression:4.0.5.RELEASE'
+        runtime 'org.springframework:spring-aop:4.0.5.RELEASE'
+        runtime 'org.springframework:spring-expression:4.0.5.RELEASE'
         test 'org.hamcrest:hamcrest-core:1.3'
     }
 

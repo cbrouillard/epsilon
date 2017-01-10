@@ -47,10 +47,10 @@ class WishController {
         }
 
         def allWishes = genericService.loadUserObjects(person, Wish.class)
-        List<Category> categories = ((allWishes*.category) - null).toSet()
-                .sort(Category.nameComparator)
+        List<Category> categories = allWishes ? ((allWishes*.category) - null).toSet()
+                .sort(Category.nameComparator) : new ArrayList<>()
 
-        [wishInstanceList: wishes, wishInstanceTotal: wishes.totalCount, categories:categories, totalPrice:totalPrice]
+        [wishInstanceList: wishes, wishInstanceTotal: wishes.totalCount, categories:categories, totalPrice:totalPrice?:0D]
     }
 
     def create() {
