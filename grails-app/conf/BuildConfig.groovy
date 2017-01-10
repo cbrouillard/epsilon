@@ -48,7 +48,7 @@ grails.project.dependency.resolution = {
 
     plugins {
 
-        runtime ":hibernate:3.6.10.15"
+        runtime ":hibernate:3.6.10.16"
         build ":tomcat:7.0.54"
 
         runtime ":resources:1.2.8"

@@ -264,6 +264,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.ant/ant/jars/ant-1.8.4.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/javax.servlet/javax.servlet-api/jars/javax.servlet-api-3.0.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework/spring-expression/jars/spring-expression-4.0.5.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework/spring-aop/jars/spring-aop-4.0.5.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
