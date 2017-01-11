@@ -2,7 +2,7 @@ package com.headbangers.epsilon.command
 
 import grails.validation.Validateable
 
-@Validateable
+@Validateable (nullable = true)
 class SearchCommand {
 
     String id

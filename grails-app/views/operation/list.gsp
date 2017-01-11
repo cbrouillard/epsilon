@@ -51,6 +51,7 @@
                       model="[account: selected, idChart: 'situation', byMonth: byMonth, futures: futures]"/>
 
             <hr/>
+
             <div class="text-center">
                 <div class="btn-group btn-group" role="group">
                     <g:link controller="threshold" action="create" class="btn btn-success" id="${selected?.id}">
@@ -58,8 +59,9 @@
                     </g:link>
                     <g:each in="${selected?.thresholds}" var="thr">
                         <g:link controller="threshold" action="edit" class="btn btn-default" id="${thr.id}">
-                            <span class="label" style="background-color: ${thr.active ? thr.color : 'white;border: 1px solid '+thr.color};">&nbsp;</span>
-                            %{--<span><img src="${resource(dir:'img', file:thr.active ? 'online.png' : 'offline.png')}" alt="P"/></span>--}%
+                            <span class="label"
+                                  style="background-color: ${thr.active ? thr.color : 'white;border: 1px solid ' + thr.color};">&nbsp;</span>
+                        %{--<span><img src="${resource(dir:'img', file:thr.active ? 'online.png' : 'offline.png')}" alt="P"/></span>--}%
                             ${thr.name}
                         </g:link>
                     </g:each>
@@ -143,20 +145,21 @@
 
     <div class="around-border">
         <%
-            def dataCol = [['string', "${message(code:'category')}"], ['number', "${message(code:'operations.by.month.col.amount')}"]]
+            def dataCol = [['string', "${message(code: 'category')}"], ['number', "${message(code: 'operations.by.month.col.amount')}"]]
         %>
         <gvisualization:barCoreChart elementId="byMonthChart"
                                      columns="${dataCol}" data="${graphData}"
-                                     legend="${[position: 'none', alignment: 'center']}" colors="['92e07f']" select="goCategory"/>
+                                     legend="${[position: 'none', alignment: 'center']}" colors="['92e07f']"
+                                     select="goCategory"/>
         <div id="byMonthChart"
              style="width: 100%; margin: auto;display: block;background: transparent;"></div>
 
         <script type="text/javascript">
             function goCategory(e) {
                 var item = visualization.getSelection()[0];
-                var categoryName = visualization_data.getFormattedValue (item.row, 0);
+                var categoryName = visualization_data.getFormattedValue(item.row, 0);
 
-                window.location.href = "${createLink(controller: 'category', action: "byname")}" + "?name="+categoryName
+                window.location.href = "${createLink(controller: 'category', action: "byname")}" + "?name=" + categoryName
             }
         </script>
 
@@ -165,14 +168,6 @@
 
 <div class="col-sm-12 col-md-9">
 
-</div>
-
-<div class="modal fade" id="modalWindow_show" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-    </div>
 </div>
 </body>
 </html>

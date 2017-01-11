@@ -86,7 +86,8 @@
                                         data-toggle="modal"
                                         data-target="#modalWindow_show"><img
                                         src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
-                                <g:link action="listdocuments" id="${accountInstance.id}"><img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Docs"/></g:link>
+                                <g:link title="Documents attachés" action="listdocuments" id="${accountInstance.id}">
+                                    <img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Docs"/></g:link>
                                 <g:link title="Editer" action="edit" id="${accountInstance.id}"><img
                                         src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
                                 <g:link title="Afficher le registre" controller="operation" action="list"

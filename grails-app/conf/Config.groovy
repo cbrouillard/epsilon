@@ -59,7 +59,7 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
 
 // What URL patterns should be processed by the resources plugin
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
-
+grails.gsp.tldScanPattern='classpath*:/META-INF/*.tld,/WEB-INF/tld/*.tld'
 
 // The default codec used to encode data with ${}
 grails.views.default.codec = "html" // none, html, base64
@@ -102,12 +102,10 @@ environments {
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
     // appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    /*appenders {
+        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+    }*/
     
     debug  'com.headbangers'
 

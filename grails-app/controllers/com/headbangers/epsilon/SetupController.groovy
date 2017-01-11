@@ -53,6 +53,7 @@ class SetupController {
                         description: "Administrateur Epsilon",
                         accountExpired: false, accountLocked: false, passwordExpired: false).save(flush: true)
             }
+            PersonRole.create adminUser, adminRole, true
 
             if (setup.wantToCreateUser()) {
                 def firstUser = new Person(username: setup.username,
@@ -64,10 +65,11 @@ class SetupController {
                         description: "Premier utilisateur Epsilon",
                         accountExpired: false, accountLocked: false, passwordExpired: false).save(flush: true)
 
-                PersonRole.create adminUser, adminRole, true
                 PersonRole.create firstUser, userRole, true
-
                 springSecurityService.reauthenticate (setup.username, setup.passwd)
+
+            } else {
+                springSecurityService.reauthenticate ('admin', setup.adminpassword)
             }
 
             Parameter setupPassed = new Parameter(type: 'boolean', name: "setup.passed", owner: adminUser, value: "true")

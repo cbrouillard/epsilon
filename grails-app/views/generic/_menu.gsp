@@ -49,121 +49,123 @@
         </ul>
     </li>
 
-    %{--<%
-        def counter = com.headbangers.epsilon.Account.createCriteria().get {
-            owner{ eq ("id", sec.loggedInUserInfo (field:"id"))}
-            projections {count("id")}
-        }
-    %>
+%{--<%
+    def counter = com.headbangers.epsilon.Account.createCriteria().get {
+        owner{ eq ("id", sec.loggedInUserInfo (field:"id"))}
+        projections {count("id")}
+    }
+%>
 
-    <g:if test="${counter > 0}">--}%
-    <li class="${controllerName == 'scheduled' || controllerName == 'budget' || controllerName == 'wish' || controllerName == 'loan' ? "active" : ""} dropdown">
-        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'coins.png')}"/> <g:message code="menu.money"/> <b
-                class="caret"></b>
-        </g:link>
-        <ul class="dropdown-menu">
-            <li class="dropdown-header"><g:message code="foresight"/></li>
-            <li>
-                <g:link controller="scheduled" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
-                        code="scheduled.and.foresight.list"/></g:link>
-            </li>
-            <li>
-                <g:link controller="scheduled" class="create" action="create"><img
-                        src="${resource(dir: 'img', file: 'echeancy.png')}"/>
-                    <g:message code="scheduled.create"/>
-                </g:link>
-            </li>
-
-            <li class="divider"></li>
-            <li class="dropdown-header"><g:message code="budgets"/></li>
-            <li>
-                <g:link controller="budget" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
-                    <g:message code="budget.list"/>
-                </g:link>
-            </li>
-            <li>
-                <g:link controller="budget" class="create" action="create"><img
-                        src="${resource(dir: 'img', file: 'coins.png')}"/>
-                    <g:message code="budget.create"/>
-                </g:link>
-            </li>
-            <li class="divider"></li>
-
-            <li class="dropdown-header"><g:message code="loans"/></li>
-            <li>
-                <g:link controller="loan" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
-                    <g:message code="loan.list"/>
-                </g:link>
-            </li>
-            <li>
-                <g:link controller="loan" class="create" action="create"><img
-                        src="${resource(dir: 'img', file: 'loan.png')}"/>
-                    <g:message code="loan.create"/>
-                </g:link>
-            </li>
-            <li class="divider"></li>
-
-            <li class="dropdown-header"><g:message code="wishes"/></li>
-            <li>
-                <g:link controller="wish" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
-                    <g:message code="wish.list"/>
-                </g:link>
-            </li>
-            <li>
-                <g:link controller="wish" class="create" action="create"><img
-                        src="${resource(dir: 'img', file: 'gift.png')}"/>
-                    <g:message code="wish.create"/>
-                </g:link>
-            </li>
-            <li class="divider"></li>
-
-        </ul>
-    </li>
-    %{--</g:if>--}%
-
-    <li class="${controllerName == 'category' || controllerName == 'tiers' ? "active" : ""} dropdown">
-        <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message code="menu.data"/> <b
-                class="caret"></b>
-        </g:link>
-        <ul class="dropdown-menu">
-            <li class="dropdown-header"><g:message code="references.data"/></li>
-            <li>
-                <g:link controller="category" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
-                        code="category.list"/></g:link>
-            </li>
-            <li>
-                <g:link controller="tiers" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
-                        code="tiers.list"/></g:link>
-            </li>
-            <li class="divider"></li>
-            <li class="dropdown-header"><g:message code="documents"/></li>
-
-            <li>
-                <g:link controller="document" class="list" action="invoices"><img
-                        src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
-                        code="document.invoice.list"/></g:link>
-            </li>
-
-            <li>
-                <g:link controller="document" class="list" action="accounts"><img
-                        src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
-                        code="document.account.list"/></g:link>
-            </li>
-
-            <li class="divider"></li>
-        </ul>
-    </li>
-
+<g:if test="${counter > 0}">--}%
     <g:set var="accounts" value="${Account.findAll { owner.id == sec.loggedInUserInfo([field: 'id']) }}"/>
     <g:if test="${accounts}">
+        <li class="${controllerName == 'scheduled' || controllerName == 'budget' || controllerName == 'wish' || controllerName == 'loan' ? "active" : ""} dropdown">
+            <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="${resource(dir: 'img', file: 'coins.png')}"/> <g:message code="menu.money"/> <b
+                    class="caret"></b>
+            </g:link>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><g:message code="foresight"/></li>
+                <li>
+                    <g:link controller="scheduled" class="list" action="list"><img
+                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                            code="scheduled.and.foresight.list"/></g:link>
+                </li>
+                <li>
+                    <g:link controller="scheduled" class="create" action="create"><img
+                            src="${resource(dir: 'img', file: 'echeancy.png')}"/>
+                        <g:message code="scheduled.create"/>
+                    </g:link>
+                </li>
+
+                <li class="divider"></li>
+                <li class="dropdown-header"><g:message code="budgets"/></li>
+                <li>
+                    <g:link controller="budget" class="list" action="list"><img
+                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                        <g:message code="budget.list"/>
+                    </g:link>
+                </li>
+                <li>
+                    <g:link controller="budget" class="create" action="create"><img
+                            src="${resource(dir: 'img', file: 'coins.png')}"/>
+                        <g:message code="budget.create"/>
+                    </g:link>
+                </li>
+                <li class="divider"></li>
+
+                <li class="dropdown-header"><g:message code="loans"/></li>
+                <li>
+                    <g:link controller="loan" class="list" action="list"><img
+                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                        <g:message code="loan.list"/>
+                    </g:link>
+                </li>
+                <li>
+                    <g:link controller="loan" class="create" action="create"><img
+                            src="${resource(dir: 'img', file: 'loan.png')}"/>
+                        <g:message code="loan.create"/>
+                    </g:link>
+                </li>
+                <li class="divider"></li>
+
+                <li class="dropdown-header"><g:message code="wishes"/></li>
+                <li>
+                    <g:link controller="wish" class="list" action="list"><img
+                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                        <g:message code="wish.list"/>
+                    </g:link>
+                </li>
+                <li>
+                    <g:link controller="wish" class="create" action="create"><img
+                            src="${resource(dir: 'img', file: 'gift.png')}"/>
+                        <g:message code="wish.create"/>
+                    </g:link>
+                </li>
+                <li class="divider"></li>
+
+            </ul>
+        </li>
+    %{--</g:if>--}%
+
+        <li class="${controllerName == 'category' || controllerName == 'tiers' ? "active" : ""} dropdown">
+            <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                    code="menu.data"/> <b
+                    class="caret"></b>
+            </g:link>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><g:message code="references.data"/></li>
+                <li>
+                    <g:link controller="category" class="list" action="list"><img
+                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                            code="category.list"/></g:link>
+                </li>
+                <li>
+                    <g:link controller="tiers" class="list" action="list"><img
+                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                            code="tiers.list"/></g:link>
+                </li>
+                <li class="divider"></li>
+                <li class="dropdown-header"><g:message code="documents"/></li>
+
+                <li>
+                    <g:link controller="document" class="list" action="invoices"><img
+                            src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
+                            code="document.invoice.list"/></g:link>
+                </li>
+
+                <li>
+                    <g:link controller="document" class="list" action="accounts"><img
+                            src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
+                            code="document.account.list"/></g:link>
+                </li>
+
+                <li class="divider"></li>
+            </ul>
+        </li>
+
+
         <li class="${controllerName == 'operation' ? "active" : ""} dropdown">
             <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="${resource(dir: 'img', file: 'operation.png')}"/> <g:message code="menu.registers"/> <b

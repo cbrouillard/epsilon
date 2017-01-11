@@ -30,12 +30,11 @@
                     <li>
                         <g:message code="mail.scheduled.description"
                                    args="[scheduled.type, scheduled.amount, scheduled.tiers.name]"/>
-                        - <g:message code="mail.scheduled.fromaccount"/>
-                        <g:link absolute="true" controller="operation" action="list"
+                        - <g:link absolute="true" controller="operation" action="list"
                                 params="[account: scheduled.accountFrom.id]">
-                            (${scheduled.accountFrom.nameAndSold}
+                            ${scheduled.accountFrom.nameAndSold}
                             <img src="${resource(absolute: true, dir: 'img', file: 'operation.png')}"
-                                 alt="Voir les opérations"/>)
+                                 alt="Voir les opérations"/>
                         </g:link>
                     </li>
                 </g:each>
