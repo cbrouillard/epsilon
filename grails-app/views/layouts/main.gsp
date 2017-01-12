@@ -78,6 +78,7 @@
 
                 <div class="navbar-text pull-right">
                     <a class="label label-danger" href="https://github.com/cbrouillard/epsilon">Fork me on Github !</a>
+                    <a class="label label-success">Proudly built with Grails <g:meta name="app.grails.version"/></a>
                 </div>
 
             </div>

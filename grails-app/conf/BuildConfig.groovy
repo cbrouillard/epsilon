@@ -12,9 +12,10 @@
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.7
+grails.project.source.level = 1.7
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
+grails.project.dependency.resolver = "maven"
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
@@ -29,27 +30,30 @@ grails.project.dependency.resolution = {
         mavenLocal()
         mavenCentral()
     
-        mavenRepo "http://repo.grails.org/grails/repo/"
+        mavenRepo "https://repo.grails.org/grails/repo/"
 
-        //mavenRepo "http://snapshots.repository.codehaus.org"
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
+        //mavenRepo "https://snapshots.repository.codehaus.org"
+        //mavenRepo "https://repository.codehaus.org"
+        //mavenRepo "https://download.java.net/maven/2/"
+        //mavenRepo "https://repository.jboss.com/maven2/"
+        mavenRepo	"https://repo1.maven.org/maven2/"
+        mavenRepo	"https://repo.grails.org/grails/plugins"
+
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         //runtime 'mysql:mysql-connector-java:5.1.5'
         runtime 'postgresql:postgresql:9.1-901.jdbc4'
         compile 'org.jsoup:jsoup:1.9.2'
-        runtime 'org.springframework:spring-aop:4.0.5.RELEASE'
-        runtime 'org.springframework:spring-expression:4.0.5.RELEASE'
+        //runtime 'org.springframework:spring-aop:4.0.5.RELEASE'
+        //runtime 'org.springframework:spring-expression:4.0.5.RELEASE'
         test 'org.hamcrest:hamcrest-core:1.3'
     }
 
     plugins {
 
-        runtime ":hibernate:3.6.10.17"
-        build ":tomcat:7.0.54"
+        runtime ':hibernate4:4.3.10'
+        build ":tomcat:7.0.55.2"
 
         runtime ":resources:1.2.8"
         //compile ':asset-pipeline:1.8.11'
@@ -67,6 +71,10 @@ grails.project.dependency.resolution = {
         runtime ":webxml:1.4.1"
         compile ":twitter-bootstrap:3.3.2.1"
         compile ":google-visualization:1.0.2"
+
+        build(":release:3.1.1", ":rest-client-builder:2.1.1") {
+            export = false
+        }
     }
 
 }
