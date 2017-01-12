@@ -30,7 +30,7 @@ hibernate {
     cache.use_query_cache = false
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
     singleSession = true
-    //flush.mode = 'manual'
+    flush.mode = 'manual'
 }
 // environment specific settings
 environments {
