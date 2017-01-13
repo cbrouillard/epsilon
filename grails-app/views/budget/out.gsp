@@ -57,11 +57,11 @@
                     <td class="text-right">
                         <g:if test="${operation.latitude && operation.longitude}">
                             <g:link controller="operation" title="Localiser" action="location" id="${operation.id}"><img
-                                    src="${resource(dir: 'img', file: 'location.png')}"
+                                    src="${assetPath(src: 'location.png')}"
                                     alt="GPS"/></g:link>
                         </g:if>
                         <g:link title="Editer" action="edit" id="${operation.id}" controller="operation"><img
-                                src="${resource(dir: 'img', file: 'edit.png')}"
+                                src="${assetPath(src: 'edit.png')}"
                                 alt="Editer"/></g:link>
                     </td>
                 </tr>

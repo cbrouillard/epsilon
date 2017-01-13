@@ -55,9 +55,11 @@ grails.project.dependency.resolution = {
         runtime ':hibernate4:4.3.10'
         build ":tomcat:7.0.55.2"
 
-        runtime ":resources:1.2.8"
-        //compile ':asset-pipeline:1.8.11'
-        //compile ':cache:1.1.7'
+        //runtime ":resources:1.2.8"
+        compile ':scaffolding:2.1.2'
+        compile ':asset-pipeline:2.1.5'
+        compile ':cache:1.1.8'
+
 
         compile ":spring-security-core:2.0.0"
 
@@ -69,7 +71,7 @@ grails.project.dependency.resolution = {
         compile ":jquery-ui:1.10.4"
         runtime ":jquery:1.11.1"
         runtime ":webxml:1.4.1"
-        compile ":twitter-bootstrap:3.3.2.1"
+        compile ":twitter-bootstrap:3.3.5"
         compile ":google-visualization:1.0.2"
 
         build(":release:3.1.1", ":rest-client-builder:2.1.1") {

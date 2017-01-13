@@ -63,16 +63,6 @@ class CategoryController {
         }
     }
 
-    def show = {
-        def categoryInstance = Category.get(params.id)
-        if (!categoryInstance || !categoryInstance.owner.equals(springSecurityService.getCurrentUser())) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'category.label', default: 'Category'), params.id])}"
-            redirect(action: "list")
-        } else {
-            [categoryInstance: categoryInstance]
-        }
-    }
-
     def edit = {
         def categoryInstance = Category.get(params.id)
         if (!categoryInstance || !categoryInstance.owner.equals(springSecurityService.getCurrentUser())) {

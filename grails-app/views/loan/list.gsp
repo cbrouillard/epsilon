@@ -23,7 +23,7 @@
 <div class="col-sm-12">
     <h1><g:message code="loan.list"/> <small><g:message code="loan.list.explanation"/></small> <g:link controller="loan" action="create"
                                                                  class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'loan.png')}"
+                src="${assetPath(src: 'loan.png')}"
                 alt=">"/> <g:message code="loan.create"/></g:link></h1>
 
     <div class="alert alert-info">
@@ -84,17 +84,13 @@
                         <td><g:formatDate date="${loanInstance.calculatedEndDate}"/></td>
 
                         <td class="text-right">
-                            %{--<g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
-                                    action="show"
-                                    id="${loanInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${loanInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                    src="${assetPath(src: 'edit.png')}"/></g:link>
                             <g:link title="Afficher l'échéance associée" class="popup" controller="scheduled"
                                     action="show"
                                     data-toggle="modal" data-target="#modalWindow_show"
                                     params="[id: loanInstance.scheduled.id]"><img
-                                    src="${resource(dir: 'img', file: 'echeancy.png')}"/></g:link>
+                                    src="${assetPath(src: 'echeancy.png')}"/></g:link>
                         </td>
 
                     </tr>

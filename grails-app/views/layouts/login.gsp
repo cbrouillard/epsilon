@@ -13,21 +13,16 @@
 <html>
 <head>
     <title><g:layoutTitle default="Grails"/></title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'epsilon.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'datePicker.css')}"/>
-    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon"/>
-
+    <link rel="shortcut icon" href="${assetPath(src: 'favicon.ico')}" type="image/x-icon">
+    <asset:javascript src="application.js"/>
+    <asset:stylesheet src="application.css"/>
     <style>
     #container {
         padding-top: 60px;
         padding-bottom: 40px;
     }
     </style>
-
-    <r:require module="jquery"/>
-    <r:require module="bootstrap"/>
     <g:layoutHead/>
-    <r:layoutResources/>
 </head>
 
 <body class="pig">
@@ -36,7 +31,7 @@
     <div class="container-fluid">
         <div class="container-fluid">
             <a class="navbar-brand" href="${createLink(uri: '/')}"><img
-                    src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Epsilon" border="0"
+                    src="${assetPath(src: 'grails_logo.png')}" alt="Epsilon" border="0"
                     style="height: 20px;"/></a>
         </div>
     </div>
@@ -63,7 +58,6 @@
     </nav>
 </footer>
 
-<r:layoutResources/>
 </body>
 
 <script>

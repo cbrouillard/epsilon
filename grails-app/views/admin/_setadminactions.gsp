@@ -15,13 +15,13 @@
     <g:if test="${person?.authorities*.authority.contains("ROLE_ADMIN")}">
         <a href="#" title="Désactiver"
            onclick="ajaxPostLink('${createLink(controller:'admin', action:'setadminuser', id:person?.id, params:[id: person?.id, role: false])}', 'person${person?.id}-admin');">
-            <img src="${resource(dir: 'img', file: 'online.png')}" alt="D"/>
+            <img src="${assetPath(src: 'online.png')}" alt="D"/>
         </a>
     </g:if>
     <g:else>
         <a href="#" title="Activer"
            onclick="ajaxPostLink('${createLink(controller:'admin', action:'setadminuser', id:person?.id, params:[id: person?.id, role: true])}', 'person${person?.id}-admin');">
-            <img src="${resource(dir: 'img', file: 'offline.png')}" alt="E"/>
+            <img src="${assetPath(src: 'offline.png')}" alt="E"/>
         </a>
     </g:else>
 </g:if>

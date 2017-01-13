@@ -24,7 +24,7 @@
     <h1><g:message code="operations"/> <span class="label label-primary">${selected?.getNameAndSold()}</span>
         <g:if test="${selected?.bank?.url}">
             <a class="bank btn btn-default" href="${selected?.bank?.url}" target="_blank"><img
-                    src="${resource(dir: 'img', file: 'external.png')}"
+                    src="${assetPath(src: 'external.png')}"
                     alt=">"/> <g:message code="bank.website"/></a>
         </g:if>
 
@@ -61,7 +61,6 @@
                         <g:link controller="threshold" action="edit" class="btn btn-default" id="${thr.id}">
                             <span class="label"
                                   style="background-color: ${thr.active ? thr.color : 'white;border: 1px solid ' + thr.color};">&nbsp;</span>
-                        %{--<span><img src="${resource(dir:'img', file:thr.active ? 'online.png' : 'offline.png')}" alt="P"/></span>--}%
                             ${thr.name}
                         </g:link>
                     </g:each>
@@ -117,11 +116,11 @@
         <div class="around-border">
             <h1 class="red"><g:message code="account.no.account"/></h1>
             <ul>
-                <li><g:link controller="bank" action="create"><img src="${resource(dir: 'img', file: 'bank.png')}"
+                <li><g:link controller="bank" action="create"><img src="${assetPath(src: 'bank.png')}"
                                                                    alt=">"/> <g:message code="bank.create"/></g:link>
                 </li>
                 <li><g:link controller="account" action="create"><img
-                        src="${resource(dir: 'img', file: 'account.png')}"
+                        src="${assetPath(src: 'account.png')}"
                         alt=">"/> <g:message code="account.create"/></g:link>
                 </li>
             </ul>

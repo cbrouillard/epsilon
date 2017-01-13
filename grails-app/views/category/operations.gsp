@@ -40,7 +40,7 @@
             <span><small><g:message code="actions"/> : </small></span>
             <span>
                 <g:link title="Editer" action="edit" id="${category.id}"><img
-                        src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                        src="${assetPath(src: 'edit.png')}"/></g:link>
             </span>
 
             <span id="category${category.id}-pinned">

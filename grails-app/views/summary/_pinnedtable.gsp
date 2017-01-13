@@ -19,7 +19,7 @@
                         controller="${onepine.class.canonicalName.contains("Tiers") ? "tiers" :"category"}"
                         action="operations"
                         params="[id: onepine.id]"><img
-                        src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                        src="${assetPath(src: 'stats.png')}"/></g:link>
             </td>
         </tr>
         <g:set var="pinnedAmount" value="${pinnedAmount + currentSold}"/>

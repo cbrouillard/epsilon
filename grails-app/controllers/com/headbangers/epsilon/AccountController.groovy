@@ -67,16 +67,6 @@ class AccountController {
         }
     }
 
-    def show = {
-        def accountInstance = Account.get(params.id)
-        if (!accountInstance || !accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'account.label', default: 'Account'), params.id])}"
-            redirect(action: "list")
-        } else {
-            [accountInstance: accountInstance]
-        }
-    }
-
     def edit = {
         def accountInstance = Account.get(params.id)
         if (!accountInstance || !accountInstance.owner.equals(springSecurityService.getCurrentUser())) {

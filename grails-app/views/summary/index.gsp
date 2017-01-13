@@ -37,7 +37,7 @@
     <div class="around-border">
         <div class="alert alert-info">Comptes <span class="pull-right"><g:link controller="account" class="list"
                                                                                action="list"><img
-                    src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
+                    src="${assetPath(src: 'database_table.png')}"/></g:link></span></div>
         <g:if test="${accounts}">
             <table class="table table-striped">
                 <tbody>
@@ -50,7 +50,7 @@
                         <td class="tdright fixedsize">
                             <g:link controller="operation" action="list" params="[account: account.id]"
                                     title="Afficher le registre">
-                                <img src="${resource(dir: 'img', file: 'operation.png')}"/>
+                                <img src="${assetPath(src: 'operation.png')}"/>
                             </g:link>
                         </td>
                     </tr>
@@ -76,7 +76,7 @@
 
                 <ol>
                     <li><g:link controller="bank" action="create"><img
-                            src="${resource(dir: 'img', file: 'bank.png')}"
+                            src="${assetPath(src: 'bank.png')}"
                             alt=">"/> <g:message code="bank.create"/></g:link></li>
                 </ol>
 
@@ -91,7 +91,7 @@
         <div class="around-border">
             <div class="alert alert-info">Les budgets <span class="pull-right"><g:link controller="budget" class="list"
                                                                                        action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
+                        src="${assetPath(src: 'database_table.png')}"/></g:link></span></div>
 
             <div class="budgets list">
                 <table class="table table-striped">
@@ -124,7 +124,7 @@
                             <td class="tdright fixedsize">
                                 <g:link title="Afficher le registre" controller="budget" action="operations"
                                         params="[budget: budget.id]"><img
-                                        src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                                        src="${assetPath(src: 'operation.png')}"/></g:link>
                             </td>
                             <g:set var="budgetAmount" value="${budgetAmount + budget.amount}"/>
                             <g:set var="budgetUsedAmount" value="${budgetUsedAmount + currentSold}"/>
@@ -152,7 +152,7 @@
                         </td>
                         <td class="tdright fixedsize">
                             <g:link title="Afficher le registre" controller="budget" action="out"><img
-                                    src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                                    src="${assetPath(src: 'operation.png')}"/></g:link>
                         </td>
                     </tr>
 
@@ -195,7 +195,7 @@
         <div class="around-border">
             <div class="alert alert-info">Les échéances <span class="pull-right"><g:link controller="scheduled"
                                                                                          class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/></g:link></span></div>
+                        src="${assetPath(src: 'database_table.png')}"/></g:link></span></div>
 
             <g:if test="${lates}">
                 <small>En retard</small>

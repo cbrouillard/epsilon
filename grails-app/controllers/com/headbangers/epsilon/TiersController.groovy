@@ -58,16 +58,6 @@ class TiersController {
         }
     }
 
-    def show = {
-        def tiersInstance = Tiers.get(params.id)
-        if (!tiersInstance || !tiersInstance.owner.equals(springSecurityService.getCurrentUser())) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'tiers.label', default: 'Tiers'), params.id])}"
-            redirect(action: "list")
-        } else {
-            [tiersInstance: tiersInstance]
-        }
-    }
-
     def edit = {
         def tiersInstance = Tiers.get(params.id)
         if (!tiersInstance || !tiersInstance.owner.equals(springSecurityService.getCurrentUser())) {

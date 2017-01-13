@@ -22,7 +22,7 @@
 <div class="col-sm-12">
     <h1>Liste des futurs achats <small>Ce que vous désirez !</small> <g:link controller="wish" action="create"
                                                                              class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'gift.png')}"
+                src="${assetPath(src: 'gift.png')}"
                 alt=">"/> Créer un nouveau souhait</g:link></h1>
 
     <div class="row">

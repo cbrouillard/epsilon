@@ -13,12 +13,12 @@
 <g:if test="${budget?.active}">
     <a href="#" title="Désactiver"
        onclick="ajaxPostLink('${createLink(controller:'budget', action:'deactivate', id:budget?.id)}', 'budget${budget?.id}-activation');">
-        <img src="${resource(dir:'img', file:'online.png')}" alt="P" title="${message(code:'budget.deactivate')}"/>
+        <img src="${assetPath(src:'online.png')}" alt="P" title="${message(code:'budget.deactivate')}"/>
     </a>
 </g:if>
 <g:else>
     <a href="#" title="Activer"
        onclick="ajaxPostLink('${createLink(controller:'budget', action:'activate', id:budget?.id)}', 'budget${budget?.id}-activation');">
-        <img src="${resource(dir:'img', file:'offline.png')}" alt="_" title="${message(code:'budget.activate')}"/>
+        <img src="${assetPath(src:'offline.png')}" alt="_" title="${message(code:'budget.activate')}"/>
     </a>
 </g:else>

@@ -13,12 +13,12 @@
 <g:if test="${tiers?.pinned}">
     <a href="#"
        onclick="ajaxPostLink('${createLink(controller:'tiers', action:'unpinne', id:tiers?.id)}', 'tiers${tiers?.id}-pinned');">
-        <img src="${resource(dir:'img', file:'unpinne.png')}" alt="P" title="Stopper la surveillance"/>
+        <img src="${assetPath(src:'unpinne.png')}" alt="P" title="Stopper la surveillance"/>
     </a>
 </g:if>
 <g:else>
     <a href="#"
        onclick="ajaxPostLink('${createLink(controller:'tiers', action:'pinne', id:tiers?.id)}', 'tiers${tiers?.id}-pinned');">
-        <img src="${resource(dir:'img', file:'pinne.png')}" alt="_" title="Surveiller ce tiers"/>
+        <img src="${assetPath(src:'pinne.png')}" alt="_" title="Surveiller ce tiers"/>
     </a>
 </g:else>

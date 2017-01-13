@@ -48,7 +48,7 @@ class WishController {
 
         def allWishes = genericService.loadUserObjects(person, Wish.class)
         List<Category> categories = allWishes ? ((allWishes*.category) - null).toSet()
-                .sort(Category.nameComparator) : new ArrayList<>()
+                .sort(false, Category.nameComparator) : new ArrayList<>()
 
         [wishInstanceList: wishes, wishInstanceTotal: wishes.totalCount, categories:categories, totalPrice:totalPrice?:0D]
     }
@@ -164,19 +164,6 @@ class WishController {
 
         flash.message = "Operation créée"
         redirect(action: "list")
-    }
-
-    def show() {
-        def wishInstance = Wish.get(params.id)
-        def person = springSecurityService.getCurrentUser()
-
-        if (!wishInstance || !wishInstance.owner.equals(person)) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'wish'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [wishInstance: wishInstance]
     }
 
     def edit() {

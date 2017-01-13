@@ -55,17 +55,6 @@ class BankController {
         }
     }
 
-    def show = {
-        def bankInstance = Bank.get(params.id)
-        if (!bankInstance || !bankInstance.owner.equals(springSecurityService.getCurrentUser())) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'bank.label', default: 'Bank'), params.id])}"
-            redirect(action: "list")
-        }
-        else {
-            [bankInstance: bankInstance]
-        }
-    }
-
     def edit = {
         def bankInstance = Bank.get(params.id)
         if (!bankInstance || !bankInstance.owner.equals(springSecurityService.getCurrentUser())) {

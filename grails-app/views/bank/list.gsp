@@ -24,7 +24,7 @@
     <h1><g:message code="bank.list"/> <small><g:message code="bank.list.explanation"/></small> <g:link controller="bank"
                                                                                                        action="create"
                                                                                                        class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'bank.png')}"
+                src="${assetPath(src: 'bank.png')}"
                 alt=">"/> <g:message code="bank.create"/></g:link></h1>
     <hr/>
 </div>
@@ -73,18 +73,14 @@
                             <td><g:formatDate date="${bankInstance.lastUpdated}"/></td>
 
                             <td class="text-right">
-                                %{--<g:link title="Afficher les détails" action="show" data-toggle="modal"
-                                        data-target="#modalWindow_show"
-                                        id="${bankInstance.id}"><img
-                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                                 <g:if test="${bankInstance.url}">
                                     <a href="${bankInstance.url}" target="_blank">
-                                        <img src="${resource(dir: 'img', file: 'external.png')}"
+                                        <img src="${assetPath(src: 'external.png')}"
                                              data-toggle="tooltip" data-placement="left"
                                              title="${message(code: 'bank.website')}"/></a>
                                 </g:if>
                                 <g:link title="Editer" action="edit" id="${bankInstance.id}"><img
-                                        src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                        src="${assetPath(src: 'edit.png')}"/></g:link>
                             </td>
                         </tr>
                     </g:each>

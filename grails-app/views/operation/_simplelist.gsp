@@ -66,7 +66,7 @@
                 </g:if>
                 <td>
                     <g:if test="${operation.isFromScheduled}">
-                        <img src="${resource(dir: "img", file: "time.png")}" title="${operation.note}"/>
+                        <img src="${assetPath(src: "time.png")}" title="${operation.note}"/>
                     </g:if>
                     <g:else>
                         &nbsp;
@@ -93,23 +93,23 @@
                     <g:if test="${!actions}">
                         <g:if test="${operation.document}">
                             <g:link controller="document" action="download" id="${operation.document.id}">
-                                <img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Download"/></g:link>
+                                <img src="${assetPath(src: 'invoice.png')}" alt="Download"/></g:link>
                         </g:if>
                         <g:if test="${operation.latitude && operation.longitude}">
                             <g:link controller="operation" title="Localiser" action="location" id="${operation.id}"><img
-                                    src="${resource(dir: 'img', file: 'location.png')}"
+                                    src="${assetPath(src:'location.png')}"
                                     alt="GPS"/></g:link>
                         </g:if>
 
                         <g:link controller="operation" title="Editer" action="edit" id="${operation.id}"><img
-                                src="${resource(dir: 'img', file: 'edit.png')}"
+                                src="${assetPath(src: 'edit.png')}"
                                 alt="Editer"/></g:link>
                     </g:if>
                     <g:else>
                         <g:each in="${actions}" var="act">
                             <g:link controller="${act.ctrl}" action="${act.act}"
                                     id="${operation.id}" params="${act.params}">
-                                <img src="${resource(dir: 'img', file: "${act.icon}")}"
+                                <img src="${assetPath(src: "${act.icon}")}"
                                      alt="Action"/>
                             </g:link>
                         </g:each>

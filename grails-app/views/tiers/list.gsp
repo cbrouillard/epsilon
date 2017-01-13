@@ -23,7 +23,7 @@
 <div class="col-sm-12">
     <h1>Liste des tiers <small>Les personnes avec qui vous traitez.</small> <g:link controller="tiers" action="create"
                                                                                     class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'tiers.png')}"
+                src="${assetPath(src: 'tiers.png')}"
                 alt=">"/> Créer un nouveau tiers</g:link></h1>
 
     <div class="alert alert-info">
@@ -86,13 +86,10 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            %{--<g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
-                                    action="show" id="${tiersInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${tiersInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                    src="${assetPath(src:'edit.png')}"/></g:link>
                             <g:link title="Opérations pour ce tiers" action="operations" id="${tiersInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                                    src="${assetPath(src: 'stats.png')}"/></g:link>
                         </td>
 
                     </tr>

@@ -54,17 +54,17 @@
             <td class="tdright fixedsize"><g:formatNumber number="${scheduled.amount}" format="###,###.##"/> €</td>
             <td class="tdright fixedsize">
                 <g:if test="${scheduled.automatic}">
-                    <img src="${resource(dir: 'img', file: 'time.png')}" alt="Automatique"/>
+                    <img src="${assetPath(src: 'time.png')}" alt="Automatique"/>
                 </g:if>
 
                 <g:if test="${(!filterAutomatic && !scheduled.automatic) || (forceActionDisplay)}">
                     <g:link controller="scheduled" action="apply" id="${scheduled.id}"
                             title="${message(code: "scheduled.apply")}">
-                        <img src="${resource(dir: 'img', file: 'enter.png')}"/>
+                        <img src="${assetPath(src: 'enter.png')}"/>
                     </g:link>
                     <g:link controller="scheduled" action="jump" id="${scheduled.id}"
                             title="${message(code: "scheduled.ignore")}">
-                        <img src="${resource(dir: 'img', file: 'jump.png')}"/>
+                        <img src="${assetPath(src: 'jump.png')}"/>
                     </g:link>
                 </g:if>
             </td>

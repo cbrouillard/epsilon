@@ -25,7 +25,7 @@
             code="document.${type.toString().toLowerCase()}.list.explanation"/></small>
         <g:if test="${type != 'mixed'}">
             <g:link controller="document" action="create" params="[type: type]" class="btn btn-success"><img
-                    src="${resource(dir: 'img', file: 'invoice.png')}"
+                    src="${assetPath(src: 'invoice.png')}"
                     alt=">"/> <g:message code="document.${type.toString().toLowerCase()}.create"/></g:link>
         </g:if>
     </h1>

@@ -23,7 +23,7 @@
 <div class="col-sm-12">
     <h1><g:message code="person.list"/> <small><g:message code="person.list.explanation"/></small>
         <g:link class="create btn btn-success" action="createuser">
-            <img src="${resource(dir: 'img', file: 'personal-information.png')}" alt=">"/>
+            <img src="${assetPath(src: 'personal-information.png')}" alt=">"/>
             <g:message code="person.create"/> </g:link>
     </h1>
     <hr/>
@@ -65,11 +65,9 @@
                     <td><a href="mailto:${fieldValue(bean: person, field: "email")}">${fieldValue(bean: person, field: "email")}</a>
                     </td>
                     <td class="text-right">
-                        <g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
-                                action="showuser" id="${person.id}"><img
-                                src="${resource(dir: 'img', file: 'details.png')}"/></g:link>
+
                         <g:link title="Editer" action="edituser" id="${person.id}"><img
-                                src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                src="${assetPath(src: 'edit.png')}"/></g:link>
                     </td>
                 </tr>
             </g:each>
@@ -83,14 +81,6 @@
     </div>
 </div>
 
-</div>
-
-<div class="modal fade" id="modalWindow_show" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-    </div>
 </div>
 
 </body>

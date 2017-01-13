@@ -57,7 +57,7 @@
                 <td><g:formatDate date="${operationInstance.dateApplication}"/></td>
                 <td>
                     <g:if test="${operationInstance.isFromScheduled}">
-                        <img src="${resource(dir:"img", file:"time.png")}" title="${operationInstance.note}"/>
+                        <img src="${assetPath(src:"time.png")}" title="${operationInstance.note}"/>
                     </g:if>
                     <g:else>
                         &nbsp;
@@ -91,18 +91,15 @@
                 <td class="text-right">
                     <g:if test="${operationInstance.document}">
                         <g:link controller="document" title="Télécharger" action="download" id="${operationInstance.document.id}">
-                            <img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Download"/></g:link>
+                            <img src="${assetPath(src: 'invoice.png')}" alt="Download"/></g:link>
                     </g:if>
                     <g:if test="${operationInstance.latitude && operationInstance.longitude}">
                         <g:link controller="operation" title="Localiser" action="location" id="${operationInstance.id}"><img
-                                src="${resource(dir: 'img', file: 'location.png')}"
+                                src="${assetPath(src: 'location.png')}"
                                 alt="GPS"/></g:link>
                     </g:if>
-                    %{--<g:link title="Afficher les détails" action="show" id="${operationInstance.id}" data-toggle="modal"
-                            data-target="#modalWindow_show"><img
-                            src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>--}%
                     <g:link title="Editer" action="edit" id="${operationInstance.id}"><img
-                            src="${resource(dir: 'img', file: 'edit.png')}"
+                            src="${assetPath(src: 'edit.png')}"
                             alt="Editer"/></g:link>
                 </td>
 

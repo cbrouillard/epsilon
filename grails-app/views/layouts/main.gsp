@@ -13,12 +13,9 @@
 <html>
 <head>
     <title><g:layoutTitle default="Grails"/></title>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'epsilon.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'fileinput.css')}"/>
-    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon"/>
-
-    <r:require module="jquery"/>
-
+    <link rel="shortcut icon" href="${assetPath(src: 'favicon.ico')}" type="image/x-icon">
+    <asset:javascript src="application.js"/>
+    <asset:stylesheet src="application.css"/>
     <style>
     body {
         padding-top: 60px;
@@ -26,15 +23,9 @@
     }
     </style>
 
-    <script src="${resource(dir: '/js', file: 'password.js')}"></script>
-    <script src="${resource(dir: '/js', file: 'jscolor.min.js')}"></script>
-    <r:require module="bootstrap"/>
-    <r:require module="jquery-ui"/>
     <g:layoutHead/>
-    <r:layoutResources/>
-
     <gvisualization:apiImport/>
-    <script src="${resource(dir: '/js', file: 'fileinput.js')}"></script>
+    <link href="https://ajax.googleapis.com/ajax/static/modules/gviz/1.0/core/tooltip.css" rel="stylesheet" type="text/css">
 </head>
 
 <body class="pig">
@@ -51,7 +42,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="${createLink(uri: '/')}"><img
-                    src="${resource(dir: 'images', file: 'grails_logo.png')}"
+                    src="${assetPath(src: 'grails_logo.png')}"
                     alt="Epsilon" border="0"
                     style="height: 20px;"/></a>
         </div>
@@ -73,31 +64,24 @@
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <g:link controller="admin" action="users"><g:message code="menu.administration"/></g:link> -
                     </sec:ifAllGranted>
-                    <span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;" class="grand">&copy;</span> BROUILLARD Cyril - [2009-2017] - <g:message
-                            code="app.name"/> - <g:message code="app.purpose"/></p>
+                    <span style="-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;"
+                          class="grand">&copy;</span> BROUILLARD Cyril - [2009-2017] - <g:message
+                        code="app.name"/> - <g:message code="app.purpose"/></p>
 
                 <div class="navbar-text pull-right">
                     <a class="label label-danger" href="https://github.com/cbrouillard/epsilon">Fork me on Github !</a>
-                    <a class="label label-success">Proudly built with Grails <g:meta name="app.grails.version"/></a>
+                    <span class="label label-success">Proudly built with Grails <g:meta name="app.grails.version"/></span>
                 </div>
 
             </div>
         </div>
     </nav>
 </footer><a name="bottom"></a>
-
-<r:layoutResources/>
 </body>
 
-<script src="${resource(dir: '/js/typeahead', file: 'typeahead.bundle.js')}"></script>
 <script type="text/javascript">
     jQuery(function () {
         $('[data-toggle="tooltip"]').tooltip();
-
-//        , showOn: 'both', buttonText: '<i class="icon-calendar"></i>'
-        $(".datepicker, .datepicker-inner").datepicker({'dateFormat': 'dd/mm/yy'});
-        $(".datepicker, .datepicker-inner").attr("autocomplete", "off");
-
 
         $('.typeahead-tiers').typeahead(null, {
             source: new Bloodhound({
@@ -109,7 +93,6 @@
                 }
             })
         });
-
 
         $('.typeahead-category').typeahead(null, {
             source: new Bloodhound({
@@ -199,27 +182,27 @@
         window.location.href = '${createLink(controller:'tiers', action:'operations')}/' + tiersId
     }
 
-    var showOrHide = function (showIt, divId){
-        if (showIt){
-            $('#'+divId).removeClass('hide');;
+    var showOrHide = function (showIt, divId) {
+        if (showIt) {
+            $('#' + divId).removeClass('hide');
+            ;
         } else {
-            $('#'+divId).addClass('hide');
+            $('#' + divId).addClass('hide');
         }
     }
 
-    var ajaxPostLink = function (url, updateId) {
+    var ajaxPostLink = function (url, updateId) {
 
         jQuery.ajax(
-                {   type:'POST',
-                    url:url,
-                    success:
-                            function(data,textStatus){
-                                jQuery('#'+updateId).html(data);
-                            },
-                    error:
-                            function(XMLHttpRequest,textStatus,errorThrown){
+                {
+                    type: 'POST',
+                    url: url,
+                    success: function (data, textStatus) {
+                        jQuery('#' + updateId).html(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
 
-                            }
+                    }
                 });
 
         return false;

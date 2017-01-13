@@ -191,9 +191,9 @@
                     <td>${cron.nextDate}</td>
                     <td class="text-right">
                         <g:link title="Effacer" action="deletecron" id="${cron.id}"><img
-                                src="${resource(dir: 'img', file: 'delete.png')}"/></g:link>
+                                src="${assetPath(src: 'delete.png')}"/></g:link>
                         <g:link title="Editer" action="editcron" id="${cron.id}"><img
-                                src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                src="${assetPath(src: 'edit.png')}"/></g:link>
                     </td>
                 </tr>
             </g:each>

@@ -117,16 +117,6 @@ class ScheduledController {
         }
     }
 
-    def show = {
-        def scheduledInstance = Scheduled.get(params.id)
-        if (!scheduledInstance || !scheduledInstance.owner.equals(springSecurityService.getCurrentUser())) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
-            redirect(action: "list")
-        } else {
-            [scheduledInstance: scheduledInstance]
-        }
-    }
-
     def edit = {
         def scheduledInstance = Scheduled.get(params.id)
         if (!scheduledInstance || !scheduledInstance.owner.equals(springSecurityService.getCurrentUser())) {

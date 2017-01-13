@@ -13,7 +13,7 @@
 <%@ page import="com.headbangers.epsilon.Operation" %>
 <span class="pull-right" >
     <g:link controller="${document.type.controllerName}" action="edit" id="${linked?.id}">
-        <img src="${resource(dir: 'img', file: 'edit.png')}"/>
+        <img src="${assetPath(src:'edit.png')}"/>
     </g:link>
 </span>
 <ul class="list-inline">

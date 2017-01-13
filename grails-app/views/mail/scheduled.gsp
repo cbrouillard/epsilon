@@ -33,7 +33,7 @@
                         - <g:link absolute="true" controller="operation" action="list"
                                 params="[account: scheduled.accountFrom.id]">
                             ${scheduled.accountFrom.nameAndSold}
-                            <img src="${resource(absolute: true, dir: 'img', file: 'operation.png')}"
+                            <img src="${assetPath(absolute: true, src: 'operation.png')}"
                                  alt="Voir les opérations"/>
                         </g:link>
                     </li>

@@ -23,7 +23,7 @@
 <div class="col-sm-12">
     <h1><g:message code="category.list"/> <small><g:message code="category.list.explanation"/></small> <g:link controller="category" action="create"
                                                                                 class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'category.png')}"
+                src="${assetPath(src: 'category.png')}"
                 alt=">"/> <g:message code="category.create"/></g:link></h1>
 
     <div class="alert alert-info">
@@ -91,14 +91,11 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            %{--<g:link title="Afficher les détails" data-toggle="modal" data-target="#modalWindow_show"
-                                    action="show" id="${categoryInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${categoryInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                    src="${assetPath(src: 'edit.png')}"/></g:link>
                             <g:link title="Opérations pour cette catégorie" action="operations"
                                     id="${categoryInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                                    src="${assetPath(src: 'stats.png')}"/></g:link>
                         </td>
 
                     </tr>

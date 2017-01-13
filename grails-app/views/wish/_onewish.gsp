@@ -8,7 +8,7 @@
         <g:else>
             <g:link title="Editer" action="edit" id="${wishInstance.id}">
                 <img style="max-height: 200px;max-width: 200px;"
-                     src="${resource(dir: 'img', file: 'no-image.png')}"/>
+                     src="${assetPath(src: 'no-image.png')}"/>
             </g:link>
         </g:else>
     </div>
@@ -51,7 +51,7 @@
                     <g:if test="${!refreshed}">
                         <a href="#" class="btn"
                            onclick="ajaxPostLink('${createLink(controller:'wish', action:'refresh', id:wishInstance?.id)}', 'refreshWish${wishInstance?.id}');">
-                            <img src="${resource(dir: 'img', file: 'refresh.png')}" alt="_"
+                            <img src="${assetPath(src: 'refresh.png')}" alt="_"
                                  title="Rafraichir les données"/>
                         </a>
                     </g:if>
@@ -60,10 +60,10 @@
                     </g:else>
 
                     <g:link title="Editer" action="edit" id="${wishInstance.id}" class="btn"><img
-                            src="${resource(dir: 'img', file: 'edit.png')}" alt="Editer"/></g:link>
+                            src="${assetPath(src: 'edit.png')}" alt="Editer"/></g:link>
                     <g:link title="Acheter!" action="create_operation" id="${wishInstance.id}"
                             class="btn"><img
-                            src="${resource(dir: 'img', file: 'buy.png')}" alt="Acheter!"/></g:link>
+                            src="${assetPath(src: 'buy.png')}" alt="Acheter!"/></g:link>
                 </div>
             </li>
         </ul>

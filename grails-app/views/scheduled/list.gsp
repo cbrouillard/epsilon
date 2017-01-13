@@ -26,7 +26,7 @@
             controller="scheduled"
             action="create"
             class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'echeancy.png')}"
+                src="${assetPath(src: 'echeancy.png')}"
                 alt=">"/> <g:message code="scheduled.create"/></g:link></h1>
 
     <div class="row">
@@ -166,7 +166,7 @@
                                     controller="category"
                                     action="operations"
                                     params="[id: scheduledInstance.category.id]"><img
-                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                                    src="${assetPath(src: 'stats.png')}"/></g:link>
                             ${fieldValue(bean: scheduledInstance, field: "category.name")}
                         </td>
                         <td>
@@ -174,7 +174,7 @@
                                     controller="tiers"
                                     action="operations"
                                     params="[id: scheduledInstance.tiers.id]"><img
-                                    src="${resource(dir: 'img', file: 'stats.png')}"/></g:link>
+                                    src="${assetPath(src: 'stats.png')}"/></g:link>
                             ${fieldValue(bean: scheduledInstance, field: "tiers.name")}
                         </td>
 
@@ -203,12 +203,8 @@
                             </div>
                         </td>
                         <td class="text-right">
-                           %{-- <g:link title="Afficher les détails" action="show" id="${scheduledInstance.id}"
-                                    data-toggle="modal"
-                                    data-target="#modalWindow_show"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${scheduledInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}"
+                                    src="${assetPath(src: 'edit.png')}"
                                     alt="Editer"/></g:link>
                         </td>
                     </tr>

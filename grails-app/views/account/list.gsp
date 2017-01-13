@@ -24,7 +24,7 @@
     <h1><g:message code="account.list"/> <small><g:message code="account.list.explanation"/></small> <g:link
             controller="account" action="create"
             class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'account.png')}"
+                src="${assetPath(src: 'account.png')}"
                 alt=">"/> <g:message code="account.create"/></g:link></h1>
     <hr/>
 </div>
@@ -82,17 +82,13 @@
                                                                       format="###,###.##"/> €</b></td>
 
                             <td class="text-right">
-                                %{--<g:link title="Afficher les détails" action="show" id="${accountInstance.id}"
-                                        data-toggle="modal"
-                                        data-target="#modalWindow_show"><img
-                                        src="${resource(dir: 'img', file: 'details.png')}"/></g:link>--}%
                                 <g:link title="Documents attachés" action="listdocuments" id="${accountInstance.id}">
-                                    <img src="${resource(dir: 'img', file: 'invoice.png')}" alt="Docs"/></g:link>
+                                    <img src="${assetPath(src: 'invoice.png')}" alt="Docs"/></g:link>
                                 <g:link title="Editer" action="edit" id="${accountInstance.id}"><img
-                                        src="${resource(dir: 'img', file: 'edit.png')}"/></g:link>
+                                        src="${assetPath(src: 'edit.png')}"/></g:link>
                                 <g:link title="Afficher le registre" controller="operation" action="list"
                                         params="[account: accountInstance.id]"><img
-                                        src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                                        src="${assetPath(src: 'operation.png')}"/></g:link>
                             </td>
                         </tr>
                     </g:each>

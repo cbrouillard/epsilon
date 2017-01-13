@@ -83,18 +83,6 @@ class LoanController {
         }
     }
 
-    def show = {
-        def person = springSecurityService.getCurrentUser()
-        def loanInstance = Loan.get(params.id)
-        if (!loanInstance && loanInstance.owner.equals(person)) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'loan.label', default: 'Loan'), params.id])}"
-            redirect(action: "list")
-        }
-        else {
-            [loanInstance: loanInstance]
-        }
-    }
-
     def edit = {
         def person = springSecurityService.getCurrentUser()
         def loanInstance = Loan.get(params.id)

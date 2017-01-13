@@ -15,19 +15,19 @@
 
     <li class="${controllerName == 'bank' || controllerName == 'account' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'bank.png')}"/> <g:message code="menu.bank"/> <b class="caret"></b>
+            <img src="${assetPath(src: 'bank.png')}"/> <g:message code="menu.bank"/> <b class="caret"></b>
         </g:link>
         <ul class="dropdown-menu">
             <li class="dropdown-header"><g:message code="banks"/></li>
             <li>
                 <g:link controller="bank" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                        src="${assetPath(src: 'database_table.png')}"/>
                     <g:message code="bank.list"/>
                 </g:link>
             </li>
             <li>
                 <g:link controller="bank" class="create" action="create"><img
-                        src="${resource(dir: 'img', file: 'bank.png')}"/>
+                        src="${assetPath(src: 'bank.png')}"/>
                     <g:message code="bank.create"/>
                 </g:link>
             </li>
@@ -35,13 +35,13 @@
             <li class="dropdown-header"><g:message code="accounts"/></li>
             <li>
                 <g:link controller="account" class="list" action="list"><img
-                        src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                        src="${assetPath(src: 'database_table.png')}"/>
                     <g:message code="account.list"/>
                 </g:link>
             </li>
             <li>
                 <g:link controller="account" class="create" action="create"><img
-                        src="${resource(dir: 'img', file: 'account.png')}"/>
+                        src="${assetPath(src: 'account.png')}"/>
                     <g:message code="account.create"/>
                 </g:link>
             </li>
@@ -49,31 +49,23 @@
         </ul>
     </li>
 
-%{--<%
-    def counter = com.headbangers.epsilon.Account.createCriteria().get {
-        owner{ eq ("id", sec.loggedInUserInfo (field:"id"))}
-        projections {count("id")}
-    }
-%>
-
-<g:if test="${counter > 0}">--}%
     <g:set var="accounts" value="${Account.findAll { owner.id == sec.loggedInUserInfo([field: 'id']) }}"/>
     <g:if test="${accounts}">
         <li class="${controllerName == 'scheduled' || controllerName == 'budget' || controllerName == 'wish' || controllerName == 'loan' ? "active" : ""} dropdown">
             <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="${resource(dir: 'img', file: 'coins.png')}"/> <g:message code="menu.money"/> <b
+                <img src="${assetPath(src: 'coins.png')}"/> <g:message code="menu.money"/> <b
                     class="caret"></b>
             </g:link>
             <ul class="dropdown-menu">
                 <li class="dropdown-header"><g:message code="foresight"/></li>
                 <li>
                     <g:link controller="scheduled" class="list" action="list"><img
-                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                            src="${assetPath(src:'database_table.png')}"/> <g:message
                             code="scheduled.and.foresight.list"/></g:link>
                 </li>
                 <li>
                     <g:link controller="scheduled" class="create" action="create"><img
-                            src="${resource(dir: 'img', file: 'echeancy.png')}"/>
+                            src="${assetPath(src: 'echeancy.png')}"/>
                         <g:message code="scheduled.create"/>
                     </g:link>
                 </li>
@@ -82,13 +74,13 @@
                 <li class="dropdown-header"><g:message code="budgets"/></li>
                 <li>
                     <g:link controller="budget" class="list" action="list"><img
-                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                            src="${assetPath(src:'database_table.png')}"/>
                         <g:message code="budget.list"/>
                     </g:link>
                 </li>
                 <li>
                     <g:link controller="budget" class="create" action="create"><img
-                            src="${resource(dir: 'img', file: 'coins.png')}"/>
+                            src="${assetPath(src:'coins.png')}"/>
                         <g:message code="budget.create"/>
                     </g:link>
                 </li>
@@ -97,13 +89,13 @@
                 <li class="dropdown-header"><g:message code="loans"/></li>
                 <li>
                     <g:link controller="loan" class="list" action="list"><img
-                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                            src="${assetPath(src: 'database_table.png')}"/>
                         <g:message code="loan.list"/>
                     </g:link>
                 </li>
                 <li>
                     <g:link controller="loan" class="create" action="create"><img
-                            src="${resource(dir: 'img', file: 'loan.png')}"/>
+                            src="${assetPath(src: 'loan.png')}"/>
                         <g:message code="loan.create"/>
                     </g:link>
                 </li>
@@ -112,13 +104,13 @@
                 <li class="dropdown-header"><g:message code="wishes"/></li>
                 <li>
                     <g:link controller="wish" class="list" action="list"><img
-                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/>
+                            src="${assetPath(src: 'database_table.png')}"/>
                         <g:message code="wish.list"/>
                     </g:link>
                 </li>
                 <li>
                     <g:link controller="wish" class="create" action="create"><img
-                            src="${resource(dir: 'img', file: 'gift.png')}"/>
+                            src="${assetPath(src: 'gift.png')}"/>
                         <g:message code="wish.create"/>
                     </g:link>
                 </li>
@@ -130,7 +122,7 @@
 
         <li class="${controllerName == 'category' || controllerName == 'tiers' ? "active" : ""} dropdown">
             <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                <img src="${assetPath(src: 'database_table.png')}"/> <g:message
                     code="menu.data"/> <b
                     class="caret"></b>
             </g:link>
@@ -138,12 +130,12 @@
                 <li class="dropdown-header"><g:message code="references.data"/></li>
                 <li>
                     <g:link controller="category" class="list" action="list"><img
-                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                            src="${assetPath(src: 'database_table.png')}"/> <g:message
                             code="category.list"/></g:link>
                 </li>
                 <li>
                     <g:link controller="tiers" class="list" action="list"><img
-                            src="${resource(dir: 'images/skin', file: 'database_table.png')}"/> <g:message
+                            src="${assetPath(src: 'database_table.png')}"/> <g:message
                             code="tiers.list"/></g:link>
                 </li>
                 <li class="divider"></li>
@@ -151,13 +143,13 @@
 
                 <li>
                     <g:link controller="document" class="list" action="invoices"><img
-                            src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
+                            src="${assetPath(src:'invoice.png')}"/> <g:message
                             code="document.invoice.list"/></g:link>
                 </li>
 
                 <li>
                     <g:link controller="document" class="list" action="accounts"><img
-                            src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message
+                            src="${assetPath(src: 'invoice.png')}"/> <g:message
                             code="document.account.list"/></g:link>
                 </li>
 
@@ -168,7 +160,7 @@
 
         <li class="${controllerName == 'operation' ? "active" : ""} dropdown">
             <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="${resource(dir: 'img', file: 'operation.png')}"/> <g:message code="menu.registers"/> <b
+                <img src="${assetPath(src: 'operation.png')}"/> <g:message code="menu.registers"/> <b
                     class="caret"></b>
             </g:link>
 
@@ -178,7 +170,7 @@
                 <g:each in="${accounts}" var="account">
                     <li>
                         <g:link controller="operation" params="[account: account.id]" action="list"><img
-                                src="${resource(dir: 'img', file: 'operation.png')}"/> ${account.nameAndSold}</g:link>
+                                src="${assetPath(src: 'operation.png')}"/> ${account.nameAndSold}</g:link>
                     </li>
                 </g:each>
                 <li class="divider"></li>
@@ -198,12 +190,12 @@
             <ul class="dropdown-menu">
                 <li>
                     <g:link controller="admin" action="users"><img
-                            src="${resource(dir: 'images/skin', file: 'exclamation.png')}"/> <g:message
+                            src="${assetPath(src: 'exclamation.png')}"/> <g:message
                             code="admin.list.user"/></g:link>
                 </li>
                 <li>
                     <g:link controller="admin" action="crons"><img
-                            src="${resource(dir: 'images/skin', file: 'exclamation.png')}"/> <g:message
+                            src="${assetPath(src: 'exclamation.png')}"/> <g:message
                             code="admin.crons.list.title"/></g:link>
                 </li>
                 <li class="divider"></li>
@@ -213,7 +205,7 @@
 
     <li class="${controllerName == 'person' ? "active" : ""} dropdown">
         <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="${resource(dir: 'img', file: 'personal-information.png')}"/>
+            <img src="${assetPath(src: 'personal-information.png')}"/>
             <g:message code="menu.profil" args="${sec.username()}"/> <b class="caret"></b>
         </g:link>
         <ul class="dropdown-menu">
@@ -221,13 +213,13 @@
                 <g:link class="personal"
                         controller="person"
                         action="infos"><img
-                        src="${resource(dir: 'img', file: 'details.png')}"/> <g:message
+                        src="${assetPath(src: 'details.png')}"/> <g:message
                         code="person.informations"/></g:link>
             </li>
             <li class="divider"></li>
             <li>
                 <g:link controller="logout" class="logout">
-                    <img src="${resource(dir: 'img', file: 'logout.png')}"/>
+                    <img src="${assetPath(src: 'logout.png')}"/>
                     <g:message code="logout"/>
                 </g:link>
             </li>

@@ -103,16 +103,6 @@ class BudgetController {
         }
     }
 
-    def show = {
-        def budgetInstance = Budget.get(params.id)
-        if (!budgetInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'budget.label', default: 'Budget'), params.id])}"
-            redirect(action: "list")
-        } else {
-            [budgetInstance: budgetInstance]
-        }
-    }
-
     def edit = {
         def budgetInstance = Budget.get(params.id)
         if (!budgetInstance) {

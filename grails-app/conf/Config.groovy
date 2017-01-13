@@ -160,6 +160,7 @@ grails.mail.props = ["mail.smtp.auth":"true",
 
 grails.plugins.twitterbootstrap.fixtaglib = true
 
+grails.assets.includes = ["binaries/_*.*"]
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
 
 /* remove this line 

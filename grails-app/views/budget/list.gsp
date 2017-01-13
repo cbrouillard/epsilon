@@ -25,7 +25,7 @@
     <h1><g:message code="budget.list"/> <small><g:message code="budget.list.explanation"/></small> <g:link
             controller="budget" action="create"
             class="btn btn-success"><img
-                src="${resource(dir: 'img', file: 'coins.png')}"
+                src="${assetPath(src: 'coins.png')}"
                 alt=">"/> <g:message code="budget.create"/></g:link></h1>
 
     <div class="row">
@@ -201,16 +201,12 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            %{--<g:link title="Afficher les détails" action="show" id="${budgetInstance.id}"
-                                    data-toggle="modal"
-                                    data-target="#modalWindow_show"><img
-                                    src="${resource(dir: 'img', file: 'details.png')}" alt="Détails"/></g:link>--}%
                             <g:link title="Editer" action="edit" id="${budgetInstance.id}"><img
-                                    src="${resource(dir: 'img', file: 'edit.png')}"
+                                    src="${assetPath(src: 'edit.png')}"
                                     alt="Editer"/></g:link>
                             <g:link title="Afficher le registre" controller="budget" action="operations"
                                     params="[budget: budgetInstance.id]"><img
-                                    src="${resource(dir: 'img', file: 'operation.png')}"/></g:link>
+                                    src="${assetPath(src: 'operation.png')}"/></g:link>
                         </td>
                     </tr>
                 </g:each>

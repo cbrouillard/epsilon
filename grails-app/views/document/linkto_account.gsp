@@ -72,7 +72,7 @@
                         <td class="text-right">
                             <g:link controller="account" action="linkdocument"
                                     id="${accountInstance.id}" params="[docId: document.id]">
-                                <img src="${resource(dir: 'img', file: "enter.png")}"
+                                <img src="${assetPath(src: "enter.png")}"
                                      alt="Action"/>
                             </g:link>
                         </td>

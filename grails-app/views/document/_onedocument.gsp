@@ -51,12 +51,12 @@
             <li class="list-group-item">
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
                     <g:link controller="document" action="download" id="${document.id}" class="btn btn-success">
-                        <img src="${resource(dir: 'img', file: 'invoice.png')}"/> <g:message code="document.download"/>
+                        <img src="${assetPath(src: 'invoice.png')}"/> <g:message code="document.download"/>
                     </g:link>
                     <g:link controller="document" id="${document.id}" action="linkto" class="btn btn-default"
                             data-toggle="tooltip" data-placement="bottom"
                             title="${message(code: "document.${document.type.toString().toLowerCase()}.linkto")}">
-                        <img src="${resource(dir: 'img', file: 'link.png')}"/> Lier
+                        <img src="${assetPath(src: 'link.png')}"/> Lier
                     </g:link>
                 </div>
             </li>

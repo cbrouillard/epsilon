@@ -71,18 +71,6 @@ class AdminController {
         }
     }
 
-    def showuser = {
-        def person = Person.get(params.id)
-        if (person) {
-
-            [person: person]
-
-        } else {
-            flash.message = "Utilisateur introuvable"
-            redirect(action: 'index')
-        }
-    }
-
     def createuser = {
         def person = new Person()
         person.properties = params

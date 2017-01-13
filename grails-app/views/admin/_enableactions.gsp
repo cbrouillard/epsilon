@@ -13,12 +13,12 @@
 <g:if test="${person?.enabled}">
     <a href="#"
        onclick="ajaxPostLink('${createLink(controller:'admin', action:'disableuser', id:person?.id)}', 'person${person?.id}-enable');">
-        <img src="${resource(dir: 'img', file: 'online.png')}" alt="D"/>
+        <img src="${assetPath(src: 'online.png')}" alt="D"/>
     </a>
 </g:if>
 <g:else>
     <a href="#"
        onclick="ajaxPostLink('${createLink(controller:'admin', action:'enableuser', id:person?.id)}', 'person${person?.id}-enable');">
-        <img src="${resource(dir: 'img', file: 'offline.png')}" alt="E"/>
+        <img src="${assetPath(src: 'offline.png')}" alt="E"/>
     </a>
 </g:else>
