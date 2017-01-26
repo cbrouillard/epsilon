@@ -148,6 +148,9 @@ class CategoryController {
             def fromDate = dateUtil.firstDayOfYear(selectedFrom)
             def toDate = dateUtil.lastDayOfYear(selectedTo)
 
+            params.sort = "dateApplication"
+            params.order = "desc"
+
             def operations = Operation.createCriteria().list(params) {
                 between("dateApplication", fromDate, toDate)
                 eq("category", category)
