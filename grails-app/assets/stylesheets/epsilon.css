@@ -13,7 +13,7 @@ html * {
     /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
 }
 
-input{
+input {
     min-height: 30px;
 }
 
@@ -95,7 +95,7 @@ table td.fixedsize {
     margin-left: 5px;*/
 }
 
-td.principal {
+td.principal, span.principal {
     font-weight: bold;
 }
 
@@ -372,7 +372,7 @@ div.export {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
 
-.around-border-within-tab{
+.around-border-within-tab {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     padding-top: 5px;
@@ -384,7 +384,6 @@ div.export {
     border-radius: 5px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
-
 
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
@@ -404,26 +403,27 @@ label.mandatory {
     text-decoration: underline;
 }
 
-.logo{
-    padding:10px;
+.logo {
+    padding: 10px;
     background-color: #92E07F;
     text-align: right;
     margin-bottom: 10px;;
 }
 
-div.errors input{
+div.errors input {
     border: 1px solid red;
     font-weight: bold;
 }
 
-.ui-datepicker-trigger{
+.ui-datepicker-trigger {
     min-height: 30px !important;
-    margin-left:5px;
+    margin-left: 5px;
 }
 
 .twitter-typeahead {
     width: 100%;
 }
+
 .tt-menu,
 .gist {
     text-align: left;
@@ -468,7 +468,7 @@ div.errors input{
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
 .tt-suggestion {
@@ -502,6 +502,7 @@ div.counter-shower {
     text-align: center;
     padding-bottom: 15px;
 }
+
 div.counter-shower-no-line {
     text-align: center;
     padding-bottom: 15px;
@@ -511,13 +512,13 @@ div.counter-shower .number, div.counter-shower-no-line .number {
     font-size: 32px;
 }
 
-div.counter-shower .lbl , div.counter-shower-no-line .lbl{
+div.counter-shower .lbl, div.counter-shower-no-line .lbl {
     font-weight: bold;
     font-size: 16px;
     margin-top: 15px;
 }
 
-.little-space-bottom{
+.little-space-bottom {
     margin-bottom: 15px;
 }
 
@@ -533,4 +534,8 @@ div.counter-shower .lbl , div.counter-shower-no-line .lbl{
 
 .ajax-link {
     cursor: pointer;
+}
+
+small.small12 {
+    font-size: 12px;
 }

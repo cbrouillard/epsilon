@@ -126,11 +126,11 @@ class OperationController {
 
         if (!programmedScheduleds) {
             Date todayPlusOneMonth = dateUtil.getDatePlusOneMonth(new Date())
-            lastDayOfMonth = dateUtil.getLastDayOfTheMonth(todayPlusOneMonth)
+            def lastDayOfNextMonth = dateUtil.getLastDayOfTheMonth(todayPlusOneMonth)
             programmedScheduleds = Scheduled.createCriteria().list {
                 createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
                 createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
-                lte("dateApplication", lastDayOfMonth)
+                lte("dateApplication", lastDayOfNextMonth)
                 gt("dateApplication", new Date())
                 eq("active", true)
                 eq("deleted", false)
@@ -140,6 +140,13 @@ class OperationController {
                 }
             }
         }
+
+        def operationsInFuture = Operation.createCriteria().list({
+            gt("dateApplication", lastDayOfMonth)
+            eq("account.id", selectedAccount.id)
+        })
+
+        programmedScheduleds += operationsInFuture
 
         [accounts    : accounts, selected: selectedAccount, byMonth: month,
          currentMonth: currentMonth, graphData: graphData,

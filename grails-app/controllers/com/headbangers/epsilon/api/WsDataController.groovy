@@ -117,6 +117,7 @@ class WsDataController {
                     if (actualDay != prevDay || (currentMonth != cal.get(Calendar.MONTH) && actualDay == prevDay)) {
                         chartData.graphData.add(new GraphData(key: "$prevDay ${sdf.format(previousDate)}", value: bufferAmount, index: i))
                         prevDay = actualDay;
+                        currentMonth = cal.get(Calendar.MONTH)
                         i += 1;
                     }
 

@@ -100,7 +100,26 @@
                     <g:set var="budgetUsedAmount" value="${0D}"/>
                     <g:each in="${budgets}" var="budget" status="b">
                         <tr>
-                            <td class="principal">${budget.name}</td>
+                            <td><span class="principal">${budget.name}</span>
+                                <g:if test="${budget.startDate || budget.endDate}">
+                                    <br/>
+                                    <small class="small12">
+                                        <g:if test="${budget.startDate}">
+                                            <g:message code="budget.from.to"
+                                                       args="${[formatDate(date: budget.startDate)]}"/>
+                                        </g:if>
+                                        <g:else>
+                                            <g:message code="budget.from.firstday"/>
+                                        </g:else>
+                                        <g:if test="${budget.endDate}">
+                                            <g:formatDate date="${budget.endDate}"/>
+                                        </g:if>
+                                        <g:else>
+                                            <g:message code="budget.to.lastday"/>
+                                        </g:else>
+                                    </small>
+                                </g:if>
+                            </td>
 
                             <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
 
@@ -132,7 +151,7 @@
                     </g:each>
                     <tr class="important">
                         <td class="principal">&nbsp;</td>
-                        <td class="tdright">= <g:formatNumber number="${budgetUsedAmount}"
+                        <td class="tdright" style="white-space: nowrap;">= <g:formatNumber number="${budgetUsedAmount}"
                                                               format="###,###.##"/> / <g:formatNumber
                                 number="${budgetAmount}"
                                 format="###,###.##"/> €</td>

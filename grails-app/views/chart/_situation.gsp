@@ -37,10 +37,7 @@
     }
     def currentMonth = cal.get(Calendar.MONTH)
 
-    def operationsSortedByDaysIncludingFutures = allOperations;
-    if (byMonth == null || byMonth == Calendar.getInstance().get(Calendar.MONTH)) {
-        operationsSortedByDaysIncludingFutures += futures
-    }
+    def operationsSortedByDaysIncludingFutures = allOperations + futures;
     operationsSortedByDaysIncludingFutures = operationsSortedByDaysIncludingFutures.sort {
         it.dateApplication
     }
@@ -63,6 +60,7 @@
             }
             depenseCourbe.add(buffer)
             prevDay = actualDay;
+            currentMonth = cal.get(Calendar.MONTH)
         }
 
         if (operation.type.equals(OperationType.DEPOT) || operation.type.equals(OperationType.VIREMENT_PLUS)) {
