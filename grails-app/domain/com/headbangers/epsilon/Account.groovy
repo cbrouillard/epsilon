@@ -99,6 +99,24 @@ class Account {
         return realAmount
     }
 
+    def getCurrentMonthSold (){
+        Calendar calendar = Calendar.getInstance();
+        def lastSnapshot = getLastSnapshot()
+        def realAmount = lastSnapshot ? lastSnapshot.amount : this.amount
+
+        def operations = lastOperationsByMonth (calendar.get(Calendar.MONTH))
+        operations.each { operation ->
+            if (operation.type.equals(OperationType.RETRAIT)
+                    || operation.type.equals(OperationType.VIREMENT_MOINS)) {
+                realAmount -= operation.amount
+            } else if (operation.type.equals(OperationType.DEPOT)
+                    || operation.type.equals(OperationType.VIREMENT_PLUS)) {
+                realAmount += operation.amount
+            }
+        }
+        return realAmount
+    }
+
     def getFormattedSold() {
         return new DecimalFormat("###,###.##").format(getSold())
     }
