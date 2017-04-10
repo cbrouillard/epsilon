@@ -27,7 +27,7 @@ class AccountSnapshotJob {
         accounts.each { account ->
             log.debug ("Treating this account : ${account.name}")
             // build a new snapshot for this account
-            def snapshot = new Snapshot (account:account, amount:account.currentMonthSold, previous:account.lastSnapshot);
+            def snapshot = new Snapshot (account:account, amount:account.sold, previous:account.lastSnapshot);
             account.addToSnapshots(snapshot)
 
             account.save()
