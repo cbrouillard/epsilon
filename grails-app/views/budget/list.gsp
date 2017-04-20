@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,6 +93,8 @@
 
                         <div class="lbl">
                             <g:message code="budget.out.operations"/>
+                            <g:link title="Afficher le registre" controller="budget" action="out"><img
+                                    src="${assetPath(src: 'operation.png')}"/></g:link>
                         </div>
                     </div>
                 </div>

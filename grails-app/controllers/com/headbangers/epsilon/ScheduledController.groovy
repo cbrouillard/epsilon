@@ -215,6 +215,7 @@ class ScheduledController {
             }
 
             scheduled.dateApplication = dateUtil.getDatePlusOneMonth(scheduled.dateApplication)
+            scheduled.save(flush:true)
 
             redirect(controller: "summary")
 
@@ -231,6 +232,7 @@ class ScheduledController {
         if (scheduled) {
 
             scheduled.dateApplication = dateUtil.getDatePlusOneMonth(scheduled.dateApplication)
+            scheduled.save(flush:true)
 
             redirect(controller: "summary")
 

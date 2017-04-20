@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@
 
         <tr>
             <td class="principal">
+                <span class="badge"><g:if test="${scheduled.type.sign?.equals("-")}"><img src="${assetPath(src: 'depense.png')}" alt="Dépense" width="16px" height="16px"/></g:if>
+                <g:else><img src="${assetPath(src: 'revenue.png')}" alt="Revenu" width="16px" height="16px"/></g:else></span>
                 ${scheduled.name}
             </td>
             <td><g:formatDate date="${scheduled.dateApplication}"/></td>
