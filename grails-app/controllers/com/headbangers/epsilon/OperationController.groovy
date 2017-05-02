@@ -157,7 +157,7 @@ class OperationController {
         def person = springSecurityService.getCurrentUser()
         operationInstance.owner = person
         if (params["category.name"]) {
-            // we search for the category, if we don't find it then auto-create            
+            // we search for the category, if we don't find it then auto-create
             operationInstance.category = categoryService.findOrCreateCategory(person, params["category.name"], type)
         }
         if (params["tiers.name"]) {
@@ -173,18 +173,6 @@ class OperationController {
                 log.error("We have to sync the snapshot")
                 snapshotService.sync(operationInstance.account, operationInstance.dateApplication)
             }
-
-            //            def bayes = ""
-            //            try{
-            //                bayes = bayesClassifierService.classifyText(params["tiers.name"])
-            //            } catch (Throwable all){
-            //                log.error "Impossible de classifier ..."
-            //            }
-            //            
-            //            if (!bayes.equals(params["category.name"])) {
-            //                bayesClassifierService.train (params["tiers.name"], params["category.name"]);
-            //            }
-
             return true
         }
 
@@ -258,19 +246,20 @@ class OperationController {
     }
 
     def edit = {
+        def person = springSecurityService.getCurrentUser()
         def operationInstance = Operation.get(params.id)
-        if (!operationInstance || !operationInstance.owner.equals(springSecurityService.getCurrentUser())) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'operation.label', default: 'Operation'), params.id])}"
-            redirect(action: "list")
+        if (operationInstance && (operationInstance.owner.equals(person) || operationInstance.account.owner.equals(person)||operationInstance.account.joinOwner?.equals(person))) {
+          return [operationInstance: operationInstance]
         } else {
-            return [operationInstance: operationInstance]
+          flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'operation.label', default: 'Operation'), params.id])}"
+          redirect(action: "list")
         }
     }
 
     def update = {
         def person = springSecurityService.getCurrentUser()
         def operationInstance = Operation.get(params.id)
-        if (operationInstance && operationInstance.owner.equals(person)) {
+        if (operationInstance && (operationInstance.owner.equals(person) || operationInstance.account.owner.equals(person)||operationInstance.account.joinOwner?.equals(person))) {
             if (params.version) {
                 def version = params.version.toLong()
                 if (operationInstance.version > version) {
@@ -313,8 +302,9 @@ class OperationController {
     }
 
     def delete = {
+        def person = springSecurityService.getCurrentUser()
         def operationInstance = Operation.get(params.id)
-        if (operationInstance && operationInstance.owner.equals(springSecurityService.getCurrentUser())) {
+        if (operationInstance && (operationInstance.owner.equals(person) || operationInstance.account.owner.equals(person)||operationInstance.account.joinOwner?.equals(person))) {
             try {
                 operationInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'operation.label', default: 'Operation'), params.id])}"

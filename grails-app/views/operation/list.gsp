@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,22 @@
 <body>
 <div class="col-sm-12">
     <h1><g:message code="operations"/> <span class="label label-primary">${selected?.getNameAndSold()}</span>
+
         <g:if test="${selected?.bank?.url}">
             <a class="bank btn btn-default" href="${selected?.bank?.url}" target="_blank"><img
                     src="${assetPath(src: 'external.png')}"
                     alt=">"/> <g:message code="bank.website"/></a>
+        </g:if>
+        <g:if test="${selected?.joinOwner}">
+
+          <small>Commun avec
+          <g:if test="${selected.owner.id.toString().equals(sec.loggedInUserInfo([field: 'id']).toString())}">
+            ${selected.joinOwner.userRealName}
+          </g:if>
+          <g:else>
+            ${selected.owner.userRealName}
+          </g:else>
+          </small>
         </g:if>
 
     </h1>

@@ -131,7 +131,10 @@ class Account {
         // now getting all operations on this account with dateApplication >= snapshot.dateCreated
         return Operation.createCriteria().list(order: 'asc', sort: 'dateApplication') {
             account { eq("id", this.id) }
-            owner { eq("id", this.owner.id) }
+            or {
+              owner {eq("id", this.owner.id)}
+              owner {eq("id", this.joinOwner?.id)}
+            }
             if (snapshot) {
                 ge("dateApplication", snapshot.dateCreated)
             }
@@ -144,7 +147,10 @@ class Account {
         // now getting all operations on this account with dateApplication >= snapshot.dateCreated
         return Operation.createCriteria().list(order: 'desc', sort: 'dateApplication') {
             account { eq("id", this.id) }
-            owner { eq("id", this.owner.id) }
+            or {
+              owner {eq("id", this.owner.id)}
+              owner {eq("id", this.joinOwner?.id)}
+            }
             if (snapshot) {
                 ge("dateApplication", snapshot.dateCreated)
             }
@@ -154,7 +160,10 @@ class Account {
     def getLastNOperations(n) {
         return Operation.createCriteria().list() {
             account { eq("id", this.id) }
-            owner { eq("id", this.owner.id) }
+            or {
+              owner {eq("id", this.owner.id)}
+              owner {eq("id", this.joinOwner?.id)}
+            }
             maxResults(n)
             order("dateApplication", "desc")
         }
@@ -180,7 +189,10 @@ class Account {
 
         return Operation.createCriteria().list(order: 'asc', sort: 'dateApplication') {
             account { eq("id", this.id) }
-            owner { eq("id", this.owner.id) }
+            or {
+              owner {eq("id", this.owner.id)}
+              owner {eq("id", this.joinOwner?.id)}
+            }
             between("dateApplication", firstDay, lastDay)
         }
     }
