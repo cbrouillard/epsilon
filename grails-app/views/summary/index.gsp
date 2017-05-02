@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,11 @@
                 <g:set var="accountAmount" value="${0D}"/>
                 <g:each in="${accounts}" status="i" var="account">
                     <tr>
-                        <td class="principal">${account.name}</td>
+                        <td class="principal">${account.name}
+                        <g:if test="${account.joinOwner}">
+                          <img src="${assetPath(src: 'join.png')}" alt="Joined account"/>
+                        </g:if>
+                        </td>
                         <td class="tdright fixedsize"><g:formatNumber number="${account.sold}"
                                                                       format="###,###.##"/> €</td>
                         <td class="tdright fixedsize">

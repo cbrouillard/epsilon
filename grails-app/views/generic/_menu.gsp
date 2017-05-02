@@ -49,7 +49,13 @@
         </ul>
     </li>
 
-    <g:set var="accounts" value="${Account.findAll { owner.id == sec.loggedInUserInfo([field: 'id']) }}"/>
+    <g:set var="accounts" value="${Account.findAll { owner.id == sec.loggedInUserInfo([field: 'id'])}}"/>
+    <g:set var="joinedAccounts" value="${Account.findAll { joinOwner?.id == sec.loggedInUserInfo([field: 'id'])}}"/>
+    <g:if test="${!joinedAccounts}">
+      <g:set var="joinedAccounts" value="${Account.findAll { owner.id == sec.loggedInUserInfo([field: 'id']) && joinOwner != null }}"/>
+      <% accounts.removeAll (joinedAccounts) %>
+    </g:if>
+
     <g:if test="${accounts}">
         <li class="${controllerName == 'scheduled' || controllerName == 'budget' || controllerName == 'wish' || controllerName == 'loan' ? "active" : ""} dropdown">
             <g:link controller="bank" class="dropdown-toggle" data-toggle="dropdown">
@@ -174,6 +180,16 @@
                     </li>
                 </g:each>
                 <li class="divider"></li>
+                <g:if test="${joinedAccounts}">
+                  <li class="dropdown-header"><g:message code="account.joined.list"/></li>
+                  <g:each in="${joinedAccounts}" var="account">
+                      <li>
+                          <g:link controller="operation" params="[account: account.id]" action="list"><img
+                                  src="${assetPath(src: 'operation.png')}"/> ${account.nameAndSold}</g:link>
+                      </li>
+                  </g:each>
+                  <li class="divider"></li>
+                </g:if>
             </ul>
         </li>
     </g:if>

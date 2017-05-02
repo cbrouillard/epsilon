@@ -11,6 +11,8 @@
 
 package com.headbangers.epsilon
 
+import org.hibernate.criterion.CriteriaSpecification;
+
 class AccountService {
 
     def dateUtil
@@ -19,7 +21,11 @@ class AccountService {
     def selectAccount(person, accountId) {
 
         return Account.createCriteria().get {
-            owner {eq("id", person.id)}
+            createAlias ("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
+            or {
+              owner {eq("id", person.id)}
+              eq("j.id", person.id)
+            }
             eq("id", accountId)
             maxResults(1)
         }
@@ -53,7 +59,7 @@ class AccountService {
             }
         }
         log.error "Calculated amount is ${amount}"
-        
+
         def datePlusOneMonth = dateUtil.getDatePlusOneMonth (date)
         def currentMonth = dateUtil.getMonth ()
 

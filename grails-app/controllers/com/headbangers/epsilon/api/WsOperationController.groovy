@@ -18,6 +18,7 @@ class WsOperationController {
     def tiersService
     def categoryService
     def snapshotService
+    def genericService
 
     private Person checkUser(HttpServletRequest request) {
         String token = request.getHeader("WWW-Authenticate")
@@ -41,7 +42,7 @@ class WsOperationController {
             operation.type = OperationType.RETRAIT
             operation.tiers = tiersService.findOrCreateTiers(person, tiersName)
             operation.category = categoryService.findOrCreateCategory(person, categoryName, CategoryType.DEPENSE)
-            operation.account = Account.findByIdAndOwner(params.account, person)
+            operation.account = genericService.loadUserObject (person, Account.class, params.account)
             operation.dateApplication = new Date()
             operation.amount = Double.parseDouble(params.amount.replaceAll(",", "\\."))
             operation.owner = person
@@ -70,7 +71,7 @@ class WsOperationController {
             operation.type = OperationType.DEPOT
             operation.tiers = tiersService.findOrCreateTiers(person, tiersName)
             operation.category = categoryService.findOrCreateCategory(person, categoryName, CategoryType.REVENU)
-            operation.account = Account.findByIdAndOwner(params.account, person)
+            operation.account = genericService.loadUserObject (person, Account.class, params.account)
             operation.dateApplication = new Date()
             operation.amount = Double.parseDouble(params.amount.replaceAll(",", "\\."))
             operation.owner = person
@@ -97,7 +98,7 @@ class WsOperationController {
             operationMoins.type = OperationType.VIREMENT_MOINS
             operationMoins.tiers = tiersService.findOrCreateTiers(person, tiersName)
             operationMoins.category = categoryService.findOrCreateCategory(person, categoryName, CategoryType.VIREMENT)
-            operationMoins.account = Account.findByIdAndOwner(params.accountFrom, person)
+            operationMoins.account = genericService.loadUserObject (person, Account.class, params.accountFrom)
             operationMoins.dateApplication = new Date()
             operationMoins.amount = Double.parseDouble(params.amount.replaceAll(",", "\\."))
             operationMoins.owner = person
@@ -107,7 +108,7 @@ class WsOperationController {
             operationPlus.type = OperationType.VIREMENT_PLUS
             operationPlus.tiers = tiersService.findOrCreateTiers(person, tiersName)
             operationPlus.category = categoryService.findOrCreateCategory(person, categoryName, CategoryType.VIREMENT)
-            operationPlus.account = Account.findByIdAndOwner(params.accountTo, person)
+            operationPlus.account = genericService.loadUserObject (person, Account.class, params.accountTo)
             operationPlus.dateApplication = new Date()
             operationPlus.amount = Double.parseDouble(params.amount.replaceAll(",", "\\."))
             operationPlus.owner = person

@@ -33,7 +33,7 @@ class ScheduledController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 20, 100)
-
+        params.sort = params.sort ?: 'name';
 
         def person = springSecurityService.getCurrentUser()
         def scheduleds = Scheduled.createCriteria().list(params) {

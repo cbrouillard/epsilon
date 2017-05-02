@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest
 class WsAccountController {
 
     def personService
+    def genericService
 
     private Person checkUser(HttpServletRequest request) {
         String token = request.getHeader("WWW-Authenticate")
@@ -27,7 +28,7 @@ class WsAccountController {
         def person = checkUser(request)
         List<MobileAccount> accounts = new ArrayList<MobileAccount>()
         if (person) {
-            def db = Account.findAllByOwner(person, [sort: 'name', order: 'asc'])
+            def db = genericService.loadUserObjects(person, Account.class, [sort: 'name', order: 'asc'])
             db.each { account ->
                 accounts.add(new MobileAccount(account))
             }
@@ -41,7 +42,7 @@ class WsAccountController {
         def person = checkUser(request)
         MobileAccount result = new MobileAccount()
         if (person) {
-            def account = Account.findByIdAndOwner(params.id, person)
+            def account = genericService.loadUserObject (person, Account.class, params.id)
             if (account) {
                 result = new MobileAccount(account)
             }
@@ -54,7 +55,7 @@ class WsAccountController {
         def person = checkUser(request)
         List<MobileOperation> result = new ArrayList<MobileOperation>();
         if (person && params.wsAccountId) {
-            def account = Account.findByIdAndOwner(params.wsAccountId, person)
+            def account = genericService.loadUserObject (person, Account.class, params.wsAccountId)
             def operations = account.getLastOperationsDesc()
             operations.each { operation ->
                 result.add(new MobileOperation(operation))
@@ -68,7 +69,7 @@ class WsAccountController {
         def person = checkUser(request)
         MobileSimpleResult result = new MobileSimpleResult("ko")
         if (person) {
-            def account = Account.findByIdAndOwner(params.wsAccountId, person)
+            def account = genericService.loadUserObject (person, Account.class, params.wsAccountId)
             if (account) {
                 Account.executeUpdate("update Account set mobileDefault = false where owner = ?", [person])
                 account.setMobileDefault(new Boolean(params.isDefault))

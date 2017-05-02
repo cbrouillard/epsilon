@@ -102,6 +102,40 @@ class AccountController {
         }
     }
 
+    def addjoin = {
+      def accountInstance = Account.get(params.id)
+      if (accountInstance && accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
+        render view: 'join', model: [account: accountInstance, users: Person.findAllByEnabled(true)]
+      } else {
+        redirect(action: "list")
+      }
+    }
+
+    def setjoin = {
+      def accountInstance = Account.get(params.id)
+      if (accountInstance && accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
+
+          Person person = Person.findById (params.p)
+          if (person && person.enabled){
+            accountInstance.joinOwner = person;
+            accountInstance.save(flush:true)
+          }
+
+      }
+
+      redirect (action : "list")
+    }
+
+    def deljoin = {
+      def accountInstance = Account.get(params.id)
+      if (accountInstance && accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
+        accountInstance.joinOwner = null;
+        accountInstance.save(flush:true)
+      }
+
+      redirect (action : "list")
+    }
+
     def delete = {
         def accountInstance = Account.get(params.id)
         if (accountInstance && accountInstance.owner.equals(springSecurityService.getCurrentUser())) {

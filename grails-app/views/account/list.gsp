@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,6 +50,8 @@
                         <g:sortableColumn property="name"
                                           title="${message(code: 'account.name.label', default: 'Name')}"/>
 
+                        <th>Propriétaire</th>
+
                         <g:sortableColumn property="type"
                                           title="${message(code: 'account.type.label', default: 'Type')}"/>
 
@@ -71,7 +73,33 @@
 
                             <td>${fieldValue(bean: accountInstance, field: "bank.name")}</td>
 
+
                             <td>${fieldValue(bean: accountInstance, field: "name")}</td>
+                            <td>
+                                Vous
+                                <g:if test="${accountInstance.joinOwner}">
+                                  et
+                                  <g:if test="${accountInstance.owner.id.toString().equals(sec.loggedInUserInfo([field: 'id']).toString())}">
+                                    ${accountInstance.joinOwner.userRealName}
+
+                                    <g:link action="deljoin" id="${accountInstance.id}"
+                                            data-toggle="tooltip" data-placement="bottom"
+                                            class="btn btn-sm btn-default" title="Supprimer ce propriétaire">
+                                      <img src="${assetPath(src: 'delete.png')}" alt="Delete join"/>
+                                    </g:link>
+                                  </g:if>
+                                  <g:else>
+                                      ${accountInstance.owner.userRealName}
+                                  </g:else>
+                                </g:if>
+                                <g:else>
+                                  <g:link action="addjoin" id="${accountInstance.id}"
+                                          data-toggle="tooltip" data-placement="bottom"
+                                          class="btn btn-sm btn-default" title="Ajouter un propriétaire">
+                                    <img src="${assetPath(src: 'join.png')}" alt="Join account"/>
+                                  </g:link>
+                                </g:else>
+                            </td>
 
                             <td>${fieldValue(bean: accountInstance, field: "type")}</td>
 

@@ -33,6 +33,8 @@ class Account {
     String description
 
     Person owner
+    Person joinOwner
+
     boolean mobileDefault = false
 
     static constraints = {
@@ -45,6 +47,8 @@ class Account {
         description nullable: true, widget: 'textarea'
 
         lastUpdated nullable: true
+
+        joinOwner nullable:true
     }
 
     static mapping = {
