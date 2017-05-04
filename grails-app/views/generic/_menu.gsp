@@ -49,10 +49,10 @@
         </ul>
     </li>
 
-    <g:set var="accounts" value="${Account.findAll { owner.id == sec.loggedInUserInfo([field: 'id'])}}"/>
-    <g:set var="joinedAccounts" value="${Account.findAll { joinOwner?.id == sec.loggedInUserInfo([field: 'id'])}}"/>
+    <g:set var="accounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id'])})}"/>
+    <g:set var="joinedAccounts" value="${Account.findAll([sort:'name',order:'asc'], { joinOwner?.id == sec.loggedInUserInfo([field: 'id'])})}"/>
     <g:if test="${!joinedAccounts}">
-      <g:set var="joinedAccounts" value="${Account.findAll { owner.id == sec.loggedInUserInfo([field: 'id']) && joinOwner != null }}"/>
+      <g:set var="joinedAccounts" value="${Account.findAll([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id']) && joinOwner != null })}"/>
       <% accounts.removeAll (joinedAccounts) %>
     </g:if>
 
