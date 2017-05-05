@@ -190,7 +190,7 @@
                         <td>
                             <ul>
                                 <g:each in="${budgetInstance.attachedCategories}" status="c" var="category">
-                                    <li>${category.name}</li>
+                                    <li><g:link controller="category" action="operations" id="${category.id}">${category.name}</g:link></li>
                                 </g:each>
                             </ul>
                         </td>
