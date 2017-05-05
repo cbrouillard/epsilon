@@ -17,9 +17,14 @@ import grails.plugin.springsecurity.annotation.Secured
 class AdminController {
 
     def springSecurityService
+    def notificationService
 
     def index = {
         redirect(action: "users")
+    }
+
+    def testplatform = {
+        render(view: 'testplatform')
     }
 
     def users = {
@@ -186,5 +191,45 @@ class AdminController {
             person.save(flush: true)
         }
         render(template: 'enableactions', model: [person: person])
+    }
+
+    def sendmail = {
+        def fakeScheduled = new ArrayList<Scheduled> ()
+        def user_admin = springSecurityService.getCurrentUser()
+
+        def bank = new Bank (name:"FAKE Bank",
+            description:"FAKE Test Bank",
+            owner:user_admin)
+        def tiers = new Tiers (
+            name:"Epsilon Enterprise",
+            description:"Ma société",
+            owner:user_admin)
+        def category = new Category (
+            name:"FAKE Category",
+            type:CategoryType.DEPENSE,
+            description:"Dépense pour FAKE.",
+            owner:user_admin)
+        def account = new Account (name:"Compte FAKE",
+            bank:bank,
+            type: AccountType.CHEQUES,
+            dateOpened:new Date(),
+            amount: 1000.8784D,
+            description:"Un compte de test",
+            owner:user_admin)
+
+        def scheduled = new Scheduled (
+            type:OperationType.FACTURE,
+            tiers:tiers,
+            category:category,
+            accountFrom:account,
+            name:"Echeance test",
+            dateApplication:new Date(),
+            amount:45D,
+            automatic:true, owner:user_admin)
+
+        fakeScheduled.add (scheduled)
+        notificationService.sendScheduledDoneMail (user_admin, fakeScheduled)
+        flash.message = "Mail sent. Check your mail (${user_admin.email})"
+        render (view:"testplatform")
     }
 }
