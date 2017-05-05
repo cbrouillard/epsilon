@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group ${hasErrors(bean: scheduled, field: 'accountFrom', 'has-error')}">
+                    <div class="form-group ${hasErrors(bean: loanInstance?.scheduled, field: 'accountFrom', 'has-error')}">
 
                         <label for="account${type}" class="col-sm-2 control-label mandatory"><g:message
                                 code="loan.account.label"/></label>
@@ -90,10 +90,10 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-user"></span></span>
-                                <g:select id="account${type}" optionValue="name" name="accountFrom.id"
+                                <g:select id="account${type}" optionValue="name" name="loanInstance.accountFrom.id"
                                           from="${accounts}"
                                           optionKey="id"
-                                          value="${scheduled?.accountFrom?.id}"
+                                          value="${loanInstance?.scheduled?.accountFrom?.id}"
                                           class="form-control"/>
                             </div>
 

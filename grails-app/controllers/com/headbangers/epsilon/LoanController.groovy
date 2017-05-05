@@ -23,17 +23,17 @@ class LoanController {
     def categoryService
     def tiersService
     def dateUtil
-    
+
     def index = {
         redirect(action: "list", params: params)
     }
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        
+
         def person = springSecurityService.getCurrentUser()
         def loans = genericService.loadUserObjects (person, Loan.class, params)
-        
+
         [loanInstanceList: loans, loanInstanceTotal: loans.totalCount]
     }
 
@@ -49,12 +49,12 @@ class LoanController {
     def save = {
         def person = springSecurityService.getCurrentUser()
         def loanInstance = new Loan(params)
-        
+
         params.remove ("type")
         loanInstance.currentCalculatedAmountValue = loanInstance.amount + (loanInstance.interest ? loanInstance.interest : 0)
-        
+
         loanInstance.tiers = tiersService.findOrCreateTiers (person, params["tiers.name"])
-        
+
         def scheduled = new Scheduled(params)
         scheduled.automatic = true
         scheduled.amount = loanInstance.refundValue
@@ -64,14 +64,14 @@ class LoanController {
         scheduled.category = categoryService.findOrCreateCategory (person, message (code:"loan.label"), scheduled.type.equals(OperationType.FACTURE)?CategoryType.DEPENSE:CategoryType.REVENU)
         scheduled.owner = person
         scheduled.accountFrom = Account.get(params["accountFrom.id"])
-        
+
         loanInstance.owner = person
         loanInstance.scheduled = scheduled
-        
+
         if (scheduled.dateApplication && loanInstance.amount && loanInstance.refundValue){
             loanInstance.calculatedEndDate = caculateLoanEndDate (loanInstance.currentCalculatedAmountValue, scheduled.dateApplication, loanInstance.refundValue)
         }
-        
+
         scheduled.save(flush:true)
         if (loanInstance.save(flush:true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'loan.label', default: 'Loan'), loanInstance.id])}"
@@ -91,7 +91,7 @@ class LoanController {
             redirect(action: "list")
         }
         else {
-            def accounts = genericService.loadUserObjects (person, Account.class)
+            def accounts = genericService.loadUserObjects (person, Account.class, [sort:'name', order:'asc'])
             return [loanInstance: loanInstance, accounts:accounts]
         }
     }
@@ -103,7 +103,7 @@ class LoanController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (loanInstance.version > version) {
-                    
+
                     loanInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'loan.label', default: 'Loan')] as Object[], "Another user has updated this Loan while you were editing")
                     render(view: "edit", model: [loanInstance: loanInstance])
                     return
@@ -111,17 +111,17 @@ class LoanController {
             }
             loanInstance.properties = params
             loanInstance.tiers = tiersService.findOrCreateTiers (person, params["tiers.name"])
-            
+
             loanInstance.scheduled.dateApplication = dateUtil.parseFromView (params.dateApplication)
             loanInstance.scheduled.tiers = loanInstance.tiers
             loanInstance.scheduled.accountFrom = Account.get(params["accountFrom.id"])
             loanInstance.scheduled.amount = loanInstance.refundValue
             loanInstance.scheduled.name = "Prêt - ${loanInstance.name}"
-            
+
             if (loanInstance.scheduled.dateApplication && loanInstance.amount && loanInstance.refundValue){
                 loanInstance.calculatedEndDate = caculateLoanEndDate (loanInstance.currentCalculatedAmountValue, loanInstance.scheduled.dateApplication, loanInstance.refundValue)
             }
-            
+
             if (!loanInstance.hasErrors() && loanInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'loan.label', default: 'Loan'), loanInstance.id])}"
                 redirect(action: "list")
@@ -156,11 +156,11 @@ class LoanController {
             redirect(action: "list")
         }
     }
-    
+
     private Date caculateLoanEndDate (totalAmount, firstApplicationDate, refundByMonth){
         double nbMonth = totalAmount / refundByMonth
         int realNbMonth = java.lang.Math.round (nbMonth)
-        
+
         return dateUtil.addMonthToDate (firstApplicationDate, realNbMonth)
     }
 }
