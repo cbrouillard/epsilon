@@ -204,12 +204,14 @@
                     class="caret"></b>
             </g:link>
             <ul class="dropdown-menu">
+              <li class="dropdown-header"><g:message code="admin.list.test.platform"/></li>
                 <li>
                   <g:link controller="admin" action="sendmail"><img
                           src="${assetPath(src: 'test.png')}"/> <g:message
                           code="admin.list.test.mail"/></g:link>
                 </li>
                 <li class="divider"></li>
+                <li class="dropdown-header"><g:message code="admin.configure"/></li>
                 <li>
                     <g:link controller="admin" action="users"><img
                             src="${assetPath(src: 'exclamation.png')}"/> <g:message
