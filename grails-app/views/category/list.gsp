@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,6 +91,9 @@
                             </div>
                         </td>
                         <td class="text-right">
+                            <g:link title="Fusionner" action="askmerge" id="${categoryInstance.id}">
+                            <img src="${assetPath(src: 'merge.png')}"/>
+                            </g:link>
                             <g:link title="Editer" action="edit" id="${categoryInstance.id}"><img
                                     src="${assetPath(src: 'edit.png')}"/></g:link>
                             <g:link title="Opérations pour cette catégorie" action="operations"

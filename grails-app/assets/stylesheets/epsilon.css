@@ -361,6 +361,30 @@ div.export {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
 
+.around-border-red {
+    background-color: rgba(242, 222, 222, 0.6);
+    padding: 20px;
+    border: 1px solid #a94442;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.around-border-green {
+    background-color: rgba(223, 240, 216, 0.3);
+    padding: 20px;
+    border: 1px solid #3c763d;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
 .around-border-no-padding {
     background-color: rgba(255, 255, 255, 0.5);
     border: 1px solid #e5e5e5;

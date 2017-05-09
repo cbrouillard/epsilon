@@ -217,4 +217,84 @@ class CategoryController {
         }
     }
 
+    def askmerge = {
+      def person = springSecurityService.getCurrentUser()
+      def cat = genericService.loadUserObject(person, Category.class, params.id)
+
+      if (cat) {
+
+        def allCategories = genericService.loadUserObjects(person, Category.class, ['order':'asc', 'sort': 'name'])
+        render (view:'merge', model:[leftCategory:cat, categories:allCategories])
+
+      } else {
+          redirect(action: "list")
+      }
+    }
+
+    def merge = {
+      def person = springSecurityService.getCurrentUser()
+
+      def catToMerge = genericService.loadUserObject(person, Category.class, params.catToMerge)
+      def mergeIn = genericService.loadUserObject(person, Category.class, params.mergeIn)
+
+      if (catToMerge && mergeIn){
+
+        if (catToMerge.id.equals(mergeIn.id)){
+          flash.message = "Sélectionnez deux categories différentes !"
+          chain (action:'askmerge', id:catToMerge.id)
+          return
+        }
+
+        if (catToMerge.type != mergeIn.type) {
+          flash.message = "Les deux catégories ne sont pas du même type. Impossible de les fusionner."
+          chain (action:'askmerge', id:catToMerge.id)
+          return
+        }
+
+        // TOUTES les opérations ayant comme categorie = catToMerge prennent mergeIn comme catégorie.
+        // la catégorie catToMerge est ensuite supprimées
+        def operations = Operation.findAllByCategory (catToMerge)
+        if (operations){
+          operations.each {ope ->
+              ope.category = mergeIn
+              ope.save()
+          }
+        }
+
+        def budgets = genericService.loadUserObjects(person, Budget.class)
+        if (budgets){
+          budgets.each { budget ->
+            if (budget.attachedCategories.contains(catToMerge)){
+              budget.removeFromAttachedCategories (catToMerge)
+              budget.save()
+            }
+          }
+        }
+
+        def scheduleds = Scheduled.findAllByCategory(catToMerge)
+        if (scheduleds){
+          scheduleds.each { sch ->
+            sch.category = mergeIn
+            sch.save()
+          }
+        }
+
+        def wishes = Wish.findAllByCategory (catToMerge)
+        if (wishes){
+          whishes.each { wish ->
+            wish.category = mergeIn
+            wish.save()
+          }
+        }
+
+        catToMerge.delete(flush:true)
+
+        flash.message = "Fusion effectuée"
+        chain (action:'operations', id:mergeIn.id)
+
+      } else {
+          redirect(action: "list")
+      }
+    }
+
 }
