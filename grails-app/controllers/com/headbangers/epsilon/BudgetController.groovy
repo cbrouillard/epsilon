@@ -23,6 +23,7 @@ class BudgetController {
     def genericService
     def categoryService
     def budgetService
+    def dateUtil
 
     def index = {
         redirect(action: "list", params: params)
@@ -30,9 +31,32 @@ class BudgetController {
 
     def operations = {
         def person = springSecurityService.getCurrentUser()
-
         def budget = Budget.findByIdAndOwner(params.budget, person)
         [budget: budget]
+    }
+
+    def stats = {
+        def person = springSecurityService.getCurrentUser()
+        def budget = Budget.findByIdAndOwner(params.id, person)
+        if (budget){
+
+            def currentYear = dateUtil.currentYear
+            def fromDate = dateUtil.firstDayOfYear(currentYear)
+            def toDate = dateUtil.lastDayOfYear(currentYear)
+
+            params.sort = "dateApplication"
+            params.order = "desc"
+
+            def operations = Operation.createCriteria().list(params) {
+                between("dateApplication", fromDate, toDate)
+                'in'("category", budget.attachedCategories)
+            }
+
+            render(view:'stats', model: [budget: budget, operations: operations])
+
+        } else {
+            redirect(action:'list')
+        }
     }
 
     def out = {

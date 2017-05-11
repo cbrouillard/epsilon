@@ -11,6 +11,8 @@
 
 package com.headbangers.epsilon
 
+import java.awt.Color
+
 class Category {
     String id
     static hasMany = [operations: Operation]
@@ -101,5 +103,15 @@ class Category {
             // println "Comparing ${o1.name} with ${o2.name} return ${o1.name.compareTo(o2.name)}"
             return o1.name.compareTo(o2.name)
         }
+    }
+
+    public String getInvertedColor (){
+
+	    def decoded = Color.decode(color)
+	    def r = decoded.getRed()
+	    def g = decoded.getGreen()
+	    def b = decoded.getBlue()
+
+        return String.format("#%02x%02x%02x", 255 - r, 255 - g, 255 - b)
     }
 }

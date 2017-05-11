@@ -209,6 +209,10 @@
                             <g:link title="Afficher le registre" controller="budget" action="operations"
                                     params="[budget: budgetInstance.id]"><img
                                     src="${assetPath(src: 'operation.png')}"/></g:link>
+
+                            <g:link title="Afficher les stats" controller="budget" action="stats"
+                                                                params="[id: budgetInstance.id]"><img
+                                                                src="${assetPath(src: 'stats.png')}"/></g:link>
                         </td>
                     </tr>
                 </g:each>

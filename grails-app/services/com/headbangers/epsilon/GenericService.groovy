@@ -59,7 +59,8 @@ class GenericService {
               createAlias ("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
               or {
                 owner {eq ("id", person.id)}
-                eq("j.id", person.id) }
+                eq("j.id", person.id)
+              }
             } else {
 
               owner {eq ("id", person.id)}

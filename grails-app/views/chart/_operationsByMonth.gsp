@@ -12,8 +12,9 @@
 -->
 <%@ page import="com.headbangers.epsilon.CategoryType; com.headbangers.epsilon.Scheduled; com.headbangers.epsilon.Operation; com.headbangers.epsilon.OperationType; java.text.SimpleDateFormat" %>
 <%
-    def color = [category.color]
-    def columns = [['string', "${message(code:'operations.by.month.col.month')}"], ['number', "${message(code:'operations.by.month.col.amount')}"]];
+    def color = [category ? category.color : "#555555", category? category.invertedColor : "#aaaaaa"]
+    def columns = [['string', "${message(code:'operations.by.month.col.month')}"], ['number', "${message(code:'operations.by.month.col.amount')}"],
+    , ['number', "${message(code:'operations.by.month.col.avg')}"]];
     def data = new ArrayList();
 
     if (operations) {
@@ -33,6 +34,7 @@
     def prevMonth = actualMonth
 
     operations.each {operation ->
+
         cal.setTime(operation.dateApplication)
 
         actualMonth = cal.get(Calendar.MONTH)
@@ -43,18 +45,29 @@
 
             bufferAmount = 0
         }
-
         bufferAmount += operation.amount
         previousDate = operation.dateApplication
     }
 
     data.add(["${sdf.format(previousDate)}", bufferAmount])
 
+	def sum = 0
+    data.each { d ->
+        sum += d[1];
+    }
+    def avg = sum / data.size()
+    def data2 = new ArrayList()
+    data.each { d ->
+        data2.add (d + avg);
+    }
+
+
 %>
-<gvisualization:columnCoreChart elementId="operationsByMonth"
-                              columns="${columns}" data="${data}"
+<gvisualization:comboCoreChart elementId="operationsByMonth"
+                              columns="${columns}" data="${data2}"
                               legend="[position: 'top']"
-                              width="100%" colors="${color}" height="500" select="goMonth"/>
+                              width="100%" colors="${color}" height="500" select="goMonth"
+                              seriesType="area" series="${[0: [type: 'bars']]}"/>
 <div id="operationsByMonth"></div>
 <script type="text/javascript">
     function goMonth(e) {
