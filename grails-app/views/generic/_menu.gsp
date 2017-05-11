@@ -154,6 +154,12 @@
                 </li>
 
                 <li>
+                    <g:link controller="document" class="list" action="salaries"><img
+                            src="${assetPath(src: 'invoice.png')}"/> <g:message
+                            code="document.salary.list"/></g:link>
+                </li>
+
+                <li>
                     <g:link controller="document" class="list" action="accounts"><img
                             src="${assetPath(src: 'invoice.png')}"/> <g:message
                             code="document.account.list"/></g:link>

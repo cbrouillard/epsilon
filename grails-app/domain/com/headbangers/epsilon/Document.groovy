@@ -3,6 +3,7 @@ package com.headbangers.epsilon
 class Document {
 
     public enum Type {
+        SALARY("operation", "linkto_operation", "[\"pdf\"]"),
         INVOICE("operation", "linkto_operation", "[\"pdf\"]"),
         BANK("bank", "linkto_bank", "[\"pdf\"]"),
         ACCOUNT("account", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]");

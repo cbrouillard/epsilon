@@ -38,6 +38,9 @@
                 <g:if test="${document.type == com.headbangers.epsilon.Document.Type.ACCOUNT}">
                     <g:set var="linked" value="${accounts.find { it.documents.contains(document) }}"/>
                 </g:if>
+                <g:if test="${document.type == com.headbangers.epsilon.Document.Type.SALARY}">
+                    <g:set var="linked" value="${Operation.findByDocument(document)}"/>
+                </g:if>
 
                 <g:if test="${linked}">
                     <g:render template="/document/linkdescriptor" model="[linked: linked]"/>

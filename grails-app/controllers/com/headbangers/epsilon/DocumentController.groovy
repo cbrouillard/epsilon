@@ -49,6 +49,19 @@ class DocumentController {
         render(view: 'list', model: [documents: documents, type: Document.Type.ACCOUNT, accounts: Account.findAllByOwner(person)])
     }
 
+    def salarys (){
+        chain(action:"salaries")
+    }
+
+    def salaries() {
+        params.max = Math.min(params.max ? params.int('max') : 20, 80)
+
+        def person = springSecurityService.getCurrentUser()
+        def documents = fetchByType person, Document.Type.SALARY
+
+        render(view: 'list', model: [documents: documents, type: Document.Type.SALARY, accounts: Account.findAllByOwner(person)])
+    }
+
     private List<Document> fetchByType(Person person, Document.Type type) {
         return Document.createCriteria().list {
             owner { eq("id", person.id) }
