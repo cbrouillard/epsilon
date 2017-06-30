@@ -68,12 +68,16 @@ class AccountController {
     }
 
     def edit = {
+
+        def person = springSecurityService.getCurrentUser()
+        def banks = genericService.loadUserObjects(person, Bank.class)
         def accountInstance = Account.get(params.id)
+
         if (!accountInstance || !accountInstance.owner.equals(springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'account.label', default: 'Account'), params.id])}"
             redirect(action: "list")
         } else {
-            return [accountInstance: accountInstance]
+            return [accountInstance: accountInstance, banks: banks]
         }
     }
 

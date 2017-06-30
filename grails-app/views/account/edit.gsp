@@ -63,6 +63,24 @@
                         </div>
                     </div>
 
+                    <div class="form-group ${hasErrors(bean: accountInstance, field: 'bank', 'errors')}">
+
+                        <label for="bank.id" class="col-sm-2 control-label mandatory"><g:message
+                                code="account.bank.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-piggy-bank"></span></span>
+                                <g:select optionValue="name" name="bank.id" from="${banks}" optionKey="id"
+                                          value="${accountInstance?.bank?.id}"
+                                          required="required" class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
                     <div class="form-group ${hasErrors(bean: accountInstance, field: 'type', 'errors')}">
 
                         <label for="type" class="col-sm-2 control-label mandatory"><g:message
