@@ -15,7 +15,7 @@ class Budget {
 
     String id
     static belongsTo = [Person]
-    static hasMany = [attachedCategories: Category]
+    static hasMany = [attachedCategories: Category, attachedAccounts: Account]
 
     String name
     String note
@@ -105,6 +105,9 @@ class Budget {
             between("dateApplication", firstDay, lastDay)
             if (this.attachedCategories) {
                 'in'("category", this.attachedCategories)
+            }
+            if (this.attachedAccounts){
+                'in'("account", this.attachedAccounts)
             }
             eq("type", OperationType.RETRAIT)
         }

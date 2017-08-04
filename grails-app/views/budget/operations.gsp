@@ -55,6 +55,7 @@
                 <th><g:message code="date"/></th>
                 <th><g:message code="tiers"/></th>
                 <th><g:message code="category"/></th>
+                <th><g:message code="account"/></th>
                 <th class="text-right"><g:message code="payment"/></th>
                 <th class="text-right"><g:message code="total"/></th>
                 <th class="text-right"><g:message code="actions"/></th>
@@ -67,6 +68,7 @@
                     <td><g:formatDate date="${operation.dateApplication}"/></td>
                     <td>${operation.tiers.name}</td>
                     <td>${operation.category.name}</td>
+                    <td>${operation.account.name}</td>
                     <td class="tdright"><b><g:formatNumber number="${operation?.amount}" format="###,###.##"/> €</b>
                         <g:set var="total" value="${total + operation?.amount}"/>
                     </td>

@@ -87,6 +87,12 @@ class BudgetController {
         return categories
     }
 
+    def findAvailableAccounts (){
+        def person = springSecurityService.getCurrentUser()
+        def accounts = genericService.loadUserObjects(person, Account.class, ["sort":"name", "order":"asc"])
+        return accounts
+    }
+
     def fillBudgetWithSelectedCategories(person, budget, selectedCategories) {
         if (selectedCategories instanceof String) {
             def oneCat = categoryService.findOrCreateCategory(person, selectedCategories, CategoryType.DEPENSE)
@@ -106,10 +112,24 @@ class BudgetController {
         return budget
     }
 
+    def fillBudgetWithSelectedAccounts (person, budget, selectedAccounts){
+        if (selectedAccounts instanceof String) {
+            def one = Account.findByOwnerAndId (person, selectedAccounts)
+            if (one) {
+                budget.addToAttachedAccounts(one)
+            }
+        } else {
+            def accounts = Account.findAllByOwnerAndIdInList (person, selectedAccounts)
+            accounts.each {acc -> budget.addToAttachedAccounts(acc)}
+        }
+
+        return budget
+    }
+
     def create = {
         def budgetInstance = new Budget()
         budgetInstance.properties = params
-        return [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()]
+        return [budgetInstance: budgetInstance, availableCategories: findAvailableCategories(), availableAccounts: findAvailableAccounts()]
     }
 
     def save = {
@@ -118,12 +138,13 @@ class BudgetController {
         budgetInstance.owner = person
 
         budgetInstance = fillBudgetWithSelectedCategories(person, budgetInstance, params.selectedCategories)
+        budgetInstance = fillBudgetWithSelectedAccounts(person, budgetInstance, params.selectedAccounts)
 
         if (budgetInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'budget.label', default: 'Budget'), budgetInstance.id])}"
             redirect(action: "list")
         } else {
-            render(view: "create", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()])
+            render(view: "create", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories(), availableAccounts: findAvailableAccounts()])
         }
     }
 
@@ -133,7 +154,7 @@ class BudgetController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'budget.label', default: 'Budget'), params.id])}"
             redirect(action: "list")
         } else {
-            return [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()]
+            return [budgetInstance: budgetInstance, availableCategories: findAvailableCategories(), availableAccounts: findAvailableAccounts()]
         }
     }
 
@@ -145,12 +166,15 @@ class BudgetController {
             budgetInstance.attachedCategories.clear()
             budgetInstance = fillBudgetWithSelectedCategories(person, budgetInstance, params.selectedCategories)
 
+            budgetInstance.attachedAccounts.clear()
+            budgetInstance = fillBudgetWithSelectedAccounts(person, budgetInstance, params.selectedAccounts)
+
             if (params.version) {
                 def version = params.version.toLong()
                 if (budgetInstance.version > version) {
 
                     budgetInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'budget.label', default: 'Budget')] as Object[], "Another user has updated this Budget while you were editing")
-                    render(view: "edit", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()])
+                    render(view: "edit", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories(), availableAccounts: findAvailableAccounts()])
                     return
                 }
             }
@@ -161,7 +185,7 @@ class BudgetController {
                 redirect(action: "list")
 
             } else {
-                render(view: "edit", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories()])
+                render(view: "edit", model: [budgetInstance: budgetInstance, availableCategories: findAvailableCategories(), availableAccounts: findAvailableAccounts()])
             }
         } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'budget.label', default: 'Budget'), params.id])}"

@@ -144,6 +144,32 @@
                         </div>
                     </div>
 
+                    <div class="form-group ${hasErrors(bean: budgetInstance, field: 'attachedAccounts', 'has-error')}">
+
+                        <label for="selectedAccounts-select" class="col-sm-2 control-label"><g:message
+                                code="budget.attachedAccounts.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group" style="background-color: #eee;">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-tags"></span></span>
+                                <ui:multiSelect
+                                        name="selectedAccounts"
+                                        multiple="yes"
+                                        from="${availableAccounts}"
+                                        optionValue="name"
+                                        optionKey="id"
+                                        value="${budgetInstance.attachedAccounts}"
+                                        noSelection="['': 'Choisissez dans la liste']"
+                                        isLeftAligned="true" class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors">
+                                <g:message code="budget.attachedAccounts.label.helper"/>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group ${hasErrors(bean: budgetInstance, field: 'note', 'has-error')}">
 
                         <label for="note" class="col-sm-2 control-label"><g:message

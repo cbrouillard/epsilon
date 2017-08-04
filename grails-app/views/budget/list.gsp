@@ -133,6 +133,7 @@
                     <th class="text-right"><g:message code="budget.used.amount"/></th>
 
                     <th><g:message code="budget.categories.label" default="Categories"/></th>
+                    <th><g:message code="budget.accounts.label" default="Accounts"/></th>
                     <g:sortableColumn property="note" title="${message(code: 'budget.note.label', default: 'Note')}"/>
                     <g:sortableColumn property="lastUpdated"
                                       title="${message(code: 'budget.lastUpdated.label', default: 'Last Updated')}"/>
@@ -191,6 +192,13 @@
                             <ul>
                                 <g:each in="${budgetInstance.attachedCategories}" status="c" var="category">
                                     <li><g:link controller="category" action="operations" id="${category.id}">${category.name}</g:link></li>
+                                </g:each>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <g:each in="${budgetInstance.attachedAccounts}" status="c" var="account">
+                                    <li><g:link controller="operation" params="[account: account.id]" action="list">${account.name}</g:link></li>
                                 </g:each>
                             </ul>
                         </td>
