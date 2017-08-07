@@ -86,6 +86,9 @@
                             </div>
                         </td>
                         <td class="text-right">
+                            <g:link title="Fusionner" action="askmerge" id="${tiersInstance.id}">
+                                                    <img src="${assetPath(src: 'merge.png')}"/>
+                                                    </g:link>
                             <g:link title="Editer" action="edit" id="${tiersInstance.id}"><img
                                     src="${assetPath(src:'edit.png')}"/></g:link>
                             <g:link title="Opérations pour ce tiers" action="operations" id="${tiersInstance.id}"><img

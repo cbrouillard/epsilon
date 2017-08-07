@@ -193,4 +193,68 @@ class TiersController {
             redirect(action: "list")
         }
     }
+
+    def askmerge = {
+        def person = springSecurityService.getCurrentUser()
+        def tiers = genericService.loadUserObject(person, Tiers.class, params.id)
+
+        if (tiers) {
+
+            def allTiers = genericService.loadUserObjects(person, Tiers.class, ['order':'asc', 'sort': 'name'])
+            render (view:'merge', model:[leftTiers:tiers, tierses:allTiers])
+
+        } else {
+            redirect(action: "list")
+        }
+    }
+
+    def merge = {
+        def person = springSecurityService.getCurrentUser()
+
+        def tiersToMerge = genericService.loadUserObject(person, Tiers.class, params.tiersToMerge)
+        def mergeIn = genericService.loadUserObject(person, Tiers.class, params.mergeIn)
+
+        if (tiersToMerge && mergeIn){
+
+            if (tiersToMerge.id.equals(mergeIn.id)){
+                flash.message = "Sélectionnez deux tiers différents !"
+                chain (action:'askmerge', id:tiersToMerge.id)
+                return
+            }
+
+            // TOUTES les opérations ayant comme tiers = tiersToMerge prennent mergeIn comme tiers.
+            // tiersToMerge est ensuite supprimées
+            def operations = Operation.findAllByTiers (tiersToMerge)
+            if (operations){
+                operations.each {ope ->
+                    ope.tiers = mergeIn
+                    ope.save()
+                }
+            }
+
+            def scheduleds = Scheduled.findAllByTiers(tiersToMerge)
+            if (scheduleds){
+                scheduleds.each { sch ->
+                    sch.tiers = mergeIn
+                    sch.save()
+                }
+            }
+
+            def loans = Loan.findAllByTiers (tiersToMerge)
+            if (loans){
+                loans.each { loan ->
+                    loan.tiers = mergeIn
+                    loan.save()
+                }
+            }
+
+            tiersToMerge.delete(flush:true)
+
+            flash.message = "Fusion effectuée"
+            chain (action:'operations', id:mergeIn.id)
+
+        } else {
+            redirect(action: "list")
+        }
+    }
 }
