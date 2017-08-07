@@ -10,36 +10,74 @@
  */
 
 package com.headbangers.epsilon
-
-import groovy.transform.EqualsAndHashCode
+import org.hibernate.Criteria
 
 class ScheduledService {
 
     def dateUtil
 
+    def retrieveForPerson (person, params){
+        def scheduleds = Scheduled.createCriteria().list(params) {
+            createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+            createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
+            eq 'deleted', false
+            or {
+                eq("accountTo.owner.id", person.id)
+                eq("accountFrom.owner.id", person.id)
+                eq("accountTo.joinOwner.id", person.id)
+                eq("accountFrom.joinOwner.id", person.id)
+            }
+        }
+
+        return scheduleds
+    }
+
     def findLates(person) {
         return Scheduled.createCriteria().list(order: 'asc', sort: 'dateApplication') {
-            owner { eq("id", person.id) }
+            createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+            createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
             lt("dateApplication", dateUtil.getTodayMorning())
             eq("active", true)
+            eq("deleted", false)
+            or {
+                eq("accountTo.owner.id", person.id)
+                eq("accountFrom.owner.id", person.id)
+                eq("accountTo.joinOwner.id", person.id)
+                eq("accountFrom.joinOwner.id", person.id)
+            }
         }
     }
 
     def findToday(person, isAutomatic) {
         return Scheduled.createCriteria().list(order: 'asc', sort: 'dateApplication') {
-            owner { eq("id", person.id) }
+            createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+            createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
             between("dateApplication", dateUtil.getTodayMorning(), dateUtil.getTodayEvening())
             eq("automatic", isAutomatic)
             eq("active", true)
+            eq("deleted", false)
+            or {
+                eq("accountTo.owner.id", person.id)
+                eq("accountFrom.owner.id", person.id)
+                eq("accountTo.joinOwner.id", person.id)
+                eq("accountFrom.joinOwner.id", person.id)
+            }
         }
     }
 
     def findFutures(person) {
         return Scheduled.createCriteria().list(order: 'asc', sort: 'dateApplication') {
-            owner { eq("id", person.id) }
+            createAlias('accountTo', 'accountTo', Criteria.LEFT_JOIN)
+            createAlias('accountFrom', 'accountFrom', Criteria.LEFT_JOIN)
             gt("dateApplication", dateUtil.getTodayEvening())
             eq("active", true)
             eq("deleted", false)
+            or {
+                eq("accountTo.owner.id", person.id)
+                eq("accountFrom.owner.id", person.id)
+                eq("accountTo.joinOwner.id", person.id)
+                eq("accountFrom.joinOwner.id", person.id)
+            }
         }
     }
 

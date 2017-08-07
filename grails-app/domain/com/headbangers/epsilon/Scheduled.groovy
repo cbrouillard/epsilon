@@ -99,4 +99,8 @@ class Scheduled {
 
         return expression.getNextDates(3, this.dateApplication);
     }
+
+    def isCorrelatedTo(person){
+        return owner.equals(person) || accountFrom?.joinOwner.equals(person) || accountTo?.joinOwner.equals(person)
+    }
 }

@@ -36,10 +36,7 @@ class ScheduledController {
         params.sort = params.sort ?: 'name';
 
         def person = springSecurityService.getCurrentUser()
-        def scheduleds = Scheduled.createCriteria().list(params) {
-            eq 'deleted', false
-            owner { eq("id", person.id) }
-        }
+        def scheduleds = scheduledService.retrieveForPerson(person, params)
 
         Map<String, Double> stats = scheduledService.buildFutureStats(person)
 
@@ -119,7 +116,7 @@ class ScheduledController {
 
     def edit = {
         def scheduledInstance = Scheduled.get(params.id)
-        if (!scheduledInstance || !scheduledInstance.owner.equals(springSecurityService.getCurrentUser())) {
+        if (!scheduledInstance || !scheduledInstance.isCorrelatedTo (springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'scheduled.label', default: 'Scheduled'), params.id])}"
             redirect(action: "list")
         } else {
@@ -130,7 +127,7 @@ class ScheduledController {
     def update = {
         def person = springSecurityService.getCurrentUser()
         def scheduledInstance = Scheduled.get(params.id)
-        if (scheduledInstance && scheduledInstance.owner.equals(person)) {
+        if (!scheduledInstance || !scheduledInstance.isCorrelatedTo (springSecurityService.getCurrentUser())) {
             if (params.version) {
                 def version = params.version.toLong()
                 if (scheduledInstance.version > version) {
@@ -225,7 +222,6 @@ class ScheduledController {
     }
 
     def jump = {
-        // the (almost) same code as apply ... not really cool :(
         def person = springSecurityService.getCurrentUser()
         def scheduled = genericService.loadUserObject(person, Scheduled.class, params.id)
 
@@ -276,6 +272,7 @@ class ScheduledController {
         def scheduled = Scheduled.createCriteria().list(params) {
             ilike("name", "%${params.query}%")
             owner { eq("id", person.id) }
+            // TODO scheduled
         }
 
         Map<String, Double> stats = scheduledService.buildFutureStats(person)
@@ -288,8 +285,9 @@ class ScheduledController {
     def simpleautocomplete() {
         def person = springSecurityService.getCurrentUser()
         def scheduled = Scheduled.createCriteria().list {
-            owner { eq("id", person.id) }
             ilike("name", "${params.query}%")
+            owner { eq("id", person.id) }
+            // TODO scheduled
         }
 
         render scheduled*.name as JSON

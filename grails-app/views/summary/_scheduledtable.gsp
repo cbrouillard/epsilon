@@ -52,7 +52,7 @@
                 <g:else><img src="${assetPath(src: 'revenue.png')}" alt="Revenu" width="16px" height="16px"/></g:else></span>
                 ${scheduled.name}
             </td>
-            <td><g:formatDate date="${scheduled.dateApplication}"/></td>
+            <td class="fixedsize tdcenter"><g:formatDate date="${scheduled.dateApplication}"/></td>
             <td class="tdright fixedsize"><g:formatNumber number="${scheduled.amount}" format="###,###.##"/> €</td>
             <td class="tdright fixedsize">
                 <g:if test="${scheduled.automatic}">
