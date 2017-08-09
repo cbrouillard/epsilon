@@ -127,7 +127,7 @@ class ScheduledController {
     def update = {
         def person = springSecurityService.getCurrentUser()
         def scheduledInstance = Scheduled.get(params.id)
-        if (!scheduledInstance || !scheduledInstance.isCorrelatedTo (springSecurityService.getCurrentUser())) {
+        if (scheduledInstance && scheduledInstance.isCorrelatedTo (person)) {
             if (params.version) {
                 def version = params.version.toLong()
                 if (scheduledInstance.version > version) {
