@@ -25,44 +25,71 @@ class NotificationIntegrationTests extends GrailsUnitTestCase {
 
         //notificationService = new NotificationService()
 
-        user_admin = new Person(username:"admin",
-            userRealName:"Administrateur Epsilon",
-            passwd: 'md5pass',
-            enabled:true,
-            email:"cyril.brouillard@gmail.com",
-            emailShow:false,
-            description:"Administrateur Epsilon")
-        def bank = new Bank (name:"CA",
-            description:"Crédit Agricole",
-            owner:user_admin)
-        def tiers = new Tiers (
-            name:"Epsilon Enterprise",
-            description:"Ma société",
-            owner:user_admin)
-        def category = new Category (
-            name:"Loisir",
-            type:CategoryType.DEPENSE,
-            description:"Dépense pour loisir.",
-            owner:user_admin)
-        def account = new Account (name:"Compte courant",
-            bank:bank,
-            type: AccountType.CHEQUES,
-            dateOpened:new Date(),
-            amount: 1000.8784D,
-            description:"Un compte de test",
-            owner:user_admin)
+        user_admin = new Person(username: "admin",
+                userRealName: "Administrateur Epsilon",
+                passwd: 'md5pass',
+                enabled: true,
+                email: "cyril.brouillard@gmail.com",
+                emailShow: false,
+                description: "Administrateur Epsilon")
+        def user_admin2 = new Person(username: "joined",
+                userRealName: "Administrateur Epsilon",
+                passwd: 'md5pass',
+                enabled: true,
+                email: "cyril.brouillard@gmail.com",
+                emailShow: false,
+                description: "Administrateur Epsilon")
 
-        def scheduled = new Scheduled (
-            type:OperationType.FACTURE,
-            tiers:tiers,
-            category:category,
-            accountFrom:account,
-            name:"Echeance test",
-            dateApplication:new Date(),
-            amount:45D,
-            automatic:true, owner:user_admin)
+        def bank = new Bank(name: "CA",
+                description: "Crédit Agricole",
+                owner: user_admin)
+        def tiers = new Tiers(
+                name: "Epsilon Enterprise",
+                description: "Ma société",
+                owner: user_admin)
+        def category = new Category(
+                name: "Loisir",
+                type: CategoryType.DEPENSE,
+                description: "Dépense pour loisir.",
+                owner: user_admin)
+        def account = new Account(name: "Compte commun",
+                bank: bank,
+                type: AccountType.CHEQUES,
+                dateOpened: new Date(),
+                amount: 1000.8784D,
+                description: "Un compte de test",
+                owner: user_admin, joinOwner: user_admin2)
+        def account2 = new Account(name: "Compte perso",
+                bank: bank,
+                type: AccountType.CHEQUES,
+                dateOpened: new Date(),
+                amount: 1000.8784D,
+                description: "Un compte de test",
+                owner: user_admin)
 
-        scheduledList.add (scheduled)
+
+        def scheduled = new Scheduled(
+                type: OperationType.FACTURE,
+                tiers: tiers,
+                category: category,
+                accountFrom: account,
+                name: "Echeance test",
+                dateApplication: new Date(),
+                amount: 45D,
+                automatic: true, owner: user_admin)
+
+        def scheduled2 = new Scheduled(
+                type: OperationType.FACTURE,
+                tiers: tiers,
+                category: category,
+                accountFrom: account2,
+                name: "Echeance test perso",
+                dateApplication: new Date(),
+                amount: 105D,
+                automatic: true, owner: user_admin)
+
+        scheduledList.add(scheduled)
+        scheduledList.add(scheduled2)
 
     }
 
@@ -72,7 +99,7 @@ class NotificationIntegrationTests extends GrailsUnitTestCase {
 
     void testSendScheduledMail() {
         log.info "Lancement du test"
-        notificationService.sendScheduledDoneMail (user_admin, scheduledList)
+        notificationService.sendScheduledDoneMail(user_admin, scheduledList)
 
     }
 }
