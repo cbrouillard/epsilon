@@ -211,7 +211,7 @@ class WsDataController {
 
                 def params = [:]
                 params.sort = "dateApplication"
-                params.order = "desc"
+                params.order = "asc"
 
                 def operations = Operation.createCriteria().list(params) {
                     between("dateApplication", fromDate, toDate)
