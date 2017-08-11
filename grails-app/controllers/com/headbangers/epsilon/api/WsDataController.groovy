@@ -197,6 +197,34 @@ class WsDataController {
         render chartData as JSON
     }
 
+    def chartBudgetOperations (){
+        MobileChartData chartData = new MobileChartData(colors: ['#92e07f'])
+        def person = checkUser(request)
+
+        if (person){
+            def budget = Budget.findByOwnerAndId (person, params.wsBudgetId)
+            if (budget){
+
+                def currentYear = dateUtil.currentYear
+                def fromDate = dateUtil.firstDayOfYear(currentYear)
+                def toDate = dateUtil.lastDayOfYear(currentYear)
+
+                def params = [:]
+                params.sort = "dateApplication"
+                params.order = "desc"
+
+                def operations = Operation.createCriteria().list(params) {
+                    between("dateApplication", fromDate, toDate)
+                    'in'("category", budget.attachedCategories)
+                }
+
+                chartData.graphData = buildChartOperations(operations)
+            }
+        }
+
+        render chartData as JSON
+    }
+
     private List<GraphData> buildChartOperations(operations) {
         List<GraphData> datas = new ArrayList<>()
 

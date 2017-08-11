@@ -51,6 +51,10 @@ class UrlMappings {
             action = "chartAccountFuture"
         }
         "/api/budgets"(resources: 'wsBudget')
+        "/api/budget/$wsBudgetId/chart/operations" {
+            controller = "wsData"
+            action = "chartBudgetOperations"
+        }
         "/api/categories"(resources: 'wsCategory') {
             "/operations"(controller: 'wsCategory', action: 'operations')
         }
