@@ -6,7 +6,8 @@ class Document {
         SALARY("operation", "linkto_operation", "[\"pdf\"]"),
         INVOICE("operation", "linkto_operation", "[\"pdf\"]"),
         BANK("bank", "linkto_bank", "[\"pdf\"]"),
-        ACCOUNT("account", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]");
+        ACCOUNT("account", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]"),
+        IMABOSS("operation", "linkto_operation", "[\"pdf\"]")
 
         private String controllerName
         private String linkView

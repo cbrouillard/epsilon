@@ -70,6 +70,17 @@ class DocumentController {
         render(view: 'list', model: [documents: documents, type: Document.Type.SALARY, accounts: Account.findAllByOwner(person)])
     }
 
+    def imaboss(){
+        params.max = Math.min(params.max ? params.int('max') : 20, 80)
+        params.sort = "dateCreated"
+        params.order = "desc"
+
+        def person = springSecurityService.getCurrentUser()
+        def documents = fetchByType person, Document.Type.IMABOSS, params
+
+        render(view: 'list', model: [documents: documents, type: Document.Type.IMABOSS, accounts: Account.findAllByOwner(person)])
+    }
+
     private List<Document> fetchByType(Person person, Document.Type type, params) {
         return Document.createCriteria().list(sort:params.sort, order:params.order, max:params.max, offset:params.offset) {
             owner { eq("id", person.id) }
