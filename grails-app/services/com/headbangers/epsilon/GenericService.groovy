@@ -15,24 +15,25 @@ import org.hibernate.criterion.CriteriaSpecification;
 
 class GenericService {
 
-    def  springSecurityService
+    def springSecurityService
 
-    def buildColor (name){
+    def buildColor(name) {
         def md5 = springSecurityService.encodePassword(name).toString()
-        return "#${md5.substring(0,6)}"
+        return "#${md5.substring(0, 6)}"
     }
 
     def loadUserObjects(person, object) {
-        return object.createCriteria().list(sort:'dateCreated', order:'desc'){
+        return object.createCriteria().list(sort: 'dateCreated', order: 'desc') {
 
             if (object == Account.class) {
-              createAlias ("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
-              or {
-                owner {eq ("id", person.id)}
-                eq("j.id", person.id) }
+                createAlias("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
+                or {
+                    owner { eq("id", person.id) }
+                    eq("j.id", person.id)
+                }
             } else {
 
-              owner {eq ("id", person.id)}
+                owner { eq("id", person.id) }
 
             }
         }
@@ -40,34 +41,49 @@ class GenericService {
 
     def loadUserObjects(person, object, params) {
         return object.createCriteria()
-            .list(sort:params.sort, order:params.order, max:params.max, offset:params.offset){
-                if (object == Account.class) {
-                  createAlias ("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
-                  or {
-                    owner {eq ("id", person.id)}
+                .list(sort: params.sort, order: params.order, max: params.max, offset: params.offset) {
+            if (object == Account.class) {
+                createAlias("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
+                or {
+                    owner { eq("id", person.id) }
                     eq("j.id", person.id)
-                  }
-                } else {
-                  owner {eq ("id", person.id)}
                 }
+            } else {
+                owner { eq("id", person.id) }
             }
+        }
     }
 
-    def loadUserObject (person, object, objectId){
-        return object.createCriteria().get {
-            if (object == Account.class) {
-              createAlias ("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
-              or {
-                owner {eq ("id", person.id)}
-                eq("j.id", person.id)
-              }
+    def loadUserObject(person, object, String objectId) {
+        if (object == Operation.class) {
+
+            Operation operation = Operation.get(objectId)
+            if (operation &&
+                    (operation.ownerId == person.id ||
+                            person.id == operation.account.joinOwnerId ||
+                            person.id == operation.account.ownerId)) {
+                return operation
             } else {
-
-              owner {eq ("id", person.id)}
-
+                return null
             }
-            eq ("id", objectId)
-            maxResults(1)
+
+        } else {
+
+            return object.createCriteria().get {
+                if (object == Account.class) {
+                    createAlias("joinOwner", "j", CriteriaSpecification.LEFT_JOIN)
+                    or {
+                        owner { eq("id", person.id) }
+                        eq("j.id", person.id)
+                    }
+                } else {
+
+                    owner { eq("id", person.id) }
+
+                }
+                eq("id", objectId)
+                maxResults(1)
+            }
         }
     }
 }
