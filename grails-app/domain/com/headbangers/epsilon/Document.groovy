@@ -8,9 +8,9 @@ class Document {
         BANK("bank", "linkto_bank", "[\"pdf\"]"),
         ACCOUNT("account", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]");
 
-        private String controllerName;
-        private String linkView;
-        private String allowed;
+        private String controllerName
+        private String linkView
+        private String allowed
 
         private Type(String cName, String lV, String allowed) {
             this.controllerName = cName

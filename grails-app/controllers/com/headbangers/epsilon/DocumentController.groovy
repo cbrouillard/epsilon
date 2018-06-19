@@ -24,27 +24,33 @@ class DocumentController {
 
     def invoices() {
         params.max = Math.min(params.max ? params.int('max') : 20, 80)
+        params.sort = "dateCreated"
+        params.order = "desc"
 
         def person = springSecurityService.getCurrentUser()
-        def documents = fetchByType person, Document.Type.INVOICE
+        def documents = fetchByType person, Document.Type.INVOICE, params
 
         render(view: 'list', model: [documents: documents, type: Document.Type.INVOICE])
     }
 
     def banks() {
         params.max = Math.min(params.max ? params.int('max') : 20, 80)
+        params.sort = "dateCreated"
+        params.order = "desc"
 
         def person = springSecurityService.getCurrentUser()
-        def documents = fetchByType person, Document.Type.BANK
+        def documents = fetchByType person, Document.Type.BANK, params
 
         render(view: 'list', model: [documents: documents, type: Document.Type.BANK])
     }
 
     def accounts() {
         params.max = Math.min(params.max ? params.int('max') : 20, 80)
+        params.sort = "dateCreated"
+        params.order = "desc"
 
         def person = springSecurityService.getCurrentUser()
-        def documents = fetchByType person, Document.Type.ACCOUNT
+        def documents = fetchByType person, Document.Type.ACCOUNT, params
 
         render(view: 'list', model: [documents: documents, type: Document.Type.ACCOUNT, accounts: Account.findAllByOwner(person)])
     }
@@ -55,15 +61,17 @@ class DocumentController {
 
     def salaries() {
         params.max = Math.min(params.max ? params.int('max') : 20, 80)
+        params.sort = "dateCreated"
+        params.order = "desc"
 
         def person = springSecurityService.getCurrentUser()
-        def documents = fetchByType person, Document.Type.SALARY
+        def documents = fetchByType person, Document.Type.SALARY, params
 
         render(view: 'list', model: [documents: documents, type: Document.Type.SALARY, accounts: Account.findAllByOwner(person)])
     }
 
-    private List<Document> fetchByType(Person person, Document.Type type) {
-        return Document.createCriteria().list {
+    private List<Document> fetchByType(Person person, Document.Type type, params) {
+        return Document.createCriteria().list(sort:params.sort, order:params.order, max:params.max, offset:params.offset) {
             owner { eq("id", person.id) }
             eq("type", type)
         }
