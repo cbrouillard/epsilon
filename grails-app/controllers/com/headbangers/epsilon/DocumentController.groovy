@@ -55,8 +55,8 @@ class DocumentController {
         render(view: 'list', model: [documents: documents, type: Document.Type.ACCOUNT, accounts: Account.findAllByOwner(person)])
     }
 
-    def salarys (){
-        chain(action:"salaries")
+    def salarys() {
+        chain(action: "salaries")
     }
 
     def salaries() {
@@ -70,7 +70,7 @@ class DocumentController {
         render(view: 'list', model: [documents: documents, type: Document.Type.SALARY, accounts: Account.findAllByOwner(person)])
     }
 
-    def imaboss(){
+    def imaboss() {
         params.max = Math.min(params.max ? params.int('max') : 20, 80)
         params.sort = "dateCreated"
         params.order = "desc"
@@ -81,8 +81,12 @@ class DocumentController {
         render(view: 'list', model: [documents: documents, type: Document.Type.IMABOSS, accounts: Account.findAllByOwner(person)])
     }
 
+    def imabosss() {
+        chain(action: "imaboss")
+    }
+
     private List<Document> fetchByType(Person person, Document.Type type, params) {
-        return Document.createCriteria().list(sort:params.sort, order:params.order, max:params.max, offset:params.offset) {
+        return Document.createCriteria().list(sort: params.sort, order: params.order, max: params.max, offset: params.offset) {
             owner { eq("id", person.id) }
             eq("type", type)
         }
