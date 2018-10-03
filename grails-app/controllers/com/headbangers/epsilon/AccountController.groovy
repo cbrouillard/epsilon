@@ -94,6 +94,12 @@ class AccountController {
                 }
             }
             accountInstance.properties = params
+
+            if (params.forcedAmount){
+                accountInstance.getLastSnapshot().amount = Double.parseDouble(params.forcedAmount)
+                accountInstance.getLastSnapshot().save()
+            }
+
             if (!accountInstance.hasErrors() && accountInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'account.label', default: 'Account'), accountInstance.name])}"
                 redirect(action: "list")

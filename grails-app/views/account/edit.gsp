@@ -117,6 +117,29 @@
                         </div>
                     </div>
 
+                    <div class="form-group has-error">
+
+                        <label for="forcedAmount" class="col-sm-2 control-label"><g:message
+                                code="account.forced.amount.label"/></label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-euro"></span></span>
+                                <g:textField pattern="^([0-9.,-])*" id="forcedAmount" name="forcedAmount"
+                                             value="${formatNumber(number:accountInstance?.sold, format:'0.##')}"
+                                             required="true"
+                                             class="form-control"/>
+                            </div>
+
+                            <div class="help-block with-errors">
+                                <g:message
+                                        code="account.forced.amount.help"/>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </fieldset>
 
