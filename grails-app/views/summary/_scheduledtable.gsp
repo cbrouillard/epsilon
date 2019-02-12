@@ -10,7 +10,7 @@
  * GNU General Public License for more details.
  */
 -->
-<table class="${cssClass} table table-striped">
+<table class="${cssClass} table table-striped table-hover">
     <tbody>
     <g:set var="actualMonth" value="${scheduleds ? scheduleds.get(0).dateApplication.getMonth() + 1 : 0}"/>
     <g:set var="prev" value="${actualMonth}"/>
@@ -31,8 +31,8 @@
 
         <g:if test="${actualMonth != prev}">
             <tr class="important">
-                <td colspan="2"><g:message code="scheduled.topay.this.month"/></td>
-                <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="###,###.##"/> €</td>
+                <td colspan="3" class="tdright fixedsize">= <g:formatNumber number="${amount}"
+                                                                            format="###,###.##"/> €</td>
                 <td class="tdright fixedsize">&nbsp;</td>
 
                 <g:set var="amount" value="${0}"/>
@@ -47,14 +47,19 @@
         </g:if>
 
         <tr>
-            <td class="principal">
-                <span class="badge"><g:if test="${scheduled.type.sign?.equals("-")}"><img src="${assetPath(src: 'depense.png')}" alt="Dépense" width="16px" height="16px"/></g:if>
-                <g:else><img src="${assetPath(src: 'revenue.png')}" alt="Revenu" width="16px" height="16px"/></g:else></span>
+            <td class="principal text-nowrap">
+                <span class="badge"><g:if test="${scheduled.type.sign?.equals("-")}"><img
+                        src="${assetPath(src: 'depense.png')}" alt="Dépense" width="16px" height="16px"/></g:if>
+                    <g:else><img src="${assetPath(src: 'revenue.png')}" alt="Revenu" width="16px"
+                                 height="16px"/></g:else></span>
                 ${scheduled.name}
             </td>
-            <td class="fixedsize tdcenter"><g:formatDate date="${scheduled.dateApplication}"/></td>
-            <td class="tdright fixedsize"><g:formatNumber number="${scheduled.amount}" format="###,###.##"/> €</td>
-            <td class="tdright fixedsize">
+            <td class="tdcenter dayofmonth"><small data-toggle="tooltip" data-placement="bottom" title="<g:formatDate format="E dd MM yyyy"
+                    date="${scheduled.dateApplication}"/>"><g:formatDate formatName="date.format.onlyday"
+                                                                         date="${scheduled.dateApplication}"/></small>
+            </td>
+            <td class="tdright text-nowrap"><g:formatNumber number="${scheduled.amount}" format="###,###.##"/> €</td>
+            <td class="tdright littlefixedsize">
                 <g:if test="${scheduled.automatic}">
                     <img src="${assetPath(src: 'time.png')}" alt="Automatique"/>
                 </g:if>
@@ -79,8 +84,7 @@
     </g:each>
     <g:if test="${scheduleds}">
         <tr class="important">
-            <td colspan="2"><g:message code="scheduled.topay.this.month"/></td>
-            <td class="tdright fixedsize">= <g:formatNumber number="${amount}" format="###,###.##"/> €</td>
+            <td colspan="3" class="tdright fixedsize">= <g:formatNumber number="${amount}" format="###,###.##"/> €</td>
             <td class="tdright fixedsize">&nbsp;</td>
             <g:set var="amount" value="${0}"/>
         </tr>

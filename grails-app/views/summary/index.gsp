@@ -39,19 +39,19 @@
                                                                                action="list"><img
                     src="${assetPath(src: 'database_table.png')}"/></g:link></span></div>
         <g:if test="${accounts}">
-            <table class="table table-striped">
+            <table class="table table-striped table-hover">
                 <tbody>
                 <g:set var="accountAmount" value="${0D}"/>
                 <g:each in="${accounts}" status="i" var="account">
                     <tr>
-                        <td class="principal">${account.name}
+                        <td class="principal text-nowrap">${account.name}
                         <g:if test="${account.joinOwner}">
                           <img src="${assetPath(src: 'join.png')}" alt="Joined account"/>
                         </g:if>
                         </td>
-                        <td class="tdright fixedsize"><g:formatNumber number="${account.sold}"
+                        <td class="tdright text-nowrap"><g:formatNumber number="${account.sold}"
                                                                       format="###,###.##"/> €</td>
-                        <td class="tdright fixedsize">
+                        <td class="tdright">
                             <g:link controller="operation" action="list" params="[account: account.id]"
                                     title="Afficher le registre">
                                 <img src="${assetPath(src: 'operation.png')}"/>
@@ -64,9 +64,9 @@
                 <g:if test="${accounts}">
                     <tr class="important">
                         <td class="principal">&nbsp;</td>
-                        <td class="tdright fixedsize">= <g:formatNumber number="${accountAmount}"
+                        <td class="tdright">= <g:formatNumber number="${accountAmount}"
                                                                         format="###,###.##"/> €</td>
-                        <td class="tdright fixedsize">&nbsp;</td>
+                        <td class="tdright">&nbsp;</td>
                     </tr>
                 </g:if>
                 </tbody>
@@ -98,13 +98,13 @@
                         src="${assetPath(src: 'database_table.png')}"/></g:link></span></div>
 
             <div class="budgets list">
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                     <tbody>
                     <g:set var="budgetAmount" value="${0D}"/>
                     <g:set var="budgetUsedAmount" value="${0D}"/>
                     <g:each in="${budgets}" var="budget" status="b">
                         <tr>
-                            <td><span class="principal">${budget.name}</span>
+                            <td><span class="principal text-nowrap">${budget.name}</span>
                                 <g:if test="${budget.startDate || budget.endDate}">
                                     <br/>
                                     <small class="small12">
@@ -128,7 +128,7 @@
                             <g:set var="currentSold" value="${budget.currentMonthOperationsSum}"/>
 
                             <g:if test="${currentSold < budget.amount}">
-                                <td class="tdright">
+                                <td class="tdright text-nowrap">
                                 <span class="label label-success">
                             </g:if>
                             <g:elseif
@@ -144,7 +144,7 @@
                                 <td class="tdright budget"><span>
                             </g:else>
                             <g:formatNumber number="${currentSold}" format="###,###.##" /> / <g:formatNumber number="${budget.amount}" format="###,###.##" /> €</span></td>
-                            <td class="tdright fixedsize">
+                            <td class="tdright">
                                 <g:link title="Afficher le registre" controller="budget" action="operations"
                                         params="[budget: budget.id]"><img
                                         src="${assetPath(src: 'operation.png')}"/></g:link>
@@ -159,7 +159,7 @@
                                                               format="###,###.##"/> / <g:formatNumber
                                 number="${budgetAmount}"
                                 format="###,###.##"/> €</td>
-                        <td class="tdright fixedsize">&nbsp;</td>
+                        <td class="tdright">&nbsp;</td>
                     </tr>
 
                     <tr>
@@ -173,7 +173,7 @@
                                 <g:formatNumber number="${outOfBudget ?: 0}" format="###,###.##"/> €
                             </span>
                         </td>
-                        <td class="tdright fixedsize">
+                        <td class="tdright">
                             <g:link title="Afficher le registre" controller="budget" action="out"><img
                                     src="${assetPath(src: 'operation.png')}"/></g:link>
                         </td>

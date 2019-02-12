@@ -10,7 +10,7 @@
  * GNU General Public License for more details.
  */
 -->
-<%@ page import="com.headbangers.epsilon.Account" %>
+<%@ page import="com.headbangers.epsilon.AccountType; com.headbangers.epsilon.Account" %>
 <ul class="nav navbar-nav">
 
     <li class="${controllerName == 'bank' || controllerName == 'account' ? "active" : ""} dropdown">
@@ -49,7 +49,8 @@
         </ul>
     </li>
 
-    <g:set var="accounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id'])})}"/>
+    <g:set var="accounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id']) && type != AccountType.PRO})}"/>
+    <g:set var="proAccounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id'])&& type == AccountType.PRO})}"/>
     <g:set var="joinedAccounts" value="${Account.findAll([sort:'name',order:'asc'], { joinOwner?.id == sec.loggedInUserInfo([field: 'id'])})}"/>
     <g:if test="${!joinedAccounts}">
       <g:set var="joinedAccounts" value="${Account.findAll([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id']) && joinOwner != null })}"/>
@@ -198,6 +199,17 @@
                     </li>
                 </g:each>
                 <li class="divider"></li>
+                <g:if test="${proAccounts}">
+                    <li class="dropdown-header"><g:message code="account.pro.list"/></li>
+                    <g:each in="${proAccounts}" var="account">
+                        <li>
+                            <g:link controller="operation" params="[account: account.id]" action="list"><img
+                                    src="${assetPath(src: 'operation.png')}"/> ${account.nameAndSold}</g:link>
+                        </li>
+                    </g:each>
+                    <li class="divider"></li>
+                </g:if>
+
                 <g:if test="${joinedAccounts}">
                   <li class="dropdown-header"><g:message code="account.joined.list"/></li>
                   <g:each in="${joinedAccounts}" var="account">

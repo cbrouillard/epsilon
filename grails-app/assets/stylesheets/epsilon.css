@@ -55,6 +55,14 @@ table td.fixedsize {
     width: 115px;
 }
 
+table td.littlefixedsize {
+    width: 70px !important;
+}
+
+table td.dayofmonth{
+    font-style: italic;
+}
+
 .limitedSize {
     width: 200px;
     text-align: justify;

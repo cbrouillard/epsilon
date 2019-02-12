@@ -15,6 +15,7 @@ public enum AccountType {
 
     CHEQUES,
     EPARGNE,
+    PRO
 
     ;
 }
