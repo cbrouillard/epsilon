@@ -171,6 +171,12 @@
                             code="document.imaboss.list"/></g:link>
                 </li>
 
+                <li>
+                    <g:link controller="document" class="list" action="eurl"><img
+                            src="${assetPath(src: 'invoice.png')}"/> <g:message
+                            code="document.eurl.list"/></g:link>
+                </li>
+
                 <li class="divider"></li>
             </ul>
         </li>

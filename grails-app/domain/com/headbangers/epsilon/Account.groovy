@@ -37,6 +37,8 @@ class Account {
 
     boolean mobileDefault = false
 
+    boolean deleted = false
+
     static constraints = {
         bank nullable: false
         name nullable: false, blank: false

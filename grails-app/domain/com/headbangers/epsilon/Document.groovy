@@ -7,7 +7,8 @@ class Document {
         INVOICE("operation", "linkto_operation", "[\"pdf\"]"),
         BANK("bank", "linkto_bank", "[\"pdf\"]"),
         ACCOUNT("account", "linkto_account", "[\"pdf\", \"ofx\", \"qif\", \"csv\"]"),
-        IMABOSS("operation", "linkto_operation", "[\"pdf\"]")
+        IMABOSS("operation", "linkto_operation", "[\"pdf\"]"),
+        EURL("operation", "linkto_operation", "[\"pdf\"]")
 
         private String controllerName
         private String linkView

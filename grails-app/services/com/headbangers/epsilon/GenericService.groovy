@@ -48,6 +48,7 @@ class GenericService {
                     owner { eq("id", person.id) }
                     eq("j.id", person.id)
                 }
+                eq("deleted", false)
             } else {
                 owner { eq("id", person.id) }
             }
