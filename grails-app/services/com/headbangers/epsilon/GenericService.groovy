@@ -50,7 +50,12 @@ class GenericService {
                 }
                 eq("deleted", false)
             } else {
+                if (object == Bank.class) {
+                    eq("deleted", false)
+                }
+
                 owner { eq("id", person.id) }
+
             }
         }
     }

@@ -97,7 +97,8 @@ class BankController {
         def bankInstance = Bank.get(params.id)
         if (bankInstance && bankInstance.owner.equals(springSecurityService.getCurrentUser())) {
             try {
-                bankInstance.delete(flush: true)
+                bankInstance.deleted = true
+                bankInstance.save(flush:true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'bank.label', default: 'Bank'), bankInstance.name])}"
                 redirect(action: "list")
             }

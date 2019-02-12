@@ -49,9 +49,9 @@
         </ul>
     </li>
 
-    <g:set var="accounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id']) && type != AccountType.PRO})}"/>
-    <g:set var="proAccounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id'])&& type == AccountType.PRO})}"/>
-    <g:set var="joinedAccounts" value="${Account.findAll([sort:'name',order:'asc'], { joinOwner?.id == sec.loggedInUserInfo([field: 'id'])})}"/>
+    <g:set var="accounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id']) && type != AccountType.PRO && deleted == false})}"/>
+    <g:set var="proAccounts" value="${Account.findAll ([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id'])&& type == AccountType.PRO && deleted == false})}"/>
+    <g:set var="joinedAccounts" value="${Account.findAll([sort:'name',order:'asc'], { joinOwner?.id == sec.loggedInUserInfo([field: 'id']) && deleted == false})}"/>
     <g:if test="${!joinedAccounts}">
       <g:set var="joinedAccounts" value="${Account.findAll([sort:'name',order:'asc'], { owner.id == sec.loggedInUserInfo([field: 'id']) && joinOwner != null })}"/>
       <% accounts.removeAll (joinedAccounts) %>

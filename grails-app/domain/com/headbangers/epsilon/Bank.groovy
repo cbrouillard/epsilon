@@ -23,6 +23,8 @@ class Bank {
     Person owner
     Document document
 
+    boolean deleted = false
+
     static constraints = {
         url nullable:true, blank:false
         name nullable:false, blank:false
