@@ -43,7 +43,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         //runtime 'mysql:mysql-connector-java:5.1.5'
-        runtime 'postgresql:postgresql:9.1-901.jdbc4'
+        runtime 'org.postgresql:postgresql:42.2.5'
         compile 'org.jsoup:jsoup:1.9.2'
         //runtime 'org.springframework:spring-aop:4.0.5.RELEASE'
         //runtime 'org.springframework:spring-expression:4.0.5.RELEASE'
