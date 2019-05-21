@@ -1,0 +1,4 @@
+1. virer les plugins multi-select, jquery, bootstrap (utiliser les bindings simples css / js)
+2. virer @Validateable (mieux gérer l'objet command)
+3. créer une nouvelle app en 3.3.2 (comme bebook)
+4. copier le source et prier.
