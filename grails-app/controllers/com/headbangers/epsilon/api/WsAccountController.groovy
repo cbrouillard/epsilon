@@ -6,6 +6,7 @@ import com.headbangers.epsilon.mobile.MobileAccount
 import com.headbangers.epsilon.mobile.MobileOperation
 import com.headbangers.epsilon.mobile.MobileSimpleResult
 import grails.converters.JSON
+import com.headbangers.epsilon.AccountType
 
 import javax.servlet.http.HttpServletRequest
 
@@ -30,7 +31,9 @@ class WsAccountController {
         if (person) {
             def db = genericService.loadUserObjects(person, Account.class, [sort: 'name', order: 'asc'])
             db.each { account ->
-                accounts.add(new MobileAccount(account))
+                if (account.type != AccountType.VIRTUEL) {
+                    accounts.add(new MobileAccount(account))
+                }
             }
         }
 
