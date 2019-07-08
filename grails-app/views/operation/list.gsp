@@ -43,7 +43,7 @@
     </h1>
     <g:if test="${selected?.description}">
         <blockquote>
-            ${selected.description}
+            ${raw(selected.description)}
         </blockquote>
     </g:if>
     <hr/>
